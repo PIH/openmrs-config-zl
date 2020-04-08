@@ -1,0 +1,14 @@
+{
+  "@openmrs/esm-login": {
+    "logo": {
+      "src": "/mirebalais/frontend/assets/pih-logo.png",
+      "alt": "Partners in Health"
+    },
+    "links": {
+      "loginSuccess": {
+        "url": "/mirebalais/home.page",
+        "spa": false
+      }
+    }
+  }
+}
