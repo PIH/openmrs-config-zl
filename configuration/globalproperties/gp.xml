@@ -1,0 +1,58 @@
+<config>
+    <globalProperties>
+        <globalProperty>
+            <property>addresshierarchy.i18nSupport</property>
+            <value>true</value>
+        </globalProperty>
+        <globalProperty>
+            <property>coreapps.defaultPatientIdentifierLocation</property>
+            <value>Chiapas</value>
+        </globalProperty>
+        <globalProperty>
+            <property>default_locale</property>
+            <value>fr</value>
+        </globalProperty>
+        <globalProperty>
+            <property>emr.concept.diagnosisSetOfSets</property>
+            <!-- HUM Diagnosis Sets -->
+            <value>8fcd0b0c-f977-4a66-a1b5-ad7ce68e6770</value>
+        </globalProperty>
+        <globalProperty>
+            <property>emr.paperRecordIdentifierType</property>
+            <!-- Patient Dossier number / Nimewo Dosye -->
+            <value>e66645eb-03a8-4991-b4ce-e87318e37566</value>
+        </globalProperty>
+        <globalProperty>
+            <property>emr.externalDossierIdentifierType</property>
+            <!-- External Nimewo Dosye -->
+            <value>9dbea4d4-35a9-4793-959e-952f2a9f5347</value>
+        </globalProperty>
+        <globalProperty>
+            <property>coreapps.defaultPatientIdentifierLocation</property>
+            <!-- Hôpital Universitaire de Mirebalais -->
+            <value>a084f714-a536-473b-94e6-ec317b152b43</value>
+        </globalProperty>
+        <globalProperty>
+            <property>orderentryowa.labOrderablesConceptSet</property>
+            <!-- Laboratory categories -->
+            <value>517d25f7-2e68-4da4-912b-76090fbfe0fd</value>
+        </globalProperty>
+        <globalProperty>
+            <property>labworkflowowa.locationOfLaboratory</property>
+            <!-- Location of laboratory (Haiti) -->
+            <value>e9732df4-971d-4a9a-9129-e2e610552468</value>
+        </globalProperty>
+        <globalProperty>
+            <property>locale.allowed.list</property>
+            <value>ht,fr,en</value>
+        </globalProperty>
+        <globalProperty>
+            <property>log.level</property>
+            <value>org.openmrs.api:warn</value>
+        </globalProperty>
+        <globalProperty>
+            <property>spa.frontend.directory</property>
+            <value>configuration/frontend</value>
+        </globalProperty>
+    </globalProperties>
+</config>
