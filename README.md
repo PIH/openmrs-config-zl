@@ -1,21 +1,37 @@
 openmrs-config-zl
 ==============================
 
-### Steps to deploy new changes to your local developmnet server
+### Prequistes
 
-If you've made changes to the openmrs-config-pihemr project, first run `mvn clean install` on that project to
-build the new config-pihemr artifact and install it to your local repo.
+Some utility scripts, "install.sh" and "watch.sh", have been written to ease having to manually run mvn install
+and watch commands on both this project and the "openmrs-config-pihemr" project.
 
-Then on this project run `mvn clean compile -DserverId=[serverId]` where [serverId] is the name of the SDK
-server you are deploying to.  This will build the config-zl project (pulling in any changes to config-pihemr),
-and then deploy the changes to the server specified by [serverId].
+However, these scripts depend on finding your "openmrs-config-pihemr" relative to this project, so they should both be 
+checked out into the same directory, and the "openmrs-config-pihemr" directory should be named "openmrs-config-pihemr"
+or "config-pihemr".
+
+Example directory structure:
+
+openmrs-config-pihemr
+openmrs-config-zl
+
+or
+
+config-pihemr
+config-zl
+
+### Steps to deploy new changes to your local development server
+
+Run "./install.sh [serverId]" where [serverId] is the name of the SDK server you are deploying to.  This will first build 
+the config-pihemr project, then build the config-zl project, (pulling in any changes to config-pihemr),
+and finally deploying the changes to the server specified by [serverId].
 
 #### To enable watching, you run the following:
 
-* in the parent project (openmrs-config-pihemr) directory:  
-`mvn clean openmrs-packager:watch`
-* in the current openmr-config-zl directory:  
-`mvn clean openmrs-packager:watch -Dgoal=compile -DserverId=SERVER_ID -DdelaySeconds=3`
+"./watch.sh [serverId]" where [serverId] is the name of the SDK server you are deploying too.  This will watch
+*both* the config-pihemr and config-zl projects for changes and redeploy when there are changes.  It runs
+indefinitely, so you will need to cancel it with a "Ctrl-C".
+
 
 ### General usage
 
