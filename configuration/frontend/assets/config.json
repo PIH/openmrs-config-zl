@@ -10,5 +10,11 @@
         "spa": false
       }
     }
+  },
+  "@pih/esm-refapp-navbar": {
+    "brand": {
+      "src": "/mirebalais/frontend/assets/zl-logo.png",
+      "alt": "Zanmi Lasante"
+    }
   }
 }
