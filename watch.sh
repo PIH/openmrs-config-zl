@@ -1,18 +1,29 @@
+#!/bin/bash
 
-# NOTE: this "watchs" the directory and rebuilds on changes, so it will run indefinitely until you "Ctrl-C"
+usage () {
+    echo -e "Usage: watch.sh [SERVER]\n"
+    echo -e "Watches the configuration and updates SERVER on any chances, where a server is the name of an OpenMRS SDK instance at path '~/openmrs/[SERVER]'\n"
+    echo -e "Also watches the parent config if it is at ../openmrs-config-pihemr or ../config-pihemr.\n"
+    echo -e "Example: ./watch.sh mirebalais\n"
+}
+
+mvn_watch() {
+  mvn clean openmrs-packager:watch -DdelaySeconds=1
+}
 
 if [ $# -eq 0 ]; then
-    echo "Please provide the name of the server to install to as a command line argument"
-    echo "For example: './install.sh mirebalais'"
+    echo -e "Please provide the name of the server to install to as a command line argument.\n"
+    usage
     exit 1
 fi
 
+
 # if there's a "config-pihemr" or "openmrs-config-pihemr" directory at the same level as this project,
 # run the watch for it as well
-if [[ -f '../config-pihemr/watch.sh' ]]; then
-    (cd ../config-pihemr && ./watch.sh &)
-elif [[ -f '../openmrs-config-pihemr/watch.sh' ]]; then
-    (cd ../openmrs-config-pihemr && ./watch.sh &)
+if [[ -d '../config-pihemr' ]]; then
+    (cd ../config-pihemr && mvn_watch &)
+elif [[ -d '../openmrs-config-pihemr' ]]; then
+    (cd ../openmrs-config-pihemr && mvn_watch &)
 else
   echo "Unable to find PIH-EMR config, skipping watching it"
 fi
