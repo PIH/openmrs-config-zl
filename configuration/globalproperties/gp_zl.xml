@@ -1,4 +1,5 @@
 <config>
+    <!-- TODO: this can just be moved into the main gp.xml in PIH EMR -->
     <globalProperties>
         <globalProperty>
             <property>spa.frontend.directory</property>
