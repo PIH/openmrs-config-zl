@@ -1,4 +1,9 @@
 {
+  "@openmrs/esm-api": {
+    "redirectAuthFailure": {
+      "url": "/mirebalais/login.htm"
+    }
+  },
   "@openmrs/esm-login": {
     "logo": {
       "src": "/mirebalais/frontend/assets/pih-logo.png",
