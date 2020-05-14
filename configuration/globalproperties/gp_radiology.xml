@@ -59,6 +59,12 @@
         </globalProperty>
 
         <globalProperty>
+            <property>radiologyapp.creatinineLevelConcept</property>
+            <!-- Concept: Serum creatinine (mg per dL) -->
+            <value>668cd2a5-60dd-4dc4-889b-e09f072c6a1a</value>
+        </globalProperty>
+
+        <globalProperty>
             <property>radiologyapp.contrastOrderablesConcept</property>
             <!-- Concept: HUM radiology orderables with contrast -->
             <value>60e6cd5a-3070-4b41-a36d-4730d4e85733</value>
@@ -101,7 +107,7 @@
         <globalProperty>
             <property>pacsintegration.locationCodeAttributeTypeUuid</property>
             <!-- Location Attribute type: Location Code -->
-            <value>64f01c78-191d-4947-a201-7e0a7f0caf2</value>
+            <value>64f01c78-191d-4947-a201-7e0a7f0caf21</value>
         </globalProperty>
 
         <globalProperty>
