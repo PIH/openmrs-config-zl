@@ -1,9 +1,47 @@
 <config>
-    <!-- TODO: this can just be moved into the main gp.xml in PIH EMR -->
-    <globalProperties>
-        <globalProperty>
-            <property>spa.frontend.directory</property>
-            <value>configuration/frontend</value>
-        </globalProperty>
-    </globalProperties>
+
+    <!-- Core Global Properties -->
+    <globalProperty>
+        <property>default_locale</property>
+        <value>fr</value>
+    </globalProperty>
+
+    <globalProperty>
+        <property>locale.allowed.list</property>
+        <value>ht, fr, en</value>
+    </globalProperty>
+
+    <globalProperty>
+        <property>emr.concept.diagnosisSetOfSets</property>
+        <!-- Concept: HUM Diagnosis Sets -->
+        <value>8fcd0b0c-f977-4a66-a1b5-ad7ce68e6770</value>
+    </globalProperty>
+
+    <!-- Paper Record Global Properties -->
+    <globalProperty>
+        <property>emr.paperRecordIdentifierType</property>
+        <!-- Patient Identifier: Nimewo Dosye -->
+        <value>e66645eb-03a8-4991-b4ce-e87318e37566</value>
+    </globalProperty>
+
+    <globalProperty>
+        <property>emr.externalDossierIdentifierType</property>
+        <!-- Patient Identifier: External Nimewo Dosye -->
+        <value>9dbea4d4-35a9-4793-959e-952f2a9f5347</value>
+    </globalProperty>
+
+    <!-- Order Entry OWA -->
+    <globalProperty>
+        <property>orderentryowa.labOrderablesConceptSet</property>
+        <!-- Concept: Laboratory categories -->
+        <value>517d25f7-2e68-4da4-912b-76090fbfe0fd</value>
+    </globalProperty>
+
+    <!-- Lab Workflow OWA -->
+    <globalProperty>
+        <property>labworkflowowa.locationOfLaboratory</property>
+        <!-- Concept: Location of laboratory (Haiti) -->
+        <value>e9732df4-971d-4a9a-9129-e2e610552468</value>
+    </globalProperty>
+
 </config>
