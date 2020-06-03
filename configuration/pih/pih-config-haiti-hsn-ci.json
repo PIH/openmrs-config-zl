@@ -1,8 +1,4 @@
 {
-  "welcomeMessage": "Bienvenue dans l'EMR de Hôpital Saint-Nicolas",
-  "site": "HSN_SAINT_MARC",
-  "dossierIdentifierPrefix": "HSN",
-
   "components": [
     "clinicianDashboard",
     "visitNote",
@@ -27,9 +23,5 @@
     "covid19",
     "edTriage",
     "edTriageQueue"
-	],
-
-  "globalProperties": {
-    "coreapps.defaultPatientIdentifierLocation": "97c241a0-eaec-11e5-a837-0800200c9a66"
-  }
+	]
 }
