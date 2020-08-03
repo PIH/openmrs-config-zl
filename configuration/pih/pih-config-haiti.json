@@ -59,6 +59,21 @@
 
     "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti.json",
 
+    "locationTags": {
+      "Check-In Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "Consult Note Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "COVID-19 Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "ED Triage Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "HIV Consult Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "Medical Record Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "Mental Health Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "NCD Consult Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "Primary Care Consult Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "Provider Management Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "Registration Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"],
+      "Vitals Location": ["Hôpital Notre-Dame de la Nativité de Belladère", "Centre de Santé de Cerca la Source", "Hôpital Sainte-Thérèse de Hinche", "Hôpital la Colline de Lascahobas", "Centre de Santé de Thomonde"]
+    },
+
     "registrationConfig": {
         "allowUnknownPatients": true,
         "allowManualEntryOfPrimaryIdentifier": true,
