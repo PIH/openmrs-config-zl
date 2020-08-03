@@ -1,6 +1,6 @@
 {
   "welcomeMessage": "Bienvenue dans l'EMR de Hôpital Saint-Nicolas",
-  "site": "HSN_SAINT_MARC",
+  "site": ""Hôpital Saint-Nicolas de Saint-Marc"",
   "dossierIdentifierPrefix": "HSN",
 
   "components": [
@@ -31,6 +31,24 @@
 
   "globalProperties": {
     "coreapps.defaultPatientIdentifierLocation": "97c241a0-eaec-11e5-a837-0800200c9a66"
+  },
+
+  "locationTags": {
+    "Admission Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
+    "Check-In Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
+    "COVID-19 Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
+    "Identifier Assignment Location": ["Hôpital Saint-Nicolas de Saint-Marc"],
+    "Lab Results Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
+    "Login Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"],
+    "Medical Record Location": ["Hôpital Saint-Nicolas de Saint-Marc"],
+    "Mental Health Location": ["Sante Mantal | HSN"],
+    "Program Location": ["Hôpital Saint-Nicolas de Saint-Marc"],
+    "Provider Management Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"],
+    "Registration Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"],
+    "Tablet Entry Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
+    "Transfer Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
+    "Vitals Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
+    "Visit Location": ["Hôpital Saint-Nicolas de Saint-Marc"]
   },
 
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json"
