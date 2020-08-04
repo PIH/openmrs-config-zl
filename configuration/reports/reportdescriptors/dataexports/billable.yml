@@ -1,0 +1,27 @@
+key: "billabledataexport"
+uuid: "6bd65742-5b45-4f50-a5a8-90c81a387f90"
+name: "mirebalaisreports.billabledataexport.name"
+description: "mirebalaisreports.billabledataexport.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "billabledataexport"
+    type: "sql"
+    config: "sql/billable.sql"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "dataExport"
+  sites:
+    - "MIREBALAIS"
+
+

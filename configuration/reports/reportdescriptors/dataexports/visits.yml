@@ -1,0 +1,26 @@
+key: "visitsdataexport"
+uuid: "fa46aee9-fc73-11e3-8248-08002769d9ae"
+name: "mirebalaisreports.visitsdataexport.name"
+description: "mirebalaisreports.visitsdataexport.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "visitsdataexport"
+    type: "sql"
+    config: "sql/visits.sql"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "dataExport"
+  sites:
+    - "MIREBALAIS"
+
