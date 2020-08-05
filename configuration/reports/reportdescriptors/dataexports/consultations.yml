@@ -21,5 +21,8 @@ designs:
       "dateFormat": "dd-MMM-yyyy HH:mm:ss"
 config:
   category: "dataExport"
+  components:
+    - "consult"
+    - "allDataExports"
 
 

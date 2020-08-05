@@ -1,7 +1,7 @@
-key: "checkinsdataexport"
-uuid: "1c72b461-fc74-11e3-8248-08002769d9ae"
-name: "mirebalaisreports.checkinsdataexport.name"
-description: "mirebalaisreports.checkinsdataexport.description"
+key: "diagnosesdataexport"
+uuid: "257bb3e9-fc74-11e3-8248-08002769d9ae"
+name: "mirebalaisreports.diagnosesdataexport.name"
+description: "mirebalaisreports.diagnosesdataexport.description"
 parameters:
   - key: "startDate"
     type: "java.util.Date"
@@ -10,9 +10,9 @@ parameters:
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
 datasets:
-  - key: "checkinsdataexport"
+  - key: "diagnosesdataexport"
     type: "sql"
-    config: "sql/checkins.sql"
+    config: "sql/diagnoses.sql"
 designs:
   - type: "csv"
     properties:
@@ -22,7 +22,6 @@ designs:
 config:
   category: "dataExport"
   components:
-    - "checkIn"
+    - "consult"
     - "allDataExports"
-
 
