@@ -51,6 +51,7 @@
     "Admission Note Location": [
       "CDI Klinik Ekstèn Jeneral Achiv Santral",
       "CDI Klinik Ekstèn Jeneral Biwo Randevou",
+      "CDI Klinik Ekstèn Jeneral",
       "CDI Klinik Ekstèn Jeneral Famasi",
       "CDI Klinik Ekstèn Jeneral Laboratwa",
       "CDI Klinik Ekstèn Jeneral Radyografi",
@@ -65,6 +66,8 @@
       "Sal Fanm B",
       "Sal Fanm",
       "Sal Gason",
+      "Sal Gason A",
+      "Sal Gason B",
       "Sal Izolman",
       "Sal Operasyon",
       "Sal Reyabilitasyon",
@@ -187,7 +190,7 @@
     ],
     "ED Note Location": ["Ijans"],
     "ED Triage Location": ["Ijans"],
-    "HIV Consult Location": [],
+    "HIV Consult Location": ["Klinik Ekstèn", "Sante Fanm"],
     "Identifier Assignment Location": [
       "Hôpital Universitaire de Mirebalais - Prensipal",
       "CDI Klinik Ekstèn Jeneral"
@@ -378,6 +381,8 @@
       "Sal Operasyon",
       "Sal Reyabilitasyon",
       "Sal Timoun",
+      "Sal Timoun A",
+      "Sal Timoun B",
       "Sante Fanm",
       "Sante Kominotè",
       "Swen Entansif Neonatal",
@@ -454,6 +459,7 @@
       "Klinik Ekstèn",
       "Sal Aprè Operasyon | Sante Fanm",
       "Sal Aprè Operasyon",
+      "Sal Aprè Akouchman",
       "Sal Avan Akouchman",
       "Sal Fanm",
       "Sal Gason",
