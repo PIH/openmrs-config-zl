@@ -48,7 +48,12 @@
     "Tablet Entry Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
     "Transfer Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
     "Vitals Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
-    "Visit Location": ["Hôpital Saint-Nicolas de Saint-Marc"]
+    "Visit Location": ["Hôpital Saint-Nicolas de Saint-Marc"],
+    "Consult Note Location": [],
+    "NCD Consult Location": [],
+    "ED Triage Location": [],
+    "HIV Consult Location": [],
+    "Primary Care Consult Location": []
   },
 
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json"
