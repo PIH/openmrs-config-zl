@@ -136,8 +136,8 @@
         </script>
     </ifMode>
 
-    <!-- Program enrollment (if the patient hasn't already been enrolled)-->
-    <enrollInProgram programId="HIV" />
+    <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location-->
+    <enrollInProgram programId="HIV" locationTag="Program Location"/>
 
     <!-- ToDo:  Add when enrollment date is fixed
     <section id="hiv-program" sectionTag="fieldset" headerTag="legend" headerStyle="title"
@@ -1087,7 +1087,7 @@
         </div>
     </section>
 
-    
+
     <section id="tb-screen" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.tbscreen.title">
         <div class="section-container">
