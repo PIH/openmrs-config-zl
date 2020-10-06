@@ -792,7 +792,7 @@
                          style="checkbox"/>
 
                 </template>
-                <render mode="homosexual" cId="CIEL:160578"/>
+                <render mode="menSexWithMen" cId="CIEL:160578"/>
                 <render mode="sexWorker" cId="CIEL:160579"/>
                 <render mode="prisoner" cId="CIEL:156761"/>
                 <render mode="transgender" cId="PIH:11561"/>
