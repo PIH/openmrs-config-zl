@@ -467,46 +467,6 @@
                 </p>
 
                 <p>
-                    <obs conceptId="CIEL:164082" toggle="hiPops"
-                         answerConceptId="PIH:11560"
-                         answerCode="pihcore.highRiskPopulations"
-                         style="checkbox"/>
-
-                    <div id="hiPops">
-                        <div class="two-columns">
-                            <span style="padding-left:30px;"></span>
-                            <obs conceptId="PIH:11535"
-                                 answerConceptId="CIEL:160578"
-                                 answerCode="pihcore.homoSexual"
-                                 style="checkbox"/>
-                            <br/>
-                            <span style="padding-left:30px;"></span>
-                            <obs conceptId="PIH:11535"
-                                 answerConceptId="CIEL:160579"
-                                 answerCode="pihcore.sexWorker"
-                                 style="checkbox"/>
-                            <br/>
-                            <span style="padding-left:30px;"></span>
-                            <obs conceptId="PIH:11535"
-                                 answerConceptId="PIH:11561"
-                                 answerCode="pihcore.transgender"
-                                 style="checkbox"/>
-                            <br/>
-                            <obs conceptId="PIH:11535"
-                                 answerConceptId="CIEL:156761"
-                                 answerCode="pihcore.prisoner"
-                                 style="checkbox"/>
-                            <br/>
-                            <obs conceptId="PIH:11535"
-                                 answerConceptId="CIEL:105"
-                                 answerCode="pihcore.ivDrugUser"
-                                 style="checkbox"/>
-                        </div>
-                    </div>
-                </p>
-
-
-                <p>
                     <obs conceptId="CIEL:164082" toggle="otherReason"
                          answerConceptId="PIH:5622"
                          answerCode="pihcore.other"
