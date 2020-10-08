@@ -17,6 +17,8 @@
   },
 
   "locationTags": {
-    "Login Location": ["Hôpital Notre-Dame de la Nativité de Belladère"]
+    "Login Location": ["Hôpital Notre-Dame de la Nativité de Belladère"],
+    "Medical Record Location": ["Hôpital Notre-Dame de la Nativité de Belladère"],
+    "Visit Location": ["Hôpital Notre-Dame de la Nativité de Belladère"]
   }
 }

@@ -17,6 +17,8 @@
   },
 
   "locationTags": {
-    "Login Location": ["Hôpital Sainte-Thérèse de Hinche"]
+    "Login Location": ["Hôpital Sainte-Thérèse de Hinche"],
+    "Medical Record Location": ["Hôpital Sainte-Thérèse de Hinche"],
+    "Visit Location": ["Hôpital Sainte-Thérèse de Hinche"]
   }
 }

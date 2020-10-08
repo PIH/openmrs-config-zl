@@ -39,6 +39,8 @@
   },
 
   "locationTags": {
-    "Login Location": ["Hôpital la Colline de Lascahobas"]
+    "Login Location": ["Hôpital la Colline de Lascahobas"],
+    "Medical Record Location": ["Hôpital la Colline de Lascahobas"],
+    "Visit Location": ["Hôpital la Colline de Lascahobas"]
   }
 }
