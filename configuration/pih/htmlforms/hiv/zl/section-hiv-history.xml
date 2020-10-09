@@ -782,22 +782,88 @@
         </div>
 
         <div class="section-container">
-            <h3><uimessage code="pihcore.keyPopulation"/></h3>
-            <repeat>
-                <template>
-
-                    <obs conceptId="PIH:11560"
-                         answerConceptId="{cId}"
-                         answerCode="pihcore.{mode}"
-                         style="checkbox"/>
-
-                </template>
-                <render mode="menSexWithMen" cId="CIEL:160578"/>
-                <render mode="sexWorker" cId="CIEL:160579"/>
-                <render mode="prisoner" cId="CIEL:156761"/>
-                <render mode="transgender" cId="PIH:11561"/>
-                <render mode="ivDrugUser" cId="CIEL:105"/>
-            </repeat>
+            <h3>
+                <uimessage code="pihcore.keyPopulation"/>
+            </h3>
+            <table>
+            <!-- menSexWithMen -->
+            <tr>
+                <td>
+                    <label>
+                        <uimessage code="pihcore.menSexWithMen"/>
+                    </label>
+                </td>
+                <td>
+                    <p class="radio">
+                        <obs conceptId="CIEL:160578" answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
+                             answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
+                             style="radio" answerSeparator=""/>
+                    </p>
+                </td>
+            </tr>
+            <!-- sexWorker -->
+                <td>
+                    <label>
+                        <uimessage code="pihcore.sexWorker"/>
+                    </label>
+                </td>
+                <td>
+                    <p class="radio">
+                        <obs conceptId="CIEL:160579"
+                             answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
+                             answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
+                             style="radio" answerSeparator=""/>
+                    </p>
+                </td>
+                <!-- prisoner -->
+                <tr>
+                    <td>
+                        <label>
+                            <uimessage code="pihcore.prisoner"/>
+                        </label>
+                    </td>
+                    <td>
+                        <p class="radio">
+                            <obs conceptId="CIEL:156761"
+                                 answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
+                                 answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
+                                 style="radio" answerSeparator=""/>
+                        </p>
+                    </td>
+                </tr>
+                <!-- transgender -->
+                <tr>
+                    <td>
+                        <label>
+                            <uimessage code="pihcore.transgender"/>
+                        </label>
+                    </td>
+                    <td>
+                        <p class="radio">
+                            <obs conceptId="PIH:11561"
+                                 answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
+                                 answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
+                                 style="radio" answerSeparator=""/>
+                        </p>
+                    </td>
+                </tr>
+                <!-- ivDrugUser -->
+                <tr>
+                    <td>
+                        <label>
+                            <uimessage code="pihcore.ivDrugUser"/>
+                        </label>
+                    </td>
+                    <td>
+                        <p class="radio">
+                            <obs conceptId="CIEL:105"
+                                 answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
+                                 answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
+                                 style="radio" answerSeparator=""/>
+                        </p>
+                    </td>
+                </tr>
+            </table>
         </div>
     </section>
 
