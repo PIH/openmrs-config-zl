@@ -786,84 +786,31 @@
                 <uimessage code="pihcore.keyPopulation"/>
             </h3>
             <table>
-            <!-- menSexWithMen -->
-            <tr>
-                <td>
-                    <label>
-                        <uimessage code="pihcore.menSexWithMen"/>
-                    </label>
-                </td>
-                <td>
-                    <p class="radio">
-                        <obs conceptId="CIEL:160578" answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
-                             answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
-                             style="radio" answerSeparator=""/>
-                    </p>
-                </td>
-            </tr>
-            <!-- sexWorker -->
-                <td>
-                    <label>
-                        <uimessage code="pihcore.sexWorker"/>
-                    </label>
-                </td>
-                <td>
-                    <p class="radio">
-                        <obs conceptId="CIEL:160579"
-                             answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
-                             answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
-                             style="radio" answerSeparator=""/>
-                    </p>
-                </td>
-                <!-- prisoner -->
-                <tr>
-                    <td>
-                        <label>
-                            <uimessage code="pihcore.prisoner"/>
-                        </label>
-                    </td>
-                    <td>
-                        <p class="radio">
-                            <obs conceptId="CIEL:156761"
-                                 answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
-                                 answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
-                                 style="radio" answerSeparator=""/>
-                        </p>
-                    </td>
-                </tr>
-                <!-- transgender -->
-                <tr>
-                    <td>
-                        <label>
-                            <uimessage code="pihcore.transgender"/>
-                        </label>
-                    </td>
-                    <td>
-                        <p class="radio">
-                            <obs conceptId="PIH:11561"
-                                 answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
-                                 answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
-                                 style="radio" answerSeparator=""/>
-                        </p>
-                    </td>
-                </tr>
-                <!-- ivDrugUser -->
-                <tr>
-                    <td>
-                        <label>
-                            <uimessage code="pihcore.ivDrugUser"/>
-                        </label>
-                    </td>
-                    <td>
-                        <p class="radio">
-                            <obs conceptId="CIEL:105"
-                                 answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
-                                 answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
-                                 style="radio" answerSeparator=""/>
-                        </p>
-                    </td>
-                </tr>
-            </table>
+                <repeat>
+                    <template>
+                        <tr>
+                            <td>
+                                <label>
+                                    <uimessage code="pihcore.{name}"/>
+                                </label>
+                            </td>
+                            <td>
+                                <p class="radio">
+                                    <obs conceptId="{cId}"
+                                         answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
+                                         answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
+                                         style="radio" answerSeparator=""/>
+                                </p>
+                            </td>
+                        </tr>
+                </template>
+                <render cId="CIEL:160578" name="menSexWithMen"/>
+                <render cId="CIEL:160579" name="sexWorker"/>
+                <render cId="CIEL:156761" name="prisoner"/>
+                <render cId="PIH:11561" name="transgender"/>
+                <render cId="CIEL:105" name="ivDrugUser"/>
+            </repeat>
+        </table>
         </div>
     </section>
 
