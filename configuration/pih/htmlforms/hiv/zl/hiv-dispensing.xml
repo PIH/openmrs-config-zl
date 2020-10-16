@@ -104,7 +104,7 @@
 
 <script type="text/javascript">
 
-    jq(function() {
+    jq(document).ready(function() {
 
         var artTreatmentConstructUuid = '0b1ca3d0-9f70-4366-a58c-c0f7491c47da';
         var medicationOrdersUuid = '3cd9491e-26fe-102b-80cb-0017a47871b2';
@@ -120,9 +120,20 @@
 
         var currentEncounterDate = new Date();
         var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-        if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length > 0)) {
-          currentEncounterDate = new Date(+encounterDate);
+          if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length > 0)) {
+            currentEncounterDate = new Date(+encounterDate);
+        } else {
+          // look for the encounterDate datepicker widget
+          var encounterDateValue = jq("#encounterDate .hasDatepicker");
+          if (encounterDateValue) {
+            var getDate = encounterDateValue.datepicker('getDate');
+            if (getDate) {
+              currentEncounterDate = new Date(getDate);
+            }
+          }
         }
+
+
 
         var lastPrescribedRegimen = {
             prescribedDate: null,
@@ -185,11 +196,7 @@
 
 
         var validateNextDispensingDate = function() {
-            var currentEncounterDate = new Date();
-            var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-            if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length > 0)) {
-                currentEncounterDate = new Date(+encounterDate);
-            }
+            var currentEncounterDate = new Date(getField('encounterDate.value').datepicker('getDate'));
 
             var dateObj = getField('nextDispenseDate.value').datepicker('getDate');
             var newDate = new Date(dateObj);
@@ -255,18 +262,15 @@
 
 
     jq("#monthsDispensed input").change(function() {
-    var monthsDispensed= getValue('monthsDispensed.value');
-    if (typeof monthsDispensed !== "undefined" &amp;&amp; monthsDispensed !== null &amp;&amp; (monthsDispensed.length >
-    0)) {
-    var currentEncounterDate = new Date();
-    var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-              if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length > 0)) {
-                  currentEncounterDate = new Date(+encounterDate);
+        var monthsDispensed= getValue('monthsDispensed.value');
+        if (typeof monthsDispensed !== "undefined" &amp;&amp; monthsDispensed !== null
+                &amp;&amp; (monthsDispensed.length > 0)) {
+              var currentEncounterDate = new Date(getField('encounterDate.value').datepicker('getDate'));
+                  currentEncounterDate.setDate(currentEncounterDate.getDate() + 28 * monthsDispensed);
+                  setValue('nextDispenseDate.value', currentEncounterDate.toISOString().slice(0,10));
+                  validateNextDispensingDate();
               }
-              currentEncounterDate.setDate(currentEncounterDate.getDate() + 28 * monthsDispensed);
-              setValue('nextDispenseDate.value', currentEncounterDate.toISOString().slice(0,10));
-              validateNextDispensingDate();
-          }
+
         });
 
     var dispensedToValue= null;
