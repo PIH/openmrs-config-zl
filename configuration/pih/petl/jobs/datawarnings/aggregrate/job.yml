@@ -1,0 +1,16 @@
+type: "sqlserver-bulk-import"
+configuration:
+  extract:
+    datasource: "mysql/openmrs.yml"
+    query:  "datawarnings/aggregrate/source.sql"
+
+  load:
+    datasource: "sqlserver/openmrs_extractions.yml"
+    table: "hivmigration_aggregrate_data_warnings"
+    schema: "datawarnings/aggregrate/target.sql"
+
+  dropAndRecreateTable: false
+  conditional: "SELECT COUNT(*)=1 FROM information_schema.tables WHERE table_schema = 'openmrs' AND table_name = 'hivmigration_data_warnings'"
+
+schedule:
+  cron: "0 30 6 ? * *"
