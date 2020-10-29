@@ -10,7 +10,8 @@
     warning_details VARCHAR(1000),
     encounter_date DATE,
     field_name VARCHAR(100),
-    field_value VARCHAR(1000)
+    field_value VARCHAR(1000),
+    flag_for_review BIT
 );
 
 

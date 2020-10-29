@@ -9,7 +9,7 @@ configuration:
     table: "hivmigration_aggregrate_data_warnings"
     schema: "datawarnings/aggregrate/target.sql"
 
-  dropAndRecreateTable: false
+  dropAndRecreateTable: true
   conditional: "SELECT COUNT(*)=1 FROM information_schema.tables WHERE table_schema = 'openmrs' AND table_name = 'hivmigration_data_warnings'"
 
 schedule:

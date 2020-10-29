@@ -10,6 +10,7 @@ SELECT
     warning_details,
     encounter_date,
     field_name,
-    field_value
+    field_value,
+    flag_for_review
 FROM
     hivmigration_data_warnings;
