@@ -1385,7 +1385,7 @@
              headerCode="pihcore.tbscreen.title">
         <div class="section-container">
             <table>
-                <repeat with="['feverSweats','11565'],['wtLoss3kg','11566'],['cough','11567'],['tbContact','11568'],['painfulNodes','11569']">
+                <repeat with="['feverSweats','11565'],['wtLoss3kg','11566'],['cough','11567'],['tbContact','11568'],['painfulNodes','11569'],['bloodyCough','970'],['dyspnea','5960'],['chestPain','136']">
                     <tr>
                         <td>
                             <!-- TB symptom -->
