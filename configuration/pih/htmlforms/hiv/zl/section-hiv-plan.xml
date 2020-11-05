@@ -614,7 +614,14 @@
                     <label>
                         <uimessage code="pihcore.ifYesReason"/>
                     </label>
-                    <obs conceptId="PIH:13021" style="text"/>
+                    <p class="radio" style="margin-left: 2em;" >
+                        <obs conceptId="PIH:REASON TO POSTPONE CODED" style="radio"
+                            answerConceptIds="PIH:PATIENT REFUSED,PIH:DEATH,PIH:DENIAL,PIH:CLINICAL DECISION,PIH:REFERRAL,PIH:OTHER"
+                            answerCodes="pihcore.refused,pihcore.died,pihcore.denial,pihcore.clinicalDecision,pihcore.referredOut,pihcore.other"
+                            answerSeparator="&lt;br /&gt;" />
+                        <label>:</label>
+                        <obs conceptId="PIH:REASON TO POSTPONE TEXT" style="text" />
+                    </p>
                 </p>
 
                 <p>
