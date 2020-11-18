@@ -1,8 +1,8 @@
 {
     "components": [
-        "monitoringReports",
+        "allDataExports",
         "dataExports",
-        "allDataExports"
+        "monitoringReports"
     ],
 
     "scheduleMonthlyDataExports": true

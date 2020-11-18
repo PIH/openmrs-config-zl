@@ -7,17 +7,17 @@
   "site": "CROSS_SITE",
 
   "components": [
-    "visitNote",
-    "mentalHealth",
-    "patientRegistration",
-    "visitManagement",
+    "chwApp",
     "clinicianDashboard",
-    "systemAdministration",
     "dataExports",
     "exportPatients",
     "importPatients",
+    "mentalHealth",
+    "patientRegistration",
     "programs",
-    "chwApp"
+    "systemAdministration",
+    "visitManagement",
+    "visitNote"
   ],
 
   "globalProperties": {
