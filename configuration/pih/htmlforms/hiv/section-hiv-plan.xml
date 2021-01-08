@@ -842,7 +842,7 @@
                     <!-- for HIV followup -->
                     <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
                         <obs conceptId="PIH:1559" style="radio"
-                             answerConceptIds="CIEL:1066,CIEL:160017,CIEL:1267,CIEL:981,PIH:2224"
+                             answerConceptIds="CIEL:1066,CIEL:160017,CIEL:1267,CIEL:981,CIEL:163057"
                              answerCodes="pihcore.tb.medsNotIndicated,pihcore.tb.medsStarted,pihcore.tb.medsStopped,pihcore.tb.medsChanged,pihcore.tb.ongoing"
                              answerSeparator="&lt;br /&gt;" />
                         <br/><br/>
