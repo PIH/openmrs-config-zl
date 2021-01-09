@@ -847,10 +847,10 @@
                         <option value="0fc3d5c1-fd39-4899-b5c0-b094e28ff359" label="DRV/ETV 300/100 mg"/>
                     </orderProperty>
                     <orderProperty name="action" label="Action">
-                        <option value="NEW" label="Place a new Order"/>
-                        <option value="REVISE" label="Revise this Order"/>
-                        <option value="RENEW" label="Renew this Order"/>
-                        <option value="DISCONTINUE" label="Discontinue this Order"/>
+                        <option value="NEW" label="New Order"/>
+                        <option value="REVISE" label="Revise Order"/>
+                        <option value="RENEW" label="Renew Order"/>
+                        <option value="DISCONTINUE" label="Discontinue Order"/>
                     </orderProperty>
                     <div style="padding:0px;">
                         <orderProperty name="dose" label="Dosing"/>
@@ -875,7 +875,7 @@
                         </orderProperty>
                     </div>
                     <div style="padding:0px;">
-                        <orderProperty name="quantity" value="0" label="Quantity"/>
+                        <orderProperty name="quantity" label="Quantity"/>
                         <orderProperty name="quantityUnits" value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label=" ">
                             <option value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="tablet(s)"/>
                             <option value="161553AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="mg"/>
