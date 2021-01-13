@@ -23,6 +23,16 @@
                 min-width: initial;
             }
 
+            .flex-questions {
+                display: flex;
+                flex-wrap: wrap;
+            }
+
+            .flex-questions > div {
+                margin-right: 16px;
+                margin-bottom: 8px;
+            }
+
             form fieldset {
                 min-width: 90%;
                 display: block;
@@ -724,6 +734,42 @@
             </div>
         </section>
     </includeIf>
+
+    <section id="contacts" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+            headerCode="pihcore.contacts">
+        <repeat with="['1'],['2'],['3'],['4'],['5']">
+            <div class="section-container mb-4 flex-questions">
+                <obsgroup groupingConceptId="PIH:Contact construct">
+                    <div>
+                        <obs conceptId="PIH:RELATIONSHIP OF RELATIVE TO PATIENT"
+                         labelCode="pihcore.contactRelationship"
+                         answerConceptIds="PIH:PARTNER OR SPOUSE,PIH:GUARDIAN RELATIONSHIP TO CHILD,PIH:SIBLING,PIH:OTHER RELATIVE"/>
+                    </div>
+                    <div>
+                        <obs conceptId="PIH:FIRST NAME" labelCode="pihcore.firstName"/>
+                    </div>
+                    <div>
+                        <obs conceptId="PIH:LAST NAME" labelCode="pihcore.lastName"/>
+                    </div>
+                    <div>
+                        <obs conceptId="PIH:AGE" labelCode="pihcore.age"/>
+                    </div>
+                    <div>
+                        <obs conceptId="CIEL:163533"
+                             labelCode="pihcore.dead"
+                             answerConceptIds="PIH:ALIVE,PIH:DEATH,PIH:UNKNOWN"
+                             style="checkbox"/>
+                    </div>
+                    <div>
+                        <obs conceptId="PIH:RESULT OF HIV TEST"
+                             labelCode="pihcore.hiv.serologicalStatus"
+                             answerConceptIds="PIH:UNKNOWN,PIH:POSITIVE,PIH:NEGATIVE"
+                             style="checkbox"/>
+                    </div>
+                </obsgroup>
+            </div>
+        </repeat>
+    </section>
 
     <section id="transmission" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.modeOfTransmission">

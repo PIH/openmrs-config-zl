@@ -1020,10 +1020,10 @@
 
                     <repeat>
                         <template>
-                            <obsgroup groupingConceptId="PIH:1295">
+                            <obsgroup groupingConceptId="PIH:ADVERSE EFFECT CONSTRUCT">
                                 <tr>
                                     <td id="{name}-ae">
-                                        <obs conceptId="PIH:1297"
+                                        <obs conceptId="PIH:ADVERSE EFFECT"
                                              answerConceptId="{concept}"
                                              style="checkbox"
                                              toggle="{id: '{name}-ae-date', style: 'dim'}" />
@@ -1045,10 +1045,10 @@
                     </repeat>
                     <repeat>
                         <template>
-                            <obsgroup groupingConceptId="PIH:1295">
+                            <obsgroup groupingConceptId="PIH:ADVERSE EFFECT CONSTRUCT">
                                 <tr>
                                     <td id="{name}-ae">
-                                        <obs conceptId="PIH:1297"
+                                        <obs conceptId="PIH:ADVERSE EFFECT"
                                              answerConceptId="{concept}"
                                              style="checkbox"
                                              commentFieldLabel="(préciser)"
