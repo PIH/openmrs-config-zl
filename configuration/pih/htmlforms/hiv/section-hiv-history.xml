@@ -754,17 +754,22 @@
                     <div>
                         <obs conceptId="PIH:AGE" labelCode="pihcore.age"/>
                     </div>
-                    <div>
-                        <obs conceptId="CIEL:163533"
-                             labelCode="pihcore.dead"
-                             answerConceptIds="PIH:ALIVE,PIH:DEATH,PIH:UNKNOWN"
-                             style="checkbox"/>
+                    <div style="margin-right: 64px;">
+                        <label><uimessage code="pihcore.dead"/></label>
+                        <p class="radio">
+                            <obs conceptId="CIEL:163533"
+                                answerConceptIds="PIH:ALIVE,PIH:DEATH,PIH:UNKNOWN"
+                                answerCodes="general.no,general.yes,pihcore.unknown"
+                                style="radio"/>
+                        </p>
                     </div>
                     <div>
-                        <obs conceptId="PIH:RESULT OF HIV TEST"
-                             labelCode="pihcore.hiv.serologicalStatus"
-                             answerConceptIds="PIH:UNKNOWN,PIH:POSITIVE,PIH:NEGATIVE"
-                             style="checkbox"/>
+                        <label><uimessage code="pihcore.hiv.serologicalStatus"/></label>
+                        <p class="radio">
+                            <obs conceptId="PIH:RESULT OF HIV TEST"
+                                answerConceptIds="PIH:UNKNOWN,PIH:POSITIVE,PIH:NEGATIVE"
+                                style="radio"/>
+                        </p>
                     </div>
                 </obsgroup>
             </div>
