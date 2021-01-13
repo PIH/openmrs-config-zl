@@ -36,9 +36,9 @@
   },
 
   "locationTags": {
-    "Login Location": ["Centre de Santé de Thomonde"],
-    "Medical Record Location": ["Centre de Santé de Thomonde"],
-    "Visit Location": ["Centre de Santé de Thomonde"]
+    "Login Location": ["Thomonde"],
+    "Medical Record Location": ["Thomonde"],
+    "Visit Location": ["Thomonde"]
   },
 
   "biometricsConfig": {

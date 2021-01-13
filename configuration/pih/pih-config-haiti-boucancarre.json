@@ -36,9 +36,9 @@
   },
 
   "locationTags": {
-    "Login Location": ["Centre de Santé Saint-Michel de Boucan-Carré"],
-    "Medical Record Location": ["Centre de Santé Saint-Michel de Boucan-Carré"],
-    "Visit Location": ["Centre de Santé Saint-Michel de Boucan-Carré"]
+    "Login Location": ["Boucan-Carré"],
+    "Medical Record Location": ["Boucan-Carré"],
+    "Visit Location": ["Boucan-Carré"]
   },
 
   "biometricsConfig": {

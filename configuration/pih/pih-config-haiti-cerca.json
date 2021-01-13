@@ -17,8 +17,8 @@
   },
 
   "locationTags": {
-    "Login Location": ["Centre de Santé de Cerca la Source"],
-    "Medical Record Location": ["Centre de Santé de Cerca la Source"],
-    "Visit Location": ["Centre de Santé de Cerca la Source"]
+    "Login Location": ["Cerca la Source"],
+    "Medical Record Location": ["Cerca la Source"],
+    "Visit Location": ["Cerca la Source"]
   }
 }

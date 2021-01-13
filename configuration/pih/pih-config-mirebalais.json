@@ -396,7 +396,7 @@
       "Klinik MNT",
       "Sal Timoun"
     ],
-    "Program Location": ["Hôpital Universitaire de Mirebalais"],
+    "Program Location": ["Mirebalais"],
     "Provider Management Location": [
       "Ijans | Sante Fanm",
       "Klinik Ekstèn",
@@ -510,7 +510,7 @@
       "Swen Entansif",
       "Travay e Akouchman"
     ],
-    "Visit Location": ["Hôpital Universitaire de Mirebalais", "Patient Home"]
+    "Visit Location": ["Mirebalais", "Patient Home"]
   },
 
   "registrationConfig": {
