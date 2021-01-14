@@ -65,6 +65,82 @@
         </ifMode>
     </style>
 
+<excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
+<script type="text/javascript">
+
+    jq(document).ready(function() {
+
+        const contextPath = window.location.href.split('/')[3];
+        const apiBaseUrl =  "/" + contextPath + "/ws/rest/v1";
+        const chwNameConceptUuid = "164141AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+        const patientUuid = '<lookup expression="patient.uuid"/>';
+        
+        let currentEncounterDate = new Date();
+        let encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
+        if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length > 0)) {
+            currentEncounterDate = new Date(+encounterDate);
+        }
+        
+        let lastRecordedChw = {
+            name: "",
+            date: null,
+            encounterDisplay: ""
+        };
+        
+        jq.getJSON(apiBaseUrl + "/obs", {
+            concept: chwNameConceptUuid,
+            patient: patientUuid,
+            v: 'custom:(uuid,display,obsDatetime,value,encounter:(display,encounterDatetime,location:(display),encounterType:(display)))'
+          },
+          function( data ){                    
+            if (data.results.length > 0) {
+                for (let index = 0; index &lt; data.results.length; ++index) {
+                    let chwObs = data.results[index];
+                    let chwObsDate = new Date(chwObs.obsDatetime);
+                    let tmpChwObs = {
+                      name: "",
+                      date: null,
+                      encounterDisplay: ""
+                    };
+                    if( (currentEncounterDate.getTime() >=  chwObsDate.getTime()) ||
+                        (currentEncounterDate.toDateString() === chwObsDate.toDateString())) {
+                            if (typeof chwObs.value !== "undefined" &amp;&amp; chwObs.value !== null &amp;&amp; (chwObs.value.length &gt; 0)) {
+                                tmpChwObs.name = chwObs.value;
+                                tmpChwObs.date = chwObsDate;
+                                tmpChwObs.encounterDisplay = chwObs.encounter.display;
+                              }
+                    }
+                    if ( (tmpChwObs.date != null) &amp;&amp;
+                        ((lastRecordedChw.date == null) || (lastRecordedChw.date.getTime() &lt; tmpChwObs.date.getTime()) ) ) {
+
+                        lastRecordedChw.name = tmpChwObs.name;
+                        lastRecordedChw.date = tmpChwObs.date;
+                        lastRecordedChw.encounterDisplay = tmpChwObs.encounterDisplay;
+                    }                    
+                }                            
+            }
+            if (lastRecordedChw.date != null) {
+                  jq("#lastRecordedCHW").text(lastRecordedChw.name);
+                  jq("#lastRecordedCHWEncounter").text(lastRecordedChw.encounterDisplay);
+                  jq("#lastRecorded-CHW-div").show();
+            } else {
+                //show the div with the normal obs behaviour
+                jq("#normal-CHW-div").show();
+            }
+          });
+
+          jq("#changeChw").on('change', function(){
+            
+            if (this.checked === true) {
+                jq("#editChwNameDiv").show();
+            } else {
+                jq("#editChwNameDiv").hide();
+            }
+          });
+    });
+</script>
+</excludeIf>
+
     <ifMode mode="VIEW" include="false" >
         <script type="text/javascript">
 
@@ -125,7 +201,7 @@
         <script type="text/javascript">
             jq(document).ready(function() {
 
-                // handle our custom functionality for triggering going to the next section when the "Next" button is clicked
+            // handle our custom functionality for triggering going to the next section when the "Next" button is clicked
                 jq('#next').click(function() {
                     window.htmlForm.getBeforeSubmit().push(function () {
                     window.htmlForm.setReturnUrl(window.htmlForm.getReturnUrl() + "&amp;goToNextSection=hiv-state");
@@ -142,6 +218,59 @@
             });
         </script>
     </ifMode>
+
+    <section id="chwName-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.chw">
+        <div class="section-container-color">
+            <div id="chw-name-details">
+                <p id="chw-name">                    
+                    
+                    <includeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
+                        <label>
+                            <uimessage code="pihcore.nameCHW"/>:
+                        </label>
+                        <obs id="chwName" conceptId="CIEL:164141"/>
+                    </includeIf>
+                    
+                    <excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
+                        <div id="lastRecorded-CHW-div" style="display: none">
+                            <label>
+                                <uimessage code="pihcore.last.recorded.nameCHW"/>:
+                            </label>
+                            <span id="lastRecordedCHW" class="value"></span>
+                            <br/>
+                            <label><uimessage code="general.fromDate"/>:</label>
+                            <span id="lastRecordedCHWEncounter" class="value"></span>
+                            <br/>
+                            <ifMode mode="EDIT" include="true">
+                                <div>
+                                    <label>
+                                        <uimessage code="pihcore.change.nameCHW"/>?
+                                    </label>
+                                    <input type="checkbox" id="changeChw" name="changeChw"/>
+                                    <label for="changeChw"><uimessage code="coreapps.yes"/></label>
+                                </div>
+                                <div id="editChwNameDiv" style="display: none">
+                                    <label>
+                                        <uimessage code="pihcore.nameCHW"/>:
+                                    </label>
+                                    <obs id="chwName" conceptId="CIEL:164141"/>
+                                </div>
+                            </ifMode>
+                        </div>
+                        <div id="normal-CHW-div" style="display: none">
+                            <label>
+                                <uimessage code="pihcore.nameCHW"/>:
+                            </label>
+                            <obs id="chwName" conceptId="CIEL:164141"/>
+                        </div>
+                    </excludeIf>
+                    
+                    
+                </p>
+            </div>
+        </div>
+    </section>
 
     <!-- UHM-4784 Use Lab results or workflow to enter lab data.  Using includeif to comment out the section -->
     <includeIf velocityTest="$patient.gender == 'NoLabEntryHere' ">

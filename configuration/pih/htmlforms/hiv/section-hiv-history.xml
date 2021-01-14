@@ -160,6 +160,20 @@
     </section>
     -->
 
+    <section id="chwName-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.chw">
+        <div class="section-container-color">
+            <div id="chw-name-details">
+                <p id="chw-name">
+                    <label>
+                        <uimessage code="pihcore.nameCHW"/>: 
+                    </label>
+                    <obs id="chwName" conceptId="CIEL:164141"/>
+                </p>
+            </div>
+        </div>
+    </section>
+
     <section id="referralIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.transferReferralIn">
         <div class="section-container-color">
