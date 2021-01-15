@@ -741,9 +741,11 @@
             <div class="section-container mb-4 flex-questions">
                 <obsgroup groupingConceptId="PIH:Contact construct">
                     <div>
-                        <obs conceptId="PIH:RELATIONSHIP OF RELATIVE TO PATIENT"
+                        <!-- Relationship to patient -->
+                        <obs conceptId="CIEL:164352"
                          labelCode="pihcore.contactRelationship"
-                         answerConceptIds="PIH:PARTNER OR SPOUSE,PIH:GUARDIAN RELATIONSHIP TO CHILD,PIH:SIBLING,PIH:OTHER RELATIVE"/>
+                         answerConceptIds="CIEL:1527,PIH:GUARDIAN,PIH:PARTNER OR SPOUSE,CIEL:1528,PIH:SIBLING,PIH:OTHER RELATIVE"/>
+                         <!-- CIEL codes: 1527=Parent, 1528=Child -->
                     </div>
                     <div>
                         <obs conceptId="PIH:FIRST NAME" labelCode="pihcore.firstName"/>
@@ -757,6 +759,7 @@
                     <div style="margin-right: 64px;">
                         <label><uimessage code="pihcore.dead"/></label>
                         <p class="radio">
+                            <!-- Health status of contact -->
                             <obs conceptId="CIEL:163533"
                                 answerConceptIds="PIH:ALIVE,PIH:DEATH,PIH:UNKNOWN"
                                 answerCodes="general.no,general.yes,pihcore.unknown"
