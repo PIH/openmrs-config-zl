@@ -1,0 +1,155 @@
+<htmlform formUuid="96482a6e-5b62-11eb-8f5a-0242ac110002"
+          formEncounterType="0b242b71-5b60-11eb-8f5a-0242ac110002"
+          formName="HIV Drug Order Documentation" formVersion="1.0">
+
+    <style type="text/css">
+
+        form fieldset {
+            display: block;
+        }
+
+        .two-columns {
+            column-count: 2;
+            -webkit-column-count: 2;
+            -moz-column-count: 2;
+        }
+
+        .three-columns {
+            column-count: 3;
+            -webkit-column-count: 3;
+            -moz-column-count: 3;
+        }
+
+        p.radio > * {
+            display: inline;
+            float: none !important;
+            min-width: initial;
+        }
+
+        .section-container label,
+            .section-container-color label {
+            margin: 0px;
+        }
+
+        .section-container-color {
+            background: #F2F2F2;
+            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+            padding: 10px 5px 10px 15px;
+            line-height: 1.5em; /*add this for vertical spacing between elements*/
+        }
+
+        - .section {
+            width: 100%;
+        }
+
+        label {
+            padding: 0px 3px 0px 0px
+        }
+
+        .narrow {
+            width: 200px;
+        }
+
+        .drugorders-drug-section {
+            padding: 10px;
+            border: 1px dotted black;
+        }
+        .drugorders-drug-details {
+            font-weight:bold;
+            padding-top: 5px; padding-bottom: 5px;
+        }
+        .order-field {
+            display: inline-block;
+            padding: 0px;
+        }
+        .order-field.action {
+            display: block;
+        }
+        .order-field.dateActivated {
+            padding-right: 20px;
+        }
+        .order-field-label {
+            display: inline-block;
+            padding-right: 5px;
+            vertical-align: middle;
+        }
+        .order-field-label:after {
+            content: "";
+            white-space: pre;
+        }
+        .order-field-widget {
+            display: inline-block;
+        }
+        .order-view-section {
+            display: block;
+            padding-left: 0px;
+        }
+    </style>
+
+    <!-- Stolen from the dispensing module, but using prescription construct instead of dispensing -->
+    <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.visitNote.orders.medications">
+
+        <div class="section-container-color">
+
+            <drugOrder format="select" selectLabel="Add another drug...">
+                <orderTemplate>
+                    <orderProperty name="drug"/>
+                    <orderProperty name="action" label="Action">
+                        <option value="NEW" label="New Order"/>
+                        <option value="REVISE" label="Revise Order"/>
+                        <option value="RENEW" label="Renew Order"/>
+                        <option value="DISCONTINUE" label="Discontinue Order"/>
+                    </orderProperty>
+                    <div style="padding:0px;">
+                        <orderProperty name="dose" label="Dosing"/>
+                        <orderProperty name="doseUnits"/>
+                        <orderProperty name="frequency"/>
+                        <orderProperty name="route"/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="dateActivated" label="Starting"/>
+                        <orderProperty name="duration" label="for"/>
+                        <orderProperty name="durationUnits"/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="quantity" label="Quantity"/>
+                        <orderProperty name="quantityUnits"/>
+                        <orderProperty name="numRefills" value="0" label="Refills"/>
+                    </div>
+                    <div style="display:none;">
+                        <orderProperty name="urgency" value="ROUTINE"/>
+                        <orderProperty name="dosingType" value="org.openmrs.SimpleDosingInstructions"/>
+                        <orderProperty name="previousOrder"/>
+                        <orderProperty name="careSetting" value="OUTPATIENT"/>
+                    </div>
+                    <orderProperty name="voided"/>
+                    <orderProperty name="discontinueReason">
+                        <option value="CIEL:843"/>
+                        <option value="CIEL:102"/>
+                        <option value="CIEL:127750"/>
+                        <option value="CIEL:1754"/>
+                        <option value="CIEL:162853"/>
+                        <option value="CIEL:1434"/>
+                        <option value="CIEL:987"/>
+                        <option value="CIEL:1253"/>
+                        <option value="CIEL:1067"/>
+                        <option value="CIEL:5622"/>
+                    </orderProperty>
+                </orderTemplate>
+            </drugOrder>
+
+        </div>
+
+    </section>
+
+    <ifMode mode="VIEW" include="false">
+        <div id="buttons">
+            <submit submitClass="confirm right" submitCode="emr.save"/>
+            <button type="button" class="cancel">
+                <uimessage code="emr.cancel"/>
+            </button>
+        </div>
+    </ifMode>
+
+</htmlform>
