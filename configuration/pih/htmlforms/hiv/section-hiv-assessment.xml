@@ -1,5 +1,5 @@
 <htmlform formUuid="d6ab46c0-e61d-11e9-81b4-2a2ae2dbcce4"
-          formName="Assessment" formVersion="2.0">
+          formName="Assessment" formVersion="4.0">
 
     <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.CleanDiagnosisConstructAction"/>
 

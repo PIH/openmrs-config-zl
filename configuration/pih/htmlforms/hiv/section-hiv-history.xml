@@ -1,5 +1,5 @@
 <htmlform formUuid="e8806b32-e546-11e9-81b4-2a2ae2dbcce4"
-          formName="HIV History" formVersion="1.0">
+          formName="HIV History" formVersion="4.0">
 
     <style type="text/css">
         <ifMode mode="VIEW" include="false">
@@ -176,7 +176,7 @@
             <div id="chw-name-details">
                 <p id="chw-name">
                     <label>
-                        <uimessage code="pihcore.nameCHW"/>: 
+                        <uimessage code="pihcore.nameCHW"/>:
                     </label>
                     <obs id="chwName" conceptId="CIEL:164141"/>
                 </p>
@@ -1048,7 +1048,7 @@
                             </tr>
                         </obsgroup>
                     </template>
-                    
+
                     <render concept="PIH:PNEUMONIA" name="pneumonia"/>
                     <render concept="PIH:HERPES ZOSTER" name="herpes"/>
                     <render concept="CIEL:5334" name="thrush" />
