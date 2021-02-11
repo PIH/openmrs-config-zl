@@ -1525,17 +1525,35 @@
         </div>
     </section>
 
+    <style>
+        .tb-screening-question * {
+            display: inline;
+            float: none !important;
+            min-width: initial;
+            vertical-align: middle;
+        }
+        .tb-screening-question-label {
+            display:block;
+        }
+        .tb-screening-question {
+            margin-bottom: 10px;
+        }
+    </style>
+
 
     <section id="tb-screen" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.tbscreen.title">
         <div class="section-container">
             <div class="two-columns">
                 <repeat with="['feverSweats','11565'],['wtLoss3kg','11566'],['cough','11567'],['tbContact','11568'],['painfulNodes','11569'],['bloodyCough','970'],['dyspnea','5960'],['chestPain','136']">
-                    <!-- ToDo: Add radio styling, answerCode (pihcore.tbscreen.{0}), conceptCodes (coreapps.yes/no) -->
-                    <obs conceptIds="PIH:11563,PIH:11564"
-                         answerConceptId="PIH:{1}"
-                         answerLabel="pihcore.tbscreen.{0}"
-                         conceptLabels="oui,non" />
+                    <div class="radio tb-screening-question">
+                        <obs conceptIds="PIH:11563,PIH:11564"
+                             answerConceptId="PIH:{1}"
+                             labelCode="pihcore.tbscreen.{0}"
+                             labelCssClass="tb-screening-question-label"
+                             conceptLabels="coreapps.yes,coreapps.no"
+                             style="radio" />
+                    </div>
                 </repeat>
             </div>
 
