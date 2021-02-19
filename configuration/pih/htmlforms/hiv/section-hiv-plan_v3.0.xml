@@ -1260,6 +1260,29 @@
 
     </section>
 
+    <script>
+        jq(function() {
+            let providerBox = jq("#provider-name-non-coded input");
+            if(providerBox.val()) {
+                providerBox.attr("disabled", "disabled");
+            } else {
+                jq("#provider").hide();
+            }
+        });
+    </script>
+
+    <section id="provider" sectionTag="fieldset"
+             headerTag="legend" headerStyle="title"
+             headerCode="pihcore.provider">
+
+        <div class="section-container-color">
+            <label>
+                <uimessage code="pihcore.provider"/>
+            </label>
+            <obs id="provider-name-non-coded" conceptId="PIH:Provider name non-coded" disabled="disabled" size="50" />
+        </div>
+    </section>
+
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
             <submit submitClass="confirm right" submitCode="emr.save"/>
