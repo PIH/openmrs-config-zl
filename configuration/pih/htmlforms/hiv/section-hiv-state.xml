@@ -640,7 +640,7 @@
                             answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
                             answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
                             answerSeparator="&lt;br /&gt;"/>
-                        <obs conceptId="CIEL:160136" />
+                        <obs conceptId="CIEL:160136" size="14" />
                     </p>
                     <p>
                         <obs conceptId="PIH:Anti TB free text" labelCode="zl.ifOtherSpecify" />
