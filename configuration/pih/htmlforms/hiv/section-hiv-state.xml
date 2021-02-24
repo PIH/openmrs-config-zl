@@ -10,10 +10,21 @@
                 vertical-align: top;
             }
 
-            .two-columns {
+            .two-columns-legacy {
                 column-count: 2;
                 -webkit-column-count: 2;
                 -moz-column-count: 2;
+            }
+
+            .two-columns {
+                display: table;
+                height: 100%;
+                width: 100%;
+            }
+
+            .two-columns > div {
+                display: table-cell;
+                width: 50%;
             }
 
             p.radio > * {
@@ -496,7 +507,7 @@
                 <p class="small">
                     <obs conceptId="CIEL:159599"/>
                 </p>
-                <div class="two-columns">
+                <div class="two-columns-legacy">
                     <p class="radio">
                         <!-- ARV medications  -->
                         <obsgroup groupingConceptId="PIH:13156">
@@ -603,31 +614,38 @@
                 <uimessage code="pihcore.antiTbTreatment"/>
             </h4>
 
-            <p class="small">
-                <obs id="takingAntiTB"
-                     conceptId="CIEL:159798" style="radio"
-                     answerConceptIds="CIEL:1065,CIEL:1066"
-                     answerCodes="emr.yes,pihcore.none.label" >
-                    <controls>
-                        <when value="CIEL:1065" thenDisplay="#current-tb-meds"/>
-                    </controls>
-                </obs>
-            </p>
+            <div  class="two-columns">
+                <div>
+                    <p class="small">
+                        <obs id="takingAntiTB"
+                            conceptId="CIEL:159798" style="radio"
+                            answerConceptIds="CIEL:1065,CIEL:1066"
+                            answerCodes="emr.yes,pihcore.none.label" >
+                            <controls>
+                                <when value="CIEL:1065" thenDisplay=".current-tb-meds"/>
+                            </controls>
+                        </obs>
+                    </p>
 
-            <div id="current-tb-meds" class="two-columns">
-                <label>
-                    <uimessage code="pihcore.startDate" />
-                </label>
-                <obs conceptId="CIEL:1113" />
-                <br/>
-
-                <p class="radio">
-                    <obs conceptId="CIEL:1111" style="radio"
-                         answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
-                         answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
-                         answerSeparator="&lt;br /&gt;" />
-                    <obs conceptId="CIEL:160136" />
-                </p>
+                    <div class="current-tb-meds">
+                        <label>
+                            <uimessage code="pihcore.startDate" />
+                        </label>
+                        <obs conceptId="CIEL:1113" />
+                    </div>
+                </div>
+                <div class="current-tb-meds">
+                    <p class="radio">
+                        <obs conceptId="CIEL:1111" style="radio"
+                            answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
+                            answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
+                            answerSeparator="&lt;br /&gt;"/>
+                        <obs conceptId="CIEL:160136" />
+                    </p>
+                    <p>
+                        <obs conceptId="PIH:Anti TB free text" labelCode="zl.ifOtherSpecify" />
+                    </p>
+                </div>
             </div>
 
             <h4>
@@ -778,7 +796,7 @@
     <section id="tb-screen" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.tbscreen.title">
         <div class="section-container">
-            <div class="two-columns">
+            <div class="two-columns-legacy">
                 <repeat with="['feverSweats','11565'],['wtLoss3kg','11566'],['cough','11567'],['tbContact','11568'],['painfulNodes','11569'],['bloodyCough','970'],['dyspnea','5960'],['chestPain','136']">
                     <div class="radio tb-screening-question">
                         <obs conceptIds="PIH:11563,PIH:11564"
@@ -803,7 +821,7 @@
     <section id="sexual-activity" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.sexualActivities.label">
         <div class="section-container">
-            <div class="two-columns">
+            <div class="two-columns-legacy">
                 <p class="radio">
                     <label>
                         <uimessage code="zl.sexuallyActive"/>?
@@ -897,7 +915,7 @@
                          style="checkbox"/>
 
                     <div id="pregnant">
-                        <div class="two-columns">
+                        <div class="two-columns-legacy">
                             <!-- Last menstrual period (LMP or DDR) -->
                             <p>
                                 <label>
@@ -919,7 +937,7 @@
                             </p>
                         </div>
 
-                        <div id="calculated-edd-and-gestational" class="two-columns hidden">
+                        <div id="calculated-edd-and-gestational" class="two-columns-legacy hidden">
                             <p>
                                 <span id="calculated-gestational-age-wrapper">
                                     <span id="calculated-gestational-age-label">
@@ -1144,7 +1162,7 @@
             </label>
             <br/>
 
-            <div class="two-columns">
+            <div class="two-columns-legacy">
                 <repeat with="['One'],
                               ['Two'],
                               ['Three'],
