@@ -1265,7 +1265,7 @@
             <label>
                 <uimessage code="pihcore.provider"/>
             </label>
-            <obs conceptId="PIH:Provider name non-coded" disabled="disabled" size="50" />
+            <obs conceptId="PIH:Provider name non-coded" size="50" />
         </div>
     </section>
 
