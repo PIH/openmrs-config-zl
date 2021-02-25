@@ -27,10 +27,15 @@
                 display: block;
             }
 
+            /* A div with class="two-columns" must have exactly two children divs */
             .two-columns {
-                column-count: 2;
-                -webkit-column-count: 2;
-                -moz-column-count: 2;
+                display: table;
+                height: 100%;
+                width: 100%;
+            }
+            .two-columns > div {
+                display: table-cell;
+                width: 50%;
             }
 
             .four-columns {
