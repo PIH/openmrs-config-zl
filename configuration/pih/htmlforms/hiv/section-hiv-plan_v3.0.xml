@@ -673,16 +673,8 @@
                     <obsgroup groupingConceptId="PIH:6116">
                         <label>ARV</label>
                         <obs id="arv1Drug" conceptId="CIEL:1282"
-                             answerConceptIds="3cd43a64-26fe-102b-80cb-0017a47871b2,
-                             164511AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,
-                             3cdc4d3a-26fe-102b-80cb-0017a47871b2,
-                             3cdc4a42-26fe-102b-80cb-0017a47871b2,
-                             164512AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,
-                             165086AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,
-                             e43b308c-a303-4524-b4bd-a728a9f52faf,
-                             4ff47449-6108-4823-89b8-986426d84d55,
-                             3cdc4ec0-26fe-102b-80cb-0017a47871b2,
-                             3cee7fb4-26fe-102b-80cb-0017a47871b2"
+                             answerConceptIds="CIEL:792,CIEL:164511,CIEL:160124,CIEL:1652,CIEL:164512,
+                                CIEL:165086,CIEL:164505,CIEL:162565,CIEL:160104,CIEL:5622"
                         />
 
                         <!-- Other ARV -->
