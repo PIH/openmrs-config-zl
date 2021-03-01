@@ -1170,12 +1170,12 @@
             <label>
                 <uimessage code="pihcore.consult.clinicalImpressions"/>
             </label>
-            <obs conceptId="CIEL:162749" style="text"/>
+            <obs conceptId="CIEL:162749" style="textarea" rows="8"/>
 
             <label>
                 <uimessage code="pihcore.actionPlan"/>
             </label>
-            <obs conceptId="PIH:1620" style="text"/>
+            <obs conceptId="PIH:1620" style="textarea" rows="8"/>
 
             <p class="narrow">
                 <label>
