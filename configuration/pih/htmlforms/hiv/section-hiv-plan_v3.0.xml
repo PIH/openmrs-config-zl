@@ -698,8 +698,10 @@
                 </obsgroup>
                 <br/>
                 <p class="radio">
-                    <obs conceptId="PIH:On or starting PEP" style="radio"
-                        labelText="Est-ce que le patient a commencé ou commencera une prophylaxie (PEP)?"
+                    <!-- Post-exposure prophylaxis -->
+                    <obs conceptId="CIEL:1691" style="radio"
+                        labelCode="pihcore.hiv.startedOrWillStartPEP"
+                        answerConceptIds="CIEL:1065,CIEL:1066"
                     />
                 </p>
                 <br/><br/><br/><br/>
