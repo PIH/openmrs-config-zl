@@ -42,7 +42,7 @@
             -moz-column-count: 3;
         }
 
-        p.radio > * {
+        .radio > * {
             display: inline;
             float: none !important;
             min-width: initial;
@@ -644,56 +644,65 @@
                          answerConceptIds="CIEL:1066,CIEL:127750,PIH:2222,PIH:1619,CIEL:160037,PIH:7262"
                          answerCodes="pihcore.noNotIndicated,pihcore.yesButRefused,pihcore.yesAfterCHW,pihcore.yesStartNow,pihcore.yesTreatmentStarted,pihcore.yesDelayed"
                          answerSeparator="&lt;br /&gt;" />
-                    <!-- Reason about delay -->
-                    <label>
-                        <uimessage code="pihcore.ifYesReason"/>
-                    </label>
-                    <obs conceptId="PIH:13021" style="text"/>
+                    
                 </p>
 
-                <p class="radio">
-                    <obsgroup groupingConceptId="PIH:6116">
-                        <label>
-                            <uimessage code="pihcore.hiv.startDateARV"/>
-                        </label>
-                        <obs conceptId="CIEL:159599"/>
-                        <br/><br/>
+                <p>
+                    <label>
+                        <uimessage code="pihcore.reason"/>
+                    </label>
+                    <obs conceptId="PIH:ARV treatment reason non-coded" style="text"/>
+                </p>
 
-                        <label>
-                            <!-- this label for HIV intake encounter -->
-                            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-                                <uimessage code="pihcore.hiv.startRegimenName"/>:
-                            </includeIf>
-                            <!-- this label for HIV followup -->
-                            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-                                <uimessage code="pihcore.specifyRegimen"/>:
-                            </includeIf>
-                        </label>
+                <obsgroup groupingConceptId="PIH:6116">
+                    <label>
+                        <uimessage code="pihcore.hiv.startDateARV"/>
+                    </label>
+                    <obs conceptId="CIEL:159599"/>
+                    <br/><br/>
 
-                        <br/>
-                        <!-- ARV medications -->
-                        <label>ARV</label>
-                        <obs id="arv1Drug" conceptId="CIEL:1282"
-                             answerConceptIds="CIEL:792,CIEL:164511,CIEL:160124,CIEL:1652,CIEL:164512,
-                                CIEL:165086,CIEL:164505,CIEL:162565,CIEL:160104,CIEL:5622"
-                        />
+                    <label>
+                        <!-- this label for HIV intake encounter -->
+                        <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+                            <uimessage code="pihcore.hiv.startRegimenName"/>:
+                        </includeIf>
+                        <!-- this label for HIV followup -->
+                        <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+                            <uimessage code="pihcore.specifyRegimen"/>:
+                        </includeIf>
+                    </label>
 
-                        <!-- Other ARV -->
-                        <label>
-                            <uimessage code="pihcore.other" /> ARV:
-                        </label>
-                        <obs conceptId="CIEL:5424"/>
+                    <br/>
+                    <!-- ARV medications -->
+                    <label>ARV</label>
+                    <obs id="arv1Drug" conceptId="CIEL:1282"
+                            answerConceptIds="CIEL:792,CIEL:164511,CIEL:160124,CIEL:1652,CIEL:164512,
+                            CIEL:165086,CIEL:164505,CIEL:162565,CIEL:160104,CIEL:5622"
+                    />
 
-                        <br/>
+                    <!-- Other ARV -->
+                    <label>
+                        <uimessage code="pihcore.other" /> ARV:
+                    </label>
+                    <obs conceptId="CIEL:5424"/>
 
+                    <br/>
+
+                    <p class="radio">
                         <label>
                             <uimessage code="pihcore.treatmentLine" />
                         </label>
                         <obs conceptId="PIH:13115" style="radio"
-                             answerConceptIds="PIH:7428,PIH:7429,PIH:7430" />
-                    </obsgroup>
-                <br/><br/><br/><br/>
+                                answerConceptIds="PIH:7428,PIH:7429,PIH:7430" />
+                    </p>
+                </obsgroup>
+                <br/>
+                <p class="radio">
+                    <obs conceptId="PIH:On or starting PEP" style="radio"
+                        labelText="Est-ce que le patient a commencé ou commencera une prophylaxie (PEP)?"
+                    />
                 </p>
+                <br/><br/><br/><br/>
             </div>
 
 
