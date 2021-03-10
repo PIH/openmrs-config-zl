@@ -697,12 +697,12 @@
                     </p>
                 </obsgroup>
                 <br/>
-                <p class="radio">
+                <p>
                     <!-- Post-exposure prophylaxis -->
-                    <obs conceptId="CIEL:1691" style="radio"
-                        labelCode="pihcore.hiv.startedOrWillStartPEP"
-                        answerConceptIds="CIEL:1065,CIEL:1066"
-                    />
+                    <obs conceptId="CIEL:162225" answerConceptId="CIEL:1691"
+                      labelCode="pihcore.hiv.startedOrWillStartPEP"
+                      answerLabel=""
+                      showCommentField="true" />
                 </p>
                 <br/><br/><br/><br/>
             </div>
