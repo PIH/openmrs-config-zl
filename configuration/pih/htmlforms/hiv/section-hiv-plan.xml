@@ -542,14 +542,14 @@
                                         <td class="{drugname}-treat">
                                             <obs conceptId="PIH:PROPHYLAXIS STARTED"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.started" answerLabel=""
+                                                 labelCode="pihcore.initiated" answerLabel=""
                                                  toggle="{drugname}-start-date"/>
                                             <obs conceptId="PIH:Prophylaxis should continue"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="coreapps.continue" answerLabel="" />
+                                                 labelCode="pihcore.continued" answerLabel="" />
                                             <obs conceptId="PIH:Stop Rx" style="checkbox"
                                                  answerConceptId="CIEL:1065"
-                                                 labelCode="pihcore.stop" answerLabel=""
+                                                 labelCode="pihcore.stopped" answerLabel=""
                                                  toggle="{drugname}-reason-stopped"/>
                                         </td>
                                         <td class="{drugname}-treat small-input">
@@ -589,14 +589,14 @@
                                         <td class="{drugname}-treat">
                                             <obs conceptId="PIH:PROPHYLAXIS STARTED"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.started" answerLabel=""
+                                                 labelCode="pihcore.initiated" answerLabel=""
                                                  toggle="{drugname}-start-date"/>
                                             <obs conceptId="PIH:Prophylaxis should continue"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="coreapps.continue" answerLabel="" />
+                                                 labelCode="pihcore.continued" answerLabel="" />
                                             <obs conceptId="PIH:Stop Rx" style="checkbox"
                                                  answerConceptId="CIEL:1065"
-                                                 labelCode="pihcore.stop" answerLabel=""
+                                                 labelCode="pihcore.stopped" answerLabel=""
                                                  toggle="{drugname}-reason-stopped"/>
                                         </td>
                                         <td class="{drugname}-treat small-input">
@@ -631,14 +631,14 @@
                                         <td class="{drugname}-treat">
                                             <obs conceptId="PIH:PROPHYLAXIS STARTED"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.started" answerLabel=""
+                                                 labelCode="pihcore.initiated" answerLabel=""
                                                  toggle="{drugname}-start-date"/>
                                             <obs conceptId="PIH:Prophylaxis should continue"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="coreapps.continue" answerLabel="" />
+                                                 labelCode="pihcore.continued" answerLabel="" />
                                             <obs conceptId="PIH:Stop Rx" style="checkbox"
                                                  answerConceptId="CIEL:1065"
-                                                 labelCode="pihcore.stop" answerLabel=""
+                                                 labelCode="pihcore.stopped" answerLabel=""
                                                  toggle="{drugname}-reason-stopped"/>
                                         </td>
                                         <td class="{drugname}-treat small-input">
@@ -673,14 +673,14 @@
                                 <td class="other-pro-treat">
                                     <obs conceptId="PIH:PROPHYLAXIS STARTED"
                                             answerConceptId="CIEL:1065" style="checkbox"
-                                            labelCode="pihcore.started" answerLabel=""
+                                            labelCode="pihcore.initiated" answerLabel=""
                                             toggle="other-pro-start-date"/>
                                     <obs conceptId="PIH:Prophylaxis should continue"
                                             answerConceptId="CIEL:1065" style="checkbox"
-                                            labelCode="coreapps.continue" answerLabel="" />
+                                            labelCode="pihcore.continued" answerLabel="" />
                                     <obs conceptId="PIH:Stop Rx" style="checkbox"
                                             answerConceptId="CIEL:1065"
-                                            labelCode="pihcore.stop" answerLabel=""
+                                            labelCode="pihcore.stopped" answerLabel=""
                                             toggle="other-pro-reason-stopped"/>
                                 </td>
                                 <td class="other-pro-treat small-input">
