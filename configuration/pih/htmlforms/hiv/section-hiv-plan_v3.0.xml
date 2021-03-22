@@ -483,7 +483,7 @@
                             </td>
                             <td>
                                 <label>
-                                    <uimessage code="pihcore.statusAndOrder" />
+                                    <uimessage code="pihcore.status" />
                                 </label>
                             </td>
                             <td>
@@ -492,9 +492,11 @@
                                 </label>
                             </td>
                             <td>
+                                <label>
+                                    <uimessage code="pihcore.numberPerDay" />
+                                </label>
                             </td>
                         </tr>
-
                         <repeat>
                             <template>
                                 <obsgroup groupingConceptId="PIH:Prescription construct">
@@ -508,160 +510,53 @@
                                         <td class="{drugname}-treat">
                                             <obs conceptId="PIH:PROPHYLAXIS STARTED"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.initiated" answerLabel=""
-                                                 toggle="{drugname}-start-date"/>
+                                                 labelCode="pihcore.initiated" answerLabel=""/>
                                             <obs conceptId="PIH:Prophylaxis should continue"
                                                  answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.continued" answerLabel="" />
+                                                 labelCode="pihcore.continued" answerLabel=""/>
                                             <obs conceptId="PIH:Stop Rx" style="checkbox"
                                                  answerConceptId="CIEL:1065"
-                                                 labelCode="pihcore.stopped" answerLabel=""
-                                                 toggle="{drugname}-reason-stopped"/>
+                                                 labelCode="pihcore.stopped" answerLabel=""/>
                                         </td>
                                         <td class="{drugname}-treat small-input">
-                                            <obs conceptId="PIH:Prescription instructions non-coded" />
+                                            <obs conceptId="PIH:Prescription instructions non-coded"/>
                                         </td>
                                         <td class="{drugname}-treat">
-                                            <p class="{drugname}-start-date">
-                                                <!-- Treatment start date -->
-                                                <obs conceptId="CIEL:163526" allowFutureDates="true"
-                                                     labelCode="pihcore.startDate" />
-                                            </p>
-                                            <p class="{drugname}-reason-stopped small-input">
-                                                <obs conceptId="PIH:REASON TREATMENT STOPPED COMMENT"
-                                                     labelCode="pihcore.stopReason" />
-                                            </p>
+                                            <obs conceptId="PIH:Number per day non coded"/>
                                         </td>
                                     </tr>
                                 </obsgroup>
                             </template>
                             <render conceptMap="CIEL:105281" drugname="Cotrimoxazole" />
-                        </repeat>
-
-                        <repeat>
-                            <template>
-                                <obsgroup groupingConceptId="PIH:10742">
-                                    <tr>
-                                        <td>
-                                            <obs conceptId="CIEL:1282" answerConceptId="{conceptMap}"
-                                                answerLabel="{drugname}"
-                                                toggle="{id: '{drugname}-treat', style: 'dim'}"/>
-                                            <p class="radio {drugname}-treat">
-                                                <obs conceptId="PIH:13154" style="radio"
-                                                    answerConceptIds="CIEL:159943, CIEL:159944"
-                                                    answerSeparator="&lt;br /&gt;"/>
-                                            </p>
-                                        </td>
-                                        <td class="{drugname}-treat">
-                                            <obs conceptId="PIH:PROPHYLAXIS STARTED"
-                                                 answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.initiated" answerLabel=""
-                                                 toggle="{drugname}-start-date"/>
-                                            <obs conceptId="PIH:Prophylaxis should continue"
-                                                 answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.continued" answerLabel="" />
-                                            <obs conceptId="PIH:Stop Rx" style="checkbox"
-                                                 answerConceptId="CIEL:1065"
-                                                 labelCode="pihcore.stopped" answerLabel=""
-                                                 toggle="{drugname}-reason-stopped"/>
-                                        </td>
-                                        <td class="{drugname}-treat small-input">
-                                            <obs conceptId="PIH:Prescription instructions non-coded" />
-                                        </td>
-                                        <td class="{drugname}-treat">
-                                            <p class="{drugname}-start-date">
-                                                <!-- Treatment start date -->
-                                                <obs conceptId="CIEL:163526" allowFutureDates="true"
-                                                     labelCode="pihcore.startDate" />
-                                            </p>
-                                            <p class="{drugname}-reason-stopped small-input">
-                                                <obs conceptId="PIH:REASON TREATMENT STOPPED COMMENT"
-                                                     labelCode="pihcore.stopReason" />
-                                            </p>
-                                        </td>
-                                    </tr>
-                                </obsgroup>
-                            </template>
                             <render conceptMap="CIEL:78280"  drugname="Isoniazide" />
-                        </repeat>
-
-                        <repeat>
-                            <template>
-                                <obsgroup groupingConceptId="PIH:10742">
-                                    <tr>
-                                        <td>
-                                            <obs conceptId="CIEL:1282" answerConceptId="{conceptMap}"
-                                                answerLabel="{drugname}"
-                                                toggle="{id: '{drugname}-treat', style: 'dim'}"/>
-                                        </td>
-                                        <td class="{drugname}-treat">
-                                            <obs conceptId="PIH:PROPHYLAXIS STARTED"
-                                                 answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.initiated" answerLabel=""
-                                                 toggle="{drugname}-start-date"/>
-                                            <obs conceptId="PIH:Prophylaxis should continue"
-                                                 answerConceptId="CIEL:1065" style="checkbox"
-                                                 labelCode="pihcore.continued" answerLabel="" />
-                                            <obs conceptId="PIH:Stop Rx" style="checkbox"
-                                                 answerConceptId="CIEL:1065"
-                                                 labelCode="pihcore.stopped" answerLabel=""
-                                                 toggle="{drugname}-reason-stopped"/>
-                                        </td>
-                                        <td class="{drugname}-treat small-input">
-                                            <obs conceptId="PIH:Prescription instructions non-coded" />
-                                        </td>
-                                        <td class="{drugname}-treat">
-                                            <p class="{drugname}-start-date">
-                                                <!-- Treatment start date -->
-                                                <obs conceptId="CIEL:163526" allowFutureDates="true"
-                                                     labelCode="pihcore.startDate" />
-                                            </p>
-                                            <p class="{drugname}-reason-stopped small-input">
-                                                <obs conceptId="PIH:REASON TREATMENT STOPPED COMMENT"
-                                                     labelCode="pihcore.stopReason" />
-                                            </p>
-                                        </td>
-                                    </tr>
-                                </obsgroup>
-                            </template>
                             <render conceptMap="CIEL:76488"  drugname="Fluconazole" />
-                            <render conceptMap="CIEL:74250"  drugname="Dapsone" />
                         </repeat>
 
-                        <obsgroup groupingConceptId="PIH:10742">
+                        <obsgroup groupingConceptId="PIH:Prescription construct">
                             <tr>
-                                <td class="small-input">
-                                    <obs conceptId="CIEL:1282"
-                                        answerConceptId="PIH:3120" answerCode="pihcore.other"
-                                        toggle="{id: '{other-pro-treat}', style: 'dim'}"
+                                <td>
+                                    <!-- Medication orders -->
+                                    <obs conceptId="CIEL:1282" answerConceptId="PIH:3120"
+                                        answerLabel="other-pro"
+                                        toggle="{id: 'other-pro-treat', style: 'dim'}"
                                         commentFieldLabel="specify:" />
                                 </td>
                                 <td class="other-pro-treat">
                                     <obs conceptId="PIH:PROPHYLAXIS STARTED"
                                             answerConceptId="CIEL:1065" style="checkbox"
-                                            labelCode="pihcore.initiated" answerLabel=""
-                                            toggle="other-pro-start-date"/>
+                                            labelCode="pihcore.initiated" answerLabel=""/>
                                     <obs conceptId="PIH:Prophylaxis should continue"
                                             answerConceptId="CIEL:1065" style="checkbox"
-                                            labelCode="pihcore.continued" answerLabel="" />
+                                            labelCode="pihcore.continued" answerLabel=""/>
                                     <obs conceptId="PIH:Stop Rx" style="checkbox"
                                             answerConceptId="CIEL:1065"
-                                            labelCode="pihcore.stopped" answerLabel=""
-                                            toggle="other-pro-reason-stopped"/>
+                                            labelCode="pihcore.stopped" answerLabel=""/>
                                 </td>
                                 <td class="other-pro-treat small-input">
-                                    <obs conceptId="PIH:Prescription instructions non-coded" />
+                                    <obs conceptId="PIH:Prescription instructions non-coded"/>
                                 </td>
                                 <td class="other-pro-treat">
-                                    <p class="other-pro-start-date">
-                                        <!-- Treatment start date -->
-                                        <obs conceptId="CIEL:163526" allowFutureDates="true"
-                                                labelCode="pihcore.startDate" />
-                                    </p>
-                                    <p class="other-pro-reason-stopped small-input">
-                                        <obs conceptId="PIH:REASON TREATMENT STOPPED COMMENT"
-                                                labelCode="pihcore.stopReason" />
-                                    </p>
+                                    <obs conceptId="PIH:Number per day non coded"/>
                                 </td>
                             </tr>
                         </obsgroup>
