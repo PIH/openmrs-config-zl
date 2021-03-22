@@ -487,13 +487,11 @@
                                 </label>
                             </td>
                             <td>
-                                <label>
-                                    <uimessage code="pihcore.dosage" />
-                                </label>
+                                <!-- Labels are on the input elements -->
                             </td>
                             <td>
                                 <label>
-                                    <uimessage code="pihcore.numberPerDay" />
+                                    <uimessage code="pihcore.stopReason" />
                                 </label>
                             </td>
                         </tr>
@@ -519,10 +517,15 @@
                                                  labelCode="pihcore.stopped" answerLabel=""/>
                                         </td>
                                         <td class="{drugname}-treat small-input">
-                                            <obs conceptId="PIH:Prescription instructions non-coded"/>
+                                            <p>
+                                                <obs conceptId="PIH:Prescription instructions non-coded" labelCode="pihcore.dosage"/>
+                                            </p>
+                                            <p>
+                                                <obs conceptId="PIH:Number per day non coded" labelCode="pihcore.numberPerDay"/>
+                                            </p>
                                         </td>
                                         <td class="{drugname}-treat">
-                                            <obs conceptId="PIH:Number per day non coded"/>
+                                            <obs conceptId="PIH:REASON TREATMENT STOPPED COMMENT" />
                                         </td>
                                     </tr>
                                 </obsgroup>
@@ -531,6 +534,23 @@
                             <render conceptMap="CIEL:78280"  drugname="Isoniazide" />
                             <render conceptMap="CIEL:76488"  drugname="Fluconazole" />
                         </repeat>
+
+                        <obsgroup groupingConceptId="PIH:Prescription construct">
+                            <tr>
+                                <td>
+                                    <!-- Medication orders -->
+                                    <obs conceptId="CIEL:1282" answerConceptId="PIH:MOSQUITO NET"
+                                        answerLabel="Moustiquaire"
+                                        toggle="{id: 'mosquito-net-treat', style: 'dim'}"/>
+
+                                </td>
+                                <td class="mosquito-net-treat">
+                                    <obs conceptId="PIH:PROPHYLAXIS STARTED"
+                                            answerConceptId="CIEL:1065" style="checkbox"
+                                            labelCode="pihcore.initiated" answerLabel=""/>
+                                </td>
+                            </tr>
+                        </obsgroup>
 
                         <obsgroup groupingConceptId="PIH:Prescription construct">
                             <tr>
@@ -553,10 +573,15 @@
                                             labelCode="pihcore.stopped" answerLabel=""/>
                                 </td>
                                 <td class="other-pro-treat small-input">
-                                    <obs conceptId="PIH:Prescription instructions non-coded"/>
+                                    <p>
+                                        <obs conceptId="PIH:Prescription instructions non-coded" labelCode="pihcore.dosage"/>
+                                    </p>
+                                    <p>
+                                        <obs conceptId="PIH:Number per day non coded" labelCode="pihcore.numberPerDay"/>
+                                    </p>
                                 </td>
                                 <td class="other-pro-treat">
-                                    <obs conceptId="PIH:Number per day non coded"/>
+                                    <obs conceptId="PIH:REASON TREATMENT STOPPED COMMENT" />
                                 </td>
                             </tr>
                         </obsgroup>
