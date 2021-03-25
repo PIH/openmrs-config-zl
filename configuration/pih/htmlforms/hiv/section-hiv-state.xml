@@ -824,6 +824,30 @@
         </div>
     </section>
 
+    <section id="radiology-findings" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.rad_findings.title">
+        <div class="section-container-color">
+            <!-- Use PACS at HUM -->
+            <repeat with="['Chest (X-ray)','CIEL:165152','chestXRay'],
+                          ['Pelvic (U/S)', 'CIEL:161283', 'pelvicUS'],
+                          ['Abdominal (U/S)','CIEL:845','abUS']">
+                <p>
+                    <obsgroup groupingConceptId="PIH:Radiology report construct">
+                        <obs conceptId="PIH:Radiology procedure performed"
+                             answerConceptId="{1}" toggle="{2}"
+                             answerCode="pihcore.rad.{2}"
+                             style="checkbox"/>
+                        <div id="{2}" class="two-columns">
+                            <obs conceptId="PIH:Radiology report comments"
+                                 labelCode="pihcore.findings.label" />
+                            <obs conceptId="PIH:12847" labelCode="Date" />
+                        </div>
+                    </obsgroup>
+                </p>
+            </repeat>
+        </div>
+    </section>
+
     <section id="sexual-activity" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="zl.consultNote.sexualActivities.label">
         <div class="section-container">
