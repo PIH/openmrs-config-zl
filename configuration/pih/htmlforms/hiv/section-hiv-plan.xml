@@ -485,6 +485,12 @@
         <section id="id-treatment-prophylaxis" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.prophylaxis">
             <div class="section-container-color">
 
+                <p class="radio">
+                    <obs conceptId="PIH:13154" style="radio"
+                         answerConceptIds="CIEL:159943, CIEL:159944"
+                         labelCode="pihcore.inhTreatmentLine"/>
+                </p>
+
                 <drugOrder>
                     <orderTemplate>
                         <orderProperty name="action"/>
