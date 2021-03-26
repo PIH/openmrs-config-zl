@@ -530,7 +530,7 @@
                                 <td>
                                     <!-- Medication orders -->
                                     <obs conceptId="CIEL:1282" answerConceptId="PIH:3120"
-                                        answerLabel="other-pro"
+                                        answerLabel="pihcore.other"
                                         toggle="{id: 'other-pro-treat', style: 'dim'}"
                                         commentFieldLabel="specify:" />
                                 </td>
