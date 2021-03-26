@@ -1,0 +1,37 @@
+header {
+	background: #FF9800;
+}
+
+h3 {
+	color: #3E3E3E;
+}
+
+.dashboard .info-header {
+	border-bottom: 6px solid #3E3E3E;
+}
+
+.dashboard .info-header i {
+	color: #3E3E3E;
+}
+
+.tag {
+	background: #0f5149;
+}
+
+.dashboard .action-section ul {
+	background: #0f5149;
+}
+
+.button.task, button.task, a.button.task {
+	background: #323372;
+}
+
+a {
+	color: #323372;
+}
+
+.button.confirm, button.confirm,
+input[type="submit"].confirm, input[type="button"].confirm, input[type="submit"].confirm,
+a.button.confirm {
+	background: #0F5149;
+}
