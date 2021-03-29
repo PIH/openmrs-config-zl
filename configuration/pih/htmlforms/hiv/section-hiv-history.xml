@@ -84,6 +84,25 @@
         </ifMode>
     </style>
 
+<script type="text/javascript">
+
+    jq(document).ready(function() {
+
+        // UHM-5259, do not display TB treatment rows 2RHZ/4RH and 2RHEZS/1RHEZ/5RHE if they dont already have a value
+        var twoSRHEZ = jq('#2s_rhez_1rhez_5rhe span.value').text();
+        if (!twoSRHEZ || twoSRHEZ.length &lt; 1) {
+            jq('#2s_rhez_1rhez_5rhe').closest('tr').hide();
+        }
+
+        var twoRhz_FourRH = jq('#2rhz_4rh span.value').text();
+        if (!twoRhz_FourRH || twoRhz_FourRH.length &lt; 1) {
+            jq('#2rhz_4rh').closest('tr').hide();
+        }
+
+    });
+
+</script>
+
     <ifMode mode="VIEW" include="false" >
         <script type="text/javascript">
 
@@ -1273,8 +1292,8 @@
                             <obsgroup groupingConceptId="PIH:1589">
                                 <tr>
                                     <td>
-                                        <obs conceptId="CIEL:1282" answerConceptId="{concept}"
-                                             answerCode="pihcore.tb.{regimen}"
+                                        <obs id="{obs_id}" conceptId="CIEL:1282" answerConceptId="{concept}"
+                                             answerCode="pihcore.tb.{regimen}.{obs_id}"
                                              toggle="{id: '{regimen}', style: 'dim'}" />
                                     </td>
                                     <td class="{regimen}">
@@ -1294,9 +1313,11 @@
                                 </tr>
                             </obsgroup>
                         </template>
-                        <render concept="PIH:2406" regimen="initialTreatment" />
-                        <render concept="PIH:2408" regimen="retreatment" />
-                        <render concept="CIEL:159909" regimen="mdrtbTreatment" />
+                        <render concept="PIH:2406" regimen="initialTreatment" obs_id="2_RHZE_4_RH"/>
+                        <render concept="PIH:2RHZ / 4RH" regimen="initialTreatment" obs_id="2rhz_4rh"/>  <!-- legacy treatment, only shown if existing data (see JS above) -->
+                        <render concept="PIH:2408" regimen="retreatment" obs_id="2hrze_4hr"/>
+                        <render concept="PIH:2126" regimen="retreatment" obs_id="2s_rhez_1rhez_5rhe"/>  <!-- legacy treatment, only shown if existing data (see JS above) -->
+                        <render concept="CIEL:159909" regimen="mdrtbTreatment" obs_id="ciel_159909"/>
                     </repeat>
                 </table>
 
