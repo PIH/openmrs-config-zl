@@ -97,16 +97,7 @@
                 <orderTemplate>
                     <orderProperty name="action"/>
                     <div style="padding:0px;">
-                        <orderProperty name="concept" label="Drug">
-                            <optionGroup
-                                    concept="3cd72184-26fe-102b-80cb-0017a47871b2"
-                                    groupLabel="ARVs"
-                                    sortAlphabetically="true" />
-                            <optionGroup
-                                    groupClass="hidden-field"
-                                    groupLabel="Other Medications"
-                                    sortAlphabetically="true" />
-                        </orderProperty>
+                        <orderProperty name="concept" label="Drug"/>
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="drug" label="Formulation"/>
@@ -119,6 +110,7 @@
                             <option value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="ART"/>
                             <option value="160538AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="PTME"/>
                             <option value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="Prophylaxis"/>
+                            <option value="3ccca7cc-26fe-102b-80cb-0017a47871b2" label="TB"/>
                         </orderProperty>
                     </div>
                     <div style="padding:0px;">
