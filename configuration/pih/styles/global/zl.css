@@ -2,7 +2,11 @@ header {
 	background: #FF9800;
 }
 
-h3 {
+h1 {
+	color: #0f5149;
+}
+
+h2,h3,h4,h5 {
 	color: #3E3E3E;
 }
 
@@ -24,14 +28,45 @@ h3 {
 
 .button.task, button.task, a.button.task {
 	background: #323372;
+	border: #323372 1px solid;
 }
 
 a {
 	color: #323372;
 }
 
+.new-patient-header .identifiers span.add-id a,
+.patient-header .identifiers span.add-id a:link,
+.patient-header .identifiers span.add-id a:visited {
+	color: #3AB4B1;
+}
 .button.confirm, button.confirm,
 input[type="submit"].confirm, input[type="button"].confirm, input[type="submit"].confirm,
 a.button.confirm {
 	background: #0F5149;
+}
+
+.button, button, input[type="submit"], input[type="button"], input[type="submit"], a.button {
+	color: #3E3E3E;
+}
+
+header a, header a:visited, header a:hover, header a:link {
+	background: #FF9800;
+}
+
+header .user-options li.change-location {
+	border: 1px solid #FF9800;
+}
+
+header .user-options li.change-location:hover, header .user-options li.change-location .focus {
+	background: #FF9800;
+}
+
+ul.select li {
+	color: #0f5149;
+}
+
+ui.select li.selected {
+	color: white;
+	background-color: #0f5149;
 }
