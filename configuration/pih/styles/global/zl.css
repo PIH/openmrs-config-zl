@@ -66,8 +66,10 @@ ui.select li.selected {
 	color: #3AB4B1;
 }
 
-.button.confirm, button.confirm,
-input[type="submit"].confirm, input[type="button"].confirm, input[type="submit"].confirm,
+.button.confirm,
+button.confirm,
+input[type="submit"].confirm,
+input[type="button"].confirm,
 a.button.confirm {
 	background: #0F5149;
 	border-color: #0f5149;
