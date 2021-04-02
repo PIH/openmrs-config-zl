@@ -150,6 +150,10 @@ ul#formBreadcrumb li.doing {
 	outline: 2px solid #0f5149;
 }
 
+.simple-form-ui #occupationLabel select {
+	max-height: 400px;
+}
+
 form select:focus,
 form input:focus {
 	background: #CFDCDB;
