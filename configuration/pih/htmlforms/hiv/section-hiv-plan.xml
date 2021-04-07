@@ -796,79 +796,39 @@
         </section>
     </includeIf>
 
-    <!-- HIV intake only-->
-    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-        <section id="id-treatment-sti-treatment-intake" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.stiTreatment">
-            <div class="section-container-color">
-                <div class="two-columns">
-                    <p class="radio">
-                        <label>
-                            <uimessage code="pihcore.syph.needTreatment"/>
-                        </label>
-                        <br/>
+    <section id="id-treatment-sti-treatment" sectionTag="fieldset"
+             headerTag="legend" headerStyle="title"
+             headerCode="pihcore.stiTreatment">
+        <div class="section-container-color">
+            <!-- HIV intake only-->
+            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
 
-                        <obs conceptId="CIEL:165331" style="radio"
-                             answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,CIEL:160037"
-                             answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
-                             answerSeparator="&lt;br /&gt;"/>
-                    </p>
-
+                <p class="radio">
                     <label>
-                        <uimessage code="pihcore.startDate"/>
+                        <uimessage code="pihcore.syph.needTreatment"/>
                     </label>
-                    <obs conceptId="PIH:13023"/>
+                    <br/>
 
-                    <br/>
-                    <br/>
-                    <br/>
-                    <p>
-                        <label>
-                            <uimessage code="pihcore.syph.patientNeedsOtherTreatment"/>
-                        </label>
-                        <table>
-                            <tr>
-                                <td>
-                                    <label>
-                                        <uimessage code="pihcore.regimen"/>
-                                    </label>
-                                </td>
-                                <td>
-                                    <label>
-                                        <uimessage code="providermanagement.startDate"/>
-                                    </label>
-                                </td>
-                            </tr>
+                    <obs conceptId="CIEL:165331" style="radio"
+                         answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,CIEL:160037"
+                         answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
+                         answerSeparator="&lt;br /&gt;"/>
+                </p>
 
-                            <repeat with="['1'],['2'],['3']">
-                                <obsgroup groupingConceptId="PIH:13027">
-                                    <tr>
-                                        <td>
-                                            <!-- Toggle doesn't work with text -->
-                                            <obs conceptId="PIH:10637" style="text"/>
-                                        </td>
-                                        <td>
-                                            <obs conceptId="CIEL:1428"/>
-                                        </td>
-                                    </tr>
-                                </obsgroup>
-                            </repeat>
-                        </table>
-                    </p>
-                </div>
+                <label>
+                    <uimessage code="pihcore.startDate"/>
+                </label>
+                <obs conceptId="PIH:13023"/>
                 <p>
                     <label>
                         <uimessage code="pihcore.remarks"/>
                     </label>
                     <obs conceptId="PIH:1374" style="text" rows="2" cols="40"/>
                 </p>
-            </div>
-        </section>
-    </includeIf>
+            </includeIf>
 
-    <!-- HIV followup only-->
-    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-        <section id="id-treatment-sti-treatment-followup" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.stiTreatment">
-            <div class="section-container-color">
+            <!-- HIV followup only-->
+            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
                 <label>
                     <uimessage code="pihcore.syph.needTreatment"/>
                 </label>
@@ -909,7 +869,7 @@
                 <div id="other-sti-details">
                     <obsgroup groupingConceptId="PIH:13027">
                         <label>
-                            <uimessage code="pihcore.mch.otherSTI" />
+                            <uimessage code="pihcore.mch.otherSTI"/>
                         </label>
                         <repeat>
                             <template>
@@ -940,9 +900,80 @@
                         </p>
                     </obsgroup>
                 </div>
-            </div>
-        </section>
-    </includeIf>
+            </includeIf>
+            <hr style="border: 1px dashed #ccc;"/>
+
+            <!-- Syphilis and STI drug order -->
+            <drugOrder>
+                <orderTemplate>
+                    <orderProperty name="action"/>
+                    <div style="padding:0px;">
+                        <orderProperty name="concept" label="pihcore.drugOrders.concept">
+                            <optionGroup concept="PIH:Syphilis and STI drug set"/>
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
+                    </div>
+                    <div style="padding:0x;">
+                        <orderProperty name="dosingType"/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
+                        <orderProperty name="doseUnits" label=" ">
+                            <option value="CIEL:1513"/>
+                            <option value="CIEL:1608"/>
+                            <option value="CIEL:162380"/>
+                        </orderProperty>
+                        <orderProperty name="frequency" label=" x "/>
+                        <orderProperty name="route" label=" ">
+                            <option value="CIEL:160240"/> <!-- Oral -->
+                            <option value="CIEL:162797"/> <!-- Topical -->
+                        </orderProperty>
+                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50"
+                                       label=" "/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="dateActivated" label="pihcore.starting"/>
+                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
+                        <orderProperty name="durationUnits" label=" "/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="quantity" label="pihcore.quantity"/>
+                        <orderProperty name="quantityUnits" label=" ">
+                            <option value="CIEL:1513"/>
+                            <option value="CIEL:1608"/>
+                            <option value="CIEL:162380"/>
+                        </orderProperty>
+                        <orderProperty name="numRefills" label="pihcore.refills"/>
+                    </div>
+                    <div style="display:none;">
+                        <orderProperty name="urgency" value="ROUTINE"/>
+                        <orderProperty name="previousOrder"/>
+                        <orderProperty name="careSetting" value="OUTPATIENT"/>
+                        <orderProperty name="orderReason" value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+                            <option value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                        </orderProperty>
+                    </div>
+                    <div style="display:none;" class="order-discontinueReason">
+                        <orderProperty name="discontinueReason">
+                            <option value="CIEL:843"/>
+                            <option value="CIEL:102"/>
+                            <option value="CIEL:127750"/>
+                            <option value="CIEL:1754"/>
+                            <option value="CIEL:162853"/>
+                            <option value="CIEL:1434"/>
+                            <option value="CIEL:987"/>
+                            <option value="CIEL:1253"/>
+                            <option value="CIEL:1067"/>
+                            <option value="CIEL:5622"/>
+                        </orderProperty>
+                        <orderProperty name="discontinueReasonNonCoded"/>
+                    </div>
+                </orderTemplate>
+            </drugOrder>
+        </div>
+    </section>
 
     <!-- this section is ONLY included for HIV intake encounter -->
     <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33' &amp;&amp; ($patient.getAge($encounter.getEncounterDatetime()) &gt; 13)">
