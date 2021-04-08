@@ -912,6 +912,9 @@
                             <optionGroup concept="PIH:Syphilis and STI drug set"/>
                         </orderProperty>
                     </div>
+                    <div style="padding:0x;">
+                        <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
+                    </div>
                     <div style="padding:0px;">
                         <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
                     </div>
@@ -921,14 +924,22 @@
                     <div style="padding:0px;">
                         <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
                         <orderProperty name="doseUnits" label=" ">
-                            <option value="CIEL:1513"/>
-                            <option value="CIEL:1608"/>
-                            <option value="CIEL:162380"/>
+                            <option value="CIEL:1513"/>    <!-- Tablet -->
+                            <option value="CIEL:1608"/>    <!-- Capsule -->
+                            <option value="CIEL:161553"/>  <!-- mg -->
+                            <option value="CIEL:162376" /> <!-- Application -->
+                            <option value="CIEL:162380"/>  <!-- Tube -->
+                            <option value="CIEL:162356"/>  <!-- Drop -->
+                            <option value="CIEL:162264" label="IU"/>  <!-- IU -->
                         </orderProperty>
                         <orderProperty name="frequency" label=" x "/>
                         <orderProperty name="route" label=" ">
                             <option value="CIEL:160240"/> <!-- Oral -->
                             <option value="CIEL:162797"/> <!-- Topical -->
+                            <option value="CIEL:160243"/> <!-- Intramuscular -->
+                            <option value="CIEL:160242" label="IV"/> <!-- IV -->
+                            <option value="CIEL:162392"/> <!-- Vaginally -->
+                            <option value="CIEL:162390"/> <!-- eyes -->
                         </orderProperty>
                         <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50"
                                        label=" "/>
@@ -941,9 +952,13 @@
                     <div style="padding:0px;">
                         <orderProperty name="quantity" label="pihcore.quantity"/>
                         <orderProperty name="quantityUnits" label=" ">
-                            <option value="CIEL:1513"/>
-                            <option value="CIEL:1608"/>
-                            <option value="CIEL:162380"/>
+                            <option value="CIEL:1513"/>    <!-- Tablet -->
+                            <option value="CIEL:1608"/>    <!-- Capsule -->
+                            <option value="CIEL:161553"/>  <!-- mg -->
+                            <option value="CIEL:162376" /> <!-- Application -->
+                            <option value="CIEL:162380"/>  <!-- Tube -->
+                            <option value="CIEL:162356"/>  <!-- Drop -->
+                            <option value="CIEL:162264" label="IU"/>  <!-- IU -->
                         </orderProperty>
                         <orderProperty name="numRefills" label="pihcore.refills"/>
                     </div>
@@ -951,9 +966,7 @@
                         <orderProperty name="urgency" value="ROUTINE"/>
                         <orderProperty name="previousOrder"/>
                         <orderProperty name="careSetting" value="OUTPATIENT"/>
-                        <orderProperty name="orderReason" value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-                            <option value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
-                        </orderProperty>
+                        <orderProperty name="orderReason" value="3cce6116-26fe-102b-80cb-0017a47871b2" /> <!-- STI -->
                     </div>
                     <div style="display:none;" class="order-discontinueReason">
                         <orderProperty name="discontinueReason">
