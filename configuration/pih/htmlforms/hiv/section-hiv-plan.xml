@@ -966,7 +966,9 @@
                         <orderProperty name="urgency" value="ROUTINE"/>
                         <orderProperty name="previousOrder"/>
                         <orderProperty name="careSetting" value="OUTPATIENT"/>
-                        <orderProperty name="orderReason" value="3cce6116-26fe-102b-80cb-0017a47871b2" /> <!-- STI -->
+                        <orderProperty name="orderReason" >
+                            <option value="3cce6116-26fe-102b-80cb-0017a47871b2" /> <!-- STI -->
+                        </orderProperty>
                     </div>
                     <div style="display:none;" class="order-discontinueReason">
                         <orderProperty name="discontinueReason">
