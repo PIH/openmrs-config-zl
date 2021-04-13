@@ -48,5 +48,9 @@
             <property>labworkflowowa.labResultsEncounterTypes</property>
             <value>${encounterType.labSpecimenCollection.uuid},${encounterType.laboratoryResults.uuid},${encounterType.covidIntake.uuid},${encounterType.covidFollowup.uuid},${encounterType.zlHivIntake.uuid},${encounterType.zlHivFollowup.uuid}</value>
         </globalProperty>
+        <globalProperty>
+            <property>registrationapp.paperRecordIdentifierDefinition</property>
+            <value>paperrecord.patientDataDefinition.paperRecordIdentifier</value>
+        </globalProperty>
     </globalProperties>
 </config>
