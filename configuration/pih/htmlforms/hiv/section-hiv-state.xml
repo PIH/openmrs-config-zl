@@ -743,7 +743,33 @@
         .tb-screening-question {
             margin-bottom: 10px;
         }
+
+        .tb-screening-result-section.tb-screening-result-label {
+            display: inline-block;
+        }
+        .tb-screening-result-section select {
+            display: inline-block;
+        }
+        .tb-screening-result-section input.hasDatepicker {
+            display: inline-block;
+            width: 200px;
+            min-width: 100px;
+        }
     </style>
+
+    <script type="text/javascript">
+        jq(document).ready(function() {
+            // Only show the TB screening result question if it has been answered.  Only collected historically
+            var showTbScreening = (typeof getValue !== 'undefined' &amp;&amp; getValue('tbScreeningResultQuestion.value')); // Edit mode
+            showTbScreening = showTbScreening || (typeof getValue === 'undefined' &amp;&amp; jq('.tb-screening-result-section').find('.value').length > 0); // View mode
+            if (showTbScreening) {
+                jq('.tb-screening-result-section').show();
+            }
+            else {
+                jq('.tb-screening-result-section').hide();
+            }
+        });
+    </script>
 
     <section id="tb-screen" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.tbscreen.title">
@@ -760,7 +786,14 @@
                     </div>
                 </repeat>
             </div>
-
+            <div class="tb-screening-result-section">
+                <obs id="tbScreeningResultQuestion" conceptId="CIEL:160108"
+                     answerConceptIds="CIEL:703,CIEL:664"
+                     labelCode="pihcore.tbscreen.screeningTestResult"
+                     labelCssClass="tb-screening-result-label"
+                     conceptLabels="coreapps.positive,coreapps.negative"
+                     showDate="true" />
+            </div>
             <br/>
             <p>
                 <label>
