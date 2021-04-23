@@ -58,7 +58,7 @@ Hinche,328f6a60-0370-102d-b0e3-001ec94a0cc1,Hôpital Sainte-Thérèse de Hinche,
 Jean Denis,9f960dcd-9644-11eb-b8a1-0242ac110002,Jean Denis,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 La Colline,23e7bb0d-51f9-4d5f-b34b-2fbbfeea1960,Hôpital la Colline de Lascahobas,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
 Maissade,96f36fcb-9644-11eb-b8a1-0242ac110002,Maissade,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-Mirebalais,a084f714-a536-473b-94e6-ec317b152b43,Mirebalais (MoH code 62101),,,Mirebalais,,,,,,,,,,,,,,,,,,,,,,,,TRUE,,,,,,,,TRUE,
+Mirebalais,a084f714-a536-473b-94e6-ec317b152b43,Mirebalais (MoH code 62101),,,Mirebalais,,,,,TRUE,TRUE,,,,,,TRUE,,,,,TRUE,TRUE,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
 Patient Home,AF939782-898B-409A-99A4-D1653484EDBD,The patient is visited at home,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,TRUE,
 Petite Riviere,a7af173a-f623-445a-bf01-e6a64c0b2c98,Centre Médical Charles Colimon de Petite Riviere,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
 POZ,c488ed05-f259-4f7b-a9d4-8f56736da691,Promotion Objectif Zerosida,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
