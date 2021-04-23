@@ -17,8 +17,6 @@
   },
 
   "locationTags": {
-    "Login Location": ["Hinche"],
-    "Medical Record Location": ["Hinche"],
-    "Visit Location": ["Hinche"]
+    "Login Location": ["Hinche"]
   }
 }

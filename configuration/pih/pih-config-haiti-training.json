@@ -13,8 +13,6 @@
   },
 
   "locationTags": {
-    "Login Location": ["Thomonde"],
-    "Medical Record Location": ["Thomonde"],
-    "Visit Location": ["Thomonde"]
+    "Login Location": ["Thomonde"]
   }
 }

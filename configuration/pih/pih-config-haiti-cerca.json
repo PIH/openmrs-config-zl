@@ -17,8 +17,6 @@
   },
 
   "locationTags": {
-    "Login Location": ["Cerca la Source"],
-    "Medical Record Location": ["Cerca la Source"],
-    "Visit Location": ["Cerca la Source"]
+    "Login Location": ["Cerca la Source"]
   }
 }

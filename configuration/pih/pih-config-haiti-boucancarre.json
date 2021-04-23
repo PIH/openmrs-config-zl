@@ -36,9 +36,7 @@
   },
 
   "locationTags": {
-    "Login Location": ["Boucan-Carré"],
-    "Medical Record Location": ["Boucan-Carré"],
-    "Visit Location": ["Boucan-Carré"]
+    "Login Location": ["Boucan-Carré"]
   },
 
   "biometricsConfig": {
