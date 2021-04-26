@@ -2,7 +2,7 @@ Name,UUID,Description,Parent,Attribute|Location Code,Attribute|Name to print on 
 Baptiste,93ad149f-9644-11eb-b8a1-0242ac110002,Baptiste,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Belladère,d6dafa1a-9a2f-4f61-a33e-410acb64b0e9,Hôpital Notre-Dame de la Nativité de Belladère,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
 Boucan-Carré,9bc65df6-99a2-4d43-b56b-f42bde3f5d6d,Centre de Santé Saint-Michel de Boucan-Carré,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
-Cange,328f68e4-0370-102d-b0e3-001ec94a0cc,Hôpital Bon Sauveur de Cange,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
+Cange,328f68e4-0370-102d-b0e3-001ec94a0cc1,Hôpital Bon Sauveur de Cange,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
 Cerca cavajal,83f215e4-9644-11eb-b8a1-0242ac110002,Cerca cavajal,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 Cerca la Source,c741e25d-eb07-4efc-89e4-38ac73948ae1,Centre de Santé de Cerca la Source,,,,,,,,TRUE,TRUE,,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,,,,TRUE,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE
 Dufailly,9c7bb4b3-9644-11eb-b8a1-0242ac110002,Dufailly,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
