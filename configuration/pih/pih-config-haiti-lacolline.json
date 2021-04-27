@@ -39,6 +39,7 @@
   },
 
   "locationTags": {
-    "Login Location": ["La Colline"]
+    "Login Location": ["La Colline"],
+    "Medical Record Location": ["La Colline"]
   }
 }

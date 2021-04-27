@@ -36,7 +36,8 @@
   },
 
   "locationTags": {
-    "Login Location": ["Thomonde"]
+    "Login Location": ["Thomonde"],
+    "Medical Record Location": ["Thomonde"]
   },
 
   "biometricsConfig": {

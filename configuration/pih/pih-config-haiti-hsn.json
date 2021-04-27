@@ -34,7 +34,8 @@
   },
 
   "locationTags": {
-    "Login Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"]
+    "Login Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"],
+    "Medical Record Location": ["Saint-Marc (HSN)"]
   },
 
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json"

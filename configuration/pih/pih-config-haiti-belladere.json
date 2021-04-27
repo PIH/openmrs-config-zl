@@ -36,7 +36,8 @@
   },
 
   "locationTags": {
-    "Login Location": ["Belladère"]
+    "Login Location": ["Belladère"],
+    "Medical Record Location": ["Belladère"]
   },
 
   "biometricsConfig": {
