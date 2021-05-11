@@ -6,7 +6,7 @@
   },
   "@openmrs/esm-login": {
     "logo": {
-      "src": "/mirebalais/frontend/assets/pih-logo.png",
+      "src": "/mirebalais/frontend/site/pih-logo.png",
       "alt": "Partners in Health"
     },
     "links": {
@@ -18,7 +18,7 @@
   },
   "@pih/esm-refapp-navbar": {
     "brand": {
-      "src": "/mirebalais/frontend/assets/zl-logo.png",
+      "src": "/mirebalais/frontend/site/zl-logo.png",
       "alt": "Zanmi Lasante"
     }
   }
