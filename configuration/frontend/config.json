@@ -4,19 +4,16 @@
       "url": "/mirebalais/login.htm"
     }
   },
-  "@openmrs/esm-login": {
+  "@openmrs/esm-login-app": {
     "logo": {
       "src": "/mirebalais/frontend/site/pih-logo.png",
       "alt": "Partners in Health"
     },
     "links": {
-      "loginSuccess": {
-        "url": "/mirebalais/home.page",
-        "spa": false
-      }
+      "loginSuccess": "${openmrsBase}/mirebalais/home.page"
     }
   },
-  "@pih/esm-refapp-navbar": {
+  "@pih/esm-refapp-navbar-app": {
     "brand": {
       "src": "/mirebalais/frontend/site/zl-logo.png",
       "alt": "Zanmi Lasante"
