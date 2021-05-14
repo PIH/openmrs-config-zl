@@ -4,3 +4,29 @@ encounterType:
     uuid: "c31d306a-40c4-11e7-a919-92ebcb67fe33"
   zlHivFollowup:
     uuid: "c31d3312-40c4-11e7-a919-92ebcb67fe33"
+
+patientIdentifierType:
+  nif:
+    uuid: "e797f826-8e8f-11e7-bb31-be2e44b06b34"
+  cin:
+    uuid: "e797face-8e8f-11e7-bb31-be2e44b06b34"
+  biometricsReferenceCode:
+    uuid: "e26ca279-8f57-44a5-9ed8-8cc16e90e559"
+  zlEmrId:
+    uuid: "a541af1e-105c-40bf-b345-ba1fd6a59b85"
+  dossierNumber:
+    uuid: "e66645eb-03a8-4991-b4ce-e87318e37566"
+  externalDossierNumber:
+    uuid: "9dbea4d4-35a9-4793-959e-952f2a9f5347"
+  hivemrV1:
+    uuid: "139766e8-15f5-102d-96e4-000c29c2a5d7"
+  userEnteredRef:
+    uuid: "d9009bd0-eac9-11e5-a837-0800200c9a66"
+  dentalDossierNumber:
+    uuid: "b5d0a5bd-adf3-4fe0-a231-5a488f6d2c61"
+  hivDossierNumber:
+    uuid: "3B954DB1-0D41-498E-A3F9-1E20CCC47323"
+  hivemrV1InfantId:
+    uuid: "B68489FE-7B34-400B-992C-D4C1B5DD2928"
+  hivemrV1InfantCode:
+    uuid: "5FB435B4-F573-48C0-A715-FEBD42FDBB75"
