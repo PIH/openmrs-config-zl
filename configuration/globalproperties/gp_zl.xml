@@ -43,10 +43,6 @@
             <!-- Concept: Location of laboratory (Haiti) -->
             <value>e9732df4-971d-4a9a-9129-e2e610552468</value>
         </globalProperty>
-        <globalProperty>
-            <!-- Override the one defined in config-pihemr to include ZL HIV encounter types -->
-            <property>labworkflowowa.labResultsEncounterTypes</property>
-            <value>${encounterType.labSpecimenCollection.uuid},${encounterType.laboratoryResults.uuid},${encounterType.covidIntake.uuid},${encounterType.covidFollowup.uuid},${encounterType.zlHivIntake.uuid},${encounterType.zlHivFollowup.uuid}</value>
-        </globalProperty>
+
     </globalProperties>
 </config>
