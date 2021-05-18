@@ -1,10 +1,4 @@
-# for easy lookup, keys should be the name of the encounter type in the DB
-encounterType:
-  zlHivIntake:
-    uuid: "c31d306a-40c4-11e7-a919-92ebcb67fe33"
-  zlHivFollowup:
-    uuid: "c31d3312-40c4-11e7-a919-92ebcb67fe33"
-
+# Patient Identifier Type UUIDs
 patientIdentifierType:
   nif:
     uuid: "e797f826-8e8f-11e7-bb31-be2e44b06b34"
