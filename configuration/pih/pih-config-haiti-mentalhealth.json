@@ -12,6 +12,7 @@
     "dataExports",
     "exportPatients",
     "importPatients",
+    "markPatientDead",
     "mentalHealth",
     "patientRegistration",
     "programs",

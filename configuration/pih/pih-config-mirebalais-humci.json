@@ -29,6 +29,7 @@
     "lacollinePatientRegistrationEncounterTypes",
     "legacyMpi",
     "managePrinters",
+    "markPatientDead",
     "mch",
     "mentalHealth",
     "monitoringReports",

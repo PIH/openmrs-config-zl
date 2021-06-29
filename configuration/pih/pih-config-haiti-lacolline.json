@@ -15,6 +15,7 @@
       "exportPatients",
       "growthChart",
       "importPatients",
+      "markPatientDead",
       "mentalHealth",
       "monitoringReports",
       "myAccount",
