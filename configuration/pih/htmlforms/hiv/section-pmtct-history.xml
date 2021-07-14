@@ -370,7 +370,7 @@
                         <!-- Relationship to patient -->
                         <obs id="relation-{0}" conceptId="CIEL:164352"
                              labelCode="pihcore.contactRelationship"
-                             answerConceptIds="CIEL:1527,PIH:GUARDIAN,PIH:PARTNER OR SPOUSE,CIEL:1528,PIH:SIBLING,PIH:OTHER RELATIVE"/>
+                             answerConceptIds="PIH:MOTHER,CIEL:1527,PIH:GUARDIAN,PIH:PARTNER OR SPOUSE,CIEL:1528,PIH:SIBLING,PIH:OTHER RELATIVE"/>
                          <!-- CIEL codes: 1527=Parent, 1528=Child -->
                     </div>
                     <div>
@@ -404,6 +404,12 @@
                                 <obs id="contact-hiv-status-{0}" conceptId="PIH:RESULT OF HIV TEST"
                                      answerConceptIds="PIH:UNKNOWN,PIH:POSITIVE,PIH:NEGATIVE"
                                      style="radio" answerSeparator=""/>
+                            </p>
+                            <p>
+                                <label>
+                                    Phone No. (ie. xxxx-xxxx)
+                                </label>
+                                <obs conceptId="PIH:TELEPHONE NUMBER OF CONTACT	" labelCode="xx-xxx-xxxx"/>
                             </p>
                         </div>
                     </div>
