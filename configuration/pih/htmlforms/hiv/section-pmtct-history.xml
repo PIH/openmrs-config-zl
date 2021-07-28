@@ -198,45 +198,92 @@
 
     <ifMode mode="VIEW" include="false">
         <script type="text/javascript">
+            jq(document).ready(function() {
 
-            var $j = jQuery;
+            var x = 1;
+            var elem=document.getElementsByClassName('contacts');
+            var contactSize=elem.length;
 
-            jq(function() {
+            var hideOtherContacts = function() {
+            jq('#contact-2').hide();
+            jq('#contact-3').hide();
+            jq('#contact-4').hide();
+            jq('#contact-5').hide();
+            jq('#contact-6').hide();
+            jq('#contact-7').hide();
+            jq('#contact-8').hide();
+            jq('#contact-9').hide();
+            jq('#contact-10').hide();
+            };
 
-                var hasValue = function(element) {
-                    return jq(element).find('.contact-name input').val();
-                };
+            jq('#contact-'+x).show();
+            hideOtherContacts();
+            jq('#show-less-contacts-button').hide()
 
-                var hideOtherContacts = function() {
-                    jq('#contact-2').hide();
-                    jq('#contact-3').hide();
-                    jq('#contact-4').hide();
-                    jq('#contact-5').hide();
-                    jq('#contact-6').hide();
-                    jq('#contact-7').hide();
-                    jq('#contact-8').hide();
-                    jq('#contact-9').hide();
-                    jq('#contact-10').hide();
-                };
 
-                if (!hasValue('#contact-2') &amp;&amp; !hasValue('#contact-3') &amp;&amp; !hasValue('#contact-4') &amp;&amp; !hasValue('#contact-5') &amp;&amp; !hasValue('#contact-6') &amp;&amp; !hasValue('#contact-7') &amp;&amp; !hasValue('#contact-8') &amp;&amp; !hasValue('#contact-9') &amp;&amp; !hasValue('#contact-10')) {
-                    hideOtherContacts();
-                    jq('#show-more-contacts-button').show();
-                }
+            jq('#show-more-contacts-button').click(function() {
+            if(contactSize > x){
+            x++;
+            jq('#contact-'+x).show();
+            if(x>1){
+            jq('#show-less-contacts-button').show()
+            }
+            if(x==10){
+            jq('#show-more-contacts-button').hide();
+            }
 
-                jq('#show-more-contacts-button').click(function() {
-                    jq('.contact').show();
-                    jq('#show-more-contacts-button').hide();
-                    jq('#show-less-contacts-button').show();
-                });
+            }
+            });
 
-                jq('#show-less-contacts-button').click(function() {
-                    hideOtherContacts();
-                    jq('#show-less-contacts-button').hide();
-                    jq('#show-more-contacts-button').show();
-                });
+            jq('#show-less-contacts-button').click(function() {
+
+            if(contactSize > x || x==10){
+            if(x>1){
+            jq('#contact-'+x).hide();
+            x--;
+            if(x==1){
+            jq('#show-less-contacts-button').hide()
+            }
+            }
+            jq('#show-more-contacts-button').show();
+            }
+
+            });
+
+
+
+            <!-- Phone Number Regex functionality -->
+            for(let i=0; contactSize>i; i++){
+
+            jq("#contact-hiv-phone-"+i).children(":input").change(function(e) {
+            var val=e.target.value;
+            phoneNumber(val,i);
+
+            });
+            }
+
+            function phoneNumber(inputted,index){
+
+            var pattern1= /^\d{8}$/;
+            var pattern2= /^\d{4}(?:\)|[-|\s])?\s*?\d{4}$/;
+
+            if(inputted.match(pattern1) || inputted.match(pattern2)){
+
+            jq("#next").prop("disabled", false)
+            jq("#submit").prop("disabled", false)
+            jq("#contact-phone-error-message-"+index).text('');
+
+            }else{
+
+            jq("#contact-phone-error-message-"+index).text('<uimessage code="pihcore.invalid.phoneNumber"/>');
+            jq("#next").prop("disabled", true)
+            jq("#submit").prop("disabled", true)
+            }
+
+            }
 
             })
+
 
         </script>
     </ifMode>
@@ -364,7 +411,7 @@
             headerCode="pihcore.contacts">
 
         <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10']">
-            <span id="contact-{0}" class="mb-4 flex-questions section-container" >
+            <span id="contact-{0}" class="mb-4 flex-questions section-container contacts">
                 <obsgroup groupingConceptId="PIH:Contact construct" showIfEmpty="false">
                     <div>
                         <!-- Relationship to patient -->
@@ -407,13 +454,19 @@
                             </p>
                         </div>
                     </div>
+                    <div>
+                        <obs id="contact-hiv-phone-{0}" conceptId="PIH:TELEPHONE NUMBER OF CONTACT"
+                             labelCode="pihcore.telephone"/>
+                        <span id="contact-phone-error-message-{0}" class="text-danger"></span>
+                    </div>
+
                 </obsgroup>
             </span>
         </repeat>
-            <button id="show-more-contacts-button" type="button" style="display:none">
+            <button id="show-more-contacts-button" type="button">
                 <uimessage code="pihcore.showMore"/>
             </button>
-            <button id="show-less-contacts-button" type="button" style="display:none">
+            <button id="show-less-contacts-button" type="button">
                 <uimessage code="pihcore.showLess"/>
             </button>
     </section>
