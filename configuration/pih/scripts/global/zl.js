@@ -68,7 +68,7 @@ function setUpNextButtonForSections() {
   });
 }
 
-function setUpExpandableContacts() {
+function setUpExpandableContacts(badPhoneNumberMsg) {
   var x = 1;
   var elem = document.getElementsByClassName("contacts");
   var contactSize = elem.length;
@@ -134,9 +134,7 @@ function setUpExpandableContacts() {
       jq("#submit").prop("disabled", false);
       jq("#contact-phone-error-message-" + index).text("");
     } else {
-      jq("#contact-phone-error-message-" + index).text(
-        '<uimessage code="pihcore.invalid.phoneNumber"/>'
-      );
+      jq("#contact-phone-error-message-" + index).text(badPhoneNumberMsg);
       jq("#next").prop("disabled", true);
       jq("#submit").prop("disabled", true);
     }
