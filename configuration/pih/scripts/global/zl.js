@@ -69,9 +69,9 @@ function setUpNextButtonForSections() {
 }
 
 function setUpExpandableContacts(badPhoneNumberMsg) {
-  var x = 1;
+  var contactsToShow = 1;
   var elem = document.getElementsByClassName("contacts");
-  var contactSize = elem.length;
+  var maxContacts = elem.length;
 
   var hideOtherContacts = function () {
     jq("#contact-2").hide();
@@ -85,29 +85,29 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
     jq("#contact-10").hide();
   };
 
-  jq("#contact-" + x).show();
+  jq("#contact-" + contactsToShow).show();
   hideOtherContacts();
   jq("#show-less-contacts-button").hide();
 
   jq("#show-more-contacts-button").click(function () {
-    if (contactSize > x) {
-      x++;
-      jq("#contact-" + x).show();
-      if (x > 1) {
+    if (maxContacts > contactsToShow) {
+      contactsToShow++;
+      jq("#contact-" + contactsToShow).show();
+      if (contactsToShow > 1) {
         jq("#show-less-contacts-button").show();
       }
-      if (x == 10) {
+      if (contactsToShow == 10) {
         jq("#show-more-contacts-button").hide();
       }
     }
   });
 
   jq("#show-less-contacts-button").click(function () {
-    if (contactSize > x || x == 10) {
-      if (x > 1) {
-        jq("#contact-" + x).hide();
-        x--;
-        if (x == 1) {
+    if (maxContacts > contactsToShow || contactsToShow == 10) {
+      if (contactsToShow > 1) {
+        jq("#contact-" + contactsToShow).hide();
+        contactsToShow--;
+        if (contactsToShow == 1) {
           jq("#show-less-contacts-button").hide();
         }
       }
@@ -116,7 +116,7 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
   });
 
   // Phone Number Regex functionality
-  for (let i = 0; contactSize > i; i++) {
+  for (let i = 0; maxContacts > i; i++) {
     jq("#contact-hiv-phone-" + i)
       .children(":input")
       .change(function (e) {
@@ -126,6 +126,7 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
   }
 
   function phoneNumber(inputted, index) {
+  
     var pattern1 = /^\d{8}$/;
     var pattern2 = /^\d{4}(?:\)|[-|\s])?\s*?\d{4}$/;
 
@@ -139,4 +140,5 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
       jq("#submit").prop("disabled", true);
     }
   }
+
 }

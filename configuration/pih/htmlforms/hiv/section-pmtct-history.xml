@@ -127,7 +127,7 @@
             jq(function() {
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections();
-                setUpExpandableContacts();
+                setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
             });
         </script>
     </ifMode>
