@@ -1,48 +1,28 @@
 function setUpEdd(currentEncounterDate, msgWeeks) {
-  var updateEdd = function () {
-    var lastPeriodDate = htmlForm.getValueIfLegal("lastPeriodDate.value");
-    if (
-      typeof lastPeriodDate !== "undefined" &&
-      lastPeriodDate !== null &&
-      lastPeriodDate.length > 0
-    ) {
-      var today = new Date();
-      if (
-        typeof currentEncounterDate !== "undefined" &&
-        currentEncounterDate !== null &&
-        currentEncounterDate.length > 0
-      ) {
-        // calculate the gestational age at the time of the encounter
-        today = new Date(+currentEncounterDate);
-      }
-
-      var dateObj = getField("lastPeriodDate.value").datepicker("getDate");
-      var newDate = new Date(dateObj);
-      // time difference
-      var timeDiff = Math.abs(today.getTime() - newDate.getTime());
-      // weeks difference = gestational age
-      var diffWeeks = Math.ceil(timeDiff / (1000 * 3600 * 24 * 7));
-
-      // Estimated Delivery Date = (LMP - 3 months) + 12 months + 7 days
-      newDate.setMonth(newDate.getMonth() - 3);
-      newDate.setFullYear(newDate.getFullYear() + 1);
-      newDate.setDate(newDate.getDate() + 7);
-
-      var widgetDate = getField("lastPeriodDate.value")
-        .datepicker("setDate", newDate)
-        .val();
-      getField("lastPeriodDate.value").datepicker("setDate", dateObj);
-
+  function updateEdd() {
+    const lastPeriodDateValue = htmlForm.getValueIfLegal("lastPeriodDate.value");
+    if (lastPeriodDateValue) {
+      const lastPeriodDate = new Date(lastPeriodDateValue);
+      const today = currentEncounterDate ? new Date(+currentEncounterDate) : new Date();
+      const gestAgeMs = today.getTime() - lastPeriodDate.getTime();
+      const gestAgeDays = Math.floor(gestAgeMs / (1000 * 3600 * 24))
+      const gestAgeWeeks = Math.floor(gestAgeDays / 7);
+      const gestAgeRemainderDays = gestAgeDays % 7;
+      const locale = window.sessionContext.locale || navigator.language;
+      const edd = new Date(lastPeriodDate.getTime() + 1000 * 60 * 60 * 24 * 280);
       jq("#calculated-edd-and-gestational").show();
-      jq("#calculated-edd").text(widgetDate);
-      jq("#calculated-gestational-age-value").text(diffWeeks + " " + msgWeeks);
+      getField("edd.value").datepicker("setDate", edd);
+      jq("#calculated-edd").text((Intl.DateTimeFormat(locale, { dateStyle: "full" })).format(edd));
+      const gestAgeText = gestAgeWeeks + " " +
+        (gestAgeRemainderDays ? gestAgeRemainderDays + "/7 " : " ") +
+        msgWeeks;
+      jq("#calculated-gestational-age-value").text(gestAgeText);
     } else {
       jq("#calculated-edd-and-gestational").hide();
     }
   };
 
   jq("#calculated-edd-and-gestational").hide();
-
   jq("#lastPeriodDate input[type='hidden']").change(function () {
     updateEdd();
   });
