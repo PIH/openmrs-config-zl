@@ -28,8 +28,8 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git://github.com/PIH/openmrs-config-pihsl.git</connection>
-        <developerConnection>scm:git:ssh://github.com:PIH/openmrs-config-pihsl.git</developerConnection>
+        <connection>scm:git:git://github.com/PIH/openmrs-config-zl.git</connection>
+        <developerConnection>scm:git:ssh://github.com:PIH/openmrs-config-zl.git</developerConnection>
         <url>https://github.com/PIH/openmrs-config-pihsl</url>
     </scm>
 
