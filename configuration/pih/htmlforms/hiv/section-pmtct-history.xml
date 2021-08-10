@@ -126,7 +126,7 @@
         <script type="text/javascript">
             jq(function() {
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
-                setUpNextButtonForSections();
+                setUpNextButtonForSections('pmtct-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
             });
         </script>
