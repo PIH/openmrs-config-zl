@@ -257,6 +257,7 @@
         <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10']">
             <span id="contact-{0}" class="mb-4 flex-questions section-container contacts">
                 <obsgroup groupingConceptId="PIH:Contact construct" showIfEmpty="false">
+
                     <div>
                         <!-- Relationship to patient -->
                         <obs id="relation-{0}" conceptId="CIEL:164352"
@@ -273,7 +274,6 @@
                     <div>
                         <obs id="contact-age-{0}" conceptId="PIH:AGE" labelCode="pihcore.age"/>
                     </div>
-                    <br/>
                     <div class="two-columns">
                         <div>
                             <label>
@@ -298,7 +298,7 @@
                             </p>
                         </div>
                     </div>
-                    <div>
+                    <div class="contact-hiv-phone-{0}">
                         <obs id="contact-hiv-phone-{0}" conceptId="PIH:TELEPHONE NUMBER OF CONTACT"
                              labelCode="pihcore.telephone"/>
                         <span id="contact-phone-error-message-{0}" class="text-danger"></span>
