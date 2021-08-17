@@ -52,8 +52,8 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
         // get Contact values
         let contactValue = {}
         $(`#contact-${i} input, #contact-${i} select, #contact-${i} textarea, #contact-${i} radio`).each(function (i, obj) {
-            if ($(obj).val().indexOf(5) && $(obj).val().indexOf(448)) {
-                contactValue[obj.name] = $(obj).val();
+            if (jq(obj).val().indexOf(5) && jq(obj).val().indexOf(448)) {
+                contactValue[obj.name] = jq(obj).val();
             } else {
                 delete contactValue[obj.name]
             }
