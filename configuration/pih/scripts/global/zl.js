@@ -45,21 +45,23 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
     }
   });
 
-  // Phone Number Regex functionality
   for (let i = 0; maxContacts > i; i++) {
-    // get Contact values
-    let contactValue = {}
-    jq(`#contact-${i} input, #contact-${i} select, #contact-${i} textarea, #contact-${i} radio`).each(function (i, obj) {
-      contactValue[obj.name] = jq(obj).val();
-    })
-
     //showing contact if exist data
-    if (ifContactWithData(contactValue)) {
+    let contactHasValues = false;
+    jq(`#contact-${i} input:checked, #contact-${i} input[type=text]`).each(
+      function (j, domEl) {
+        const element = jq(domEl);
+        if (element.val()) {
+          contactHasValues = true;
+        }
+      }
+    )
+    if (contactHasValues) {
       jq(`#contact-${i}`).show();
       contactsToShow++;
     }
 
-
+    // Phone Number Regex validation
     jq("#contact-hiv-phone-" + i)
       .children(":input")
       .change(function (e) {
@@ -82,14 +84,6 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
       jq("#next").prop("disabled", true);
       jq("#submit").prop("disabled", true);
     }
-  }
-
-  function ifContactWithData(obj) {
-    for (let key in obj) {
-      if (obj[key] !== null && obj[key] != "" && obj[key] != '5' && obj[key] != '448')
-        return true;
-    }
-    return false;
   }
 
 }
