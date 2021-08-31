@@ -18,6 +18,8 @@
     "mentalHealth",
     "monitoringReports",
     "myAccount",
+    "ncd",
+    "obgyn",
     "overviewReports",
     "patientRegistration",
     "programs",
@@ -35,8 +37,8 @@
   },
 
   "locationTags": {
-    "Lab Results Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
-    "Login Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"],
+    "Lab Results Location": ["Saint-Marc (HSN)"],
+    "Login Location": ["Saint-Marc (HSN)"],
     "Medical Record Location": ["Saint-Marc (HSN)"]
   },
 
