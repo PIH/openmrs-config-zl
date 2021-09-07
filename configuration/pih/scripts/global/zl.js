@@ -71,7 +71,7 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
   }
 
   function phoneNumber(inputted, index) {
-  
+
     var pattern1 = /^\d{8}$/;
     var pattern2 = /^\d{4}(?:\)|[-|\s])?\s*?\d{4}$/;
 
@@ -87,3 +87,33 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
   }
 
 }
+
+function showDateIfCheckboxSelected(){
+
+  jq("#syph-q").on('change',function (){
+
+    jq(`#syph-q input[type=text]`).hide()
+
+      if (jq(`#syph-q input:checked`).val()) {
+          jq(`#syph-q input[type=text]`).show()
+      }
+  })
+
+  jq("#mom-syph").on('change',function () {
+      jq(`#mom-syph-treat`).hide();
+
+      if (jq(`#mom-syph input:checked`).val()) {
+          jq(`#mom-syph-treat`).show()
+      }
+  });
+
+    jq("#partner-syph").on('change',function () {
+        jq(`#partner-syph-treat`).hide()
+
+        if (jq(`#partner-syph input:checked`).val()) {
+            jq(`#partner-syph-treat`).show()
+        }
+    });
+
+}
+

@@ -133,6 +133,7 @@
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections('pmtct-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
+                showDateIfCheckboxSelected();
             });
         </script>
     </ifMode>
@@ -456,9 +457,9 @@
             <p>
                 <obs id="syph-q"  conceptId="CIEL:164801" style="checkbox"
                      answerConceptId="CIEL:1065" answerCode="pihcore.screeningSyph"
-                     dateLabel="Date" >
+                     dateLabel="Date">
                     <controls>
-                        <when value="CIEL:1065" thenDisplay="#syph-screen"/>
+                        <when value="CIEL:1065" thenDisplay="#syph-screen" id="syph-input"/>
                     </controls>
                 </obs>
             </p>
@@ -499,9 +500,16 @@
 
                 <div>
                     <obsgroup groupingConceptId="CIEL:166558">
-                        <obs conceptId="CIEL:1628" style="checkbox"
+                        <p>
+                        <obs  id="partner-syph" conceptId="CIEL:1628" style="checkbox"
                              answerConceptId="CIEL:112493"
-                             answerCode="pihcore.syphilisTreatmentPartner" />
+                             answerCode="pihcore.syphilisTreatmentPartner">
+                            <controls>
+                                <when value="CIEL:112493" thenDisplay="#partner-syph-treat"/>
+                            </controls>
+                        </obs>
+                        </p>
+                        <p id="partner-syph-treat">
                         <label>
                             <uimessage code="pihcore.treatmentStartDate" />
                         </label>
@@ -510,6 +518,7 @@
                             <uimessage code="pihcore.treatmentEndDate" />
                         </label>
                         <obs conceptId="CIEL:164384"/>
+                        </p>
                     </obsgroup>
                 </div>
             </div>
