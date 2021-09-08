@@ -162,7 +162,6 @@
                 );
             
                 setUpNextButtonForSections('hiv-state');
-                showDateIfCheckboxSelected();
             });
         </script>
     </ifMode>
@@ -932,11 +931,7 @@
                 <p>
                     <obs id="syph-q"  conceptId="CIEL:164801" style="checkbox"
                          answerConceptId="CIEL:1065" answerCode="pihcore.screeningSyph"
-                         dateLabel="Date">
-                        <controls>
-                            <when value="CIEL:1065" thenDisplay="#syph-screen" id="syph-input"/>
-                        </controls>
-                    </obs>
+                         dateLabel="Date" toggle="syph-screen"/>
                 </p>
                 <p id="syph-screen" class="side-by-side">
                     <label>
@@ -954,11 +949,7 @@
                             <p>
                                 <obs id="mom-syph" conceptId="CIEL:1628" style="checkbox"
                                      answerConceptId="CIEL:112493"
-                                     answerCode="pihcore.syphilisTreatmentPregnantMother" >
-                                    <controls>
-                                        <when value="CIEL:112493" thenDisplay="#mom-syph-treat"/>
-                                    </controls>
-                                </obs>
+                                     answerCode="pihcore.syphilisTreatmentPregnantMother" toggle="mom-syph-treat"/>
                             </p>
                             <p id="mom-syph-treat">
                                 <label>
@@ -978,11 +969,7 @@
                             <p>
                                 <obs  id="partner-syph" conceptId="CIEL:1628" style="checkbox"
                                       answerConceptId="CIEL:112493"
-                                      answerCode="pihcore.syphilisTreatmentPartner">
-                                    <controls>
-                                        <when value="CIEL:112493" thenDisplay="#partner-syph-treat"/>
-                                    </controls>
-                                </obs>
+                                      answerCode="pihcore.syphilisTreatmentPartner" toggle="partner-syph-treat"/>
                             </p>
                             <p id="partner-syph-treat">
                                 <label>
