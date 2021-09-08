@@ -478,14 +478,8 @@
                                  toggle="mom-syph-treat"/>
                         </p>
                         <p id="mom-syph-treat">
-                            <label>
-                                <uimessage code="pihcore.treatmentStartDate"/>
-                            </label>
-                            <obs conceptId="CIEL:163526"/>
-                            <label>
-                                <uimessage code="pihcore.treatmentEndDate"/>
-                            </label>
-                            <obs conceptId="CIEL:164384"/>
+                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate"/>
+                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate"/>
                         </p>
                     </obsgroup>
                 </div>
@@ -498,14 +492,8 @@
                                  answerCode="pihcore.syphilisTreatmentPartner" toggle="partner-syph-treat"/>
                         </p>
                         <p id="partner-syph-treat">
-                            <label>
-                                <uimessage code="pihcore.treatmentStartDate"/>
-                            </label>
-                            <obs conceptId="CIEL:163526"/>
-                            <label>
-                                <uimessage code="pihcore.treatmentEndDate"/>
-                            </label>
-                            <obs conceptId="CIEL:164384"/>
+                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate"/>
+                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate"/>
                         </p>
                     </obsgroup>
                 </div>
