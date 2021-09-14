@@ -113,7 +113,8 @@
             jq(function() {
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections('hiv-history');
-                setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
+                setUpContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
+                setUpExpandableSection('contact');
             });
         </script>
     </ifMode>
@@ -728,10 +729,10 @@
         </section>
     </includeIf>
 
-    <section id="contacts" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <section sectionTag="fieldset" headerTag="legend" headerStyle="title"
             headerCode="pihcore.contacts">
         <repeat with="['1'],['2'],['3'],['4'],['5'],['6'],['7'],['8'],['9'],['10']">
-            <span id="contact-{0}" class="contacts">
+            <span id="contact-{0}">
             <div class="section-container mb-4 flex-questions">
                 <obsgroup groupingConceptId="PIH:Contact construct" showIfEmpty="false">
                     <div>
@@ -778,10 +779,10 @@
             </div>
             </span>
         </repeat>
-        <button id="show-more-contacts-button" type="button">
+        <button id="show-more-contact" type="button">
             <uimessage code="pihcore.showMore"/>
         </button>
-        <button id="show-less-contacts-button" type="button">
+        <button id="show-less-contact" type="button">
             <uimessage code="pihcore.showLess"/>
         </button>
     </section>

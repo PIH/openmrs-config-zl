@@ -1,68 +1,10 @@
-function setUpExpandableContacts(badPhoneNumberMsg) {
-  var contactsToShow = 1;
-  var elem = document.getElementsByClassName("contacts");
-  var maxContacts = elem.length;
+function setUpContacts(badPhoneNumberMsg) {
 
-  var hideOtherContacts = function () {
-    jq("#contact-2").hide();
-    jq("#contact-3").hide();
-    jq("#contact-4").hide();
-    jq("#contact-5").hide();
-    jq("#contact-6").hide();
-    jq("#contact-7").hide();
-    jq("#contact-8").hide();
-    jq("#contact-9").hide();
-    jq("#contact-10").hide();
-  };
-
-  jq("#contact-" + contactsToShow).show();
-  hideOtherContacts();
-  jq("#show-less-contacts-button").hide();
-
-  jq("#show-more-contacts-button").click(function () {
-    if (maxContacts > contactsToShow) {
-      contactsToShow++;
-      jq("#contact-" + contactsToShow).show();
-      if (contactsToShow > 1) {
-        jq("#show-less-contacts-button").show();
-      }
-      if (contactsToShow == 10) {
-        jq("#show-more-contacts-button").hide();
-      }
-    }
-  });
-
-  jq("#show-less-contacts-button").click(function () {
-    if (maxContacts > contactsToShow || contactsToShow == 10) {
-      if (contactsToShow > 1) {
-        jq("#contact-" + contactsToShow).hide();
-        contactsToShow--;
-        if (contactsToShow == 1) {
-          jq("#show-less-contacts-button").hide();
-        }
-      }
-      jq("#show-more-contacts-button").show();
-    }
-  });
-
-  for (let i = 0; maxContacts > i; i++) {
-    //showing contact if exist data
-    let contactHasValues = false;
-    jq(`#contact-${i} input:checked, #contact-${i} input[type=text]`).each(
-      function (j, domEl) {
-        const element = jq(domEl);
-        if (element.val()) {
-          contactHasValues = true;
-        }
-      }
-    )
-    if (contactHasValues) {
-      jq(`#contact-${i}`).show();
-      contactsToShow++;
-    }
-
+  const contacts = jq("[id^=contact]");
+ 
+  for (let i = 0; i < contacts.length; i++) {
     // Phone Number Regex validation
-    jq("#contact-hiv-phone-" + i)
+    jq(contacts[i])
       .children(":input")
       .change(function (e) {
         var val = e.target.value;
@@ -86,5 +28,5 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
     }
   }
 
-}
+} 
 
