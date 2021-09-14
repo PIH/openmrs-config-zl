@@ -17,8 +17,7 @@
   },
 
   "locationTags": {
-    "Lab Results Location": ["Hinche"],
-    "Login Location": ["Hinche"],
+    "Login Location": ["Klinik MNT | Hinche", "Sante Fanm | Hinche", "Sante Mantal | Hinche"],
     "Medical Record Location": ["Hinche"]
   }
 }

@@ -35,8 +35,7 @@
   },
 
   "locationTags": {
-    "Lab Results Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
-    "Login Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"],
+    "Login Location": ["Klinik MNT | HSN", "Sante Fanm | HSN", "Sante Mantal | HSN"],
     "Medical Record Location": ["Saint-Marc (HSN)"]
   },
 

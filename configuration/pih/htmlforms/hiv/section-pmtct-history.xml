@@ -1237,6 +1237,61 @@
              </div>
          </section>
 
+    <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="evaluation">
+        <div class="section-container-color">
+
+            <div class="two-columns">
+                <div>
+                    <label>
+                        <uimessage code="pihcore.dailyDoseARV" />
+                    </label>
+                    <p class="side-by-side">
+                        <obs id="daily-dose-arv" conceptId="PIH:13649" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066">
+                            <controls>
+                                <when value="CIEL:1066" thenDisplay="#side-by-side-reason"/>
+                            </controls>
+                        </obs>
+                    </p>
+                    <p id="side-by-side-reason" style="display:none">
+                        <obs conceptId="PIH:1709" labelCode="pihcore.ifNotSpecifyReason"/>
+                    </p>
+                    <p>
+                        <obs conceptId="CIEL:160110" labelCode="pihcore.missingDosesPerMonth"/>
+                    </p>
+                    <label>
+                        <uimessage code="pihcore.dailyDoseOfCTX" />
+                    </label>
+                    <p class="side-by-side">
+                        <obs conceptId="PIH:13654" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"/>
+                    </p>
+                </div>
+
+                <div>
+
+                    <label>
+                        <uimessage code="pihcore.dailyCHWvisit"/>
+                    </label>
+                    <p class="side-by-side">
+                        <obs conceptId="CIEL:160111" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"/>
+                    </p>
+                    <label>
+                        <uimessage code="pihcore.successfulCounselingTreatment" />
+                    </label>
+                    <p class="side-by-side">
+                        <obs conceptId="CIEL:5586" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"/>
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+
     <br/>
 
     <ifMode mode="VIEW" include="false">
