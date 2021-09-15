@@ -89,6 +89,14 @@
         }
     </style>
 
+    <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
+    note that we already do this on the history section, but add here case the history section is skipped
+    the special case for infants (less than 2 years old) is only handled on the history section, as it prompts the user for a question of whether to enroll in EID or HIV
+-->
+    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 1">
+        <enrollInProgram programId="HIV" locationTag="Program Location"/>
+    </includeIf>
+
     <ifMode mode="VIEW" include="false">
         <h1>
             <uimessage code="pihcore.visitNote.plan"/>
