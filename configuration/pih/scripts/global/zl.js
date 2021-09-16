@@ -88,7 +88,7 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
 
 }
 
-function datepickerAsyncValidation(badDateInTheFutureMsg,badStartDateGreaterThanEndDateMsg){
+function datepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStartDateGreaterThanEndDateMsg){
 
   $("#startDate-0,#startDate-1").each(function(j, domEl){
     $(this).change(function (e){

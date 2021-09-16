@@ -133,7 +133,7 @@
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections('pmtct-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
-                datepickerAsyncValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greather"/>');
+                datepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
             });
         </script>
     </ifMode>
