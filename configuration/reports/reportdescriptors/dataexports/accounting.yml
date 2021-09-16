@@ -1,0 +1,25 @@
+key: "accountingreport"
+uuid: "e0c7b080-d63f-414d-92d2-05078490ea89"
+name: "mirebalaisreports.accounting.name"
+description: "mirebalaisreports.accounting.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "accounting"
+    type: "sql"
+    config: "sql/accounting.sql"
+designs:
+  - type: "excel"
+    template: "templates/accounting.xls"
+    properties:
+      "repeatingSections": "sheet:1,row:6,dataset:accounting"
+config:
+  category: "MONITORING"
+  order: 2
+  components:
+    - "monitoringReports"
