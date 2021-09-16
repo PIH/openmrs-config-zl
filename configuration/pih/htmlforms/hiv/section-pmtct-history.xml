@@ -133,6 +133,7 @@
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections('pmtct-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
+                datepickerAsyncValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greather"/>');
             });
         </script>
     </ifMode>
@@ -478,8 +479,8 @@
                                  toggle="mom-syph-treat"/>
                         </p>
                         <p id="mom-syph-treat">
-                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate"/>
-                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate"/>
+                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" id="startDate-0"/>
+                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" id="endDate-0"/>
                         </p>
                     </obsgroup>
                 </div>
@@ -492,8 +493,8 @@
                                  answerCode="pihcore.syphilisTreatmentPartner" toggle="partner-syph-treat"/>
                         </p>
                         <p id="partner-syph-treat">
-                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate"/>
-                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate"/>
+                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" id="startDate-1"/>
+                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" id="endDate-1"/>
                         </p>
                     </obsgroup>
                 </div>

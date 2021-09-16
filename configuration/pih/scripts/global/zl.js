@@ -88,3 +88,62 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
 
 }
 
+function datepickerAsyncValidation(badDateInTheFutureMsg,badStartDateGreaterThanEndDateMsg){
+
+  $("#startDate-0,#startDate-1").each(function(j, domEl){
+    $(this).change(function (e){
+      let startDate = Date.parse(e.target.value);
+      let endDate = Date.parse(jq(`#endDate-${j} input[type=text]`).val());
+
+        if (startDate > Date.now()){
+          jq(`#${domEl.getAttribute('id')} span`).show();
+          jq(`#${domEl.getAttribute('id')} span`).text(badDateInTheFutureMsg);
+          buttonsDisabled(true)
+        }else {
+          jq(`#${domEl.getAttribute('id')} span`).hide();
+          jq(`#${domEl.getAttribute('id')} span`).text('');
+          buttonsDisabled(false)
+        }
+         if(startDate>endDate){
+          jq(`#endDate-${j} span`).show();
+          jq(`#endDate-${j} span`).text(badStartDateGreaterThanEndDateMsg);
+          buttonsDisabled(true)
+        }else{
+          jq(`#endDate-${j} span`).hide();
+          jq(`#endDate-${j} span`).text('');
+          buttonsDisabled(false)
+        }
+    });
+  });
+
+
+  $("#endDate-0,#endDate-1").each(function(j, domEl){
+    $(this).change(function (e){
+      let endDate = Date.parse(e.target.value);
+      let startDate = Date.parse(jq(`#startDate-${j} input[type=text]`).val());
+
+      if (endDate > Date.now()) {
+        jq(`#${domEl.getAttribute('id')} span`).show();
+        jq(`#${domEl.getAttribute('id')} span`).text(badDateInTheFutureMsg);
+        buttonsDisabled(true)
+      }else if (startDate > endDate){
+        jq(`#${domEl.getAttribute('id')} span`).show();
+        jq(`#${domEl.getAttribute('id')} span`).text(badStartDateGreaterThanEndDateMsg);
+        buttonsDisabled(true)
+      }else {
+        jq(`#${domEl.getAttribute('id')} span`).hide();
+        jq(`#${domEl.getAttribute('id')} span`).text('');
+        buttonsDisabled(false)
+      }
+
+    });
+  });
+
+
+  function buttonsDisabled(val){
+    jq("#next").prop("disabled", val);
+    jq("#submit").prop("disabled", val);
+  }
+
+}
+
