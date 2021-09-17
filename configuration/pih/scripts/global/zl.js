@@ -90,55 +90,62 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
 
 function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStartDateGreaterThanEndDateMsg){
 
-  jq("#startDate-0,#startDate-1").each(function(j, domEl){
-    jq(this).change(function (e){
+  jq(".startDateEndDate").each(function(j, domEl){
+    for(let i=0; i<jq(domEl).find('input[type=text]').length; i++){
+      if(i % 2 === 0){
+         jq('#startDate').prop("id", `startDate-${j}`);
+        jq('#endDate').prop("id", `endDate-${j}`);
+        setStartDateIdAndEndDateId(`startDate-${j}`,`endDate-${j}`)
+      }
+    }
+  })
+
+function setStartDateIdAndEndDateId(startDateId,endDateId) {
+
+    jq(`#${startDateId}`).change(function (e) {
       let startDate = Date.parse(e.target.value);
-      let endDate = Date.parse(jq(`#endDate-${j} input[type=text]`).val());
+      let endDate = Date.parse(jq(`#${endDateId} input[type=text]`).val());
 
-        if (startDate > Date.now()){
-          jq(this).find('span').show();
-          jq(this).find('span').text(badDateInTheFutureMsg);
-          setButtonsDisabled(true)
-        }else {
-          jq(this).find('span').hide();
-          jq(this).find('span').text('');
-          setButtonsDisabled(false)
-        }
-         if(startDate>endDate){
-          jq(`#endDate-${j} span`).show();
-          jq(`#endDate-${j} span`).text(badStartDateGreaterThanEndDateMsg);
-          setButtonsDisabled(true)
-        }else{
-          jq(`#endDate-${j} span`).hide();
-          jq(`#endDate-${j} span`).text('');
-           setButtonsDisabled(false)
-        }
+      if (startDate > Date.now()) {
+        jq(this).find('span').show();
+        jq(this).find('span').text(badDateInTheFutureMsg);
+        setButtonsDisabled(true)
+      } else {
+        jq(this).find('span').hide();
+        jq(this).find('span').text('');
+        setButtonsDisabled(false)
+      }
+      if (startDate > endDate) {
+        jq(`#${endDateId} span`).show();
+        jq(`#${endDateId} span`).text(badStartDateGreaterThanEndDateMsg);
+        setButtonsDisabled(true)
+      } else {
+        jq(`#${endDateId} span`).hide();
+        jq(`#${endDateId} span`).text('');
+        setButtonsDisabled(false)
+      }
     });
-  });
 
-
-  jq("#endDate-0,#endDate-1").each(function(j, domEl){
-    jq(this).change(function (e){
+    jq(`#${endDateId}`).change(function (e) {
       let endDate = Date.parse(e.target.value);
-      let startDate = Date.parse(jq(`#startDate-${j} input[type=text]`).val());
+      let startDate = Date.parse(jq(`#${startDateId} input[type=text]`).val());
 
       if (endDate > Date.now()) {
         jq(this).find('span').show();
         jq(this).find('span').text(badDateInTheFutureMsg);
         setButtonsDisabled(true)
-      }else if (startDate > endDate){
+      } else if (startDate > endDate) {
         jq(this).find('span').show();
         jq(this).find('span').text(badStartDateGreaterThanEndDateMsg);
         setButtonsDisabled(true)
-      }else {
+      } else {
         jq(this).find('span').hide();
         jq(this).find('span').text('');
         setButtonsDisabled(false)
       }
 
     });
-  });
-
+}
 
   function setButtonsDisabled(val){
     jq("#next").prop("disabled", val);
