@@ -1,0 +1,25 @@
+key: "chronicMaladies"
+uuid: "66a975d4-790e-4348-9a88-8dfbcf551afc"
+name: "mirebalaisreports.chronicMaladies.name"
+description: "mirebalaisreports.chronicMaladies.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "chronicMaladies"
+    type: "sql"
+    config: "sql/chronicMaladies.sql"
+designs:
+  - type: "excel"
+    template: "templates/chronicMaladies.xls"
+    properties:
+      "repeatingSections": "sheet:1,row:7,dataset:chronicMaladies"
+config:
+  category: "MONITORING"
+  order: 5
+  components:
+    - "monitoringReports"
