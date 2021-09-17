@@ -952,8 +952,8 @@
                                      answerCode="pihcore.syphilisTreatmentPregnantMother" toggle="mom-syph-treat"/>
                             </p>
                             <p id="mom-syph-treat" class="startDateEndDate">
-                                <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" id="startDate"/>
-                                <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" id="endDate"/>
+                                <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
+                                <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
                             </p>
                         </obsgroup>
                     </div>
@@ -965,8 +965,8 @@
                                      answerCode="pihcore.syphilisTreatmentPartner" toggle="partner-syph-treat"/>
                             </p>
                             <p id="partner-syph-treat" class="startDateEndDate">
-                                <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" id="startDate"/>
-                                <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" id="endDate"/>
+                                <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
+                                <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
                             </p>
                         </obsgroup>
                     </div>

@@ -91,20 +91,17 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
 function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStartDateGreaterThanEndDateMsg){
 
   jq(".startDateEndDate").each(function(j, domEl){
-    for(let i=0; i<jq(domEl).find('input[type=text]').length; i++){
-      if(i % 2 === 0){
-         jq('#startDate').prop("id", `startDate-${j}`);
-        jq('#endDate').prop("id", `endDate-${j}`);
-        setStartDateIdAndEndDateId(`startDate-${j}`,`endDate-${j}`)
-      }
-    }
-  })
+    setUpDatepickers(this);
+  });
 
-function setStartDateIdAndEndDateId(startDateId,endDateId) {
+    function setUpDatepickers(containerNode) {
 
-    jq(`#${startDateId}`).change(function (e) {
+      const startDatepicker = jq(jq(containerNode).find('.startDate'));
+      const endDatepicker = jq(jq(containerNode).find('.endDate'));
+
+      startDatepicker.change(function (e) {
       let startDate = Date.parse(e.target.value);
-      let endDate = Date.parse(jq(`#${endDateId} input[type=text]`).val());
+      let endDate = Date.parse(endDatepicker.find('input[type=text]').val());
 
       if (startDate > Date.now()) {
         jq(this).find('span').show();
@@ -116,19 +113,19 @@ function setStartDateIdAndEndDateId(startDateId,endDateId) {
         setButtonsDisabled(false)
       }
       if (startDate > endDate) {
-        jq(`#${endDateId} span`).show();
-        jq(`#${endDateId} span`).text(badStartDateGreaterThanEndDateMsg);
+        endDatepicker.find('span').show();
+        endDatepicker.find('span').text(badStartDateGreaterThanEndDateMsg);
         setButtonsDisabled(true)
       } else {
-        jq(`#${endDateId} span`).hide();
-        jq(`#${endDateId} span`).text('');
+        endDatepicker.find('span').hide();
+        endDatepicker.find('span').text('');
         setButtonsDisabled(false)
       }
     });
 
-    jq(`#${endDateId}`).change(function (e) {
+      endDatepicker.change(function (e) {
       let endDate = Date.parse(e.target.value);
-      let startDate = Date.parse(jq(`#${startDateId} input[type=text]`).val());
+      let startDate = Date.parse(startDatepicker.find('input[type=text]').val());
 
       if (endDate > Date.now()) {
         jq(this).find('span').show();
