@@ -1,0 +1,28 @@
+key: "lqasdiagnoses"
+uuid: "f277f5b4-20bd-11e3-b5bd-0bec7fb71852"
+name: "mirebalaisreports.lqasdiagnoses.name"
+description: "mirebalaisreports.lqasdiagnoses.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+  - key: "location"
+    type: "org.openmrs.Location"
+    label: "reporting.parameter.location"
+datasets:
+  - key: "lqasdiagnoses"
+    type: "sql"
+    config: "sql/lqasDiagnoses.sql"
+designs:
+  - type: "excel"
+config:
+  category: "dataExport"
+  order: 1004
+  sites:
+    - "MIREBALAIS"
+  components:
+    - "dataExports"
+    - "allDataExports"
