@@ -162,7 +162,7 @@
                 );
             
                 setUpNextButtonForSections('hiv-state');
-                datepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
+                setUpDatepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
             });
         </script>
     </ifMode>
