@@ -8,7 +8,7 @@
       "allergies",
       "checkIn",
       "checkInHomepageApp",
-      "clinicianDashboard",
+      "clinicianDashboard",m
       "dataExports",
       "echocardiogram",
       "edTriage",
@@ -39,10 +39,6 @@
 
   "globalProperties": {
     "coreapps.defaultPatientIdentifierLocation": "23e7bb0d-51f9-4d5f-b34b-2fbbfeea1960"
-  },
-
-  "locationTags": {
-    "Login Location": ["La Colline"],
-    "Medical Record Location": ["La Colline"]
   }
+
 }

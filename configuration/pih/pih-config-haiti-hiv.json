@@ -60,52 +60,6 @@
 
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti.json",
 
-  "locationTags": {
-    "Lab Results Location": [
-      "Belladère",
-      "Boucan-Carré",
-      "Cange",
-      "Cerca la Source",
-      "Hinche",
-      "La Colline",
-      "Petite Riviere",
-      "Saint-Marc (HSN)",
-      "Saint-Marc (SSPE)",
-      "Thomonde",
-      "Verrettes",
-      "Mirebalais"
-    ],
-    "Login Location": [
-      "Belladère",
-      "Boucan-Carré",
-      "Cange",
-      "Cerca la Source",
-      "Hinche",
-      "La Colline",
-      "Petite Riviere",
-      "Saint-Marc (HSN)",
-      "Saint-Marc (SSPE)",
-      "Thomonde",
-      "Verrettes",
-      "Mirebalais"
-    ],
-    "Medical Record Location": [
-      "Belladère",
-      "Boucan-Carré",
-      "Cange",
-      "Cerca la Source",
-      "Hinche",
-      "La Colline",
-      "Petite Riviere",
-      "POZ",
-      "Saint-Marc (HSN)",
-      "Saint-Marc (SSPE)",
-      "Thomonde",
-      "Verrettes",
-      "Mirebalais"
-    ]
-  },
-
   "registrationConfig": {
     "allowUnknownPatients": false,
     "allowManualEntryOfPrimaryIdentifier": true,

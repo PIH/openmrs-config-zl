@@ -37,10 +37,6 @@
   "visitsPageWithSpecificUrl": "/pihcore/visit/visit.page?patient={{patient.uuid}}&visit={{visit.uuid}}#/overview",
   "providerIdentifierPrefix": "M",
 
-  "locationTags": {
-    "Login Location": ["Belladère", "Boucan-Carré", "Cange", "Cerca la Source", "Hinche", "Saint-Marc (HSN)", "La Colline", "Petite Riviere", "Saint-Marc (SSPE)", "Thomonde", "Verrettes", "Mirebalais"]
-  },
-
   "registrationConfig": {
     "allowUnknownPatients": false,
     "allowManualEntryOfPrimaryIdentifier": false,

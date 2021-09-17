@@ -34,11 +34,5 @@
   "globalProperties": {
     "haiti.checkIn.reasonsForVisit":"PIH:9359,PIH:5489,PIH:11504",
     "coreapps.defaultPatientIdentifierLocation": "328f6a60-0370-102d-b0e3-001ec94a0cc1"
-  },
-
-
-  "locationTags": {
-    "Login Location": ["Klinik MNT | Hinche", "Sante Fanm | Hinche", "Sante Mantal | Hinche"],
-    "Medical Record Location": ["Hinche"]
   }
 }
