@@ -1,3 +1,6 @@
+CALL initialize_global_metadata();
+SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
+
 select sort_order, maladies, newold "nouveaux_anciens",
 nullif(sum(L10),0) "<10ans",
 nullif(sum(L15),0) "10-14ans",
@@ -89,7 +92,7 @@ and (o.concept_id = (select concept_id from report_mapping where source = 'PIH' 
    (e.encounter_type in (select et.encounter_type_id from encounter_type et where et.name = 'Signes vitaux')))
 and o.voided = 0
 AND date(o.obs_datetime) >= @startDate
-AND date(o.obs_datetime) <= @endDate
+AND date(o.obs_datetime) < @endDate
 group by o.obs_id, rm.source, rm.code
 union all
 select
@@ -116,7 +119,7 @@ LEFT OUTER JOIN
   and e_prev.encounter_id < e_vitals.encounter_id
 where e_vitals.voided = 0
 AND date(e_vitals.encounter_datetime) >= @startDate
-AND date(e_vitals.encounter_datetime) <= @endDate
+AND date(e_vitals.encounter_datetime) < @endDate
 and e_vitals.encounter_type in (select et.encounter_type_id from encounter_type et where et.name = 'Signes vitaux')
 order by Diagnosis desc
 ) tab on dx.maladies = tab.Diagnosis and dx.newold = tab.recurrent
