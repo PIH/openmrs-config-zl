@@ -1,0 +1,20 @@
+key: "relationships"
+uuid: "f42366c3-388d-47f7-93ff-a64270a613eb"
+name: "mirebalaisreports.relationships.name"
+description: "mirebalaisreports.relationships.description"
+datasets:
+  - key: "relationships"
+    type: "sql"
+    config: "sql/relationships.sql"
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "relationshipsdataexport.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "DATA_EXPORT"
+  order: 1003
+  components:
+    - "dataExports"

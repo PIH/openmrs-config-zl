@@ -1,0 +1,20 @@
+key: "programs"
+uuid: "345556d3-0975-49c5-9123-e712f8ccbe99"
+name: "mirebalaisreports.programs.name"
+description: "mirebalaisreports.programs.description"
+datasets:
+  - key: "programs"
+    type: "sql"
+    config: "sql/programs.sql"
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "programsexport.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "DATA_EXPORT"
+  order: 1000
+  components:
+    - "dataExports"
