@@ -1,0 +1,48 @@
+key: "<code>"
+uuid: "<uuid>"
+name: "mirebalaisreports.<code>.name"
+description: "mirebalaisreports.<code>.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - {key: "patients", type: "mirebalaisPatientDataSetManager"}
+  - {key: "registration", type: "registrationDataSetManager"}
+  - {key: "visits", type: "sql", config: "sql/visits.sql"}
+  - {key: "checkins", type: "sql", config: "sql/checkins.sql"}
+  - {key: "consultations", type: "consultationsDataSetManager"}
+  - {key: "diagnoses", type: "sql", config: "sql/diagnoses.sql"}
+  - {key: "hospitalizations", type: "sql", config: "sql/hospitalizations.sql"}
+  - {key: "postOpNote1", type: "sql", config: "sql/postOpNote1.sql"}
+  - {key: "postOpNote2", type: "sql", config: "sql/postOpNote2.sql"}
+  - {key: "radiologyOrders", type: "sql", config: "sql/radiologyOrders.sql"}
+  - {key: "radiologyOrderEncounters", type: "sql", config: "sql/radiologyOrderEncounters.sql"}
+  - {key: "radiologyStudyEncounters", type: "sql", config: "sql/radiologyStudyEncounters.sql"}
+  - {key: "radiologyReportEncounters", type: "sql", config: "sql/radiologyReportEncounters.sql"}
+  - {key: "dispensing", type: "dispensingDataSetManager"}
+  - {key: "encounters", type: "haitiEncounterDataSetManager"}
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "<code>.{{ formatDate request.reportDefinition.parameterMappings.startDate \"yyyyMMdd\" }}.{{ formatDate request.reportDefinition.parameterMappings.endDate \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+    processors:
+      - name: "saveToDisk"
+        type: "disk"
+        runOnSuccess: "true"
+        runOnError: "false"
+        processorMode: "AUTOMATIC"
+        configuration:
+          saveLocation: "{{application_data_directory}}reports"
+          compressOutput: "true"
+config:
+  category: "dataExport"
+  order: ""
+  sites:
+    - "MIREBALAIS"
