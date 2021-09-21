@@ -9,9 +9,6 @@ parameters:
   - key: "endDate"
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
-
-    [ "hospitalizations", "postOpNote1", "postOpNote2" ]
-
 datasets:
   - {key: "patients", type: "mirebalaisPatientDataSetManager"}
   - {key: "checkins", type: "sql", config: "sql/checkins.sql"}
