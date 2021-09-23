@@ -112,21 +112,17 @@ function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStart
               setButtonsDisabled(false)
           }
 
-          if (endDate > Date.now()){
+          if (endDate > Date.now()) {
               endDatepicker.find('span').show();
               endDatepicker.find('span').text(badDateInTheFutureMsg);
               setButtonsDisabled(true)
-          } else {
-              endDatepicker.find('span').hide();
-              endDatepicker.find('span').text('');
-              setButtonsDisabled(false)
           }
-
           if (startDate > endDate) {
               endDatepicker.find('span').show();
               endDatepicker.find('span').text(badStartDateGreaterThanEndDateMsg);
               setButtonsDisabled(true)
-          } else {
+          }
+          if (startDate < endDate && endDate < Date.now()) {
               endDatepicker.find('span').hide();
               endDatepicker.find('span').text('');
               setButtonsDisabled(false)
@@ -141,11 +137,13 @@ function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStart
                 jq(this).find('span').show();
                 jq(this).find('span').text(badDateInTheFutureMsg);
                 setButtonsDisabled(true)
-            } else if (startDate > endDate) {
+            }
+            if (startDate > endDate) {
                 jq(this).find('span').show();
                 jq(this).find('span').text(badStartDateGreaterThanEndDateMsg);
                 setButtonsDisabled(true)
-            } else {
+            }
+            if (startDate < endDate && endDate < Date.now()){
                 jq(this).find('span').hide();
                 jq(this).find('span').text('');
                 setButtonsDisabled(false)
