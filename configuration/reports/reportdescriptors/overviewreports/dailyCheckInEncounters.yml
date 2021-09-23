@@ -1,0 +1,16 @@
+key: "dailyCheckInEncounters"
+uuid: "f170699a-50af-11e3-ba00-27a0ac7f78d9"
+name: "mirebalaisreports.dailyCheckInEncounters.name"
+description: "mirebalaisreports.dailyCheckInEncounters.description"
+parameters:
+  - key: "day"
+    type: "java.util.Date"
+    label: "mirebalaisreports.parameter.day"
+datasets:
+  - key: "overall"
+    type: "dailyCheckInsDataSetManager"
+  - key: "byLocation"
+    type: "dailyCheckInsDataSetManager"
+config:
+  category: "DAILY"
+  order: "2"

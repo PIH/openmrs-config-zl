@@ -1,0 +1,18 @@
+key: "inpatientStatsDailyReport"
+uuid: "f3bb8094-3738-11e3-b90a-a351ac6b1528"
+name: "mirebalaisreports.inpatientStatsDailyReport.name"
+description: "mirebalaisreports.inpatientStatsDailyReport.description"
+parameters:
+  - key: "day"
+    type: "java.util.Date"
+    label: "mirebalaisreports.parameter.day"
+datasets:
+  - key: "cohorts"
+    type: "inpatientStatsDailyDataSetManager"
+config:
+  category: "DAILY"
+  sites:
+    - "MIREBALAIS"
+  order: "4"
+  pageProvider: "pihcore"
+  pagePath: "reports/inpatientStatsDailyReport"

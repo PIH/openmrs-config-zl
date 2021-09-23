@@ -1,0 +1,22 @@
+key: "noncodeddiagnoses"
+uuid: "3737be52-2265-11e3-818c-c7ea4184d59e"
+name: "mirebalaisreports.noncodeddiagnoses.name"
+description: "mirebalaisreports.noncodeddiagnoses.description"
+parameters:
+  - key: "day"
+    type: "java.util.Date"
+    label: "mirebalaisreports.parameter.day"
+datasets:
+  - key: "data"
+    type: "nonCodedDiagnosisDataSetManager"
+designs:
+  - type: "csv"
+    properties:
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "DATA_QUALITY"
+  order: "1"
+  pageProvider: "pihcore"
+  pagePath: "reports/nonCodedDiagnoses"
