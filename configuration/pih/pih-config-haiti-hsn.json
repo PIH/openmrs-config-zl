@@ -37,10 +37,5 @@
     "coreapps.defaultPatientIdentifierLocation": "97c241a0-eaec-11e5-a837-0800200c9a66"
   },
 
-  "locationTags": {
-    "Login Location": ["Klinik MNT | HSN", "Sante Fanm | HSN", "Sante Mantal | HSN"],
-    "Medical Record Location": ["Saint-Marc (HSN)"]
-  },
-
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json"
 }
