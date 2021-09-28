@@ -5,39 +5,6 @@
 
     "country": "HAITI",
 
-    "components": [
-        "allergies",
-        "biometricsFingerPrints",
-        "checkIn",
-        "checkInHomepageApp",
-        "clinicianDashboard",
-        "dataExports",
-        "echocardiogram",
-        "edTriage",
-        "edTriageQueue",
-        "exportPatients",
-        "growthChart",
-        "importPatients",
-        "markPatientDead",
-        "mentalHealth",
-        "monitoringReports",
-        "myAccount",
-        "ncd",
-        "overviewReports",
-        "patientRegistration",
-        "primaryCare",
-        "programs",
-        "relationships",
-        "socioEconomics",
-        "systemAdministration",
-        "todaysVisits",
-        "vct",
-        "visitManagement",
-        "visitNote",
-        "vitals",
-        "waitingForConsult"
-    ],
-
     "globalProperties": {
         "mirebalais.checkIn.paymentAmounts": "200,150,100,75,50,0",
         "mirebalais.checkIn.paymentAmountLabels": "200,150,100,75,50,Exonéré",
@@ -70,7 +37,12 @@
           "bean:assignDossierNumber"
         ],
         "matchingPatientsPropertiesToDisplay" : [
-          "personName", "gender", "birthdate", "personAddress", "attributeMap['First Name of Mother']", "attributeMap['Telephone Number']"
+          "personName",
+          "gender",
+          "birthdate",
+          "personAddress",
+          "attributeMap['First Name of Mother']",
+          "attributeMap['Telephone Number']"
         ],
         "identifierTypesToDisplay": [
             "a541af1e-105c-40bf-b345-ba1fd6a59b85",
