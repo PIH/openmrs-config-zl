@@ -1,0 +1,16 @@
+key: "dailyRegistrations"
+uuid: "2e91bd04-4c7a-11e3-9325-f3ae8db9f6a7"
+name: "mirebalaisreports.dailyRegistrations.name"
+description: "mirebalaisreports.dailyRegistrations.description"
+parameters:
+  - key: "day"
+    type: "java.util.Date"
+    label: "mirebalaisreports.parameter.day"
+datasets:
+  - key: "overall"
+    type: "dailyRegistrationsDataSetManager"
+  - key: "byLocation"
+    type: "dailyRegistrationsDataSetManager"
+config:
+  category: "DAILY"
+  order: "1"

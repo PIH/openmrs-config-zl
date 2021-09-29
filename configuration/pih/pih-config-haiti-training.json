@@ -10,10 +10,5 @@
     "matchUrl": "http://localhost:9000/match",
     "scanUrl": "https://localhost:9443/fingerprint/scan",
     "devicesUrl": "https://localhost:9443/fingerprint/devices"
-  },
-
-  "locationTags": {
-    "Login Location": ["Thomonde"],
-    "Medical Record Location": ["Thomonde"]
   }
 }

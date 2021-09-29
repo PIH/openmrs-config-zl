@@ -1,0 +1,25 @@
+key: "weeklyMonitoring"
+uuid: "bfac0d81-09fc-4981-adf2-d6fa9e5ec852"
+name: "mirebalaisreports.weeklyMonitoring.name"
+description: "mirebalaisreports.weeklyMonitoring.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "weeklyMonitoring"
+    type: "sql"
+    config: "sql/weeklyMonitoring.sql"
+designs:
+  - type: "excel"
+    template: "templates/weeklyMonitoring.xls"
+    properties:
+      "repeatingSections": "sheet:1,row:18,dataset:weeklyMonitoring"
+config:
+  category: "MONITORING"
+  order: 1
+  components:
+    - "monitoringReports"

@@ -10,34 +10,32 @@
     "clinicianDashboard",
     "covid19",
     "dataExports",
-    "edTriage",
-    "edTriageQueue",
+    "echocardiogram",
     "exportPatients",
     "importPatients",
+    "labs",
     "markPatientDead",
+    "mch",
     "mentalHealth",
     "monitoringReports",
     "myAccount",
+    "ncd",
+    "obgyn",
     "overviewReports",
     "patientRegistration",
     "programs",
     "relationships",
+    "socioEconomics",
     "systemAdministration",
     "todaysVisits",
+    "uhmVitals",
     "visitManagement",
-    "visitNote",
-    "vitals",
-    "waitingForConsult"
+    "visitNote"
 	],
 
   "globalProperties": {
+    "haiti.checkIn.reasonsForVisit":"PIH:9359,PIH:5489,PIH:11504",
     "coreapps.defaultPatientIdentifierLocation": "97c241a0-eaec-11e5-a837-0800200c9a66"
-  },
-
-  "locationTags": {
-    "Lab Results Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN"],
-    "Login Location": ["COVID-19 | Izolman | HSN", "COVID-19 | UMI | HSN", "Sante Mantal | HSN"],
-    "Medical Record Location": ["Saint-Marc (HSN)"]
   },
 
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json"

@@ -1,0 +1,20 @@
+key: "j9CaseRegistration"
+uuid: "ed980032-3c77-11ea-8806-0242ac110002"
+name: "mirebalaisreports.j9CaseRegistration.name"
+description: "mirebalaisreports.j9CaseRegistration.description"
+datasets:
+  - key: "j9CaseRegistration"
+    type: "sql"
+    config: "sql/j9CaseRegistration.sql"
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "j9CaseRegistration.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "DATA_EXPORT"
+  order: 1007
+  components:
+    - "j9"

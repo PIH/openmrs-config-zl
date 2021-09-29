@@ -89,6 +89,14 @@
         }
     </style>
 
+    <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
+    note that we already do this on the history section, but add here case the history section is skipped
+    the special case for infants (less than 2 years old) is only handled on the history section, as it prompts the user for a question of whether to enroll in EID or HIV
+-->
+    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 1">
+        <enrollInProgram programId="HIV" locationTag="Program Location"/>
+    </includeIf>
+
     <ifMode mode="VIEW" include="false">
         <h1>
             <uimessage code="pihcore.visitNote.plan"/>
@@ -581,73 +589,6 @@
                      answerConceptIds="CIEL:159943, CIEL:159944"
                      labelCode="pihcore.inhTreatmentLine"/>
             </p>
-
-            <drugOrder>
-                <orderTemplate>
-                    <orderProperty name="action"/>
-                    <div style="padding:0px;">
-                        <orderProperty name="concept" label="Drug">
-                            <option value="CIEL:105281" label="Cotrimoxazole" />
-                            <option value="CIEL:78280"  label="Isoniazide" />
-                            <option value="CIEL:76488"  label="Fluconazole" />
-                            <option value="CIEL:74250"  label="Dapsone" />
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="drug" label="Formulation"/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
-                    </div>
-                    <div style="padding:0x;">
-                        <orderProperty name="dosingType"/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
-                        <orderProperty name="doseUnits" label=" "/>
-                        <orderProperty name="frequency" label=" x "/>
-                        <orderProperty name="route" label=" "/>
-                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50" label=" "/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="dateActivated" label="pihcore.starting"/>
-                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
-                        <orderProperty name="durationUnits" label=" ">
-                            <option value="CIEL:1072"/>  <!-- days -->
-                            <option value="CIEL:1073"/>  <!-- weeks -->
-                            <option value="CIEL:1074"/>  <!-- months -->
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="quantity" label="pihcore.quantity"/>
-                        <orderProperty name="quantityUnits" label=" "/>
-                        <orderProperty name="numRefills" label="pihcore.refills"/>
-                    </div>
-                    <div style="display:none;">
-                        <orderProperty name="urgency" value="ROUTINE"/>
-                        <orderProperty name="previousOrder"/>
-                        <orderProperty name="careSetting" value="OUTPATIENT"/>
-                        <orderProperty name="orderReason" value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-                            <option value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
-                        </orderProperty>
-                    </div>
-                    <div style="display:none;" class="order-discontinueReason">
-                        <orderProperty name="discontinueReason">
-                            <option value="CIEL:843"/>
-                            <option value="CIEL:102"/>
-                            <option value="CIEL:127750"/>
-                            <option value="CIEL:1754"/>
-                            <option value="CIEL:162853"/>
-                            <option value="CIEL:1434"/>
-                            <option value="CIEL:987"/>
-                            <option value="CIEL:1253"/>
-                            <option value="CIEL:1067"/>
-                            <option value="CIEL:5622"/>
-                        </orderProperty>
-                        <orderProperty name="discontinueReasonNonCoded"/>
-                    </div>
-                </orderTemplate>
-            </drugOrder>
         </div>
     </section>
 
@@ -681,105 +622,6 @@
                 <br/><br/><br/><br/>
                 </p>
             </div>
-
-            <drugOrder>
-                <orderTemplate>
-                    <orderProperty name="action"/>
-                    <div style="padding:0px;">
-                        <orderProperty name="concept" label="Drug" style="autocomplete"/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="drug" label="Formulation">
-                            <option value="78faac2e-dfbe-11e9-8a34-2a2ae2dbcce4" label="DTG/3TC/TDF 50/300/300 mg"/>
-                            <option value="78f968e6-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC 300/150 mg"/>
-                            <option value="78f9739a-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC/NVP 300/150/200 mg"/>
-                            <option value="78f95fa4-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC 60/30 mg"/>
-                            <option value="78f96a76-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF/3TC 300/300 mg"/>
-                            <option value="f2a2c2d9-16a6-4138-9074-6fdf3307e107" label="ABC/3TC 300/300 mg"/>
-                            <option value="78f97cfa-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC/NVP 60/30/50 mg"/>
-                            <option value="c893970e-22b5-4cb9-8be2-1a9bff480235" label="RAL/ETV 400/100 mg"/>
-                            <option value="78fab02a-dfbe-11e9-8a34-2a2ae2dbcce4" label="DTG 50 mg"/>
-                            <option value="8c35a0cd-9e2a-40eb-aa57-f589c25f17bf" label="DTG 10 mg"/>
-                            <option value="6058eb5c-c7bb-445b-9a9a-14e73e8ab5a9" label="DTG 5 mg"/>
-                            <option value="78f95bc6-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT 10 mg sp"/>
-                            <option value="78f967ba-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 10 mg sp"/>
-                            <option value="78f96526-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 50 mg"/>
-                            <option value="78f960da-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF/3TC/EFV 300/300/600 mg"/>
-                            <option value="78f96684-dfbe-11e9-8a34-2a2ae2dbcce4" label="3TC 10 mg sp"/>
-                            <option value="78faa9b8-dfbe-11e9-8a34-2a2ae2dbcce4" label="ABC/3TC 60/30 mg"/>
-                            <option value="08d3817b-4e54-4825-bc4b-0512b627d567" label="RAL/DRV/r 400/600/100mg"/>
-                            <option value="0fc3d5c1-fd39-4899-b5c0-b094e28ff359" label="DRV/ETV 300/100 mg"/>
-                            <option value="a6985b15-5fd6-4bdf-93f6-62930a438464" label="ABC/3TC 120/60 mg"/>
-                            <option value="78f96210-dfbe-11e9-8a34-2a2ae2dbcce4" label="EFV 600 mg"/>
-                            <option value="78faa576-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF 300 mg"/>
-                            <option value="78f9780e-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 200 mg"/>
-                            <option value="78f981d2-dfbe-11e9-8a34-2a2ae2dbcce4" label="ABC 300 mg"/>
-                            <option value="78faaaf8-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 40/10 mg"/>
-                            <option value="35c6041e-0af3-4bab-887d-9db682a02248" label="ABC 60 mg"/>
-                            <option value="78f976c4-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 100/25 mg"/>
-                            <option value="78faa710-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 80/20 mg"/>
-                            <option value="78f98308-dfbe-11e9-8a34-2a2ae2dbcce4" label="ABC 20 mg"/>
-                            <option value="78f95e78-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 200/50 mg"/>
-                            <option value="78f95d38-dfbe-11e9-8a34-2a2ae2dbcce4" label="ATV/r 300/100 mg"/>
-                            <option value="78f97b9c-dfbe-11e9-8a34-2a2ae2dbcce4" label="EFV 200 mg"/>
-                            <option value="29c9dd27-25f2-45c6-9708-93fe142a46ba" label="ETV 100mg"/>
-                            <option value="0fc3d5c1-fd39-4899-b5c0-b094e28ff359" label="DRV/ETV 300/100 mg"/>
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
-                    </div>
-                    <div style="display:none">
-                        <orderProperty name="orderReason" value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-                            <option value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="HIV"/>
-                         </orderProperty>
-                    </div>
-                    <div style="padding:0x;">
-                        <orderProperty name="dosingType"/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
-                        <orderProperty name="doseUnits" label=" "/>
-                        <orderProperty name="frequency" label=" x "/>
-                        <orderProperty name="route" label=" "/>
-                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50" label=" "/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="dateActivated" label="pihcore.starting"/>
-                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
-                        <orderProperty name="durationUnits" label=" ">
-                            <option value="CIEL:1072"/>  <!-- days -->
-                            <option value="CIEL:1073"/>  <!-- weeks -->
-                            <option value="CIEL:1074"/>  <!-- months -->
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="quantity" label="pihcore.quantity"/>
-                        <orderProperty name="quantityUnits" label=" "/>
-                        <orderProperty name="numRefills" label="pihcore.refills"/>
-                    </div>
-                    <div style="display:none;">
-                        <orderProperty name="urgency" value="ROUTINE"/>
-                        <orderProperty name="previousOrder"/>
-                        <orderProperty name="careSetting" value="OUTPATIENT"/>
-                    </div>
-                    <div style="display:none;" class="order-discontinueReason">
-                        <orderProperty name="discontinueReason">
-                            <option value="CIEL:843"/>
-                            <option value="CIEL:102"/>
-                            <option value="CIEL:127750"/>
-                            <option value="CIEL:1754"/>
-                            <option value="CIEL:162853"/>
-                            <option value="CIEL:1434"/>
-                            <option value="CIEL:987"/>
-                            <option value="CIEL:1253"/>
-                            <option value="CIEL:1067"/>
-                            <option value="CIEL:5622"/>
-                        </orderProperty>
-                        <orderProperty name="discontinueReasonNonCoded"/>
-                    </div>
-                </orderTemplate>
-            </drugOrder>
 
             <includeIf velocityTest="$patient.gender == 'F' ">
                 <br/>
@@ -860,89 +702,6 @@
                          answerSeparator="&lt;br /&gt;" />
                 </p>
             </div>
-
-            <!-- TB Drug order -->
-            <drugOrder>
-                <orderTemplate>
-                    <orderProperty name="action"/>
-                    <div style="padding:0px;">
-                        <orderProperty name="concept" label="pihcore.drugOrders.concept">
-                            <optionGroup concept="PIH:TUBERCULOSIS DRUGS"/>
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0x;">
-                        <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
-                    </div>
-                    <div style="padding:0x;">
-                        <orderProperty name="dosingType"/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
-                        <orderProperty name="doseUnits" label=" ">
-                            <option value="CIEL:1513"/>    <!-- Tablet -->
-                            <option value="CIEL:1608"/>    <!-- Capsule -->
-                            <option value="CIEL:161553"/>  <!-- mg -->
-                            <option value="CIEL:162264" label="IU"/>  <!-- IU -->
-                        </orderProperty>
-                        <orderProperty name="frequency" label=" x "/>
-                        <orderProperty name="route" label=" ">
-                            <option value="CIEL:160240"/> <!-- Oral -->
-                            <option value="CIEL:160243"/> <!-- Intramuscular -->
-                            <option value="CIEL:160242" label="IV"/> <!-- IV -->
-                        </orderProperty>
-                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50"
-                                       label=" "/>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="dateActivated" label="pihcore.starting"/>
-                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
-                        <orderProperty name="durationUnits" label=" ">
-                            <option value="CIEL:1072"/>  <!-- days -->
-                            <option value="CIEL:1073"/>  <!-- weeks -->
-                            <option value="CIEL:1074"/>  <!-- months -->
-                        </orderProperty>
-                    </div>
-                    <div style="padding:0px;">
-                        <orderProperty name="quantity" label="pihcore.quantity"/>
-                        <orderProperty name="quantityUnits" label=" ">
-                            <option value="CIEL:1513"/>    <!-- Tablet -->
-                            <option value="CIEL:1608"/>    <!-- Capsule -->
-                            <option value="CIEL:161553"/>  <!-- mg -->
-                            <option value="CIEL:162264" label="IU"/>  <!-- IU -->
-                        </orderProperty>
-                        <orderProperty name="numRefills" label="pihcore.refills"/>
-                    </div>
-                    <div style="display:none;">
-                        <orderProperty name="urgency" value="ROUTINE"/>
-                        <orderProperty name="previousOrder"/>
-                        <orderProperty name="careSetting" value="OUTPATIENT"/>
-                        <orderProperty name="orderReason" >
-                            <option value="3ccca7cc-26fe-102b-80cb-0017a47871b2" /> <!-- TB -->
-                        </orderProperty>
-                    </div>
-                    <div style="display:none;" class="order-discontinueReason">
-                        <orderProperty name="discontinueReason">
-                            <option value="CIEL:159794"/> <!-- continuation phase -->
-                            <option value="CIEL:981"/>    <!-- changeDose -->
-                            <option value="CIEL:159791"/> <!-- cured -->
-                            <option value="CIEL:1267"/>   <!-- completed -->
-                            <option value="CIEL:843"/>    <!-- regimen failure -->
-                            <option value="CIEL:102"/>    <!-- toxicity -->
-                            <option value="CIEL:127750"/> <!-- patient refused -->
-                            <option value="CIEL:1754"/>   <!-- out of stock -->
-                            <option value="CIEL:162853"/> <!-- interaction -->
-                            <option value="CIEL:1434"/>   <!-- pregnant -->
-                            <option value="CIEL:987"/>    <!-- intolerance -->
-                            <option value="CIEL:1067"/>   <!-- unknown -->
-                            <option value="CIEL:5622"/>   <!-- other -->
-                        </orderProperty>
-                        <orderProperty name="discontinueReasonNonCoded"/>
-                    </div>
-                </orderTemplate>
-            </drugOrder>
         </div>
 
     </section>
@@ -1082,25 +841,145 @@
                     </obsgroup>
                 </div>
             </includeIf>
-            <hr style="border: 1px dashed #ccc;"/>
+        </div>
+    </section>
 
-            <!-- Syphilis and STI drug order -->
+    <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.visitNote.orders.medications">
+
+        <h4><uimessage code="pihcore.artDrugOrders"/></h4>
+
+        <div class="section-container-color">
+            <drugOrder>
+                <orderTemplate>
+                    <orderProperty name="action"/>
+                    <div style="padding:0px;">
+                        <orderProperty name="concept" label="pihcore.drugOrders.concept" style="autocomplete"/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="drug" label="pihcore.drugOrders.drug">
+                            <option value="78faac2e-dfbe-11e9-8a34-2a2ae2dbcce4" label="DTG/3TC/TDF 50/300/300 mg"/>
+                            <option value="78f968e6-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC 300/150 mg"/>
+                            <option value="78f9739a-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC/NVP 300/150/200 mg"/>
+                            <option value="78f95fa4-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC 60/30 mg"/>
+                            <option value="78f96a76-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF/3TC 300/300 mg"/>
+                            <option value="f2a2c2d9-16a6-4138-9074-6fdf3307e107" label="ABC/3TC 300/300 mg"/>
+                            <option value="78f97cfa-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT/3TC/NVP 60/30/50 mg"/>
+                            <option value="c893970e-22b5-4cb9-8be2-1a9bff480235" label="RAL/ETV 400/100 mg"/>
+                            <option value="78fab02a-dfbe-11e9-8a34-2a2ae2dbcce4" label="DTG 50 mg"/>
+                            <option value="8c35a0cd-9e2a-40eb-aa57-f589c25f17bf" label="DTG 10 mg"/>
+                            <option value="6058eb5c-c7bb-445b-9a9a-14e73e8ab5a9" label="DTG 5 mg"/>
+                            <option value="78f95bc6-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT 10 mg sp"/>
+                            <option value="78f967ba-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 10 mg sp"/>
+                            <option value="78f96526-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 50 mg"/>
+                            <option value="78f960da-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF/3TC/EFV 300/300/600 mg"/>
+                            <option value="78f96684-dfbe-11e9-8a34-2a2ae2dbcce4" label="3TC 10 mg sp"/>
+                            <option value="78faa9b8-dfbe-11e9-8a34-2a2ae2dbcce4" label="ABC/3TC 60/30 mg"/>
+                            <option value="08d3817b-4e54-4825-bc4b-0512b627d567" label="RAL/DRV/r 400/600/100mg"/>
+                            <option value="0fc3d5c1-fd39-4899-b5c0-b094e28ff359" label="DRV/ETV 300/100 mg"/>
+                            <option value="a6985b15-5fd6-4bdf-93f6-62930a438464" label="ABC/3TC 120/60 mg"/>
+                            <option value="78f96210-dfbe-11e9-8a34-2a2ae2dbcce4" label="EFV 600 mg"/>
+                            <option value="78faa576-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF 300 mg"/>
+                            <option value="78f9780e-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 200 mg"/>
+                            <option value="78f981d2-dfbe-11e9-8a34-2a2ae2dbcce4" label="ABC 300 mg"/>
+                            <option value="78faaaf8-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 40/10 mg"/>
+                            <option value="35c6041e-0af3-4bab-887d-9db682a02248" label="ABC 60 mg"/>
+                            <option value="78f976c4-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 100/25 mg"/>
+                            <option value="78faa710-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 80/20 mg"/>
+                            <option value="78f98308-dfbe-11e9-8a34-2a2ae2dbcce4" label="ABC 20 mg"/>
+                            <option value="78f95e78-dfbe-11e9-8a34-2a2ae2dbcce4" label="LPV/r 200/50 mg"/>
+                            <option value="78f95d38-dfbe-11e9-8a34-2a2ae2dbcce4" label="ATV/r 300/100 mg"/>
+                            <option value="78f97b9c-dfbe-11e9-8a34-2a2ae2dbcce4" label="EFV 200 mg"/>
+                            <option value="29c9dd27-25f2-45c6-9708-93fe142a46ba" label="ETV 100mg"/>
+                            <option value="0fc3d5c1-fd39-4899-b5c0-b094e28ff359" label="DRV/ETV 300/100 mg"/>
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
+                    </div>
+                    <div style="display:none">
+                        <orderProperty name="orderReason" value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
+                            <option value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="HIV"/>
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0x;">
+                        <orderProperty name="dosingType"/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
+                        <orderProperty name="doseUnits" label=" "/>
+                        <orderProperty name="frequency" label=" x "/>
+                        <orderProperty name="route" label=" "/>
+                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50" label=" "/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="dateActivated" label="pihcore.starting"/>
+                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
+                        <orderProperty name="durationUnits" label=" ">
+                            <option value="CIEL:1072"/>  <!-- days -->
+                            <option value="CIEL:1073"/>  <!-- weeks -->
+                            <option value="CIEL:1074"/>  <!-- months -->
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="quantity" label="pihcore.quantity"/>
+                        <orderProperty name="quantityUnits" label=" "/>
+                        <orderProperty name="numRefills" label="pihcore.refills"/>
+                    </div>
+                    <div style="display:none;">
+                        <orderProperty name="urgency" value="ROUTINE"/>
+                        <orderProperty name="previousOrder"/>
+                        <orderProperty name="careSetting" value="OUTPATIENT"/>
+                    </div>
+                    <div style="display:none;" class="order-discontinueReason">
+                        <orderProperty name="discontinueReason">
+                            <option value="CIEL:843"/>
+                            <option value="CIEL:102"/>
+                            <option value="CIEL:127750"/>
+                            <option value="CIEL:1754"/>
+                            <option value="CIEL:162853"/>
+                            <option value="CIEL:1434"/>
+                            <option value="CIEL:987"/>
+                            <option value="CIEL:1253"/>
+                            <option value="CIEL:1067"/>
+                            <option value="CIEL:5622"/>
+                        </orderProperty>
+                        <orderProperty name="discontinueReasonNonCoded"/>
+                    </div>
+                </orderTemplate>
+            </drugOrder>
+        </div>
+
+        <br/>
+        <h4><uimessage code="pihcore.otherDrugOrders"/></h4>
+
+        <div class="section-container-color">
             <drugOrder>
                 <orderTemplate>
                     <orderProperty name="action"/>
                     <div style="padding:0px;">
                         <orderProperty name="concept" label="pihcore.drugOrders.concept">
-                            <optionGroup concept="PIH:Syphilis and STI drug set"/>
+                            <option value="CIEL:105281" label="Cotrimoxazole" />
+                            <option value="CIEL:78280"  label="Isoniazide" />
+                            <option value="CIEL:76488"  label="Fluconazole" />
+                            <option value="CIEL:74250"  label="Dapsone" />
+                            <optionGroup concept="PIH:TUBERCULOSIS DRUGS" groupLabel="pihcore.tbTreatment" sortAlphabetically="true"/>
+                            <optionGroup concept="PIH:Syphilis and STI drug set" groupLabel="pihcore.stiTreatment" sortAlphabetically="true"/>
                         </orderProperty>
                     </div>
-                    <div style="padding:0x;">
+                    <div style="padding:0px;">
                         <orderProperty name="drug" label="pihcore.drugOrders.drug"/>
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
                     </div>
-                    <div style="padding:0x;">
-                        <orderProperty name="dosingType"/>
+                    <div style="padding:0px;">
+                        <orderProperty name="orderReason" label="Order Reason">
+                            <option value="160538AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="PTME"/>
+                            <option value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="pihcore.prophylaxis"/>
+                            <option value="3ccca7cc-26fe-102b-80cb-0017a47871b2" label="pihcore.tbTreatment" />
+                            <option value="3cce6116-26fe-102b-80cb-0017a47871b2" label="pihcore.stiTreatment" />
+                        </orderProperty>
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
@@ -1122,8 +1001,8 @@
                             <option value="CIEL:162392"/> <!-- Vaginally -->
                             <option value="CIEL:162390"/> <!-- eyes -->
                         </orderProperty>
-                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50"
-                                       label=" "/>
+                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50" label=" "/>
+                        <orderProperty name="dosingType"/>
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="dateActivated" label="pihcore.starting"/>
@@ -1151,28 +1030,31 @@
                         <orderProperty name="urgency" value="ROUTINE"/>
                         <orderProperty name="previousOrder"/>
                         <orderProperty name="careSetting" value="OUTPATIENT"/>
-                        <orderProperty name="orderReason" >
-                            <option value="3cce6116-26fe-102b-80cb-0017a47871b2" /> <!-- STI -->
-                        </orderProperty>
                     </div>
                     <div style="display:none;" class="order-discontinueReason">
                         <orderProperty name="discontinueReason">
-                            <option value="CIEL:843"/>
-                            <option value="CIEL:102"/>
-                            <option value="CIEL:127750"/>
-                            <option value="CIEL:1754"/>
-                            <option value="CIEL:162853"/>
-                            <option value="CIEL:1434"/>
-                            <option value="CIEL:987"/>
+                            <option value="CIEL:159794"/> <!-- continuation phase -->
+                            <option value="CIEL:981"/>    <!-- changeDose -->
+                            <option value="CIEL:159791"/> <!-- cured -->
+                            <option value="CIEL:1267"/>   <!-- completed -->
+                            <option value="CIEL:843"/>    <!-- regimen failure -->
+                            <option value="CIEL:102"/>    <!-- toxicity -->
+                            <option value="CIEL:127750"/> <!-- patient refused -->
+                            <option value="CIEL:1754"/>   <!-- out of stock -->
+                            <option value="CIEL:162853"/> <!-- interaction -->
+                            <option value="CIEL:1434"/>   <!-- pregnant -->
+                            <option value="CIEL:987"/>    <!-- intolerance -->
                             <option value="CIEL:1253"/>
-                            <option value="CIEL:1067"/>
-                            <option value="CIEL:5622"/>
+                            <option value="CIEL:1067"/>   <!-- unknown -->
+                            <option value="CIEL:5622"/>   <!-- other -->
                         </orderProperty>
                         <orderProperty name="discontinueReasonNonCoded"/>
                     </div>
                 </orderTemplate>
             </drugOrder>
+
         </div>
+
     </section>
 
     <!-- this section is ONLY included for HIV intake encounter -->

@@ -1,0 +1,25 @@
+key: "morbidityRegister"
+uuid: "9d77c3bf-19c8-484d-af94-e2f2bb487797"
+name: "mirebalaisreports.morbidityRegister.name"
+description: "mirebalaisreports.morbidityRegister.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "morbidityRegister"
+    type: "sql"
+    config: "sql/morbidityRegister.sql"
+designs:
+  - type: "excel"
+    template: "templates/morbidityRegister.xls"
+    properties:
+      "repeatingSections": "sheet:1,row:7,dataset:morbidityRegister"
+config:
+  category: "MONITORING"
+  order: 1
+  components:
+    - "monitoringReports"

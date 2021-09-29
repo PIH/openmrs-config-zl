@@ -1,0 +1,25 @@
+key: "visitRegistry"
+uuid: "4f4dbafc-eda6-4910-b9aa-b7be62bef49f"
+name: "mirebalaisreports.visitRegistry.name"
+description: "mirebalaisreports.visitRegistry.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "visitRegistry"
+    type: "sql"
+    config: "sql/visitRegistry.sql"
+designs:
+  - type: "excel"
+    template: "templates/visitRegistry.xls"
+    properties:
+      "repeatingSections": "sheet:1,row:9,dataset:visitRegistry"
+config:
+  category: "MONITORING"
+  order: 4
+  components:
+    - "monitoringReports"

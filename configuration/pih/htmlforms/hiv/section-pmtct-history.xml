@@ -133,6 +133,7 @@
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections('pmtct-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
+                setUpDatepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
             });
         </script>
     </ifMode>
@@ -454,62 +455,47 @@
 
         <div class="section-container">
             <p>
-                <obs id="syph-q"  conceptId="CIEL:164801" style="checkbox"
+                <obs conceptId="CIEL:164801" style="checkbox"
                      answerConceptId="CIEL:1065" answerCode="pihcore.screeningSyph"
-                     dateLabel="Date" >
-                    <controls>
-                        <when value="CIEL:1065" thenDisplay="#syph-screen"/>
-                    </controls>
-                </obs>
+                     dateLabel="Date" toggle="syph-screen"/>
             </p>
             <p id="syph-screen" class="side-by-side">
                 <label>
-                    <uimessage code="pihcore.lab.syphilis" />
+                    <uimessage code="pihcore.lab.syphilis"/>
                 </label>
                 <br/>
                 <obs conceptId="CIEL:165303" style="radio"
-                     answerConceptIds="CIEL:703,CIEL:664,CIEL:1138,PIH:3083" />
+                     answerConceptIds="CIEL:703,CIEL:664,CIEL:1138,PIH:3083"/>
             </p>
             <hr/>
 
-            <div class="two-columns" >
+            <div class="two-columns">
                 <div>
                     <obsgroup groupingConceptId="CIEL:166557">
                         <p>
-                            <obs id="mom-syph" conceptId="CIEL:1628" style="checkbox"
+                            <obs conceptId="CIEL:1628" style="checkbox"
                                  answerConceptId="CIEL:112493"
-                                 answerCode="pihcore.syphilisTreatmentPregnantMother" >
-                                <controls>
-                                    <when value="CIEL:112493" thenDisplay="#mom-syph-treat"/>
-                                </controls>
-                            </obs>
+                                 answerCode="pihcore.syphilisTreatmentPregnantMother"
+                                 toggle="mom-syph-treat"/>
                         </p>
-                        <p id="mom-syph-treat">
-                            <label>
-                                <uimessage code="pihcore.treatmentStartDate" />
-                            </label>
-                            <obs conceptId="CIEL:163526"  />
-                            <label>
-                                <uimessage code="pihcore.treatmentEndDate" />
-                            </label>
-                            <obs conceptId="CIEL:164384"/>
+                        <p id="mom-syph-treat" class="startDateEndDate">
+                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
+                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
                         </p>
                     </obsgroup>
                 </div>
 
                 <div>
                     <obsgroup groupingConceptId="CIEL:166558">
-                        <obs conceptId="CIEL:1628" style="checkbox"
-                             answerConceptId="CIEL:112493"
-                             answerCode="pihcore.syphilisTreatmentPartner" />
-                        <label>
-                            <uimessage code="pihcore.treatmentStartDate" />
-                        </label>
-                        <obs conceptId="CIEL:163526"  />
-                        <label>
-                            <uimessage code="pihcore.treatmentEndDate" />
-                        </label>
-                        <obs conceptId="CIEL:164384"/>
+                        <p>
+                            <obs conceptId="CIEL:1628" style="checkbox"
+                                 answerConceptId="CIEL:112493"
+                                 answerCode="pihcore.syphilisTreatmentPartner" toggle="partner-syph-treat"/>
+                        </p>
+                        <p id="partner-syph-treat" class="startDateEndDate">
+                            <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
+                            <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
+                        </p>
                     </obsgroup>
                 </div>
             </div>

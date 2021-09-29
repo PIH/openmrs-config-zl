@@ -1,29 +1,3 @@
 {
-  "components": [
-    "allergies",
-    "checkIn",
-    "checkInHomepageApp",
-    "clinicianDashboard",
-    "covid19",
-    "dataExports",
-    "edTriage",
-    "edTriageQueue",
-    "exportPatients",
-    "importPatients",
-    "markPatientDead",
-    "mentalHealth",
-    "monitoringReports",
-    "myAccount",
-    "overviewReports",
-    "patientRegistration",
-    "programs",
-    "relationships",
-    "spaPreview",
-    "systemAdministration",
-    "todaysVisits",
-    "visitManagement",
-    "visitNote",
-    "vitals",
-    "waitingForConsult"
-	]
+
 }

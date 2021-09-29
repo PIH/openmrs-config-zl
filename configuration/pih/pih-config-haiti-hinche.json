@@ -3,22 +3,36 @@
   "site": "HINCHE",
   "dossierIdentifierPrefix": "HSTH",
 
+  "components": [
+    "allergies",
+    "checkIn",
+    "checkInHomepageApp",
+    "clinicianDashboard",
+    "dataExports",
+    "echocardiogram",
+    "exportPatients",
+    "importPatients",
+    "markPatientDead",
+    "mch",
+    "mentalHealth",
+    "monitoringReports",
+    "myAccount",
+    "ncd",
+    "obgyn",
+    "overviewReports",
+    "patientRegistration",
+    "programs",
+    "relationships",
+    "socioEconomics",
+    "systemAdministration",
+    "todaysVisits",
+    "visitManagement",
+    "visitNote",
+    "uhmVitals"
+  ],
+
   "globalProperties": {
+    "haiti.checkIn.reasonsForVisit":"PIH:9359,PIH:5489,PIH:11504",
     "coreapps.defaultPatientIdentifierLocation": "328f6a60-0370-102d-b0e3-001ec94a0cc1"
-  },
-
-  "biometricsConfig": {
-    "biometricEngine": "restBiometricEngine",
-    "templateFormat": "PROPRIETARY",
-    "subjectUrl": "http://localhost:9000/subject",
-    "matchUrl": "http://localhost:9000/match",
-    "scanUrl": "https://localhost:9443/fingerprint/scan",
-    "devicesUrl": "https://localhost:9443/fingerprint/devices"
-  },
-
-  "locationTags": {
-    "Lab Results Location": ["Hinche"],
-    "Login Location": ["Hinche"],
-    "Medical Record Location": ["Hinche"]
   }
 }

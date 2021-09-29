@@ -108,6 +108,14 @@
         </script>
     </ifMode>
 
+    <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
+        note that we already do this on the history section, but add here case the history section is skipped
+        the special case for infants (less than 2 years old) is only handled on the history section, as it prompts the user for a question of whether to enroll in EID or HIV
+    -->
+    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 1">
+        <enrollInProgram programId="HIV" locationTag="Program Location"/>
+    </includeIf>
+
     <!-- this section is ONLY included for HIV rendezvous encounter -->
     <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
     <section id="hiv-adverse-event" sectionTag="fieldset" headerTag="legend" headerStyle="title"

@@ -99,6 +99,7 @@
             jq('#2rhz_4rh').closest('tr').hide();
         }
 
+        setupCheckboxRadioGroups();
     });
 
 </script>
@@ -122,20 +123,26 @@
         <enrollInProgram programId="HIV" locationTag="Program Location"/>
     </includeIf>
 
+    <!-- special case for enroll children less than 2 years old -->
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 2">
         <section id="hiv-program" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.programEnroll">
-            <div class="section-container">
+            <div class="section-container checkbox-radio-group">
+
                 <label>
                     <uimessage code="zl.choose1"/>:
                 </label>
-                <enrollInProgram programId="EID" locationTag="Program Location" showCheckbox="true" />
-                <uimessage code="ui.i18n.Program.name.7e06bf82-9f1a-4218-b68f-823082ef519b"/>
-                <br/>
 
-                <enrollInProgram programId="HIV" locationTag="Program Location" showCheckbox="true" />
-                <uimessage code="pihcore.lab.hiv.title"/>
-                <br/>
+                <div class="checkbox-radio-option">
+                    <enrollInProgram programId="EID" locationTag="Program Location" showCheckbox="true" />
+                    <uimessage code="ui.i18n.Program.name.7e06bf82-9f1a-4218-b68f-823082ef519b"/>
+                </div>
+
+                <div class="checkbox-radio-option">
+                    <enrollInProgram programId="HIV" locationTag="Program Location" showCheckbox="true" />
+                    <uimessage code="pihcore.lab.hiv.title"/>
+                </div>
+
             </div>
         </section>
     </includeIf>
@@ -201,6 +208,10 @@
                             <uimessage code="pihcore.internalTransferLocation"/>
                         </label>
                         <obs conceptId="PIH:8621" style="location" answerLocationTags="Program Location"/>
+                        <includeIf velocityTest="$patient.gender == 'F' ">
+                            <obs conceptId="PIH:13679" style="checkbox"
+                                 answerCode="pihcore.refer.referByMCH" answerConceptId="CIEL:1065" />
+                        </includeIf>
                     </p>
 
                     <p id="external-transfer-out">

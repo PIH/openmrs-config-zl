@@ -1,0 +1,16 @@
+key: "dailyClinicalEncounters"
+uuid: "5dd60b6c-4d45-11e3-9325-f3ae8db9f6a7"
+name: "mirebalaisreports.dailyClinicalEncounters.name"
+description: "mirebalaisreports.dailyClinicalEncounters.description"
+parameters:
+  - key: "day"
+    type: "java.util.Date"
+    label: "mirebalaisreports.parameter.day"
+datasets:
+  - key: "byLocation"
+    type: "dailyClinicalEncountersDataSetManager"
+config:
+  category: "DAILY"
+  sites:
+    - "MIREBALAIS"
+  order: "3"

@@ -1,0 +1,32 @@
+key: "j9Referrals"
+uuid: "cd7dfde7-764a-4da6-81c2-d5887ed1df51"
+name: "mirebalaisreports.j9Referrals.name"
+description: "mirebalaisreports.j9Referrals.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+  - key: "patient_id"
+    type: "java.lang.String"
+    label: "Patient"
+  - key: "locale"
+    type: "java.lang.String"
+    label: "Locale"
+datasets:
+  - key: "j9Referrals"
+    type: "sql"
+    config: "sql/j9Referrals.sql"
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "j9Referrals.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  order: 1
+  components:
+    - "j9"

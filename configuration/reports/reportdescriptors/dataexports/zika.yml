@@ -1,0 +1,20 @@
+key: "zika"
+uuid: "c6bafa69-1745-4838-9171-cffaacf8fb1d"
+name: "mirebalaisreports.zika.name"
+description: "mirebalaisreports.zika.description"
+datasets:
+  - key: "zika"
+    type: "sql"
+    config: "sql/zika.sql"
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "zikadataexport.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+config:
+  category: "DATA_EXPORT"
+  order: 1001
+  components:
+    - "zika"

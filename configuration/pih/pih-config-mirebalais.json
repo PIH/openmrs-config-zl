@@ -6,8 +6,8 @@
   "site": "MIREBALAIS",
 
   "globalProperties": {
-    "mirebalais.checkIn.paymentAmounts": "200,150,100,50,0",
-    "mirebalais.checkIn.paymentAmountLabels": "200,150,100,50,Exempt",
+    "mirebalais.checkIn.paymentAmounts": "200,150,100,75,50,0",
+    "mirebalais.checkIn.paymentAmountLabels": "200,150,100,75,50,Exempt",
     "mirebalais.checkIn.paymentAmountDefault": "100",
     "haiti.checkIn.reasonsForVisit": "PIH:CLINICAL,PIH:ID card only,PIH:Lab only,PIH:Pharmacy only,PIH:Procedure only,PIH:Request scheduled appointment,PIH:Social assistance and psychosocial support,PIH:OTHER",
     "providermanagement.restrictedRoles": "68624C4C-9E10-473B-A849-204820D16C45,11C1A56D-82F7-4269-95E8-2B67B9A3D837,9a4b44b2-8a9f-11e8-9a94-a6cf71072f73,2fa6f8da-aa58-11e8-98d0-529269fb1459,4f88dd49-0c64-4ecd-af0f-4dff272a4971",
@@ -31,68 +31,6 @@
 
   "idCardLabel": "Zanmi Lasante Patient ID Card",
   "idCardLocale": "ht",
-
-  "locationTags": {
-    "Lab Results Location": [
-      "Bank Pou San",
-      "CDI Klinik Ekstèn Jeneral",
-      "COVID-19 | Izolman",
-      "COVID-19 | UMI",
-      "Klinik Ekstèn",
-      "Sal Avan Operasyon | PACU",
-      "Sal Timoun",
-      "Sal Timoun A",
-      "Sal Timoun B",
-      "Sante Fanm"
-    ],
-    "Login Location": [
-      "Achiv Santral",
-      "Bank Pou San",
-      "Biwo Resepsyon",
-      "CDI Klinik Ekstèn Jeneral Achiv Santral",
-      "CDI Klinik Ekstèn Jeneral Biwo Randevou",
-      "CDI Klinik Ekstèn Jeneral Famasi",
-      "CDI Klinik Ekstèn Jeneral Laboratwa",
-      "CDI Klinik Ekstèn Jeneral Radyografi",
-      "CDI Klinik Ekstèn Jeneral Sal Pwosedi",
-      "CDI Klinik Ekstèn Jeneral",
-      "Chimyoterapi",
-      "COVID-19 | Izolman",
-      "COVID-19 | UMI",
-      "Dantis",
-      "Famasi Famn ak Ti moun",
-      "Ijans | Sante Fanm",
-      "Ijans Resepsyon",
-      "Ijans",
-      "Klinik Ekstèn Famasi",
-      "Klinik Ekstèn",
-      "Klinik MNT",
-      "Laboratwa Ekstèn pou Fanm",
-      "Laboratwa Prensipal",
-      "Planin Familyal",
-      "Radyografi",
-      "Sal Aprè Akouchman",
-      "Sal Aprè Operasyon | Sante Fanm",
-      "Sal Aprè Operasyon",
-      "Sal Avan Akouchman",
-      "Sal Avan Operasyon | PACU",
-      "Sal Fanm",
-      "Sal Gason",
-      "Sal Izolman",
-      "Sal Operasyon",
-      "Sal Reyabilitasyon",
-      "Sal Timoun",
-      "Sante Fanm",
-      "Sante Kominotè",
-      "Swen Entansif Neonatal",
-      "Swen Entansif",
-      "Travay e Akouchman"
-    ],
-    "Medical Record Location": [
-      "CDI Klinik Ekstèn Jeneral",
-      "Hôpital Universitaire de Mirebalais - Prensipal"
-    ]
-  },
 
   "registrationConfig": {
     "allowUnknownPatients": true,

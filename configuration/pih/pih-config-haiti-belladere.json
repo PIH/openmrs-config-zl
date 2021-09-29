@@ -39,12 +39,6 @@
     "coreapps.defaultPatientIdentifierLocation": "d6dafa1a-9a2f-4f61-a33e-410acb64b0e9"
   },
 
-  "locationTags": {
-    "Lab Results Location": ["Belladère"],
-    "Login Location": ["Belladère"],
-    "Medical Record Location": ["Belladère"]
-  },
-
   "biometricsConfig": {
     "biometricEngine": "restBiometricEngine",
     "templateFormat": "PROPRIETARY",

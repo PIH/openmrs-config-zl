@@ -1,5 +1,8 @@
 type: "sqlserver-bulk-import"
 configuration:
+
+  conditional: "select if(global_property_value('pihcore.site', '') = 'CROSS_SITE', true, false)"
+
   extract:
     datasource: "mysql/openmrs.yml"
     query:  "datawarnings/aggregrate/source.sql"
@@ -10,7 +13,6 @@ configuration:
     schema: "datawarnings/aggregrate/target.sql"
 
   dropAndRecreateTable: false
-  conditional: "SELECT COUNT(*)=1 FROM information_schema.tables WHERE table_schema = 'openmrs' AND table_name = 'hivmigration_data_warnings'"
 
 schedule:
   cron: "0 30 6 ? * *"

@@ -1,0 +1,42 @@
+key: "dashboarddataexport"
+uuid: "6d9b292a-2aad-11e3-a840-5b9e0b589afb"
+name: "mirebalaisreports.dashboarddataexport.name"
+description: "mirebalaisreports.dashboarddataexport.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - {key: "patients", type: "mirebalaisPatientDataSetManager"}
+  - {key: "checkins", type: "sql", config: "sql/checkins.sql"}
+  - {key: "vitals", type: "sql", config: "sql/vitals.sql"}
+  - {key: "consultations", type: "consultationsDataSetManager"}
+  - {key: "diagnoses", type: "sql", config: "sql/diagnoses.sql"}
+  - {key: "visits", type: "sql", config: "sql/visits.sql"}
+  - {key: "hospitalizations", type: "sql", config: "sql/hospitalizations.sql"}
+  - {key: "postOpNote1", type: "sql", config: "sql/postOpNote1.sql"}
+  - {key: "postOpNote2", type: "sql", config: "sql/postOpNote2.sql"}
+designs:
+  - type: "csv"
+    properties:
+      "filenameBase": "dashboarddataexport.{{ formatDate request.reportDefinition.parameterMappings.startDate \"yyyyMMdd\" }}.{{ formatDate request.reportDefinition.parameterMappings.endDate \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"yyyyMMdd\" }}.{{ formatDate request.evaluateStartDatetime \"HHmm\" }}"
+      "characterEncoding": "ISO-8859-1"
+      "blacklistRegex": "[^\\p{InBasicLatin}\\p{L}]"
+      "dateFormat": "dd-MMM-yyyy HH:mm:ss"
+    processors:
+      - name: "saveToDisk"
+        type: "disk"
+        runOnSuccess: "true"
+        runOnError: "false"
+        processorMode: "AUTOMATIC"
+        configuration:
+          saveLocation: "{{application_data_directory}}reports"
+          compressOutput: "true"
+config:
+  category: "dataExport"
+  order: "2"
+  sites:
+    - "MIREBALAIS"

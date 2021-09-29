@@ -1,0 +1,25 @@
+key: "newDiseaseEpisodes"
+uuid: "172163ed-c9eb-418c-bc32-f32a861ee7c9"
+name: "mirebalaisreports.newDiseaseEpisodes.name"
+description: "mirebalaisreports.newDiseaseEpisodes.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "newDiseaseEpisodes"
+    type: "sql"
+    config: "sql/newDiseaseEpisodes.sql"
+designs:
+  - type: "excel"
+    template: "templates/newDiseaseEpisodes.xls"
+    properties:
+      "repeatingSections": "sheet:1,row:9,dataset:newDiseaseEpisodes"
+config:
+  category: "MONITORING"
+  order: 2
+  components:
+    - "monitoringReports"
