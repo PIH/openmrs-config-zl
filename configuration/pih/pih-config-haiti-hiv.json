@@ -40,6 +40,7 @@
     "concept.causeOfDeath": "3ce8a170-26fe-102b-80cb-0017a47871b2"
   },
 
+  "dashboardUrl": "/pihcore/router/programDashboard.page?patientId={{patientId}}",
   "providerIdentifierPrefix": "H",
 
   "extraIdentifierTypes": [
