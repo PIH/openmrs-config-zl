@@ -155,12 +155,12 @@
         </div>
     </section>
 
-    <section id="referralIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.transferReferralIn">
+    <section id="transferIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.transferIn">
         <div class="section-container-color">
             <obsgroup groupingConceptId="PIH:13169">
                 <label>
-                    <uimessage code="pihcore.externalReferInQuestion"/>
+                    <uimessage code="pihcore.externalTransferQuestion"/>
                 </label>
                 <p class="radio cb-align">
                     <obs conceptId="CIEL:160563"
