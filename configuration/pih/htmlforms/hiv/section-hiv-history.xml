@@ -1612,8 +1612,10 @@
         <div class="section-container-color">
             <!-- Use PACS at HUM -->
             <repeat with="['Chest (X-ray)','CIEL:165152','chestXRay'],
+                          ['AP Chest (X-ray)','CIEL:161273','chestXRayAP'],
                           ['Pelvic (U/S)', 'CIEL:161283', 'pelvicUS'],
-                          ['Abdominal (U/S)','CIEL:845','abUS']">
+                          ['Abdominal (U/S)','CIEL:845','abUS'],
+                          ['Obstetric (U/S)','CIEL:159618','obstetricUS']">
                 <p>
                     <obsgroup groupingConceptId="PIH:Radiology report construct">
                         <obs conceptId="PIH:Radiology procedure performed"
