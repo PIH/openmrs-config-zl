@@ -748,13 +748,14 @@
         </section>
     </includeIf>
 
-    <section id="id-treatment-sti-treatment" sectionTag="fieldset"
-             headerTag="legend" headerStyle="title"
-             headerCode="pihcore.stiTreatment">
-        <div class="section-container-color">
-            <!-- HIV intake only-->
-            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
 
+    <!-- HIV intake only-->
+    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+        <section id="id-treatment-sti-treatment" sectionTag="fieldset"
+                         headerTag="legend" headerStyle="title"
+                         headerCode="pihcore.stiTreatment">
+            <div class="section-container-color">
+                        
                 <p class="radio">
                     <label>
                         <uimessage code="pihcore.syph.needTreatment"/>
@@ -777,10 +778,16 @@
                     </label>
                     <obs conceptId="PIH:1374" style="text" rows="2" cols="40"/>
                 </p>
-            </includeIf>
+            </div>
+        </section>
+    </includeIf>
 
-            <!-- HIV followup only-->
-            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+    <!-- HIV followup only-->
+    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+        <section id="id-treatment-sti-treatment" sectionTag="fieldset"
+                         headerTag="legend" headerStyle="title"
+                         headerCode="pihcore.stiTreatment">
+            <div class="section-container-color">
                 <label>
                     <uimessage code="pihcore.syph.needTreatment"/>
                 </label>
@@ -852,9 +859,10 @@
                         </p>
                     </obsgroup>
                 </div>
-            </includeIf>
-        </div>
-    </section>
+            </div>
+        </section>
+    </includeIf>
+
 
     <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.orders.medications">

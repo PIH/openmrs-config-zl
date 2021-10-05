@@ -151,10 +151,6 @@ function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStart
         });
     }
 
-    function setButtonsDisabled(val){
-        jq("#next").prop("disabled", val);
-        jq("#submit").prop("disabled", val);
-    }
 }
 
 function setUpExpandableTransferAndReferralDetails(){
@@ -170,5 +166,30 @@ function setUpExpandableTransferAndReferralDetails(){
             }
         })
     });
+}
+
+function setUpDatepickerValidation(badDateInTheFutureMsg){
+
+    jq('.dateDatepicker').each(function(j, domEl){
+        
+        jq(this).change(function (e) {
+            let date=Date.parse(jq(this).find('input[type=text]').val())
+            if (date > Date.now()) {
+                jq(this).find('span').show();
+                jq(this).find('span').text(badDateInTheFutureMsg);
+                setButtonsDisabled(true)
+            } else {
+                jq(this).find('span').hide();
+                jq(this).find('span').text('');
+                setButtonsDisabled(false)
+            }
+        })
+    });
+    
+}
+
+function setButtonsDisabled(val){
+    jq("#next").prop("disabled", val);
+    jq("#submit").prop("disabled", val);
 }
 
