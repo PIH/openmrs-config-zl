@@ -7,6 +7,13 @@
         form fieldset {
             display: block;
         }
+        .side-by-side label {
+        display: inline-block;
+        }
+        form input[type="radio"], .form input[type="radio"] {
+        float: none;
+        display: inline-block;
+        }
 
         #test-orders input[type=checkbox],
         #id-treatment, #family-plan-section {
@@ -88,6 +95,11 @@
             width: 12em;
         }
     </style>
+    <script type="text/javascript">
+        jq(function() {
+            setUpExpandableTransferAndReferralDetails();
+        });
+    </script>
 
     <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
     note that we already do this on the history section, but add here case the history section is skipped
@@ -1168,47 +1180,48 @@
         </div>
     </section>
 
-    <section id="transfer-out-section" sectionTag="fieldset"
-             headerTag="legend" headerStyle="title" headerCode="pihcore.transfer.title">
+    <section id="transferIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.transferReferralIn">
         <div class="section-container-color">
-            <obsgroup groupingConceptId="PIH:13170">
+            <obsgroup groupingConceptId="PIH:13169">
                 <label>
-                    <uimessage code="pihcore.externalTransferQuestion" />
+                    <uimessage code="pihcore.externalTransferQuestion"/>
                 </label>
-                <p class="radio cb-align">
-                    <obs conceptId="PIH:HUM Disposition categories"
-                         answerConceptId="CIEL:160036" answerCode="emr.yes"
-                         style="checkbox" toggle="transfer-out-details"/>
+                <p class="side-by-side">
+                    <obs id="transfer-referral-spots"
+                         conceptId="PIH:REFERRAL OR TRANSFER" style="radio"
+                         answerConceptIds="PIH:11521,PIH:6965"
+                         answerCodes="pihcore.referral,pihcore.transfer"
+                         answerSeparator="" toggle="transfer-referral-out-details"/>
                 </p>
-
-                <div id="transfer-out-details">
-                    <p class="small">
+                <div id="transfer-referral-out-details">
+                    <p class="side-by-side">
                         <obs id="transfer-out-spots"
-                             conceptId="PIH:Transfer out location" style="radio"
+                             conceptId="PIH:REFERRED FROM ANOTHER SITE" style="radio"
                              answerConceptIds="PIH:8855,PIH:8856"
                              answerCodes="pihcore.internal,pihcore.external"
                              answerSeparator="">
                             <controls>
-                                <when value="PIH:8855" thenDisplay="#internal-transfer-out"/>
-                                <when value="PIH:8856" thenDisplay="#external-transfer-out"/>
+                                <when value="PIH:8855" thenDisplay="#internal-out"/>
+                                <when value="PIH:8856" thenDisplay="#external-out"/>
                             </controls>
                         </obs>
                     </p>
 
-                    <p id="internal-transfer-out">
+                    <p id="internal-out">
                         <label>
-                            <uimessage code="pihcore.internalTransferLocation" />
+                            <uimessage code="pihcore.internalLocation"/>
                         </label>
-                        <obs conceptId="PIH:8621" style="location" answerLocationTags="Program Location" />
+                        <obs conceptId="PIH:8621" style="location" answerLocationTags="Program Location"/>
                     </p>
 
-                    <p id="external-transfer-out">
-                            <label>
-                                <uimessage code="pihcore.externalTransferLocation"/>
-                            </label>
-                            <obs conceptId="PIH:11483" />
-                            <obs conceptId="PIH:PEPFAR partner site"
-                                 answerConceptId="CIEL:1065" answerCode="pihcore.pepfarSite" />
+                    <p id="external-out">
+                        <label>
+                            <uimessage code="pihcore.externalLocation"/>
+                        </label>
+                        <obs conceptId="PIH:11483"/>
+                        <obs conceptId="PIH:PEPFAR partner site"
+                             answerConceptId="CIEL:1065" answerCode="pihcore.pepfarSite"/>
                     </p>
                 </div>
             </obsgroup>
