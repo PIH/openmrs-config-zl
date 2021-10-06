@@ -7,7 +7,9 @@
             .side-by-side label {
               display: inline-block;
             }
-            form input[type="radio"], .form input[type="radio"] {
+         #arv-form-signed input[type="radio"],#location-form-complete input[type="radio"] {
+                margin:6px;
+            }      form input[type="radio"], .form input[type="radio"] {
             float: none;
             display: inline-block;
             }
@@ -170,6 +172,26 @@
         </div>
     </section>
     -->
+
+    <section id="complete-forms-questions-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.completeFormsQuestions">
+        <div class="section-container-color">
+            <div id="complete-forms-questions-section-details">
+                    <p class="side-by-side">
+                        <obs id="arv-form-signed"
+                             conceptId="PIH:ARV CONSENT FORM SIGNED" style="radio"
+                             labelCode="pihcore.ARVConsentFormSigned"
+                             answerSeparator=""/>
+                    </p>
+                    <p class="side-by-side">
+                        <obs id="location-form-complete"
+                             conceptId="PIH:LOCATION FORM COMPLETED" style="radio"
+                             labelCode="pihcore.locationFormComplete"
+                             answerSeparator=""/>
+                    </p>
+            </div>
+        </div>
+    </section>
 
     <section id="chwName-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.chw">
