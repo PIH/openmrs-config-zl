@@ -151,10 +151,6 @@ function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStart
         });
     }
 
-    function setButtonsDisabled(val){
-        jq("#next").prop("disabled", val);
-        jq("#submit").prop("disabled", val);
-    }
 }
 
 function setUpExpandableTransferAndReferralDetails(){
@@ -170,5 +166,36 @@ function setUpExpandableTransferAndReferralDetails(){
             }
         })
     });
+}
+
+function setUpPhoneNumberRegex(badPhoneNumberMsg) {
+
+    jq('.phoneRegex').each(function (j, domEl) {
+
+        jq(this).change(function (e) {
+            let phone = e.target.value;
+            if (phone.match(phoneNumberPattern().pattern1) || phone.match(phoneNumberPattern().pattern2)) {
+                jq(this).find('span').first().hide();
+                jq(this).find('span').first().text('');
+                setButtonsDisabled(false);
+            } else {
+                jq(this).find('span').first().show();
+                jq(this).find('span').first().text(badPhoneNumberMsg);
+                setButtonsDisabled(true);
+            }
+        })
+    })
+}
+
+function phoneNumberPattern(){
+    return{
+        pattern1:/^\d{8}$/,
+        pattern2:/^\d{4}(?:\)|[-|\s])?\s*?\d{4}$/
+    }
+}
+
+function setButtonsDisabled(val){
+    jq("#next").prop("disabled", val);
+    jq("#submit,.confirm").prop("disabled", val);
 }
 

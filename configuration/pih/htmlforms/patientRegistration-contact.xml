@@ -25,6 +25,8 @@
                 // hack to hide the "required" * which take up too much space and don't float properly
                 jq('#contactPerson .required').hide();
 
+                setUpPhoneNumberRegex('<uimessage code="pihcore.invalid.phoneNumber"/>');
+
             });
         </script>
     </ifMode>
@@ -132,7 +134,7 @@
                     <div>
                         <h3><uimessage code="registrationapp.patient.phone.label"/></h3>
                         <p class="left">
-                            <obs conceptId="PIH:TELEPHONE NUMBER OF CONTACT" id="contactPhoneNumber" showUnits="false" unitsCssClass="append-to-value" size="20" required="true" />
+                            <obs conceptId="PIH:TELEPHONE NUMBER OF CONTACT" id="contactPhoneNumber" showUnits="false" unitsCssClass="append-to-value" size="20" required="true" class="phoneRegex"/>
                         </p>
                     </div>
                 </div>
