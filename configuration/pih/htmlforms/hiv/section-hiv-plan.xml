@@ -755,7 +755,7 @@
                          headerTag="legend" headerStyle="title"
                          headerCode="pihcore.stiTreatment">
             <div class="section-container-color">
-                        
+
                 <p class="radio">
                     <label>
                         <uimessage code="pihcore.syph.needTreatment"/>
@@ -787,7 +787,7 @@
         <section id="id-treatment-sti-treatment" sectionTag="fieldset"
                          headerTag="legend" headerStyle="title"
                          headerCode="pihcore.stiTreatment">
-            <div class="section-container-color">
+        <div class="section-container-color">
                 <label>
                     <uimessage code="pihcore.syph.needTreatment"/>
                 </label>
@@ -859,10 +859,9 @@
                         </p>
                     </obsgroup>
                 </div>
-            </div>
+          </div>
         </section>
     </includeIf>
-
 
     <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.orders.medications">
