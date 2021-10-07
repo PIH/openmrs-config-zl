@@ -1331,7 +1331,7 @@
                              labelCode="pihcore.tbscreen.{0}"
                              labelCssClass="tb-screening-question-label"
                              conceptLabels="coreapps.yes,coreapps.no"
-                             style="radio" />
+                             style="radio" required="true" />
                     </div>
                 </repeat>
             </div>
