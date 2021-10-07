@@ -199,3 +199,23 @@ function setButtonsDisabled(val){
     jq("#submit,.confirm").prop("disabled", val);
 }
 
+function setUpDatepickerInTheFutureValidation(badDateInTheFutureMsg){
+
+    jq('.dateDatepickerInTheFuture').each(function(j, domEl){
+
+        jq(this).change(function (e) {
+            let date=Date.parse(jq(this).find('input[type=text]').val())
+            if (date > Date.now()) {
+                jq(this).find('span').show();
+                jq(this).find('span').text(badDateInTheFutureMsg);
+                setButtonsDisabled(true)
+            } else {
+                jq(this).find('span').hide();
+                jq(this).find('span').text('');
+                setButtonsDisabled(false)
+            }
+        })
+    });
+
+}
+

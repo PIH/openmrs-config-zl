@@ -163,6 +163,7 @@
             
                 setUpNextButtonForSections('hiv-state');
                 setUpDatepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
+                setUpDatepickerInTheFutureValidation('<uimessage code="pihcore.date.error.inTheFuture"/>');
             });
         </script>
     </ifMode>
@@ -932,7 +933,7 @@
                 <p>
                     <obs conceptId="CIEL:164801" style="checkbox"
                          answerConceptId="CIEL:1065" answerCode="pihcore.screeningSyph"
-                         dateLabel="Date" toggle="syph-screen"/>
+                         dateLabel="Date" toggle="syph-screen" class="dateDatepickerInTheFuture"/>
                 </p>
                 <p id="syph-screen" class="side-by-side">
                     <label>
