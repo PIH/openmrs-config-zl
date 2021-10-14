@@ -173,19 +173,19 @@
     -->
 
     <section id="complete-forms-questions-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.completeFormsQuestions">
+             headerCode="zl.completeFormsQuestions">
         <div class="section-container-color">
             <div id="complete-forms-questions-section-details">
                     <p class="side-by-side">
                         <obs id="arv-form-signed"
                              conceptId="PIH:ARV CONSENT FORM SIGNED" style="radio"
-                             labelCode="pihcore.ARVConsentFormSigned"
+                             labelCode="zl.ARVConsentFormSigned"
                              answerSeparator=""/>
                     </p>
                     <p class="side-by-side">
                         <obs id="location-form-complete"
                              conceptId="PIH:LOCATION FORM COMPLETED" style="radio"
-                             labelCode="pihcore.locationFormComplete"
+                             labelCode="zl.locationFormComplete"
                              answerSeparator=""/>
                     </p>
             </div>
@@ -1363,7 +1363,7 @@
                              labelCode="pihcore.tbscreen.{0}"
                              labelCssClass="tb-screening-question-label"
                              conceptLabels="coreapps.yes,coreapps.no"
-                             style="radio" />
+                             style="radio" required="true" />
                     </div>
                 </repeat>
             </div>

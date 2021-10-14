@@ -222,7 +222,6 @@ function setUpDatepickerInTheFutureValidation(badDateInTheFutureMsg){
                 jq(this).find('span').text('');
                 jq(this).find('input[type=text]').hide();
                 setButtonsDisabled(false)
-
             }
         })
     });
