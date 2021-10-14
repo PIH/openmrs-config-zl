@@ -51,18 +51,18 @@
                 top:5px; /*added to offset the checkbox position to line up*/
             }
 
-            .section-container label {
-                margin: 0px;
+            .section-container label,
+            .section-container-color label {
+            margin: 0px;
             }
 
             .section {
                 width: 95%;
             }
 
-            form input[type="checkbox"], form input[type="radio"],
-                .form input[type="checkbox"], .form input[type="radio"] {
-                float: none;
-                display: inline-block;
+            form input[type="radio"], .form input[type="radio"] {
+            float: none;
+            display: inline-block;
             }
 
             form label, .form label {
@@ -73,6 +73,9 @@
                 background: #F2F2F2;
                 box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
                 padding: 10px 5px 10px 15px;
+            }
+            .dateDatepickerInTheFuture label{
+                 display: block;
             }
         </ifMode>
     </style>
@@ -927,7 +930,7 @@
     <!-- this section for PMTCT followup -->
     <includeIf velocityTest="$encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
         <section id="syphilis-section" sectionTag="fieldset"
-                 headerStyle="title" headerCode="Syphilis">
+                 headerStyle="title" headerCode="SYPHILIS">
 
             <div class="section-container">
                 <p>

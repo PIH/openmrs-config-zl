@@ -202,20 +202,29 @@ function setButtonsDisabled(val){
 function setUpDatepickerInTheFutureValidation(badDateInTheFutureMsg){
 
     jq('.dateDatepickerInTheFuture').each(function(j, domEl){
-
+        jq(this).find('input[type=text]').hide();
         jq(this).change(function (e) {
-            let date=Date.parse(jq(this).find('input[type=text]').val())
-            if (date > Date.now()) {
-                jq(this).find('span').show();
-                jq(this).find('span').text(badDateInTheFutureMsg);
-                setButtonsDisabled(true)
-            } else {
-                jq(this).find('span').hide();
+            const  date=Date.parse(jq(this).find('input[type=text]').val())
+            const  isCheched=Date.parse(jq(this).find('input:checked').val())
+            if(isCheched) {
+                if (date > Date.now()) {
+                    jq(this).find('span').show();
+                    jq(this).find('span').text(badDateInTheFutureMsg);
+                    setButtonsDisabled(true)
+                } else {
+                    jq(this).find('span').hide();
+                    jq(this).find('span').text('');
+                    setButtonsDisabled(false)
+                }
+                jq(this).find('input[type=text]').show();
+            }else {
+                jq(this).find('input[type=text]').prop('value', '')
                 jq(this).find('span').text('');
+                jq(this).find('input[type=text]').hide();
                 setButtonsDisabled(false)
+
             }
         })
     });
 
 }
-
