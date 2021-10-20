@@ -134,6 +134,8 @@
                 setUpNextButtonForSections('pmtct-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
                 setUpDatepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
+                setUpExpandableTransferAndReferralDetails();
+                setUpDatepickerInTheFutureValidation('<uimessage code="pihcore.date.error.inTheFuture"/>');
             });
         </script>
     </ifMode>
@@ -155,20 +157,21 @@
         </div>
     </section>
 
-    <section id="referralIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <section id="transferIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.transferReferralIn">
         <div class="section-container-color">
             <obsgroup groupingConceptId="PIH:13169">
                 <label>
-                    <uimessage code="pihcore.externalReferInQuestion"/>
+                    <uimessage code="pihcore.externalTransferQuestion"/>
                 </label>
-                <p class="radio cb-align">
-                    <obs conceptId="CIEL:160563"
-                         answerConceptId="CIEL:160036" answerCode="emr.yes"
-                         style="checkbox" toggle="transfer-out-details"/>
+                <p class="side-by-side">
+                    <obs id="transfer-referral-spots"
+                         conceptId="PIH:REFERRAL OR TRANSFER" style="radio"
+                         answerConceptIds="PIH:11521,PIH:6965"
+                         answerCodes="pihcore.referral,pihcore.transfer"
+                         answerSeparator="" toggle="transfer-referral-out-details"/>
                 </p>
-
-                <div id="transfer-out-details">
+                <div id="transfer-referral-out-details">
                     <p class="side-by-side">
                         <obs id="transfer-out-spots"
                              conceptId="PIH:REFERRED FROM ANOTHER SITE" style="radio"
@@ -176,22 +179,22 @@
                              answerCodes="pihcore.internal,pihcore.external"
                              answerSeparator="">
                             <controls>
-                                <when value="PIH:8855" thenDisplay="#internal-transfer-out"/>
-                                <when value="PIH:8856" thenDisplay="#external-transfer-out"/>
+                                <when value="PIH:8855" thenDisplay="#internal-out"/>
+                                <when value="PIH:8856" thenDisplay="#external-out"/>
                             </controls>
                         </obs>
                     </p>
 
-                    <p id="internal-transfer-out">
+                    <p id="internal-out">
                         <label>
-                            <uimessage code="pihcore.internalTransferLocation"/>
+                            <uimessage code="pihcore.internalLocation"/>
                         </label>
                         <obs conceptId="PIH:8621" style="location" answerLocationTags="Program Location"/>
                     </p>
 
-                    <p id="external-transfer-out">
+                    <p id="external-out">
                         <label>
-                            <uimessage code="pihcore.externalTransferLocation"/>
+                            <uimessage code="pihcore.externalLocation"/>
                         </label>
                         <obs conceptId="PIH:11483"/>
                         <obs conceptId="PIH:PEPFAR partner site"
@@ -451,13 +454,13 @@
     </section>
 
     <section id="syphilis-section" sectionTag="fieldset"
-             headerStyle="title" headerCode="Syphilis">
+             headerStyle="title" headerCode="SYPHILIS">
 
         <div class="section-container">
             <p>
                 <obs conceptId="CIEL:164801" style="checkbox"
                      answerConceptId="CIEL:1065" answerCode="pihcore.screeningSyph"
-                     dateLabel="Date" toggle="syph-screen"/>
+                     dateLabel="Date" toggle="syph-screen" class="dateDatepickerInTheFuture"/>
             </p>
             <p id="syph-screen" class="side-by-side">
                 <label>

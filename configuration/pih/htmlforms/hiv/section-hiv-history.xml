@@ -4,6 +4,15 @@
     <style type="text/css">
         <ifMode mode="VIEW" include="false">
 
+            .side-by-side label {
+              display: inline-block;
+            }
+
+            form input[type="radio"], .form input[type="radio"] {
+            float: none;
+            display: inline-block;
+            }
+
             #data-collection {
                 display: inline-block;
                 width: 58%;
@@ -114,6 +123,7 @@
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections('hiv-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
+                setUpExpandableTransferAndReferralDetails();
             });
         </script>
     </ifMode>
@@ -162,6 +172,26 @@
     </section>
     -->
 
+    <section id="complete-forms-questions-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="zl.completeFormsQuestions">
+        <div class="section-container-color">
+            <div id="complete-forms-questions-section-details">
+                    <p class="side-by-side">
+                        <obs id="arv-form-signed"
+                             conceptId="PIH:ARV CONSENT FORM SIGNED" style="radio"
+                             labelCode="zl.ARVConsentFormSigned"
+                             answerSeparator=""/>
+                    </p>
+                    <p class="side-by-side">
+                        <obs id="location-form-complete"
+                             conceptId="PIH:LOCATION FORM COMPLETED" style="radio"
+                             labelCode="zl.locationFormComplete"
+                             answerSeparator=""/>
+                    </p>
+            </div>
+        </div>
+    </section>
+
     <section id="chwName-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.chw">
         <div class="section-container-color">
@@ -176,36 +206,37 @@
         </div>
     </section>
 
-    <section id="referralIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+    <section id="transferIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.transferReferralIn">
         <div class="section-container-color">
             <obsgroup groupingConceptId="PIH:13169">
                 <label>
-                    <uimessage code="pihcore.externalReferInQuestion"/>
+                    <uimessage code="pihcore.externalTransferQuestion"/>
                 </label>
-                <p class="radio cb-align">
-                    <obs conceptId="CIEL:160563"
-                         answerConceptId="CIEL:160036" answerCode="emr.yes"
-                         style="checkbox" toggle="transfer-out-details"/>
+                <p class="side-by-side">
+                    <obs id="transfer-referral-spots"
+                         conceptId="PIH:REFERRAL OR TRANSFER" style="radio"
+                         answerConceptIds="PIH:11521,PIH:6965"
+                         answerCodes="pihcore.referral,pihcore.transfer"
+                         answerSeparator="" toggle="transfer-referral-out-details"/>
                 </p>
-
-                <div id="transfer-out-details">
-                    <p class="small">
+                <div id="transfer-referral-out-details">
+                    <p class="side-by-side">
                         <obs id="transfer-out-spots"
                              conceptId="PIH:REFERRED FROM ANOTHER SITE" style="radio"
                              answerConceptIds="PIH:8855,PIH:8856"
                              answerCodes="pihcore.internal,pihcore.external"
                              answerSeparator="">
                             <controls>
-                                <when value="PIH:8855" thenDisplay="#internal-transfer-out"/>
-                                <when value="PIH:8856" thenDisplay="#external-transfer-out"/>
+                                <when value="PIH:8855" thenDisplay="#internal-out"/>
+                                <when value="PIH:8856" thenDisplay="#external-out"/>
                             </controls>
                         </obs>
                     </p>
 
-                    <p id="internal-transfer-out">
+                    <p id="internal-out">
                         <label>
-                            <uimessage code="pihcore.internalTransferLocation"/>
+                            <uimessage code="pihcore.internalLocation"/>
                         </label>
                         <obs conceptId="PIH:8621" style="location" answerLocationTags="Program Location"/>
                         <includeIf velocityTest="$patient.gender == 'F' ">
@@ -214,9 +245,9 @@
                         </includeIf>
                     </p>
 
-                    <p id="external-transfer-out">
+                    <p id="external-out">
                         <label>
-                            <uimessage code="pihcore.externalTransferLocation"/>
+                            <uimessage code="pihcore.externalLocation"/>
                         </label>
                         <obs conceptId="PIH:11483"/>
                         <obs conceptId="PIH:PEPFAR partner site"
@@ -226,6 +257,7 @@
             </obsgroup>
         </div>
     </section>
+
 
     <section id="hiv-serology" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.hiv.serology.title">
@@ -787,62 +819,64 @@
         </button>
     </section>
 
-    <section id="transmission" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.modeOfTransmission">
-    <div class="section-container">
-        <table>
-            <tr>
-                <th>
-                    Mode
-                </th>
-                <th>
-                    Date
-                </th>
-            </tr>
-            <repeat>
-                <template>
-                    <obsgroup groupingConceptId="CIEL:163288">
+    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 9">
+        <section id="transmission" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="pihcore.modeOfTransmission">
+        <div class="section-container">
+            <table>
+                <tr>
+                    <th>
+                        Mode
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                </tr>
+                <repeat>
+                    <template>
+                        <obsgroup groupingConceptId="CIEL:163288">
+                        <tr>
+                            <td>
+                                <obs conceptId="CIEL:160581"
+                                     answerConceptId="{cId}"
+                                     style="checkbox"
+                                     toggle="{id: '{toggle}-trans-date', style: 'dim'}"/>
+                            </td>
+                            <td id="{toggle}-trans-date">
+                                <obs conceptId="CIEL:162601" allowTime="false" />
+                            </td>
+                        </tr>
+                        </obsgroup>
+                    </template>
+                    <render mode="Rapports sexuels avec un homme" cId="CIEL:163290" toggle="men" />
+                    <render mode="Rapports sexuels avec une femme" cId="CIEL:163291" toggle="women" />
+                    <render mode="Injection de drogues" cId="CIEL:105" toggle="drugs"/>
+                    <render mode="Bénéficier de sang/dérivé sanguin" cId="CIEL:1063" toggle="blood" />
+                    <render mode="Transmission mère a enfant" cId="CIEL:163273" toggle="pmtct "/>
+                    <render mode="Accident d'exposition au sang" cId="CIEL:163274" toggle="accident-blood"/>
+                    <render mode="Rapports hétérosexuelles avec personne SIDA/VIH+" cId="CIEL:163289" toggle="hiv-person" />
+                    <render mode="Rapports hétérosexuelles avec personne qui s'injecte de la drogue" cId="PIH:11534" toggle="with-drug-person" />
+                    <render mode="Rapports hétérosexuelles avec personne homme bisexuel" cId="CIEL:165433" toggle="with-bisexual" />
+                    <render mode="Rapports hétérosexuelles avec personne bénéficier de sang/dérivé sanguin" cId="CIEL:165434" toggle="with-blood-person" />
+                </repeat>
+
+                <obsgroup groupingConceptId="CIEL:163288">
                     <tr>
                         <td>
                             <obs conceptId="CIEL:160581"
-                                 answerConceptId="{cId}"
-                                 style="checkbox"
-                                 toggle="{id: '{toggle}-trans-date', style: 'dim'}"/>
+                                 answerConceptId="CIEL:5622"
+                                 style="checkbox" commentFieldCode=""
+                                 toggle="{id: 'other-trans-date', style: 'dim'}"/>
                         </td>
-                        <td id="{toggle}-trans-date">
+                        <td id="other-trans-date">
                             <obs conceptId="CIEL:162601" allowTime="false" />
                         </td>
                     </tr>
-                    </obsgroup>
-                </template>
-                <render mode="Rapports sexuels avec un homme" cId="CIEL:163290" toggle="men" />
-                <render mode="Rapports sexuels avec une femme" cId="CIEL:163291" toggle="women" />
-                <render mode="Injection de drogues" cId="CIEL:105" toggle="drugs"/>
-                <render mode="Bénéficier de sang/dérivé sanguin" cId="CIEL:1063" toggle="blood" />
-                <render mode="Transmission mère a enfant" cId="CIEL:163273" toggle="pmtct "/>
-                <render mode="Accident d'exposition au sang" cId="CIEL:163274" toggle="accident-blood"/>
-                <render mode="Rapports hétérosexuelles avec personne SIDA/VIH+" cId="CIEL:163289" toggle="hiv-person" />
-                <render mode="Rapports hétérosexuelles avec personne qui s'injecte de la drogue" cId="PIH:11534" toggle="with-drug-person" />
-                <render mode="Rapports hétérosexuelles avec personne homme bisexuel" cId="CIEL:165433" toggle="with-bisexual" />
-                <render mode="Rapports hétérosexuelles avec personne bénéficier de sang/dérivé sanguin" cId="CIEL:165434" toggle="with-blood-person" />
-            </repeat>
-
-            <obsgroup groupingConceptId="CIEL:163288">
-                <tr>
-                    <td>
-                        <obs conceptId="CIEL:160581"
-                             answerConceptId="CIEL:5622"
-                             style="checkbox" commentFieldCode=""
-                             toggle="{id: 'other-trans-date', style: 'dim'}"/>
-                    </td>
-                    <td id="other-trans-date">
-                        <obs conceptId="CIEL:162601" allowTime="false" />
-                    </td>
-                </tr>
-            </obsgroup>
-        </table>
-    </div>
-    </section>
+                </obsgroup>
+            </table>
+        </div>
+        </section>
+    </includeIf>
 
     <section id="risk" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.otherFactors">
@@ -912,38 +946,42 @@
             </div>
         </div>
 
-        <div class="section-container">
-            <h3>
-                <uimessage code="pihcore.keyPopulation"/>
-            </h3>
-            <table>
-                <repeat>
-                    <template>
-                        <tr>
-                            <td>
-                                <label>
-                                    <uimessage code="pihcore.{name}"/>
-                                </label>
-                            </td>
-                            <td>
-                                <p class="radio">
-                                    <obs conceptId="{cId}"
-                                         answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
-                                         answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
-                                         style="radio" answerSeparator=""/>
-                                </p>
-                            </td>
-                        </tr>
-                </template>
-                <render cId="CIEL:160578" name="menSexWithMen"/>
-                <render cId="CIEL:160579" name="sexWorker"/>
-                <render cId="CIEL:156761" name="prisoner"/>
-                <render cId="PIH:11561" name="transgender"/>
-                <render cId="CIEL:105" name="ivDrugUser"/>
-            </repeat>
-        </table>
-        </div>
+        <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 9">
+            <div class="section-container">
+                <h3>
+                    <uimessage code="pihcore.keyPopulation"/>
+                </h3>
+                <table>
+                    <repeat>
+                        <template>
+                            <tr>
+                                <td>
+                                    <label>
+                                        <uimessage code="pihcore.{name}"/>
+                                    </label>
+                                </td>
+                                <td>
+                                    <p class="radio">
+                                        <obs conceptId="{cId}"
+                                             answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
+                                             answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
+                                             style="radio" answerSeparator=""/>
+                                    </p>
+                                </td>
+                            </tr>
+                    </template>
+                    <render cId="CIEL:160578" name="menSexWithMen"/>
+                    <render cId="CIEL:160579" name="sexWorker"/>
+                    <render cId="CIEL:156761" name="prisoner"/>
+                    <render cId="PIH:11561" name="transgender"/>
+                    <render cId="CIEL:105" name="ivDrugUser"/>
+                </repeat>
+            </table>
+            </div>
+        </includeIf>
+
     </section>
+
 
     <section id="hiv-adverse-event" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.adverseEvent">
@@ -1325,7 +1363,7 @@
                              labelCode="pihcore.tbscreen.{0}"
                              labelCssClass="tb-screening-question-label"
                              conceptLabels="coreapps.yes,coreapps.no"
-                             style="radio" />
+                             style="radio" required="true" />
                     </div>
                 </repeat>
             </div>
@@ -1606,8 +1644,10 @@
         <div class="section-container-color">
             <!-- Use PACS at HUM -->
             <repeat with="['Chest (X-ray)','CIEL:165152','chestXRay'],
+                          ['AP Chest (X-ray)','CIEL:161273','chestXRayAP'],
                           ['Pelvic (U/S)', 'CIEL:161283', 'pelvicUS'],
-                          ['Abdominal (U/S)','CIEL:845','abUS']">
+                          ['Abdominal (U/S)','CIEL:845','abUS'],
+                          ['Obstetric (U/S)','CIEL:159618','obstetricUS']">
                 <p>
                     <obsgroup groupingConceptId="PIH:Radiology report construct">
                         <obs conceptId="PIH:Radiology procedure performed"

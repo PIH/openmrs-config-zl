@@ -7,6 +7,13 @@
         form fieldset {
             display: block;
         }
+        .side-by-side label {
+        display: inline-block;
+        }
+        form input[type="radio"], .form input[type="radio"] {
+        float: none;
+        display: inline-block;
+        }
 
         #test-orders input[type=checkbox],
         #id-treatment, #family-plan-section {
@@ -88,6 +95,11 @@
             width: 12em;
         }
     </style>
+    <script type="text/javascript">
+        jq(function() {
+            setUpExpandableTransferAndReferralDetails();
+        });
+    </script>
 
     <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
     note that we already do this on the history section, but add here case the history section is skipped
@@ -736,12 +748,13 @@
         </section>
     </includeIf>
 
-    <section id="id-treatment-sti-treatment" sectionTag="fieldset"
-             headerTag="legend" headerStyle="title"
-             headerCode="pihcore.stiTreatment">
-        <div class="section-container-color">
-            <!-- HIV intake only-->
-            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+
+    <!-- HIV intake only-->
+    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+        <section id="id-treatment-sti-treatment" sectionTag="fieldset"
+                         headerTag="legend" headerStyle="title"
+                         headerCode="pihcore.stiTreatment">
+            <div class="section-container-color">
 
                 <p class="radio">
                     <label>
@@ -765,10 +778,16 @@
                     </label>
                     <obs conceptId="PIH:1374" style="text" rows="2" cols="40"/>
                 </p>
-            </includeIf>
+            </div>
+        </section>
+    </includeIf>
 
-            <!-- HIV followup only-->
-            <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+    <!-- HIV followup only-->
+    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+        <section id="id-treatment-sti-treatment" sectionTag="fieldset"
+                         headerTag="legend" headerStyle="title"
+                         headerCode="pihcore.stiTreatment">
+        <div class="section-container-color">
                 <label>
                     <uimessage code="pihcore.syph.needTreatment"/>
                 </label>
@@ -840,9 +859,9 @@
                         </p>
                     </obsgroup>
                 </div>
-            </includeIf>
-        </div>
-    </section>
+          </div>
+        </section>
+    </includeIf>
 
     <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.orders.medications">
@@ -915,11 +934,7 @@
                     <div style="padding:0px;">
                         <orderProperty name="dateActivated" label="pihcore.starting"/>
                         <orderProperty name="duration" label="pihcore.visitNote.for"/>
-                        <orderProperty name="durationUnits" label=" ">
-                            <option value="CIEL:1072"/>  <!-- days -->
-                            <option value="CIEL:1073"/>  <!-- weeks -->
-                            <option value="CIEL:1074"/>  <!-- months -->
-                        </orderProperty>
+                        <orderProperty name="durationUnits" label=" "/>
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="quantity" label="pihcore.quantity"/>
@@ -1182,7 +1197,7 @@
                 </p>
 
                 <div id="transfer-out-details">
-                    <p class="small">
+                    <p class="small side-by-side">
                         <obs id="transfer-out-spots"
                              conceptId="PIH:Transfer out location" style="radio"
                              answerConceptIds="PIH:8855,PIH:8856"
@@ -1203,12 +1218,12 @@
                     </p>
 
                     <p id="external-transfer-out">
-                            <label>
-                                <uimessage code="pihcore.externalTransferLocation"/>
-                            </label>
-                            <obs conceptId="PIH:11483" />
-                            <obs conceptId="PIH:PEPFAR partner site"
-                                 answerConceptId="CIEL:1065" answerCode="pihcore.pepfarSite" />
+                        <label>
+                            <uimessage code="pihcore.externalTransferLocation"/>
+                        </label>
+                        <obs conceptId="PIH:11483" />
+                        <obs conceptId="PIH:PEPFAR partner site"
+                             answerConceptId="CIEL:1065" answerCode="pihcore.pepfarSite" />
                     </p>
                 </div>
             </obsgroup>

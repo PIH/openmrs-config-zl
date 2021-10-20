@@ -151,9 +151,79 @@ function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStart
         });
     }
 
-    function setButtonsDisabled(val){
-        jq("#next").prop("disabled", val);
-        jq("#submit").prop("disabled", val);
+}
+
+function setUpExpandableTransferAndReferralDetails(){
+    jq("#transfer-referral-spots").each(function(j, domEl){
+        jq("#transfer-referral-out-details").hide()
+        let elem=jq(domEl).find('input:checked').val()
+        if(elem){
+            jq("#transfer-referral-out-details").show()
+        }
+        jq(this).change(function (e){
+            if(e.target.value){
+            jq("#transfer-referral-out-details").show()
+            }
+        })
+    });
+}
+
+function setUpPhoneNumberRegex(badPhoneNumberMsg) {
+
+    jq('.phoneRegex').each(function (j, domEl) {
+
+        jq(this).change(function (e) {
+            let phone = e.target.value;
+            if (phone.match(phoneNumberPattern().pattern1) || phone.match(phoneNumberPattern().pattern2)) {
+                jq(this).find('span').first().hide();
+                jq(this).find('span').first().text('');
+                setButtonsDisabled(false);
+            } else {
+                jq(this).find('span').first().show();
+                jq(this).find('span').first().text(badPhoneNumberMsg);
+                setButtonsDisabled(true);
+            }
+        })
+    })
+}
+
+function phoneNumberPattern(){
+    return{
+        pattern1:/^\d{8}$/,
+        pattern2:/^\d{4}(?:\)|[-|\s])?\s*?\d{4}$/
     }
 }
 
+function setButtonsDisabled(val){
+    jq("#next").prop("disabled", val);
+    jq("#submit,.confirm").prop("disabled", val);
+}
+
+function setUpDatepickerInTheFutureValidation(badDateInTheFutureMsg){
+
+    jq('.dateDatepickerInTheFuture').each(function(j, domEl){
+        jq(this).find('input[type=text]').hide();
+        jq(this).change(function (e) {
+            const  date=Date.parse(jq(this).find('input[type=text]').val())
+            const  isCheched=Date.parse(jq(this).find('input:checked').val())
+            if(isCheched) {
+                if (date > Date.now()) {
+                    jq(this).find('span').show();
+                    jq(this).find('span').text(badDateInTheFutureMsg);
+                    setButtonsDisabled(true)
+                } else {
+                    jq(this).find('span').hide();
+                    jq(this).find('span').text('');
+                    setButtonsDisabled(false)
+                }
+                jq(this).find('input[type=text]').show();
+            }else {
+                jq(this).find('input[type=text]').prop('value', '')
+                jq(this).find('span').text('');
+                jq(this).find('input[type=text]').hide();
+                setButtonsDisabled(false)
+            }
+        })
+    });
+
+}
