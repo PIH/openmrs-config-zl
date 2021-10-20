@@ -1238,7 +1238,7 @@
              </div>
          </section>
 
-    <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="evaluation">
+    <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.evaluation.title">
         <div class="section-container-color">
                 <div>
                     <p class="side-by-side">

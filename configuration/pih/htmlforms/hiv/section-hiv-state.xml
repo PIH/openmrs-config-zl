@@ -1190,7 +1190,7 @@
         </div>
     </section>
     <includeIf velocityTest="$encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
-        <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="evaluation">
+        <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.evaluation.title">
             <div class="section-container-color">
                 <div>
                     <p class="side-by-side">
