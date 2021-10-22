@@ -13,10 +13,11 @@
   -->
 
 <htmlform id="hiv-dispensing" class="simple-form-ui"
-          formUuid="259162b0-5dae-4bc8-9822-b40107a1d728"
+          formUuid="c3af594f-fd77-44b2-b3a0-44d4f3c7cc3a"
+          htmlformUuid="d84de0fd-ef09-4a77-895d-7faceaabfbba"
           formName="HIV Dispensing"
           formEncounterType="cc1720c9-3e4c-4fa8-a7ec-40eeaad1958c"
-          formVersion="2.0">
+          formVersion="1.0">
 
     <macros>
         <macro key="medPickupChw" value="c29f0c91-0128-445d-a64b-1f85498c5752"/>
@@ -669,10 +670,9 @@
                 <obsgroup groupingConceptId="CIEL:1442" >
                 <tr>
                     <td>
-                        <uimessage code="INH Primary" />:
+                        <uimessage code="INH" />:
                         <span class="small hidden">
                             <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
-                            <obs conceptId="PIH:13154" answerConceptId="CIEL:159943" defaultValue="CIEL:159943"></obs>  <!-- Treatment line: Primary -->
                         </span>
                     </td>
                     <td>
@@ -688,29 +688,6 @@
                         <obs conceptId="CIEL:1443" />
                     </td>
                 </tr>
-                </obsgroup>
-                <obsgroup groupingConceptId="CIEL:1442" >
-                    <tr>
-                        <td>
-                            <uimessage code="INH Secondary" />:
-                            <span class="small hidden">
-                                <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
-                                <obs conceptId="PIH:13154" answerConceptId="CIEL:159944" defaultValue="CIEL:159944"></obs>  <!-- Treatment line: Secondardy -->
-                            </span>
-                        </td>
-                        <td>
-                            <obs id="inhDrug" conceptId="CIEL:1282"
-                                 answerDrugIds="
-                                e47fa273-0c52-4f0f-b57b-34001a3e9677,
-                                849218ee-901c-46b3-80f9-7c808132893b"
-                                 answerLabels="
-                                INH 100 mg,
-                                INH 300 mg" />
-                        </td>
-                        <td>
-                            <obs conceptId="CIEL:1443" />
-                        </td>
-                    </tr>
                 </obsgroup>
                 <tr>
                     <td colspan="3">
