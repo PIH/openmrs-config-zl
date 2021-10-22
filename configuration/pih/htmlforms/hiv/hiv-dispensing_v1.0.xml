@@ -670,7 +670,7 @@
                 <obsgroup groupingConceptId="CIEL:1442" >
                 <tr>
                     <td>
-                        <uimessage code="INH" />:
+                        <uimessage code="zl.dispensing.inh" />:
                         <span class="small hidden">
                             <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
                         </span>
