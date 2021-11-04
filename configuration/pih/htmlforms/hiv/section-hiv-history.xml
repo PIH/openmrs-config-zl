@@ -124,6 +124,7 @@
                 setUpNextButtonForSections('hiv-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
                 setUpExpandableTransferAndReferralDetails();
+                setUpDatepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
             });
         </script>
     </ifMode>
@@ -1406,16 +1407,16 @@
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:1501">
-                            <tr>
+                            <tr class="startDateEndDate">
                                 <td>
                                     <obs conceptId="CIEL:1282" answerConceptId="{conceptH}"
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-hx', style: 'dim'}" />
                                 </td>
-                                <td class="{drugname}-hx">
-                                    <obs conceptId="CIEL:1190"/>
+                                <td class="{drugname}-hx startDate">
+                                    <obs conceptId="CIEL:1190" />
                                 </td>
-                                <td class="{drugname}-hx">
+                                <td class="{drugname}-hx endDate">
                                     <obs conceptId="CIEL:1191" />
                                 </td>
                             </tr>
@@ -1427,7 +1428,7 @@
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:1501">
-                            <tr>
+                            <tr class="startDateEndDate">
                                 <td>
                                     <obs conceptId="CIEL:1282" answerConceptId="{conceptH}"
                                          answerLabel="{drugname}"
@@ -1437,10 +1438,10 @@
                                              answerConceptIds="CIEL:159943, CIEL:159944" />
                                     </p>
                                 </td>
-                                <td class="{drugname}-hx">
+                                <td class="{drugname}-hx startDate">
                                     <obs conceptId="CIEL:1190"/>
                                 </td>
-                                <td class="{drugname}-hx">
+                                <td class="{drugname}-hx endDate">
                                     <obs conceptId="CIEL:1191" />
                                 </td>
                             </tr>
@@ -1452,16 +1453,16 @@
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:1501">
-                            <tr>
+                            <tr class="startDateEndDate">
                                 <td>
                                     <obs conceptId="CIEL:1282" answerConceptId="{conceptH}"
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-hx', style: 'dim'}" />
                                 </td>
-                                <td class="{drugname}-hx">
+                                <td class="{drugname}-hx startDate">
                                     <obs conceptId="CIEL:1190"/>
                                 </td>
-                                <td class="{drugname}-hx">
+                                <td class="{drugname}-hx endDate">
                                     <obs conceptId="CIEL:1191" />
                                 </td>
                             </tr>
@@ -1497,15 +1498,15 @@
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:1590">
-                            <tr>
+                            <tr class="startDateEndDate">
                                 <td>
                                     <obs conceptId="CIEL:1282" answerConceptId="{concept}"
                                          toggle="{id: '{hivMedHx}', style: 'dim'}" />
                                 </td>
-                                <td class="{hivMedHx}">
+                                <td class="{hivMedHx} startDate">
                                     <obs conceptId="CIEL:1190"/>
                                 </td>
-                                <td class="{hivMedHx}">
+                                <td class="{hivMedHx} endDate">
                                     <obs conceptId="CIEL:1191" allowFutureDates="true"/>
                                 </td>
                             </tr>
@@ -1519,15 +1520,15 @@
 
                 <!-- Other HIV regimen -->
                 <obsgroup groupingConceptId="PIH:1590">
-                    <tr>
+                    <tr class="startDateEndDate">
                         <td>
                             <obs conceptId="CIEL:1282" answerConceptId="CIEL:5622"
                                  toggle="{id: 'otherHivMedHx', style: 'dim'}" />
                         </td>
-                        <td class="otherHivMedHx">
+                        <td class="otherHivMedHx startDate">
                             <obs conceptId="CIEL:1190"/>
                         </td>
-                        <td class="otherHivMedHx">
+                        <td class="otherHivMedHx endDate">
                             <obs conceptId="CIEL:1191" allowFutureDates="true"/>
                         </td>
                     </tr>
@@ -1572,7 +1573,7 @@
                     <repeat>
                         <template>
                             <obsgroup groupingConceptId="PIH:Family planning history construct">
-                                <tr>
+                                <tr class="startDateEndDate">
                                     <td id="{comment}-fp">
                                         <obs conceptId="CIEL:374"
                                              answerConceptId="{fpMethod}"
@@ -1580,10 +1581,10 @@
                                              toggle="{id: '{comment}-date', style: 'dim'}"
                                         />
                                     </td>
-                                    <td class="{comment}-date">
+                                    <td class="{comment}-date startDate">
                                         <obs conceptId="CIEL:163757"/>
                                     </td>
-                                    <td class="{comment}-date">
+                                    <td class="{comment}-date endDate">
                                         <obs conceptId="CIEL:163758" allowFutureDates="true"/>
                                     </td>
                                 </tr>
@@ -1600,7 +1601,7 @@
 
                     <!-- Other family planning -->
                     <obsgroup groupingConceptId="PIH:Family planning history construct">
-                        <tr>
+                        <tr class="startDateEndDate">
                             <td>
                                 <obs conceptId="CIEL:374"
                                      answerConceptId="CIEL:5622"
@@ -1608,10 +1609,10 @@
                                      toggle="{id: 'other-fp', style: 'dim'}"
                                 />
                             </td>
-                            <td class="other-fp">
+                            <td class="other-fp startDate">
                                 <obs conceptId="CIEL:163757"/>
                             </td>
-                            <td class="other-fp">
+                            <td class="other-fp endDate">
                                 <obs conceptId="CIEL:163758" allowFutureDates="true"/>
                             </td>
                         </tr>
