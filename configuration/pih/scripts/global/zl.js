@@ -88,66 +88,40 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
 
 }
 
-function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStartDateGreaterThanEndDateMsg){
+function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg, badStartDateGreaterThanEndDateMsg){
 
+    // Any time the hidden value input of a date picker wrapped in specific classes is changed, validate dates
     jq(".startDateEndDate").each(function(j, domEl){
-        setUpDatepickers(this);
+        let startDateSection = jq(this).find('.startDate');
+        let endDateSection = jq(this).find('.endDate');
+        jq(startDateSection).find('input[type=hidden]').change(function(e) {
+            validateStartAndEndDates(startDateSection, endDateSection);
+        });
+        jq(endDateSection).find('input[type=hidden]').change(function(e) {
+            validateStartAndEndDates(startDateSection, endDateSection);
+        });
     });
 
-    function setUpDatepickers(containerNode) {
-        const startDatepicker = jq(jq(containerNode).find('.startDate'));
-        const endDatepicker = jq(jq(containerNode).find('.endDate'));
+    function validateStartAndEndDates(startDateSection, endDateSection) {
+        let startDate = Date.parse(jq(startDateSection).find('input[type=hidden]').val());
+        let endDate = Date.parse(jq(endDateSection).find('input[type=hidden]').val());
+        let sdErrorDiv = jq(startDateSection).find('.field-error');
+        let edErrorDiv = jq(endDateSection).find('.field-error');
 
-        startDatepicker.change(function (e) {
-          let startDate = Date.parse(e.target.value);
-          let endDate = Date.parse(endDatepicker.find('input[type=text]').val());
+        // We are re-validating, so remove any previous errors
+        jq(sdErrorDiv).hide().text('');
+        jq(edErrorDiv).hide().text('');
 
-          if (startDate > Date.now()) {
-              jq(this).find('span').show();
-              jq(this).find('span').text(badDateInTheFutureMsg);
-              setButtonsDisabled(true)
-          } else {
-              jq(this).find('span').hide();
-              jq(this).find('span').text('');
-              setButtonsDisabled(false)
-          }
+        // Show errors as appropriate for either start date, end date, or both
+        if (startDate > endDate) {
+            jq(sdErrorDiv).show().text(badStartDateGreaterThanEndDateMsg);
+            jq(edErrorDiv).show().text(badStartDateGreaterThanEndDateMsg);
+        }
 
-          if (endDate > Date.now()) {
-              endDatepicker.find('span').show();
-              endDatepicker.find('span').text(badDateInTheFutureMsg);
-              setButtonsDisabled(true)
-          }
-          if (startDate > endDate) {
-              endDatepicker.find('span').show();
-              endDatepicker.find('span').text(badStartDateGreaterThanEndDateMsg);
-              setButtonsDisabled(true)
-          }
-          if (startDate < endDate && endDate < Date.now()) {
-              endDatepicker.find('span').hide();
-              endDatepicker.find('span').text('');
-              setButtonsDisabled(false)
-          }
-        });
-
-        endDatepicker.change(function (e) {
-            let endDate = Date.parse(e.target.value);
-            let startDate = Date.parse(startDatepicker.find('input[type=text]').val());
-
-            if (endDate > Date.now()) {
-                jq(this).find('span').show();
-                jq(this).find('span').text(badDateInTheFutureMsg);
-                setButtonsDisabled(true)
-            }
-            if (startDate > endDate) {
-                jq(this).find('span').show();
-                jq(this).find('span').text(badStartDateGreaterThanEndDateMsg);
-                setButtonsDisabled(true)
-            }
-            if (startDate < endDate && endDate < Date.now()){
-                jq(this).find('span').hide();
-                jq(this).find('span').text('');
-                setButtonsDisabled(false)
-            }
+        // At the end, disable or enable submission buttons based on whether there are any visible errors
+        setButtonsDisabled(false);
+        jq('.field-error:visible').each(function(index) {
+            setButtonsDisabled(true);
         });
     }
 
