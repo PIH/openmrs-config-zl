@@ -1,0 +1,7 @@
+# These status data definitions are what define the HIV STATUS widget on the HIV Program Dashboard
+
+- id: "nextMedicationPickupDate"
+  labelCode: "zl.status.medPickups.nextScheduledDate"
+  statusDataQuery: "nextMedicationPickupDate.sql"
+  valueExpression: "#if($data.numPickups == 0)$fn.translate('zl.status.medPickups.none')#{else}$fn.formatDate($data.nextPickupDate)#end"
+  formatExpression: "#if($data.numPickups == 0 || $fn.daysSince($data.nextPickupDate) > 28)status-data-alert#{else}#end"
