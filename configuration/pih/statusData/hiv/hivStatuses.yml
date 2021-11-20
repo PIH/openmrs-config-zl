@@ -1,7 +1,10 @@
 # These status data definitions are what define the HIV STATUS widget on the HIV Program Dashboard
 
+## Retrieve the Total Number of HIV Dispensing Encounters, and the Next Dispensing Date (PIH:5096) from the last HIV Dispensing encounter.
+## If this date is more than 28 days ago, highlight it in red.
+## If there have been no HIV Drug Dispensing encounters for this patient, display “No medication pickups” in red.
 - id: "nextMedicationPickupDate"
   labelCode: "zl.status.medPickups.nextScheduledDate"
   statusDataQuery: "nextMedicationPickupDate.sql"
-  valueExpression: "#if($data.numPickups == 0)$fn.translate('zl.status.medPickups.none')#{else}$fn.formatDate($data.nextPickupDate)#end"
-  formatExpression: "#if($data.numPickups == 0 || $fn.daysSince($data.nextPickupDate) > 28)status-data-alert#{else}#end"
+  valueExpression: "#if($numPickups == 0)$fn.translate('zl.status.medPickups.none')#{else}$fn.formatDate($nextPickupDate)#end"
+  formatExpression: "#if($numPickups == 0 || $fn.daysSince($nextPickupDate) > 28)status-data-alert#{else}#end"
