@@ -8,3 +8,10 @@
   statusDataQuery: "nextMedicationPickupDate.sql"
   valueExpression: "#if($numPickups == 0)$fn.translate('zl.status.medPickups.none')#{else}$fn.formatDate($nextPickupDate)#end"
   formatExpression: "#if($numPickups == 0 || $fn.daysSince($nextPickupDate) > 28)status-data-alert#{else}#end"
+
+## Retrieve the next hiv appointment date.  If this is in the past, highlight in red
+- id: "nextHivAppointmentDate"
+  labelCode: "zl.status.appointment.nextScheduledDate"
+  statusDataQuery: "nextAppointmentDate.sql"
+  valueExpression: "$fn.formatDate($nextPickupDate)"
+  formatExpression: "#if($fn.daysSince($nextPickupDate) > 0)status-data-alert#{else}#end"

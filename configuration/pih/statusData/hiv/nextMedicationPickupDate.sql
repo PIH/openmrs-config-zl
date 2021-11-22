@@ -1,6 +1,6 @@
 # This query retrieves the total number of HIV Dispensing Encounters and the Most Recent Scheduled Dispensing Date for a patient
 
-set @hivDispensingEncounterType = encounter_type('cc1720c9-3e4c-4fa8-a7ec-40eeaad1958c');
+set @hivDispensingEncounterType = encounter_type('${encounterType.HIV_DISPENSING.uuid}');
 select ifnull(q1.num_pickups, 0) as numPickups, q2.value_datetime as nextPickupDate
 from patient p
 left join
