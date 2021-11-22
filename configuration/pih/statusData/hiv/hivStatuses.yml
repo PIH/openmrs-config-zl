@@ -13,5 +13,5 @@
 - id: "nextHivAppointmentDate"
   labelCode: "zl.status.appointment.nextScheduledDate"
   statusDataQuery: "nextAppointmentDate.sql"
-  valueExpression: "$fn.formatDate($nextPickupDate)"
-  formatExpression: "#if($fn.daysSince($nextPickupDate) > 0)status-data-alert#{else}#end"
+  valueExpression: "$fn.formatDate($nextVisitDate)"
+  formatExpression: "#if($nextVisitDate && $fn.daysSince($nextVisitDate) > 0)status-data-alert#{else}#end"
