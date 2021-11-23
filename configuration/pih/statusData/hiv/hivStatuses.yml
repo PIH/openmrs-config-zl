@@ -38,3 +38,9 @@
   conditionExpression: "#if($gender == 'F' && $pregnant == 1)true#{else}false#end"
   valueExpression: "$fn.format($dueDate)"
   formatExpression: "#if($pregnant == 1)status-data-alert#end"
+
+- id: "lastCd4Result"
+  labelCode: "zl.status.lastCd4.result"
+  statusDataQuery: "lastCd4.sql"
+  valueExpression: "#if($cd4)$cd4 $fn.translate('general.onDate') $fn.formatDate($cd4Date)#{else}$fn.translate('zl.status.lastCd4.none')#end"
+  formatExpression: ""
