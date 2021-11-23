@@ -25,8 +25,9 @@ they will be evaluated (and displayed) in the order defined.
 - id: "aUniqueIdThatMayBeUsedToReferenceThisSpecificDefinition"
   labelCode: "a.message.code.for.the.label.to.associate.with.the.data"
   statusDataQuery: "aLinkToARelativeSqlFileThatDefinesTheDataToEvaluate.sql" # note, if your SQL is very short, you could also put the raw sql query here
+  conditionExpression: "An optional expression if needed to indicate when this condition may not be enabled"
   valueExpression: "A velocity expression that defines the text that you want to display for this status."
-  formatExpression: "A velocity expression that defines the format that you want to display for this status" # For display, typically maps to css class
+  formatExpression: "An optional velocity expression that defines the format that you want to display for this status" # For display, typically maps to css class
 ```
 
 #### id
@@ -56,11 +57,15 @@ would be two additional variables named `$birthdate` and `$gender` in the Veloci
 a query returns multiple rows of data, these will need to be manipulated through the data variable.  For example, 
 one could determine the number of rows returned via `$data.size()` and retrieve the first row via `$data.get(0)`
 
+### conditionExpression
+This is an optional Velocity expression which, if it evaluates to "false" or "0" will indicate that the statusData is
+not enabled for a given patient.
+
 ### valueExpression
-This is a Velocity expression (see below) that defines the display _value_ for the statusData returned.
+This is a required Velocity expression that defines the display _value_ for the statusData returned.
 
 ### formatExpression
-This is a Velocity expression (see below) that defines the display _format_ for the statusData returned.
+This is an optional Velocity expression that defines the display _format_ for the statusData returned.
 Within the context of the statusData widget, this value maps to the CSS class of the value itself.
 CSS classes can be defined as needed to match the formats defined here in the `configuration/pih/styles/global/xxx.css` files.
 
