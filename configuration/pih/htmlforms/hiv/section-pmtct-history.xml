@@ -135,7 +135,7 @@
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
                 setUpDatepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
                 setUpExpandableTransferAndReferralDetails();
-                setUpDatepickerInTheFutureValidation('<uimessage code="pihcore.date.error.inTheFuture"/>');
+                setUpObsWithObsDateTime('syph-checkbox');
             });
         </script>
     </ifMode>
@@ -458,9 +458,9 @@
 
         <div class="section-container">
             <p>
-                <obs conceptId="CIEL:164801" style="checkbox"
+                <obs id="syph-checkbox" conceptId="CIEL:164801" style="checkbox"
                      answerConceptId="CIEL:1065" answerCode="pihcore.screeningSyph"
-                     dateLabel="Date" toggle="syph-screen" class="dateDatepickerInTheFuture"/>
+                     dateLabel="Date" toggle="syph-screen"/>
             </p>
             <p id="syph-screen" class="side-by-side">
                 <label>
@@ -1281,7 +1281,7 @@
                 </div>
 
             </div>
-        
+
     </section>
 
 

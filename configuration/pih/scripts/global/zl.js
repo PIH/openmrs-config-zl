@@ -199,31 +199,34 @@ function setButtonsDisabled(val){
     jq("#submit,.confirm").prop("disabled", val);
 }
 
-function setUpDatepickerInTheFutureValidation(badDateInTheFutureMsg){
+/**
+ * This function provides specific client-side functionality for with "checkbox" style obs with an obs date component;
+ * It is currently used for the "screening for syphilis", and configured by applying a class "dateDatepickerInTheFuture" to the relevant obs
+ *
+ * It does two main things:
+ *   ** Hide/show the datepicker input based on whether the checkbox is checked
+ *   ** Doesn't allow date selected to be ahead of the current date
+ *
+ * Ideally, 1) The HTML Form Entry module would handle this validation client-side (currently it only handles it
+ * server-side) and 2) would not allow the date to after the *encounter date* (not just the current date)
+ *
+ * We have a ticket for the above work, see: https://issues.openmrs.org/browse/HTML-799 , and if we implement this
+ * we could potentially rework this function to just be about hiding/showing the date
+ *
+ * @param badDateInTheFutureMsg
+ */
+function setUpObsWithObsDateTime(widgetId){
+    getField(widgetId + '.date').hide();
+    getField(widgetId + '.date').datepicker('option', 'maxDate', new Date());
 
-    jq('.dateDatepickerInTheFuture').each(function(j, domEl){
-        jq(this).find('input[type=text]').hide();
-        jq(this).change(function (e) {
-            const  date=Date.parse(jq(this).find('input[type=text]').val())
-            const  isCheched=Date.parse(jq(this).find('input:checked').val())
-            if(isCheched) {
-                if (date > Date.now()) {
-                    jq(this).find('span').show();
-                    jq(this).find('span').text(badDateInTheFutureMsg);
-                    setButtonsDisabled(true)
-                } else {
-                    jq(this).find('span').hide();
-                    jq(this).find('span').text('');
-                    setButtonsDisabled(false)
-                }
-                jq(this).find('input[type=text]').show();
-            }else {
-                jq(this).find('input[type=text]').prop('value', '')
-                jq(this).find('span').text('');
-                jq(this).find('input[type=text]').hide();
-                setButtonsDisabled(false)
-            }
-        })
-    });
-
+    getField(widgetId + '.value').change(function() {
+      const isChecked = getValue(widgetId + '.value');
+      if(isChecked) {
+        getField(widgetId + '.date').show();
+      }
+      else {
+        setValue(widgetId + '.date','')
+        getField(widgetId + '.date').hide();
+      }
+    })
 }
