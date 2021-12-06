@@ -182,7 +182,7 @@
             // difference in days
             var daysDifference = Math.ceil(timeDiff / (1000 * 3600 * 24 ));
             if ( (daysDifference &lt; 1) ||  (daysDifference &gt; 364)) {
-                getField('nextDispenseDate.error').text("<uimessage code='Next dispensing date has to be within a year of the encounter date'/>").show();
+                getField('nextDispenseDate.error').text("<uimessage code='zl.dispensingMustBeWithinOneYearOfEncounter'/>").show();
                 return false;
             } else {
               getField('nextDispenseDate.error').text("").hide();
@@ -267,7 +267,7 @@
             var inhDrug =  getValue('inhDrug.value');
 
             if ( arv1Drug == false &amp;&amp;  arv2Drug == false &amp;&amp;  tmsDrug == false &amp;&amp;  inhDrug == false ) {
-                jq("#missingMedsError").text("<uimessage code='Please select a drug!'/>").show();
+                jq("#missingMedsError").text("<uimessage code='zl.pleaseSelectADrug'/>").show();
                 return false;
             } else {
                 jq("missingMedsError").hide();
@@ -284,7 +284,7 @@
             var chwName = getValue('chwName.value');
             if (chwName == false) {
               // the CHW name was not entered
-              getField('chwName.error').text("<uimessage code='required'/>").show();
+              getField('chwName.error').text("<uimessage code='pihcore.required'/>").show();
               return false;
             }
           }
@@ -295,7 +295,7 @@
         beforeValidation.push(function() {
             var nextDispensingDate = getValue('nextDispenseDate.value');
             if (nextDispensingDate == false) {
-              getField('nextDispenseDate.error').text("<uimessage code='Please select date'/>").show();
+              getField('nextDispenseDate.error').text("<uimessage code='zl.pleaseSelectDate'/>").show();
               return false;
             }
 
@@ -535,7 +535,7 @@
                 <obsgroup groupingConceptId="CIEL:1442" >
                 <tr>
                    <td>
-                       <uimessage code="ARV #1" />:
+                       <uimessage code="zl.arv1" />:
                        <span class="small hidden">
                            <obs conceptId="PIH:1535" answerConceptId="PIH:3013" defaultValue="PIH:3013"></obs>
                        </span>
@@ -591,7 +591,7 @@
                 <obsgroup groupingConceptId="CIEL:1442" >
                 <tr>
                     <td>
-                        <uimessage code="ARV #2" />:
+                        <uimessage code="zl.arv2" />:
                         <span class="small hidden">
                             <obs conceptId="PIH:1535" answerConceptId="PIH:2848" defaultValue="PIH:2848"></obs>
                         </span>
@@ -643,7 +643,7 @@
                 <obsgroup groupingConceptId="CIEL:1442" >
                 <tr>
                     <td>
-                        <uimessage code="TMS / Dapsone" />:
+                        <uimessage code="zl.tmsDapsone" />:
                         <span class="small hidden">
                             <obs conceptId="PIH:1535" answerConceptId="PIH:3120" defaultValue="PIH:3120"></obs>
                         </span>
