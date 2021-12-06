@@ -32,7 +32,7 @@
     "registrationConfig": {
         "allowUnknownPatients": true,
         "allowManualEntryOfPrimaryIdentifier": true,
-        "afterCreatedUrl": "mirebalais/patientRegistration/afterRegistration.page?patientId={{patientId}}&encounterId={{encounterId}}",
+        "afterCreatedUrl": "pihcore/patientRegistration/afterRegistration.page?patientId={{patientId}}&encounterId={{encounterId}}",
         "afterCreatedActions": [
           "bean:assignDossierNumber"
         ],

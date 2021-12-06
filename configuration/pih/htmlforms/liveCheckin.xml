@@ -114,7 +114,7 @@
                     // temporarily turn ajax to synchronized so we can block if printing is not successful (a little bit hacky, probably better to disable just this call?)
                     jq.ajaxSetup({async:false});
 
-                     emr.getFragmentActionWithCallback('mirebalais', 'wristband', 'printWristband', { patientId: <lookup expression="patient.id"/> },
+                     emr.getFragmentActionWithCallback('pihcore', 'wristband', 'printWristband', { patientId: <lookup expression="patient.id"/> },
                         function(data) {
                             success = data.success;
 

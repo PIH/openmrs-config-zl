@@ -1,21 +1,21 @@
 {
   "@openmrs/esm-api": {
     "redirectAuthFailure": {
-      "url": "/mirebalais/login.htm"
+      "url": "/pihcore/login.htm"
     }
   },
   "@openmrs/esm-login-app": {
     "logo": {
-      "src": "/mirebalais/spa/site/pih-logo.png",
+      "src": "/pihcore/spa/site/pih-logo.png",
       "alt": "Partners in Health"
     },
     "links": {
-      "loginSuccess": "${openmrsBase}/mirebalais/home.page"
+      "loginSuccess": "${openmrsBase}/pihcore/home.page"
     }
   },
   "@pih/esm-refapp-navbar-app": {
     "brand": {
-      "src": "/mirebalais/spa/site/zl-logo.png",
+      "src": "/pihcore/spa/site/zl-logo.png",
       "alt": "Zanmi Lasante"
     }
   }
