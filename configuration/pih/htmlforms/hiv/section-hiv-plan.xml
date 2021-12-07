@@ -976,6 +976,7 @@
                         <orderProperty name="concept" label="pihcore.drugOrders.concept">
                             <option value="CIEL:105281" label="Cotrimoxazole" />
                             <option value="CIEL:78280"  label="Isoniazide" />
+                            <option value="CIEL:82912"  label="B6" />
                             <option value="CIEL:76488"  label="Fluconazole" />
                             <option value="CIEL:74250"  label="Dapsone" />
                             <optionGroup concept="PIH:TUBERCULOSIS DRUGS" groupLabel="pihcore.tbTreatment" sortAlphabetically="true"/>

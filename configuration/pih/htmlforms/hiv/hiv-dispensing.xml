@@ -712,6 +712,27 @@
                         </td>
                     </tr>
                 </obsgroup>
+
+                <!-- Vitamin B6 -->
+                <obsgroup groupingConceptId="CIEL:1442" >
+                    <tr>
+                        <td>
+                            <uimessage code="B6" />:
+                            <span class="small hidden">
+                                <obs conceptId="PIH:1535" answerConceptId="PIH:3120" defaultValue="PIH:3120"></obs>
+                            </span>
+                        </td>
+                        <td>
+                            <obs id="b6Drug" conceptId="CIEL:1282"
+                                 answerDrugIds="bc2f0b43-5a92-4c1a-8004-47e3b36c8bdb"
+                                 answerLabels="B6, 50mg" />
+                        </td>
+                        <td>
+                            <obs conceptId="CIEL:1443" />
+                        </td>
+                    </tr>
+                </obsgroup>
+
                 <tr>
                     <td colspan="3">
                         <span id="missingMedsError" class="error field-error" style="display: none"></span>
