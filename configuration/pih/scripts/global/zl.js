@@ -88,69 +88,33 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
 
 }
 
-function setUpDatepickerStartAndEndDateValidation(badDateInTheFutureMsg,badStartDateGreaterThanEndDateMsg){
+/**
+ * Given the widget ids of two obs of value dates, assures that the "start date" cannot be after the "end date"
+ * and that the "end date" cannot be before the "start date" by updating the min and max dates of the respective
+ * datepickers
+ */
+function setUpDatepickerStartAndEndDateValidation(startDateWidgetId, endDateWidgetId){
 
-    jq(".startDateEndDate").each(function(j, domEl){
-        setUpDatepickers(this);
-    });
+    const startDatepicker = getField(startDateWidgetId + '.value');
+    const endDatepicker = getField(endDateWidgetId + '.value');
 
-    function setUpDatepickers(containerNode) {
-        const startDatepicker = jq(jq(containerNode).find('.startDate'));
-        const endDatepicker = jq(jq(containerNode).find('.endDate'));
-
-        startDatepicker.change(function (e) {
-          let startDate = Date.parse(e.target.value);
-          let endDate = Date.parse(endDatepicker.find('input[type=text]').val());
-
-          if (startDate > Date.now()) {
-              jq(this).find('span').show();
-              jq(this).find('span').text(badDateInTheFutureMsg);
-              setButtonsDisabled(true)
-          } else {
-              jq(this).find('span').hide();
-              jq(this).find('span').text('');
-              setButtonsDisabled(false)
-          }
-
-          if (endDate > Date.now()) {
-              endDatepicker.find('span').show();
-              endDatepicker.find('span').text(badDateInTheFutureMsg);
-              setButtonsDisabled(true)
-          }
-          if (startDate > endDate) {
-              endDatepicker.find('span').show();
-              endDatepicker.find('span').text(badStartDateGreaterThanEndDateMsg);
-              setButtonsDisabled(true)
-          }
-          if (startDate < endDate && endDate < Date.now()) {
-              endDatepicker.find('span').hide();
-              endDatepicker.find('span').text('');
-              setButtonsDisabled(false)
-          }
-        });
-
-        endDatepicker.change(function (e) {
-            let endDate = Date.parse(e.target.value);
-            let startDate = Date.parse(startDatepicker.find('input[type=text]').val());
-
-            if (endDate > Date.now()) {
-                jq(this).find('span').show();
-                jq(this).find('span').text(badDateInTheFutureMsg);
-                setButtonsDisabled(true)
-            }
-            if (startDate > endDate) {
-                jq(this).find('span').show();
-                jq(this).find('span').text(badStartDateGreaterThanEndDateMsg);
-                setButtonsDisabled(true)
-            }
-            if (startDate < endDate && endDate < Date.now()){
-                jq(this).find('span').hide();
-                jq(this).find('span').text('');
-                setButtonsDisabled(false)
-            }
-        });
+    if (startDatepicker) {
+      startDatepicker.change(function () {
+        let startDate = getField(startDateWidgetId + '.value').datepicker('getDate');
+        if (startDate) {
+          endDatepicker.datepicker('option', 'minDate', startDate);
+        }
+      });
     }
 
+    if (endDatepicker) {
+      endDatepicker.change(function() {
+        let endDate = getField(endDateWidgetId + '.value').datepicker('getDate');
+        if (endDate) {
+          startDatepicker.datepicker('option', 'maxDate', endDate);
+        }
+      });
+    }
 }
 
 function setUpExpandableTransferAndReferralDetails(){
@@ -194,6 +158,7 @@ function phoneNumberPattern(){
     }
 }
 
+/*
 function setButtonsDisabled(val){
     jq("#next").prop("disabled", val);
     jq("#submit,.confirm").prop("disabled", val);
@@ -216,17 +181,18 @@ function setButtonsDisabled(val){
  * @param badDateInTheFutureMsg
  */
 function setUpObsWithObsDateTime(widgetId){
-    getField(widgetId + '.date').hide();
-    getField(widgetId + '.date').datepicker('option', 'maxDate', new Date());
+    if (getField(widgetId + '.date') && getField(widgetId + '.value')) {
+      getField(widgetId + '.date').hide();
+      getField(widgetId + '.date').datepicker('option', 'maxDate', new Date());
 
-    getField(widgetId + '.value').change(function() {
-      const isChecked = getValue(widgetId + '.value');
-      if(isChecked) {
-        getField(widgetId + '.date').show();
-      }
-      else {
-        setValue(widgetId + '.date','')
-        getField(widgetId + '.date').hide();
-      }
-    })
+      getField(widgetId + '.value').change(function () {
+        const isChecked = getValue(widgetId + '.value');
+        if (isChecked) {
+          getField(widgetId + '.date').show();
+        } else {
+          setValue(widgetId + '.date', '')
+          getField(widgetId + '.date').hide();
+        }
+      })
+    }
 }

@@ -165,7 +165,8 @@
                 );
 
                 setUpNextButtonForSections('hiv-state');
-                setUpDatepickerStartAndEndDateValidation('<uimessage code="pihcore.date.error.inTheFuture"/>','<uimessage code="pihcore.startDate.greater"/>');
+                setUpDatepickerStartAndEndDateValidation('mom-syph-treat-start','mom-syph-treat-end');
+                setUpDatepickerStartAndEndDateValidation('partner-syph-treat-start','partner-syph-treat-end');
                 setUpObsWithObsDateTime('syph-checkbox');
             });
         </script>
@@ -955,9 +956,9 @@
                                 <obs conceptId="CIEL:1628" style="checkbox" answerConceptId="CIEL:112493"
                                      answerCode="pihcore.syphilisTreatmentPregnantMother" toggle="mom-syph-treat"/>
                             </p>
-                            <p id="mom-syph-treat" class="startDateEndDate">
-                                <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
-                                <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
+                            <p id="mom-syph-treat">
+                                <obs id="mom-syph-treat-start" conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate"/>
+                                <obs id="mom-syph-treat-end" conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate"/>
                             </p>
                         </obsgroup>
                     </div>
@@ -968,9 +969,9 @@
                                 <obs conceptId="CIEL:1628" style="checkbox" answerConceptId="CIEL:112493"
                                      answerCode="pihcore.syphilisTreatmentPartner" toggle="partner-syph-treat"/>
                             </p>
-                            <p id="partner-syph-treat" class="startDateEndDate">
-                                <obs conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
-                                <obs conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
+                            <p id="partner-syph-treat">
+                                <obs id="partner-syph-treat-start" conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" />
+                                <obs id="partner-syph-treat-end" conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" />
                             </p>
                         </obsgroup>
                     </div>
