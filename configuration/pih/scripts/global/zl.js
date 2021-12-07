@@ -158,12 +158,6 @@ function phoneNumberPattern(){
     }
 }
 
-/*
-function setButtonsDisabled(val){
-    jq("#next").prop("disabled", val);
-    jq("#submit,.confirm").prop("disabled", val);
-}
-
 /**
  * This function provides specific client-side functionality for with "checkbox" style obs with an obs date component;
  * It is currently used for the "screening for syphilis", and configured by applying a class "dateDatepickerInTheFuture" to the relevant obs
