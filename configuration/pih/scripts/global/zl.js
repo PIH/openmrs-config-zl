@@ -93,28 +93,31 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
  * and that the "end date" cannot be before the "start date" by updating the min and max dates of the respective
  * datepickers
  */
-function setUpDatepickerStartAndEndDateValidation(startDateWidgetId, endDateWidgetId){
+function setUpDatepickerStartAndEndDateValidation(){
 
-    const startDatepicker = getField(startDateWidgetId + '.value');
-    const endDatepicker = getField(endDateWidgetId + '.value');
+    jq(".startDateEndDate").each(function (j, domEl) {
 
-    if (startDatepicker) {
-      startDatepicker.change(function () {
-        let startDate = getField(startDateWidgetId + '.value').datepicker('getDate');
-        if (startDate) {
-          endDatepicker.datepicker('option', 'minDate', startDate);
+        const startDatepicker = jq(jq(this).find('.startDate'));
+        const endDatepicker = jq(jq(this).find('.endDate'));
+
+        if (startDatepicker) {
+            startDatepicker.change(function () {
+                let startDate = startDatepicker.find('input[type=text]').datepicker('getDate');
+                if (startDate) {
+                    endDatepicker.find('input[type=text]').datepicker('option', 'minDate', startDate);
+                }
+            });
         }
-      });
-    }
 
-    if (endDatepicker) {
-      endDatepicker.change(function() {
-        let endDate = getField(endDateWidgetId + '.value').datepicker('getDate');
-        if (endDate) {
-          startDatepicker.datepicker('option', 'maxDate', endDate);
+        if (endDatepicker) {
+            endDatepicker.change(function () {
+                let endDate = endDatepicker.find('input[type=text]').datepicker('getDate');
+                if (endDate) {
+                    startDatepicker.find('input[type=text]').datepicker('option', 'maxDate', endDate);
+                }
+            });
         }
-      });
-    }
+    });
 }
 
 function setUpExpandableTransferAndReferralDetails(){
