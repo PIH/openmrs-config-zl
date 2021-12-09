@@ -91,7 +91,12 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
 /**
  * Given the widget ids of two obs of value dates, assures that the "start date" cannot be after the "end date"
  * and that the "end date" cannot be before the "start date" by updating the min and max dates of the respective
- * datepickers
+ * date pickers
+ *
+ * To use:
+ *    1) Add the class "startDateEndDate" to a parent element in the DOM that includes both the start and end date widgets
+ *    2) Apply "startDate" class to the start datepicker element, and "endDate" to the end datepicker element
+ *    3) Call setupDatepickerStartAndEndDateValidation() upon page load
  */
 function setUpDatepickerStartAndEndDateValidation(){
 

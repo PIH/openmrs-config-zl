@@ -570,17 +570,17 @@
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:2739">
-                            <tr>
+                            <tr class="startDateEndDate">
                                 <td>
                                     <obs conceptId="PIH:2289" answerConceptId="{conceptMap}"
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-current-treat', style: 'dim'}"/>
                                 </td>
                                 <td class="{drugname}-current-treat">
-                                    <obs conceptId="CIEL:163526" />
+                                    <obs conceptId="CIEL:163526" class="startDate"/>
                                 </td>
                                 <td class="{drugname}-current-treat">
-                                    <obs conceptId="CIEL:164384" allowFutureDates="true" />
+                                    <obs conceptId="CIEL:164384" allowFutureDates="true" class="endDate"/>
                                 </td>
                             </tr>
                         </obsgroup>
@@ -591,7 +591,7 @@
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:2739">
-                            <tr>
+                            <tr class="startDateEndDate">
                                 <td>
                                     <obs conceptId="PIH:2289" answerConceptId="{conceptMap}"
                                          answerLabel="{drugname}"
@@ -602,10 +602,10 @@
                                     </p>
                                 </td>
                                 <td class="{drugname}-current-treat">
-                                    <obs conceptId="CIEL:163526" />
+                                    <obs conceptId="CIEL:163526" class="startDate" />
                                 </td>
                                 <td class="{drugname}-current-treat">
-                                    <obs conceptId="CIEL:164384" allowFutureDates="true" />
+                                    <obs conceptId="CIEL:164384" allowFutureDates="true" class="endDate" />
                                 </td>
                             </tr>
                         </obsgroup>
@@ -616,17 +616,17 @@
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:2739">
-                            <tr>
+                            <tr class="startDateEndDate">
                                 <td>
                                     <obs conceptId="PIH:2289" answerConceptId="{conceptMap}"
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-current-treat', style: 'dim'}"/>
                                 </td>
                                 <td class="{drugname}-current-treat">
-                                    <obs conceptId="CIEL:163526" />
+                                    <obs conceptId="CIEL:163526" class="startDate" />
                                 </td>
                                 <td class="{drugname}-current-treat">
-                                    <obs conceptId="CIEL:164384" allowFutureDates="true" />
+                                    <obs conceptId="CIEL:164384" allowFutureDates="true" class="endDate"/>
                                 </td>
                             </tr>
                         </obsgroup>
@@ -636,7 +636,7 @@
                 </repeat>
 
                 <obsgroup groupingConceptId="PIH:2739">
-                    <tr>
+                    <tr class="startDateEndDate">
                         <td>
                             <obs conceptId="PIH:2289"
                                  answerConceptId="PIH:3120" answerCode="pihcore.other"
@@ -644,10 +644,10 @@
                                  commentFieldLabel="specify:" />
                         </td>
                         <td class="other-current-pro-treat">
-                            <obs conceptId="CIEL:163526" />
+                            <obs conceptId="CIEL:163526" class="startDate" />
                         </td>
                         <td class="other-current-pro-treat">
-                            <obs conceptId="CIEL:164384" allowFutureDates="true" />
+                            <obs conceptId="CIEL:164384" allowFutureDates="true" class="endDate"/>
                         </td>
                     </tr>
                 </obsgroup>
