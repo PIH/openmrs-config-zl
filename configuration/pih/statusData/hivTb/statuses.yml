@@ -1,0 +1,7 @@
+# These status data definitions are what define the TB Status widget on the HIV Program Dashboard
+
+- id: "lastScreening"
+  labelCode: "zl.status.hivTb.lastTbScreening"
+  statusDataQuery: "lastScreening.sql"
+  valueExpression: "#if($lastScreeningDate)$fn.formatDate($lastScreeningDate), $fn.translate($screeningResult)#{else}$fn.translate('zl.status.hivTb.neverScreened')#end"
+  formatExpression: "#if(!$lastScreeningDate || $screeningResult == 'zl.status.hivTb.symptomatic')status-data-alert#end"
