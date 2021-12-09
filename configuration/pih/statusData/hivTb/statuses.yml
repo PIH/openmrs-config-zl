@@ -5,3 +5,16 @@
   statusDataQuery: "lastScreening.sql"
   valueExpression: "#if($lastScreeningDate)$fn.formatDate($lastScreeningDate), $fn.translate($screeningResult)#{else}$fn.translate('zl.status.hivTb.neverScreened')#end"
   formatExpression: "#if(!$lastScreeningDate || $screeningResult == 'zl.status.hivTb.symptomatic')status-data-alert#end"
+
+- id: "lastTbTestDate"
+  labelCode: "zl.status.hivTb.lastTbTest"
+  statusDataQuery: "lastTbTest.sql"
+  valueExpression: "#if($testDate)$fn.formatDate($testDate), $fn.format($fn.concept($testType))#{else}$fn.translate('zl.status.hivTb.neverTested')#end"
+  formatExpression: ""
+
+- id: "lastTbTestResult"
+  labelCode: "zl.status.hivTb.lastTbTestResult"
+  statusDataQuery: "lastTbTest.sql"
+  conditionExpression: "#if($testDate)true#{else}false#end"
+  valueExpression: "$fn.format($fn.concept($testResult))"
+  formatExpression: ""
