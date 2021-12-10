@@ -18,3 +18,9 @@
   conditionExpression: "#if($testDate)true#{else}false#end"
   valueExpression: "$fn.format($fn.concept($testResult))"
   formatExpression: ""
+
+- id: "inhStatus"
+  labelCode: "zl.status.hivTb.inhStatus"
+  statusDataQuery: "inhStatus.sql"
+  valueExpression: "#if($startDate)$duration $fn.translate('zl.days')#{else}$fn.translate('zl.status.hivTb.inhNotStarted')#end"
+  formatExpression: ""
