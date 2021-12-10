@@ -597,7 +597,7 @@
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-current-treat', style: 'dim'}"/>
                                     <p class="radio {drugname}-current-treat">
-                                        <obs conceptId="PIH:13154" style="radio"
+                                        <obs conceptId="PIH:13786" style="radio"
                                              answerConceptIds="CIEL:159943, CIEL:159944" />
                                     </p>
                                 </td>

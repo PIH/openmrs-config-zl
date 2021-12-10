@@ -597,7 +597,7 @@
         <div class="section-container-color">
 
             <p class="radio">
-                <obs conceptId="PIH:13154" style="radio"
+                <obs conceptId="PIH:13786" style="radio"
                      answerConceptIds="CIEL:159943, CIEL:159944"
                      labelCode="pihcore.inhTreatmentLine"/>
             </p>

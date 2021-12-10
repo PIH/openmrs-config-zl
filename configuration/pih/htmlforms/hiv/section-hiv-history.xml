@@ -1136,11 +1136,14 @@
             <div class="two-column">
                 <!-- Tobacco use -->
                 <div>
-                    <label>
-                        <uimessage code="pihcore.habits.smoking"/>:
-                    </label>
-                    <obs conceptId="CIEL:163731" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
-                         answerSeparator="" style="radio"/>
+                    <p class="side-by-side">
+                        <label>
+                            <uimessage code="pihcore.habits.smoking"/>:
+                        </label>
+                        <br/>
+                        <obs conceptId="CIEL:163731" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
+                             answerSeparator="" style="radio"/>
+                    </p>
                 </div>
                 <div>
                     <label>
@@ -1161,10 +1164,11 @@
             </div>
 
             <!-- Secondary smoke -->
-            <p>
+            <p class="side-by-side">
                 <label>
                     <uimessage code="pihcore.habits.secondhandSmoke"/>:
                 </label>
+                <br/>
                 <obs conceptId="CIEL:152721" answerConceptIds="CIEL:1065,CIEL:1066"
                      answerSeparator="" style="radio"/>
             </p>
@@ -1172,11 +1176,14 @@
             <div class="two-column">
                 <!-- Alcohol use -->
                 <div>
-                    <label>
-                        <uimessage code="pihcore.habits.alcohol"/>:
-                    </label>
-                    <obs conceptId="CIEL:159449" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
-                         answerSeparator="" style="radio"/>
+                    <p class="side-by-side">
+                        <label>
+                            <uimessage code="pihcore.habits.alcohol"/>:
+                        </label>
+                        <br/>
+                        <obs conceptId="CIEL:159449" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
+                             answerSeparator="" style="radio"/>
+                    </p>
                 </div>
                 <div>
                     <label>
@@ -1207,11 +1214,14 @@
             <div class="two-column">
                 <!-- Drug use -->
                 <div>
-                    <label><uimessage code="pihcore.habits.drugs"/>:
-                    </label>
-                    <obs conceptId="CIEL:162556" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
-                         answerSeparator="" style="radio"/>
-
+                    <p class="side-by-side">
+                        <label>
+                            <uimessage code="pihcore.habits.drugs"/>:
+                        </label>
+                        <br/>
+                        <obs conceptId="CIEL:162556" answerConceptIds="CIEL:159450,CIEL:1090,CIEL:159452"
+                             answerSeparator="" style="radio"/>
+                    </p>
                 </div>
                 <div>
                     <label>
@@ -1442,7 +1452,7 @@
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-hx', style: 'dim'}" />
                                     <p class="radio {drugname}-hx">
-                                        <obs conceptId="PIH:13154" style="radio"
+                                        <obs conceptId="PIH:13786" style="radio"
                                              answerConceptIds="CIEL:159943, CIEL:159944" />
                                     </p>
                                 </td>
