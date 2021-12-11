@@ -10,5 +10,8 @@
     "matchUrl": "http://localhost:9000/match",
     "scanUrl": "https://localhost:9443/fingerprint/scan",
     "devicesUrl": "https://localhost:9443/fingerprint/devices"
-  }
+  },
+
+  "localZlIdentifierGeneratorEnabled": "true",
+  "localZlIdentifierGeneratorPrefix": "Y"
 }

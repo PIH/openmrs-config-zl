@@ -42,5 +42,8 @@
     "visitNote",
     "vitals",
     "waitingForConsult"
-	]
+	],
+
+  "localZlIdentifierGeneratorEnabled": "true",
+  "localZlIdentifierGeneratorPrefix": "Y"
 }

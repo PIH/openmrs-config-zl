@@ -77,6 +77,9 @@
     "devicesUrl": "https://localhost:9443/fingerprint/devices"
   },
 
+  "localZlIdentifierGeneratorEnabled": "true",
+  "localZlIdentifierGeneratorPrefix": "Y",
+
   "extensions": [
     {
       "id": "patientHeader.linkToHivEmr",
