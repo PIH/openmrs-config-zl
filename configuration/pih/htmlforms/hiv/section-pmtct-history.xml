@@ -984,7 +984,7 @@
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-hx', style: 'dim'}" />
                                     <p class="radio {drugname}-hx">
-                                        <obs conceptId="PIH:13786" style="radio"
+                                        <obs conceptId="PIH:13154" style="radio"
                                              answerConceptIds="CIEL:159943, CIEL:159944" />
                                     </p>
                                 </td>

@@ -672,7 +672,7 @@
                         <uimessage code="zl.dispensing.inhPrimary" />:
                         <span class="small hidden">
                             <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
-                            <obs conceptId="PIH:13786" answerConceptId="CIEL:159943" defaultValue="CIEL:159943"></obs>  <!-- Treatment line: Primary -->
+                            <obs conceptId="PIH:13154" answerConceptId="CIEL:159943" defaultValue="CIEL:159943"></obs>  <!-- Treatment line: Primary -->
                         </span>
                     </td>
                     <td>
@@ -695,7 +695,7 @@
                             <uimessage code="zl.dispensing.inhSecondary" />:
                             <span class="small hidden">
                                 <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
-                                <obs conceptId="PIH:13786" answerConceptId="CIEL:159944" defaultValue="CIEL:159944"></obs>  <!-- Treatment line: Secondardy -->
+                                <obs conceptId="PIH:13154" answerConceptId="CIEL:159944" defaultValue="CIEL:159944"></obs>  <!-- Treatment line: Secondardy -->
                             </span>
                         </td>
                         <td>
