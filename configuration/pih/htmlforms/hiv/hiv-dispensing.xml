@@ -756,7 +756,7 @@
                         <label>
                             <uimessage code="pihcore.nextDispenseDate"/>
                         </label>
-                        <obs id="nextDispenseDate" conceptId="CIEL:5096" allowFutureDates="true" />
+                        <obs id="nextDispenseDate" conceptId="CIEL:5096" allowFutureDates="true" allowPastDates="false" />
                     </td>
                 </tr>
             </table>

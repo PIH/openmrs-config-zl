@@ -396,7 +396,7 @@
                 <uimessage code="pihcore.consult.returnVisitDate" />
             </label>
             <p class="narrow">
-                <obs conceptId="CIEL:5096" allowFutureDates="true" id="apptDate"/>
+                <obs conceptId="CIEL:5096" allowFutureDates="true" allowPastDates="false" id="apptDate"/>
             </p>
         </div>
     </section>
