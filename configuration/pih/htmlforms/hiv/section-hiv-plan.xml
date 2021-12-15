@@ -95,11 +95,6 @@
             width: 12em;
         }
     </style>
-    <script type="text/javascript">
-        jq(function() {
-            setUpExpandableTransferAndReferralDetails();
-        });
-    </script>
 
     <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
     note that we already do this on the history section, but add here case the history section is skipped
@@ -1191,14 +1186,21 @@
                 <label>
                     <uimessage code="pihcore.externalTransferQuestion" />
                 </label>
-                <p class="radio cb-align">
-                    <obs conceptId="PIH:HUM Disposition categories"
-                         answerConceptId="CIEL:160036" answerCode="emr.yes"
-                         style="checkbox" toggle="transfer-out-details"/>
+                <p class="side-by-side">
+                    <obs id="transfer-referral-spots"
+                         conceptId="PIH:REFERRAL OR TRANSFER" style="radio"
+                         answerConceptIds="PIH:11521,PIH:6965"
+                         answerCodes="pihcore.referral,pihcore.transfer"
+                         answerSeparator="">
+                        <controls>
+                            <when value="PIH:11521" thenDisplay="#transfer-out-details"/>
+                            <when value="PIH:6965" thenDisplay="#transfer-out-details"/>
+                        </controls>
+                    </obs>
                 </p>
 
                 <div id="transfer-out-details">
-                    <p class="small side-by-side">
+                    <p class="side-by-side">
                         <obs id="transfer-out-spots"
                              conceptId="PIH:Transfer out location" style="radio"
                              answerConceptIds="PIH:8855,PIH:8856"

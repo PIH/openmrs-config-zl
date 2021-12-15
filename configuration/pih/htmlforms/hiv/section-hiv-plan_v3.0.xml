@@ -578,7 +578,7 @@
                          answerConceptIds="CIEL:1066,CIEL:127750,PIH:2222,PIH:1619,CIEL:160037,PIH:7262"
                          answerCodes="pihcore.noNotIndicated,pihcore.yesButRefused,pihcore.yesAfterCHW,pihcore.yesStartNow,pihcore.yesTreatmentStarted,pihcore.yesDelayed"
                          answerSeparator="&lt;br /&gt;" />
-                    
+
                 </p>
 
                 <p>
@@ -1067,14 +1067,21 @@
                 <label>
                     <uimessage code="pihcore.externalTransferQuestion" />
                 </label>
-                <p class="radio cb-align">
-                    <obs conceptId="PIH:HUM Disposition categories"
-                         answerConceptId="CIEL:160036" answerCode="emr.yes"
-                         style="checkbox" toggle="transfer-out-details"/>
+                <p class="side-by-side">
+                    <obs id="transfer-referral-spots"
+                         conceptId="PIH:REFERRAL OR TRANSFER" style="radio"
+                         answerConceptIds="PIH:11521,PIH:6965"
+                         answerCodes="pihcore.referral,pihcore.transfer"
+                         answerSeparator="">
+                        <controls>
+                            <when value="PIH:11521" thenDisplay="#transfer-out-details"/>
+                            <when value="PIH:6965" thenDisplay="#transfer-out-details"/>
+                        </controls>
+                    </obs>
                 </p>
 
                 <div id="transfer-out-details">
-                    <p class="small">
+                    <p class="side-by-side">
                         <obs id="transfer-out-spots"
                              conceptId="PIH:Transfer out location" style="radio"
                              answerConceptIds="PIH:8855,PIH:8856"

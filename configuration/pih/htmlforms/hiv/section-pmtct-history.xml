@@ -133,7 +133,6 @@
                 setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
                 setUpNextButtonForSections('pmtct-history');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
-                setUpExpandableTransferAndReferralDetails();
                 setUpDatepickerStartAndEndDateValidation();
                 setUpObsWithObsDateTime('syph-checkbox');
             });
@@ -169,32 +168,41 @@
                          conceptId="PIH:REFERRAL OR TRANSFER" style="radio"
                          answerConceptIds="PIH:11521,PIH:6965"
                          answerCodes="pihcore.referral,pihcore.transfer"
-                         answerSeparator="" toggle="transfer-referral-out-details"/>
+                         answerSeparator="">
+                        <controls>
+                            <when value="PIH:11521" thenDisplay="#transfer-referral-details"/>
+                            <when value="PIH:6965" thenDisplay="#transfer-referral-details"/>
+                        </controls>
+                    </obs>
                 </p>
-                <div id="transfer-referral-out-details">
+                <div id="transfer-referral-details">
                     <p class="side-by-side">
-                        <obs id="transfer-out-spots"
+                        <obs id="transfer-spots"
                              conceptId="PIH:REFERRED FROM ANOTHER SITE" style="radio"
                              answerConceptIds="PIH:8855,PIH:8856"
                              answerCodes="pihcore.internal,pihcore.external"
                              answerSeparator="">
                             <controls>
-                                <when value="PIH:8855" thenDisplay="#internal-out"/>
-                                <when value="PIH:8856" thenDisplay="#external-out"/>
+                                <when value="PIH:8855" thenDisplay="#internal-transfer"/>
+                                <when value="PIH:8856" thenDisplay="#external-transfer"/>
                             </controls>
                         </obs>
                     </p>
 
-                    <p id="internal-out">
+                    <p id="internal-transfer">
                         <label>
-                            <uimessage code="pihcore.internalLocation"/>
+                            <uimessage code="pihcore.internalTransferLocation"/>
                         </label>
                         <obs conceptId="PIH:8621" style="location" answerLocationTags="Program Location"/>
+                        <includeIf velocityTest="$patient.gender == 'F' ">
+                            <obs conceptId="PIH:13679" style="checkbox"
+                                 answerCode="pihcore.refer.referByMCH" answerConceptId="CIEL:1065" />
+                        </includeIf>
                     </p>
 
-                    <p id="external-out">
+                    <p id="external-transfer">
                         <label>
-                            <uimessage code="pihcore.externalLocation"/>
+                            <uimessage code="pihcore.externalTransferLocation"/>
                         </label>
                         <obs conceptId="PIH:11483"/>
                         <obs conceptId="PIH:PEPFAR partner site"

@@ -125,21 +125,6 @@ function setUpDatepickerStartAndEndDateValidation(){
     });
 }
 
-function setUpExpandableTransferAndReferralDetails(){
-    jq("#transfer-referral-spots").each(function(j, domEl){
-        jq("#transfer-referral-out-details").hide()
-        let elem=jq(domEl).find('input:checked').val()
-        if(elem){
-            jq("#transfer-referral-out-details").show()
-        }
-        jq(this).change(function (e){
-            if(e.target.value){
-            jq("#transfer-referral-out-details").show()
-            }
-        })
-    });
-}
-
 function setUpPhoneNumberRegex(badPhoneNumberMsg) {
 
     jq('.phoneRegex').each(function (j, domEl) {
