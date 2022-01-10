@@ -1068,16 +1068,9 @@
                     <uimessage code="pihcore.externalTransferQuestion" />
                 </label>
                 <p class="side-by-side">
-                    <obs id="transfer-referral-spots"
-                         conceptId="PIH:REFERRAL OR TRANSFER" style="radio"
-                         answerConceptIds="PIH:11521,PIH:6965"
-                         answerCodes="pihcore.referral,pihcore.transfer"
-                         answerSeparator="">
-                        <controls>
-                            <when value="PIH:11521" thenDisplay="#transfer-out-details"/>
-                            <when value="PIH:6965" thenDisplay="#transfer-out-details"/>
-                        </controls>
-                    </obs>
+                    <obs conceptId="PIH:HUM Disposition categories"
+                         answerConceptId="CIEL:160036" answerCode="emr.yes"
+                         style="checkbox" toggle="transfer-out-details"/>
                 </p>
 
                 <div id="transfer-out-details">
