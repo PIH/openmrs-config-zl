@@ -48,7 +48,7 @@
               width: 25%;
             }
 
-            p.radio > * {
+            p.radio :is(input, label) {
                 display: inline;
                 float: none !important;
                 min-width: initial;
@@ -126,6 +126,11 @@
             .past-medical-history-item > span, .past-medical-history-item > label {
                 display: inline !important;
                 vertical-align: middle;
+            }
+
+            .small-input input {
+                min-width: 12em;
+                width: 12em;
             }
         </ifMode>
     </style>
@@ -225,30 +230,30 @@
         <div class="section-container">
             <div class="two-columns">
                 <div>
-                <label>
-                    <uimessage code="pihcore.testOrderedBy"/>
-                </label>
+                    <label>
+                        <uimessage code="pihcore.testOrderedBy"/>
+                    </label>
 
-                <repeat>
-                    <template>
-                        <obs conceptId="CIEL:159936"
-                             answerConceptId="{point}" answerCode="{message}"/>
-                    </template>
+                    <repeat>
+                        <template>
+                            <obs conceptId="CIEL:159936"
+                                answerConceptId="{point}" answerCode="{message}"/>
+                        </template>
 
-                    <render point="CIEL:159940" message="pihcore.testLocation.vct" comment="vct"/>
-                    <render point="CIEL:159937" message="pihcore.testLocation.mch" comment="MCH"/>
-                    <render point="CIEL:160542" message="pihcore.testLocation.primary" comment="Outpatient"/>
-                    <render point="CIEL:159939" message="pihcore.testLocation.mobile" comment="Mobile"/>
-                    <render point="PIH:2714" message="pihcore.testLocation.familyPlan" comment="Family planning clinic"/>
-                    <render point="PIH:2235" message="pihcore.testLocation.maternity" comment="inpatient maternity"/>
-                    <render point="PIH:6298" message="pihcore.testLocation.surgery" comment="surgery"/>
-                    <render point="PIH:7891" message="pihcore.testLocation.intMed" comment="inpatient internal med"/>
-                    <render point="PIH:2717" message="pihcore.testLocation.pedWard" comment="inpatient peds"/>
-                 </repeat>
+                        <render point="CIEL:159940" message="pihcore.testLocation.vct" comment="vct"/>
+                        <render point="CIEL:159937" message="pihcore.testLocation.mch" comment="MCH"/>
+                        <render point="CIEL:160542" message="pihcore.testLocation.primary" comment="Outpatient"/>
+                        <render point="CIEL:159939" message="pihcore.testLocation.mobile" comment="Mobile"/>
+                        <render point="PIH:2714" message="pihcore.testLocation.familyPlan" comment="Family planning clinic"/>
+                        <render point="PIH:2235" message="pihcore.testLocation.maternity" comment="inpatient maternity"/>
+                        <render point="PIH:6298" message="pihcore.testLocation.surgery" comment="surgery"/>
+                        <render point="PIH:7891" message="pihcore.testLocation.intMed" comment="inpatient internal med"/>
+                        <render point="PIH:2717" message="pihcore.testLocation.pedWard" comment="inpatient peds"/>
+                    </repeat>
 
-                <obs conceptId="CIEL:159936"
-                     answerConceptId="CIEL:5622" answerCode="pihcore.other"
-                     commentFieldCode="zl.ifOtherSpecify" />
+                    <obs conceptId="CIEL:159936"
+                        answerConceptId="CIEL:5622" answerCode="pihcore.other"
+                        commentFieldCode="zl.ifOtherSpecify" />
 
                 </div>
 
@@ -258,6 +263,14 @@
                             <uimessage code="pihcore.hiv.testDate"/>
                         </label>
                         <obs conceptId="CIEL:164400"/>
+                    </p>
+
+                    <label>
+                        <uimessage code="pihcore.hiv.statusKnownBeforePregnancy"/>
+                    </label>
+                    <p class="radio">
+                        <obs conceptId="PIH:13955" answerConceptIds="PIH:13956, PIH:1066"
+                            answerCodes="coreapps.yes,coreapps.no" style="radio"/>
                     </p>
 
                     <!-- Partner -->
@@ -628,7 +641,7 @@
                 </label>
                 <obs conceptId="CIEL:121764" style="checkbox"
                      answerConceptId="CIEL:1065"
-                     answerCode="emr.yes" toggle="ae" />
+                     answerCode="coreapps.yes" toggle="ae" />
             </p>
 
             <div id="ae">
@@ -786,7 +799,7 @@
                 </label>
                 <obs conceptId="CIEL:1389" style="checkbox"
                      answerConceptId="CIEL:1065"
-                     answerCode="emr.yes"
+                     answerCode="coreapps.yes"
                      toggle="activeTB" />
             </p>
 
@@ -1201,46 +1214,56 @@
         </div>
     </section>
 
-        <section id="psych" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                  headerCode="pihcore.psycState">
-             <div class="section-container">
-                 <p class="radio">
-                     <label>
-                        <uimessage code="pihcore.receivedPostTestCounsel" />
-                     </label>
-                     <obs conceptId="CIEL:159382" answerConceptIds="CIEL:1066,CIEL:1065"
-                          style="radio" />
-                 </p>
+    <section id="psych" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+            headerCode="pihcore.psycState">
+        <div class="section-container">
+            <p class="radio">
+                <label>
+                <uimessage code="pihcore.receivedPostTestCounsel" />
+                </label>
+                <obs id="post-test-counseling" conceptId="CIEL:159382" answerConceptIds="CIEL:1066,CIEL:1065"
+                        style="radio">
+                    <controls>
+                        <when value="CIEL:1065" thenDisplay="#post-test-counseling-date"/>
+                    </controls>
+                </obs>
+            </p>
+            <p id="post-test-counseling-date" class="small-input">
+                <label>
+                    <uimessage code="pihcore.lab.datePostTest"/>
+                </label>
+                <obs conceptId="PIH:11525"/>
+            </p>
 
-                 <p>
-                     <label>
-                         <uimessage code="pihcore.patientReceivedAdvice" />
-                     </label>
+            <p>
+                <label>
+                    <uimessage code="pihcore.patientReceivedAdvice" />
+                </label>
 
-                     <repeat>
-                         <template>
-                             <obs conceptId="CIEL:163560"
-                                  answerConceptId="{response}"
-                                  answerCode="{text}"
-                                  style="checkbox" />
-                         </template>
-                         <render response="CIEL:151185" text="pihcore.cervicalCancerScreeningTreatment"/>
-                         <render response="CIEL:165489" text="pihcore.lowRiskBehavior" />
-                         <render response="CIEL:1382"   text="pihcore.fpCounseling" />
-                         <render response="CIEL:163559" text="pihcore.stiScreening" />
-                         <render response="CIEL:159381" text="pihcore.partnerScreening" />
-                     </repeat>
-                 </p>
+                <repeat>
+                    <template>
+                        <obs conceptId="CIEL:163560"
+                            answerConceptId="{response}"
+                            answerCode="{text}"
+                            style="checkbox" />
+                    </template>
+                    <render response="CIEL:151185" text="pihcore.cervicalCancerScreeningTreatment"/>
+                    <render response="CIEL:165489" text="pihcore.lowRiskBehavior" />
+                    <render response="CIEL:1382"   text="pihcore.fpCounseling" />
+                    <render response="CIEL:163559" text="pihcore.stiScreening" />
+                    <render response="CIEL:159381" text="pihcore.partnerScreening" />
+                </repeat>
+            </p>
 
-                 <p class="radio">
-                     <label>
-                         <uimessage code="pihcore.referredMH" />
-                     </label>
-                     <obs conceptId="PIH:13002" answerConceptIds="CIEL:1066,CIEL:1065"
-                          answerSeparator="" style="radio" />
-                 </p>
-             </div>
-         </section>
+            <p class="radio">
+                <label>
+                    <uimessage code="pihcore.referredMH" />
+                </label>
+                <obs conceptId="PIH:13002" answerConceptIds="CIEL:1066,CIEL:1065"
+                    answerSeparator="" style="radio" />
+            </p>
+        </div>
+    </section>
 
     <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.evaluation">
@@ -1290,7 +1313,7 @@
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
             <button id="next" type="button" class="submitButton confirm right">
-                <uimessage code="emr.next"/>
+                <uimessage code="coreapps.next"/>
                 <i class="icon-spinner icon-spin icon-2x" style="display: none; margin-left: 10px;"></i>
             </button>
             <button id="submit" class="submitButton confirm right">
@@ -1298,7 +1321,7 @@
                 <i class="icon-spinner icon-spin icon-2x" style="display: none; margin-left: 10px;"></i>
             </button>
             <button id="cancel" type="button" class="cancel">
-                <uimessage code="emr.cancel"/>
+                <uimessage code="coreapps.cancel"/>
             </button>
         </div>
     </ifMode>
