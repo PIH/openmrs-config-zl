@@ -269,7 +269,7 @@
                         <uimessage code="pihcore.hiv.statusKnownBeforePregnancy"/>
                     </label>
                     <p class="radio">
-                        <obs conceptId="PIH:13955" answerConceptIds="PIH:13956, PIH:1066"
+                        <obs conceptId="PIH:13955" answerConceptIds="PIH:1065, PIH:1066"
                             answerCodes="coreapps.yes,coreapps.no" style="radio"/>
                     </p>
 
