@@ -556,13 +556,10 @@
                     </th>
                 </tr>
 
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="PIH:3013" >
                 <tr>
                    <td>
                        <uimessage code="zl.arv1" />:
-                       <span class="small hidden">
-                           <obs conceptId="PIH:1535" answerConceptId="PIH:3013" defaultValue="PIH:3013"></obs>
-                       </span>
                    </td>
                    <td>
                         <obs id="arv1Drug" conceptId="CIEL:1282"
@@ -612,13 +609,10 @@
                    </td>
                 </tr>
                 </obsgroup>
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="PIH:2848">
                 <tr>
                     <td>
                         <uimessage code="zl.arv2" />:
-                        <span class="small hidden">
-                            <obs conceptId="PIH:1535" answerConceptId="PIH:2848" defaultValue="PIH:2848"></obs>
-                        </span>
                     </td>
                     <td>
                         <obs id="arv2Drug" conceptId="CIEL:1282"
@@ -664,13 +658,10 @@
                     </td>
                 </tr>
                 </obsgroup>
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="PIH:3120">
                 <tr>
                     <td>
                         <uimessage code="zl.tmsDapsone" />:
-                        <span class="small hidden">
-                            <obs conceptId="PIH:1535" answerConceptId="PIH:3120" defaultValue="PIH:3120"></obs>
-                        </span>
                     </td>
                     <td>
                         <obs id="tmsDrug" conceptId="CIEL:1282"
@@ -690,13 +681,10 @@
                     </td>
                 </tr>
                 </obsgroup>
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:1679">
                 <tr>
                     <td>
                         <uimessage code="zl.dispensing.inh" />:
-                        <span class="small hidden">
-                            <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
-                        </span>
                     </td>
                     <td>
                         <obs id="inhDrug" conceptId="CIEL:1282"

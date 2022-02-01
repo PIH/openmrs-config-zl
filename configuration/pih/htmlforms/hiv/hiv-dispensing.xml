@@ -327,6 +327,28 @@
             });
             return returnValue;
         });
+
+        // set/unset the "hidden" primary and secondary obs for inh drugs based on whether or not a drug has been selected
+        beforeSubmit.push(function(){
+            var inhPDrug =  getValue('inhPDrug.value');
+            var inhSDrug =  getValue('inhSDrug.value');
+
+            if (inhPDrug === null || inhPDrug.length === 0) {
+                setValue('inhP.value', false);
+            }
+            else {
+                setValue('inhP.value', true);
+            }
+
+            if (inhSDrug === null || inhSDrug.length === 0) {
+                setValue('inhS.value', false);
+            }
+            else {
+                setValue('inhS.value', true);
+            }
+
+            return true;
+        });
     }
 });
 </script>
@@ -558,13 +580,10 @@
                     </th>
                 </tr>
 
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="PIH:3013">
                 <tr>
                    <td>
                        <uimessage code="zl.arv1" />:
-                       <span class="small hidden">
-                           <obs conceptId="PIH:1535" answerConceptId="PIH:3013" defaultValue="PIH:3013"></obs>
-                       </span>
                    </td>
                    <td>
                         <obs id="arv1Drug" conceptId="CIEL:1282"
@@ -611,13 +630,10 @@
                 </tr>
                 </obsgroup>
 
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="PIH:2848">
                 <tr>
                     <td>
                         <uimessage code="zl.arv2" />:
-                        <span class="small hidden">
-                            <obs conceptId="PIH:1535" answerConceptId="PIH:2848" defaultValue="PIH:2848"></obs>
-                        </span>
                     </td>
                     <td>
                         <obs id="arv2Drug" conceptId="CIEL:1282"
@@ -646,13 +662,10 @@
                 </tr>
                 </obsgroup>
 
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="PIH:13960">
                     <tr>
                         <td>
                             <uimessage code="zl.arv3" />:
-                            <span class="small hidden">
-                                <obs conceptId="PIH:1535" answerConceptId="PIH:13960" defaultValue="PIH:13960"></obs>
-                            </span>
                         </td>
                         <td>
                             <obs id="arv3Drug" conceptId="CIEL:1282"
@@ -673,13 +686,10 @@
                     </tr>
                 </obsgroup>
 
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442"  hiddenConceptId="PIH:1535" hiddenAnswerConceptId="PIH:3120">
                 <tr>
                     <td>
                         <uimessage code="zl.tmsDapsone" />:
-                        <span class="small hidden">
-                            <obs conceptId="PIH:1535" answerConceptId="PIH:3120" defaultValue="PIH:3120"></obs>
-                        </span>
                     </td>
                     <td>
                         <obs id="tmsDrug" conceptId="CIEL:1282"
@@ -699,13 +709,12 @@
                     </td>
                 </tr>
                 </obsgroup>
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442"  hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:1679">
                 <tr>
                     <td>
                         <uimessage code="zl.dispensing.inhPrimary" />:
-                        <span class="small hidden">
-                            <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
-                            <obs conceptId="PIH:13786" answerConceptId="CIEL:159943" defaultValue="CIEL:159943"></obs>  <!-- Treatment line: Primary -->
+                        <span class="small hidden"><!-- hidden, automatically checked/unchecked by beforeSubmit defined above -->
+                            <obs id="inhP" conceptId="PIH:13786" answerConceptId="CIEL:159943"></obs>
                         </span>
                     </td>
                     <td>
@@ -722,13 +731,12 @@
                     </td>
                 </tr>
                 </obsgroup>
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:1679">
                     <tr>
                         <td>
                             <uimessage code="zl.dispensing.inhSecondary" />:
-                            <span class="small hidden">
-                                <obs conceptId="PIH:1535" answerConceptId="CIEL:1679" defaultValue="CIEL:1679"></obs>
-                                <obs conceptId="PIH:13786" answerConceptId="CIEL:159944" defaultValue="CIEL:159944"></obs>  <!-- Treatment line: Secondardy -->
+                            <span class="small hidden"> <!-- hidden, automatically checked by beforeSubmit defined above -->
+                                <obs id="inhS" conceptId="PIH:13786" answerConceptId="CIEL:159944"></obs>
                             </span>
                         </td>
                         <td>
@@ -747,13 +755,10 @@
                 </obsgroup>
 
                 <!-- Vitamin B6 -->
-                <obsgroup groupingConceptId="CIEL:1442" >
+                <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:82912">
                     <tr>
                         <td>
                             <uimessage code="B6" />:
-                            <span class="small hidden">
-                                <obs conceptId="PIH:1535" answerConceptId="CIEL:82912" defaultValue="CIEL:82912"></obs>
-                            </span>
                         </td>
                         <td>
                             <obs id="b6Drug" conceptId="CIEL:1282"
