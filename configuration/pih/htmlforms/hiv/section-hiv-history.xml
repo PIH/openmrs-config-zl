@@ -539,7 +539,7 @@
         </section>
     </includeIf>
 
-    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 1">
+    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 2">
         <section id="feeding" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.feedingAndVaccination" >
             <div class="section-container">
