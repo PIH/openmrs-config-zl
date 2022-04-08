@@ -925,9 +925,11 @@
                     <div style="padding:0px;">
                         <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
                     </div>
-                    <div style="display:none">
-                        <orderProperty name="orderReason" value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA">
-                            <option value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="HIV"/>
+                    <div style="padding:0px;">
+                        <orderProperty name="orderReason" label="Order Reason">
+                            <option value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="pihcore.hiv.treatment"/>
+                            <option value="163768AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="pihcore.hiv.prophylaxis" />
+                            <option value="160538AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="pihcore.pmtct"/>
                         </orderProperty>
                     </div>
                     <div style="padding:0x;">
@@ -1000,10 +1002,9 @@
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="orderReason" label="Order Reason">
-                            <option value="160538AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="PTME"/>
-                            <option value="1691AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="pihcore.prophylaxis"/>
                             <option value="3ccca7cc-26fe-102b-80cb-0017a47871b2" label="pihcore.tbTreatment" />
-                            <option value="3cce6116-26fe-102b-80cb-0017a47871b2" label="pihcore.stiTreatment" />
+                            <option value="cae011d4-e3e7-4cab-9550-d85c60d903cc" label="pihcore.tbProphylaxis"/>
+                            <option value="9508115e-54ca-4f39-a117-a33cb328cdd6" label="pihcore.stiTreatment" />
                         </orderProperty>
                     </div>
                     <div style="padding:0px;">
