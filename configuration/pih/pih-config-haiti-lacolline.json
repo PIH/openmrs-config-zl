@@ -39,6 +39,21 @@
 
   "globalProperties": {
     "coreapps.defaultPatientIdentifierLocation": "23e7bb0d-51f9-4d5f-b34b-2fbbfeea1960"
-  }
+  },
+
+  "extensions": [
+    {
+      "id": "patientHeader.linkToHivEmr",
+      "type": "link",
+      "url": "https://haiti.pih-emr.org/openmrs/pihcore/patient.page?patientId={{identifier}}&identifierType=${patientIdentifierType.hivemrV1.uuid}&dashboard=${program.hiv.uuid}",
+      "extensionPointId": "patientHeader.extraIdentifierLinks",
+      "label": "pihcore.hiv.viewPatientInHivEmr",
+      "icon": "icon-external-link",
+      "requiredPrivilege": null,
+      "extensionParams": {
+        "identifierType": "${patientIdentifierType.hivemrV1.uuid}"
+      }
+    }
+  ]
 
 }
