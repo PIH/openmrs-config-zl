@@ -9,7 +9,6 @@
   "components": [
     "allergies",
     "checkIn",
-    "checkInHomepageApp",
     "clinicianDashboard",
     "commentForm",
     "dataExports",
