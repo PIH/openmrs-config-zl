@@ -12,6 +12,7 @@
     "dataExports",
     "echocardiogram",
     "exportPatients",
+    "haitiHivEmrDashboardLink",
     "importPatients",
     "labs",
     "markPatientDead",
@@ -38,20 +39,5 @@
     "coreapps.defaultPatientIdentifierLocation": "97c241a0-eaec-11e5-a837-0800200c9a66"
   },
 
-  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json",
-
-  "extensions": [
-    {
-      "id": "patientHeader.linkToHivEmr",
-      "type": "link",
-      "url": "https://haiti.pih-emr.org/openmrs/pihcore/patient.page?patientId={{identifier}}&identifierType=${patientIdentifierType.hivemrV1.uuid}&dashboard=${program.hiv.uuid}",
-      "extensionPointId": "patientHeader.extraIdentifierLinks",
-      "label": "pihcore.hiv.viewPatientInHivEmr",
-      "icon": "icon-external-link",
-      "requiredPrivilege": null,
-      "extensionParams": {
-        "identifierType": "${patientIdentifierType.hivemrV1.uuid}"
-      }
-    }
-  ]
+  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json"
 }

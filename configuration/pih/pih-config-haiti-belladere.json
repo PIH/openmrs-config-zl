@@ -13,6 +13,7 @@
     "echocardiogram",
     "exportPatients",
     "growthChart",
+    "haitiHivEmrDashboardLink",
     "importPatients",
     "markPatientDead",
     "mentalHealth",
@@ -46,21 +47,5 @@
     "matchUrl": "http://localhost:9000/match",
     "scanUrl": "https://localhost:9443/fingerprint/scan",
     "devicesUrl": "https://localhost:9443/fingerprint/devices"
-  },
-
-  "extensions": [
-    {
-      "id": "patientHeader.linkToHivEmr",
-      "type": "link",
-      "url": "https://haiti.pih-emr.org/openmrs/pihcore/patient.page?patientId={{identifier}}&identifierType=${patientIdentifierType.hivemrV1.uuid}&dashboard=${program.hiv.uuid}",
-      "extensionPointId": "patientHeader.extraIdentifierLinks",
-      "label": "pihcore.hiv.viewPatientInHivEmr",
-      "icon": "icon-external-link",
-      "requiredPrivilege": null,
-      "extensionParams": {
-        "identifierType": "${patientIdentifierType.hivemrV1.uuid}"
-      }
-    }
-  ]
-
+  }
 }
