@@ -30,7 +30,8 @@
     "todaysVisits",
     "uhmVitals",
     "visitManagement",
-    "visitNote"
+    "visitNote",
+    "vitalsHomepageApp"
 	],
 
   "globalProperties": {
