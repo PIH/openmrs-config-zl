@@ -24,3 +24,15 @@
   statusDataQuery: "inhStatus.sql"
   valueExpression: "#if($startDate)$duration $fn.translate('zl.days')#{else}$fn.translate('zl.status.hivTb.inhNotStarted')#end"
   formatExpression: ""
+
+- id: "inhInitiationDate"
+  labelCode: "zl.status.hivTb.inhInitiationDate"
+  statusDataQuery: "inhStatus.sql"
+  valueExpression: "#if($startDate)$fn.formatDate($startDate) #{else}N/A#end"
+  formatExpression: ""
+
+- id: "inhCompletionDate"
+  labelCode: "zl.status.hivTb.inhCompletionDate"
+  statusDataQuery: "inhStatus.sql"
+  valueExpression: "#if(!$startDate)N/A #elseif($endDate && $isCompleted == 1)$fn.formatDate($endDate) #{else}$fn.translate('zl.status.hivTb.inhNotComplete')#end"
+  formatExpression: ""

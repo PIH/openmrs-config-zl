@@ -17,6 +17,7 @@ limit 1
 select
     date(@startDate) as startDate,
     date(@endDate) as endDate,
+    if(@endDate > now(), 0, 1) as isCompleted,
     if(@startDate > now(), 'future', if(@endDate > now(), 'active', 'completed')) as status,
     datediff(ifnull(@endDate, now()), @startDate)+1 as duration
 ;
