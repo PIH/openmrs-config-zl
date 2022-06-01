@@ -8,8 +8,6 @@
 
   "components": [
     "allergies",
-    "checkIn",
-    "checkInHomepageApp",
     "clinicianDashboard",
     "commentForm",
     "dataExports",
@@ -19,9 +17,7 @@
     "importPatients",
     "labResults",
     "markPatientDead",
-    "monitoringReports",
     "myAccount",
-    "overviewReports",
     "patientRegistration",
     "pmtct",
     "programs",
@@ -29,10 +25,10 @@
     "socioEconomics",
     "systemAdministration",
     "todaysVisits",
-    "uhmVitals",
     "vct",
     "visitManagement",
-    "visitNote"
+    "visitNote",
+    "vitals"
   ],
 
   "globalProperties": {

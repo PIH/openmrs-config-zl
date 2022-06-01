@@ -28,9 +28,10 @@
     "socioEconomics",
     "systemAdministration",
     "todaysVisits",
+    "uhmVitals",
     "visitManagement",
     "visitNote",
-    "uhmVitals"
+    "vitalsHomepageApp"
   ],
 
   "globalProperties": {

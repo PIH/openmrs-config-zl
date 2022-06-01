@@ -6,7 +6,7 @@
     <name>ZL OpenMRS Configuration</name>
     <description>Top-Level configuration for Zanmi Lasante OpenMRS distro</description>
     <url>https://github.com/PIH/openmrs-config-zl</url>
-    <version>1.34.0-SNAPSHOT</version>
+    <version>1.36.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <organization>
@@ -50,6 +50,17 @@
             <url>https://s01.oss.sonatype.org/content/repositories/public</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>openmrs-repo</id>
+            <name>OpenMRS Nexus Repository</name>
+            <url>https://openmrs.jfrog.io/artifactory/public</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
     <properties>
         <dataExportSqlDir>${project.build.directory}/openmrs-packager-config/configuration/reports/reportdescriptors/dataexports/sql/</dataExportSqlDir>
@@ -189,7 +200,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-gpg-plugin</artifactId>
-                        <version>1.5</version>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>sign-artifacts</id>

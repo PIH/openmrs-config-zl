@@ -32,6 +32,7 @@
     "managePrinters",
     "markPatientDead",
     "mch",
+    "medicationDispensing",
     "mentalHealth",
     "monitoringReports",
     "myAccount",
@@ -44,6 +45,7 @@
     "patientDocuments",
     "patientRegistration",
     "pmtct",
+    "powerbiReports",
     "primaryCare",
     "programs",
     "radiology",
@@ -57,6 +59,7 @@
     "vct",
     "visitManagement",
     "visitNote",
+    "vitalsHomepageApp",
     "wristbands",
     "zika"
   ],
@@ -77,21 +80,6 @@
   },
 
   "localZlIdentifierGeneratorEnabled": "true",
-  "localZlIdentifierGeneratorPrefix": "Y",
-
-  "extensions": [
-    {
-      "id": "patientHeader.linkToHivEmr",
-      "type": "link",
-      "url": "https://haitihivtest.pih-emr.org/openmrs/pihcore/patient.page?patientId={{identifier}}&identifierType=${patientIdentifierType.hivemrV1.uuid}&dashboard=${program.hiv.uuid}",
-      "extensionPointId": "patientHeader.extraIdentifierLinks",
-      "label": "pihcore.hiv.viewPatientInHivEmr",
-      "icon": "icon-external-link",
-      "requiredPrivilege": null,
-      "extensionParams": {
-        "identifierType": "${patientIdentifierType.hivemrV1.uuid}"
-      }
-    }
-  ]
+  "localZlIdentifierGeneratorPrefix": "Y"
 
 }

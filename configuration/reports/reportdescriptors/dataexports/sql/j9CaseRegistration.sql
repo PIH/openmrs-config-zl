@@ -34,6 +34,19 @@ create temporary table temp_J9_patients
 )
 ;
 
+-- populates temp table with most recent mch program row for each patient enrolled in mch program
+drop TEMPORARY TABLE IF EXISTS temp_mch_pp;
+create TEMPORARY TABLE temp_mch_pp
+select * from patient_program pp
+where pp.patient_program_id =
+         	(select pp2.patient_program_id from patient_program pp2
+         	where pp2.patient_id = pp.patient_id 
+         	and pp2.program_id = @matHealthProgram 
+         	and pp2.voided = 0  
+         	and pp2.date_completed is null
+         	order by pp2.date_enrolled desc limit 1)
+;
+
 -- this populates the temp table with the cohort of patients to be included in the report
 -- The logic is, patients that:
 -- * have ever been in the maternal health program
@@ -43,7 +56,7 @@ Select p.patient_id, per.uuid, pp.date_enrolled, currentProgramState(pp.patient_
 per.birthdate, TIMESTAMPDIFF(YEAR,per.birthdate, now()) "age"
 from patient p
          inner join person per on per.person_id = p.patient_id and per.dead = 0
-         inner join patient_program pp on pp.patient_id = p.patient_id and pp.program_id = @matHealthProgram and pp.voided = 0  and pp.date_completed is null
+         inner join temp_mch_pp pp on pp.patient_id = p.patient_id 
 ;
 
 -- telephone number

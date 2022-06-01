@@ -1,0 +1,16 @@
+key: "pbiHivDashboard"
+uuid: "512861f5-d842-11ec-a24e-0242ac110002"
+name: "zl.pbiHivDashboard.name"
+parameters:
+  - key: "pbiReportId"
+    type: "java.lang.String"
+    value: "e8898ce5-123e-4487-bf41-eeb40c482568"
+config:
+  category: "OVERVIEW"
+  sites:
+    - "MIREBALAIS"
+  order: "5"
+  components:
+    - "powerbiReports"
+  pageProvider: "pihcore"
+  pagePath: "reports/powerbi"
