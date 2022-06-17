@@ -1309,7 +1309,26 @@
 
     </section>
 
-
+    <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="pihcore.mch.breastfeeding">
+        <div class="section-container-color">
+            <p class="side-by-side">
+                <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
+                     answerConceptIds="CIEL:5526,CIEL:6046,CIEL:1152"
+                     answerCodes="zl.breastfeedExclusively,zl.mixedFeeding,zl.breastfeedStopped">
+                    <controls>
+                        <when value="CIEL:1152" thenDisplay="#wean-date"/>
+                    </controls>
+                </obs>
+            </p>
+            <div id="wean-date">
+                <label>
+                    <uimessage code="zl.weanDate" />
+                </label>
+                <obs conceptId="CIEL:166566" />
+            </div>
+        </div>
+    </section>
     <br/>
 
     <ifMode mode="VIEW" include="false">

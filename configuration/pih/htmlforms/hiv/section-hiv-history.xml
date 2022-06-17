@@ -383,6 +383,30 @@
         </div>
     </section>
 
+    <includeIf velocityTest="$patient.gender == 'F' ">
+        <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
+                 headerStyle="title" headerCode="pihcore.mch.breastfeeding">
+            <div class="section-container">
+                <p class="side-by-side">
+                    <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
+                         answerConceptIds="PIH:CURRENTLY,CIEL:1152"
+                         answerCodes="pihcore.breastfeeding,zl.breastfeedStopped">
+                        <controls>
+                            <when value="CIEL:1152" thenDisplay="#wean-date"/>
+                        </controls>
+                    </obs>
+                </p>
+                <div id="wean-date">
+                    <label>
+                        <uimessage code="zl.weanDate" />
+                    </label>
+                    <obs conceptId="CIEL:166566" />
+                </div>
+            </div>
+        </section>
+        <br/>
+    </includeIf>
+
     <!-- only show these sections if the patient is < 2 years old-->
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &lt; 2">
         <section id="birth-history" sectionTag="fieldset" headerTag="legend" headerStyle="title"
