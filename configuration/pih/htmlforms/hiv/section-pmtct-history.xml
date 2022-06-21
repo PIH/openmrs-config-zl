@@ -1121,15 +1121,20 @@
             <div class="two-columns">
                 <div>
                     <obs conceptId="CIEL:165309" style="checkbox"
-                         answerConceptId="CIEL:1382" answerCode="pihcore.mch.counselling.familyPlanning" />
+                         answerConceptId="CIEL:1382" answerCode="pihcore.mch.counselling.familyPlanning"/>
                 </div>
-                <div>
-                    <obs conceptId="CIEL:965" style="checkbox"
-                         answerConceptId="CIEL:1065" answerCode="pihcore.currentlyUsing"/>
-                </div>
-            </div>
+            </div> <br/>
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.patientType"/>:
+                </label>
+                <br/>
+                    <obs conceptId="PIH:14321"
+                         answerConceptIds="CIEL:965,PIH:13958"
+                         answerCodes="pihcore.currently.using.birth.control,pihcore.accepted"
+                         style="radio" />
+            </p>
             <br/>
-
             <p class="side-by-side">
                 <label>
                     <uimessage code="pihcore.fpMethod"/>:
@@ -1309,26 +1314,7 @@
 
     </section>
 
-    <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="pihcore.mch.breastfeeding">
-        <div class="section-container-color">
-            <p class="side-by-side">
-                <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
-                     answerConceptIds="CIEL:5526,CIEL:6046,CIEL:1152"
-                     answerCodes="zl.breastfeedExclusively,zl.mixedFeeding,zl.breastfeedStopped">
-                    <controls>
-                        <when value="CIEL:1152" thenDisplay="#wean-date"/>
-                    </controls>
-                </obs>
-            </p>
-            <div id="wean-date">
-                <label>
-                    <uimessage code="zl.weanDate" />
-                </label>
-                <obs conceptId="CIEL:166566" />
-            </div>
-        </div>
-    </section>
+
     <br/>
 
     <ifMode mode="VIEW" include="false">
