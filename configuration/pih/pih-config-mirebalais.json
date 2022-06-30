@@ -70,6 +70,17 @@
       "mothersName": {
         "required": true
       }
+    },
+    "contactInfo": {
+      "phoneNumber": {
+        "regex": "(^\\d{8}$)|(^\\d{4}(?:[-| ])?\\d{4}$)|(^\\+?(?:\\d ?){7,14}\\d$)"
+      }
+    },
+    "contactPerson": {
+      "required": true,
+      "phoneNumber": {
+        "regex": "(^\\d{8}$)|(^\\d{4}(?:[-| ])?\\d{4}$)|(^\\+?(?:\\d ?){7,14}\\d$)"
+      }
     }
   }
 }
