@@ -654,60 +654,69 @@
 
     </section>
 
-    <section id="id-treatment-tb" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.tbTreatment">
+    <section id="id-treatment-tb" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.tbTreatment">
         <div class="section-container-color">
+            <div class="two-column">
+                <div>
+                    <p class="radio">
+                        <label>
+                            <uimessage code="pihcore.tb.needTreatment"/>
+                        </label>
+                        <br/>
 
-            <div class="two-columns">
-                <p class="radio">
-                    <label>
-                        <uimessage code="pihcore.tb.needTreatment" />
-                    </label>
-                    <br/>
+                        <!-- for HIV intake -->
+                        <includeIf
+                                velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+                            <obs conceptId="PIH:1559" style="radio"
+                                 answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,PIH:1432"
+                                 answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
+                                 answerSeparator="&lt;br /&gt;"/>
+                        </includeIf>
 
-                    <!-- for HIV intake -->
+                        <!-- for HIV followup -->
+                        <includeIf
+                                velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+                            <obs conceptId="PIH:1559" style="radio"
+                                 answerConceptIds="CIEL:1066,CIEL:160017,CIEL:1267,CIEL:981,CIEL:163057"
+                                 answerCodes="pihcore.tb.medsNotIndicated,pihcore.tb.medsStarted,pihcore.tb.medsStopped,pihcore.tb.medsChanged,pihcore.tb.ongoing"
+                                 answerSeparator="&lt;br /&gt;"/>
+                            <br/>
+                            <br/>
+                        </includeIf>
+                    </p>
+
                     <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-                        <obs conceptId="PIH:1559" style="radio"
-                             answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,PIH:1432"
-                             answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
-                             answerSeparator="&lt;br /&gt;" />
+                        <label>
+                            <uimessage code="pihcore.startDate"/>
+                        </label>
                     </includeIf>
-
-                    <!-- for HIV followup -->
                     <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-                        <obs conceptId="PIH:1559" style="radio"
-                             answerConceptIds="CIEL:1066,CIEL:160017,CIEL:1267,CIEL:981,CIEL:163057"
-                             answerCodes="pihcore.tb.medsNotIndicated,pihcore.tb.medsStarted,pihcore.tb.medsStopped,pihcore.tb.medsChanged,pihcore.tb.ongoing"
-                             answerSeparator="&lt;br /&gt;" />
-                        <br/><br/>
+                        <label>Date</label>
                     </includeIf>
-                </p>
 
-                <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-                    <label>
-                        <uimessage code="pihcore.startDate" />
-                    </label>
-                </includeIf>
-                <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-                    <label>Date</label>
-                </includeIf>
+                    <obs conceptId="CIEL:1113"/>
+                </div>
+                <div>
 
-                <obs conceptId="CIEL:1113" />
-
-                <p class="radio">
-                    <!-- this label for HIV intake encounter -->
-                    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
-                        <uimessage code="pihcore.tb.startTBTreatmentComment" />
-                    </includeIf>
-                    <!-- this label for HIV followup -->
-                    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-                        <uimessage code="pihcore.specifyRegimen"/>:
-                    </includeIf>
-                    <br/>
-                    <obs conceptId="CIEL:159792" style="radio"
-                         answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
-                         answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
-                         answerSeparator="&lt;br /&gt;" />
-                </p>
+                    <p class="radio">
+                        <!-- this label for HIV intake encounter -->
+                        <includeIf
+                                velocityTest="$encounter.encounterType.uuid == 'c31d306a-40c4-11e7-a919-92ebcb67fe33'">
+                            <uimessage code="pihcore.tb.startTBTreatmentComment"/>
+                        </includeIf>
+                        <!-- this label for HIV followup -->
+                        <includeIf
+                                velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+                            <uimessage code="pihcore.specifyRegimen"/>:
+                        </includeIf>
+                        <br/>
+                        <obs conceptId="CIEL:159792" style="radio"
+                             answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
+                             answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
+                             answerSeparator="&lt;br /&gt;"/>
+                    </p>
+                </div>
             </div>
         </div>
 
@@ -749,30 +758,33 @@
         <section id="id-treatment-sti-treatment" sectionTag="fieldset"
                          headerTag="legend" headerStyle="title"
                          headerCode="pihcore.stiTreatment">
-            <div class="section-container-color">
+            <div class="section-container-color two-column">
+                <div>
+                    <p class="radio">
+                        <label>
+                            <uimessage code="pihcore.syph.needTreatment"/>
+                        </label>
+                        <br/>
 
-                <p class="radio">
+                        <obs conceptId="CIEL:165331" style="radio"
+                             answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,CIEL:160037"
+                             answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
+                             answerSeparator="&lt;br /&gt;"/>
+                    </p>
+                </div>
+                <div>
+
                     <label>
-                        <uimessage code="pihcore.syph.needTreatment"/>
+                        <uimessage code="pihcore.startDate"/>
                     </label>
-                    <br/>
-
-                    <obs conceptId="CIEL:165331" style="radio"
-                         answerConceptIds="PIH:2224,CIEL:1066,CIEL:1065,CIEL:160037"
-                         answerCodes="pihcore.ongoingExam,emr.no,emr.yes,pihcore.treatmentStarted"
-                         answerSeparator="&lt;br /&gt;"/>
-                </p>
-
-                <label>
-                    <uimessage code="pihcore.startDate"/>
-                </label>
-                <obs conceptId="PIH:13023"/>
-                <p>
-                    <label>
-                        <uimessage code="pihcore.remarks"/>
-                    </label>
-                    <obs conceptId="PIH:1374" style="text" rows="2" cols="40"/>
-                </p>
+                    <obs conceptId="PIH:13023"/>
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.remarks"/>
+                        </label>
+                        <obs conceptId="PIH:1374" style="text" rows="2" cols="40"/>
+                    </p>
+                </div>
             </div>
         </section>
     </includeIf>

@@ -385,12 +385,12 @@
 
     <includeIf velocityTest="$patient.gender == 'F' ">
         <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
-                 headerStyle="title" headerCode="pihcore.mch.breastfeeding">
+                 headerStyle="title" headerCode="zl.maternalBreastfeeding">
             <div class="section-container">
                 <p class="side-by-side">
                     <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
                          answerConceptIds="PIH:CURRENTLY,CIEL:1152"
-                         answerCodes="pihcore.breastfeeding,zl.breastfeedStopped">
+                         answerCodes="pihcore.currently,zl.breastfeedStopped">
                         <controls>
                             <when value="CIEL:1152" thenDisplay="#wean-date"/>
                         </controls>

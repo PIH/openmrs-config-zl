@@ -936,43 +936,31 @@
         </div>
     </section>
 
-    <includeIf velocityTest="$patient.gender == 'F' ">
-        <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
-                 headerStyle="title" headerCode="pihcore.mch.breastfeeding">
-            <div class="section-container">
-                <!-- this section for PMTCT followup -->
-                <includeIf velocityTest="$encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
-                    <p class="side-by-side">
-                        <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
-                             answerConceptIds="CIEL:5526,CIEL:6046,CIEL:1152"
-                             answerCodes="zl.breastfeedExclusively,zl.mixedFeeding,zl.breastfeedStopped">
-                            <controls>
-                                <when value="CIEL:1152" thenDisplay="#wean-date"/>
-                            </controls>
-                        </obs>
-                    </p>
-                </includeIf>
-                <!-- This section for HIV followup form -->
-                <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+    <!-- This section for Females and HIV followup form -->
+    <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
+        <includeIf velocityTest="$patient.gender == 'F' ">
+            <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
+                     headerStyle="title" headerCode="zl.maternalBreastfeeding">
+                <div class="section-container">
                     <p class="side-by-side">
                         <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
                              answerConceptIds="PIH:CURRENTLY,CIEL:1152"
-                             answerCodes="pihcore.breastfeeding,zl.breastfeedStopped">
+                             answerCodes="pihcore.currently,zl.breastfeedStopped">
                             <controls>
                                 <when value="CIEL:1152" thenDisplay="#wean-date"/>
                             </controls>
                         </obs>
                     </p>
-                </includeIf>
-                <div id="wean-date">
-                    <label>
-                        <uimessage code="zl.weanDate" />
-                    </label>
-                    <obs conceptId="CIEL:166566" />
+                    <div id="wean-date">
+                        <label>
+                            <uimessage code="zl.weanDate"/>
+                        </label>
+                        <obs conceptId="CIEL:166566"/>
+                    </div>
                 </div>
-            </div>
-        </section>
-    <br/>
+            </section>
+            <br/>
+        </includeIf>
     </includeIf>
 
     <!-- this section for PMTCT followup -->
@@ -1284,6 +1272,43 @@
         </section>
     </includeIf>
     <br/>
+
+    <!-- this section for PMTCT followup only -->
+    <includeIf velocityTest="$encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
+        <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
+                 headerStyle="title" headerCode="zl.maternalBreastfeeding">
+            <div class="section-container">
+                <p id="feeding-status" class="side-by-side">
+                    <label>
+                        <uimessage code="zl.breastfeedingSinceLastVisit" />
+                    </label>
+                    <obs id="breast-since-visit"
+                         conceptId="PIH:6981" style="radio"
+                         answerConceptIds="CIEL:1065,CIEL:1066">
+                        <controls>
+                            <when value="CIEL:1065" thenDisplay="#bf-status"/>
+                        </controls>
+                    </obs>
+                </p>
+                <p id="bf-status" class="side-by-side">
+                    <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
+                         answerConceptIds="CIEL:5526,CIEL:6046,CIEL:1152"
+                         answerCodes="pihcore.exclusively,zl.mixed,zl.breastfeedStopped">
+                        <controls>
+                            <when value="CIEL:1152" thenDisplay="#wean-date"/>
+                        </controls>
+                    </obs>
+                </p>
+                <div id="wean-date">
+                    <label>
+                        <uimessage code="zl.weanDate" />
+                    </label>
+                    <obs conceptId="CIEL:166566" />
+                </div>
+            </div>
+        </section>
+        <br/>
+    </includeIf>
 
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
