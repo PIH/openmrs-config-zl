@@ -14,6 +14,7 @@
     "exportPatients",
     "importPatients",
     "labs",
+    "labResults",
     "markPatientDead",
     "mch",
     "mentalHealth",

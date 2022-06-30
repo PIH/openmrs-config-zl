@@ -12,6 +12,7 @@
     "echocardiogram",
     "exportPatients",
     "importPatients",
+    "labResults",
     "markPatientDead",
     "mch",
     "mentalHealth",
