@@ -138,7 +138,7 @@ function setUpPhoneNumberRegex(badPhoneNumberMsg) {
             } else {
                 jq(this).find('span').first().show();
                 jq(this).find('span').first().text(badPhoneNumberMsg);
-                setButtonsDisabled(true);
+                setButtonsDisabled(true);setUpPhoneNumberRegex
             }
         })
     })
