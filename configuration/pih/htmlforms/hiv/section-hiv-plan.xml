@@ -96,6 +96,7 @@
         }
     </style>
 
+
     <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location:
     note that we already do this on the history section, but add here case the history section is skipped
     the special case for infants (less than 2 years old) is only handled on the history section, as it prompts the user for a question of whether to enroll in EID or HIV
@@ -108,6 +109,12 @@
         <h1>
             <uimessage code="pihcore.visitNote.plan"/>
         </h1>
+        <script type="text/javascript">
+            jq(function () {
+                    
+                    returnVisitDateValidation('<uimessage code="pihcore.invalid.returnVisitDate"/>'); 
+            });
+        </script>
     </ifMode>
 
     <!-- this section for PMTCT intake -->
@@ -1272,6 +1279,7 @@
                     <lookup expression="fn.getConcept('PIH:RETURN VISIT DATE').name"/>
                 </label>
                 <obs conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false" id="apptDate"/>
+                <span id="return-visit-date-error-message" class="text-danger"></span>
             </p>
 
         </div>
@@ -1280,7 +1288,7 @@
 
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
-            <submit submitClass="confirm right" submitCode="emr.save"/>
+            <submit submitClass="confirm right submit" submitCode="emr.save"/>
             <button type="button" class="cancel">
                 <uimessage code="emr.cancel"/>
             </button>

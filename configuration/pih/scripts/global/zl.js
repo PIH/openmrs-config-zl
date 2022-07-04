@@ -183,3 +183,27 @@ function setUpObsWithObsDateTime(widgetId){
       })
     }
 }
+
+function returnVisitDateValidation(badReturnVisitDateMsg){
+
+   let domEl= jq("#apptDate").find("input[type=text]");
+   domEl.datepicker('option','yearRange', '+0:+1'); 
+   domEl.prop("readonly", "readonly"); 
+  
+  jq(domEl).change(function(){
+
+    const nextVisitDate = domEl.datepicker('getDate');
+    const currentDate =new Date();
+    const months = (nextVisitDate.getFullYear() - currentDate.getFullYear()) * 12;
+    const nextMonth= nextVisitDate.getMonth();
+    const currentMonth = currentDate.getMonth();
+    
+    if(months <=12 && currentMonth >= nextMonth && nextVisitDate > currentDate){
+      jq("#return-visit-date-error-message").text('')
+      jq('.submit').prop("disabled", false);
+    }else{
+      jq("#return-visit-date-error-message").text(badReturnVisitDateMsg)
+      jq('.submit').prop("disabled", true);
+    }
+  })        
+}
