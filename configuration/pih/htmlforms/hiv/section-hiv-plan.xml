@@ -111,8 +111,10 @@
         </h1>
         <script type="text/javascript">
             jq(function () {
-                    
-                    returnVisitDateValidation('<uimessage code="pihcore.invalid.returnVisitDate"/>'); 
+                    returnVisitDateValidation(new Date('<lookup expression="encounter.getEncounterDatetime()"/>'),
+                                                        '<uimessage code="pihcore.returnVisitDateLessThanEncounterDate"/>',
+                                                        '<uimessage code="pihcore.invalid.returnVisitDate"/>'
+                                                        ); 
             });
         </script>
     </ifMode>
