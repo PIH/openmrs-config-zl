@@ -112,8 +112,8 @@
         <script type="text/javascript">
             jq(function () {
                     setupReturnVisitDateValidation(new Date('<lookup expression="encounter.getEncounterDatetime()"/>'),
-                                                        '<uimessage code="pihcore.returnVisitDateLessThanEncounterDate"/>',
-                                                        '<uimessage code="pihcore.invalid.returnVisitDate"/>'
+                                                        "<uimessage code="pihcore.returnVisitDateLessThanEncounterDate"/>",
+                                                        "<uimessage code="pihcore.invalid.returnVisitDate"/>"
                                                         );
             });
         </script>
