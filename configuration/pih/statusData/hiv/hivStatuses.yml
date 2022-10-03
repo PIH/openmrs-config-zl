@@ -44,3 +44,9 @@
   statusDataQuery: "lastCd4.sql"
   valueExpression: "#if($cd4)$cd4 $fn.translate('general.onDate') $fn.formatDate($cd4Date)#{else}$fn.translate('zl.status.lastCd4.none')#end"
   formatExpression: ""
+
+- id: "lastDispensedMedication"
+  labelCode: "zl.status.regimen.lastDispensedMedication"
+  statusDataQuery: "lastDispensedMedication.sql"
+  valueExpression: "#if(!$arv1DrugName && $arv2DrugName && $arv3DrugName) $fn.translate('zl.status.regimen.lastDispensedMedication.none') #end  #if($arv1DrugName) $arv1Name : $arv1DrugName ($arv1DrugQuantity) <br/> #end #if($arv2DrugName) $arv2Name : $arv2DrugName ($arv2DrugQuantity) <br/> #end #if($arv3DrugName) $arv3Name : $arv3DrugName ($arv3DrugQuantity) #end"
+  formatExpression: ""
