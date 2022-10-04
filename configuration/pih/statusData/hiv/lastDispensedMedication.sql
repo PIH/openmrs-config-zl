@@ -46,7 +46,7 @@ and o.obs_group_id = @arv1Group
 and o.person_id = @patientId and o.encounter_id = @encounterId
 ;
 
-select drugName(value_drug) @arv1DrugName
+select drugName(value_drug) into @arv1DrugName
 from obs o
 where o.concept_id = @medicationName
 and o.obs_group_id = @arv1Group
@@ -70,7 +70,7 @@ and o.obs_group_id = @arv2Group
 and o.person_id = @patientId and o.encounter_id = @encounterId
 ;
 
-select drugName(value_drug) @arv2DrugName
+select drugName(value_drug) into @arv2DrugName
 from obs o
 where o.concept_id = @medicationName
 and o.obs_group_id = @arv2Group
@@ -94,7 +94,7 @@ and o.obs_group_id = @arv3Group
 and o.person_id = @patientId and o.encounter_id = @encounterId
 ;
 
-select drugName(value_drug) @arv3DrugName
+select drugName(value_drug) into @arv3DrugName
 from obs o
 where o.concept_id = @medicationName
 and o.obs_group_id = @arv3Group
