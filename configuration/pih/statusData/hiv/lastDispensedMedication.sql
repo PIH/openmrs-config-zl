@@ -39,23 +39,18 @@ and person_id = @patientId and encounter_id = @encounterId
 ;
 
 # Get details for ARV1
-select d.drug_name, q.value_numeric into @arv1DrugName, @arv1DrugQuantity
+select value_numeric into @arv1DrugQuantity
 from obs o
-join obs o2 on o.obs_group_id = o2.obs_id
-join (
-		select obs_group_id, value_numeric
-		from obs
-		where concept_id = @medicationQuantity
-		) q on q.obs_group_id = o.obs_group_id
-join (
-		select obs_group_id, drugName(value_drug) drug_name
-		from obs
-		where concept_id = @medicationName
-		) d on q.obs_group_id = o.obs_group_id
-where o.person_id = @patientId and o.encounter_id = @encounterId
-and o2.concept_id = @dispensingConstruct
+where o.concept_id = @medicationQuantity
 and o.obs_group_id = @arv1Group
-group by o.encounter_id, o.obs_group_id
+and o.person_id = @patientId and o.encounter_id = @encounterId
+;
+
+select drugName(value_drug) @arv1DrugName
+from obs o
+where o.concept_id = @medicationName
+and o.obs_group_id = @arv1Group
+and o.person_id = @patientId and o.encounter_id = @encounterId
 ;
 
 
@@ -68,23 +63,18 @@ and person_id = @patientId and encounter_id = @encounterId
 ;
 
 # Get details for ARV2
-select d.drug_name, q.value_numeric into @arv2DrugName, @arv2DrugQuantity
+select value_numeric into @arv2DrugQuantity
 from obs o
-join obs o2 on o.obs_group_id = o2.obs_id
-join (
-		select obs_group_id, value_numeric
-		from obs
-		where concept_id = @medicationQuantity
-		) q on q.obs_group_id = o.obs_group_id
-join (
-		select obs_group_id, drugName(value_drug) drug_name
-		from obs
-		where concept_id = @medicationName
-		) d on q.obs_group_id = o.obs_group_id
-where o.person_id = @patientId and o.encounter_id = @encounterId
-and o2.concept_id = @dispensingConstruct
+where o.concept_id = @medicationQuantity
 and o.obs_group_id = @arv2Group
-group by o.encounter_id, o.obs_group_id
+and o.person_id = @patientId and o.encounter_id = @encounterId
+;
+
+select drugName(value_drug) @arv2DrugName
+from obs o
+where o.concept_id = @medicationName
+and o.obs_group_id = @arv2Group
+and o.person_id = @patientId and o.encounter_id = @encounterId
 ;
 
 
@@ -97,23 +87,18 @@ and person_id = @patientId and encounter_id = @encounterId
 ;
 
 # Get details for ARV3
-select d.drug_name, q.value_numeric into @arv3DrugName, @arv3DrugQuantity
+select value_numeric into @arv3DrugQuantity
 from obs o
-join obs o2 on o.obs_group_id = o2.obs_id
-join (
-		select obs_group_id, value_numeric
-		from obs
-		where concept_id = @medicationQuantity
-		) q on q.obs_group_id = o.obs_group_id
-join (
-		select obs_group_id, drugName(value_drug) drug_name
-		from obs
-		where concept_id = @medicationName
-		) d on q.obs_group_id = o.obs_group_id
-where o.person_id = @patientId and o.encounter_id = @encounterId
-and o2.concept_id = @dispensingConstruct
+where o.concept_id = @medicationQuantity
 and o.obs_group_id = @arv3Group
-group by o.encounter_id, o.obs_group_id
+and o.person_id = @patientId and o.encounter_id = @encounterId
+;
+
+select drugName(value_drug) @arv3DrugName
+from obs o
+where o.concept_id = @medicationName
+and o.obs_group_id = @arv3Group
+and o.person_id = @patientId and o.encounter_id = @encounterId
 ;
 
 
