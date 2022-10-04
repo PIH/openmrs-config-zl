@@ -11,10 +11,14 @@ concept_from_mapping('PIH', '9071')
 into @dispensingConstruct, @medicationCategory, @arv1, @arv2, @arv3, @medicationName, @medicationQuantity
 ;
 
-
 select concept_name(@arv1, 'en'), concept_name(@arv2, 'en'), concept_name(@arv3, 'en')
-into  @arv1Name, @arv2Name, @arv3Name;
+into  @arv1Name, @arv2Name, @arv3Name
+;
 
+select et.encounter_type_id into @hivDrugDispensing
+from encounter_type et
+where et.uuid = 'cc1720c9-3e4c-4fa8-a7ec-40eeaad1958c'
+;
 
 # Get the latest encounter with ARV1 or ARV2 or ARV3
 SELECT o.encounter_id  into @encounterId
@@ -22,6 +26,7 @@ FROM obs o
 join obs o2 on o.obs_group_id = o2.obs_id
 join encounter e on e.encounter_id = o.encounter_id
 where o.person_id = @patientId
+and e.encounter_type = @hivDrugDispensing
 and o2.concept_id = @dispensingConstruct
 and o.concept_id = @medicationCategory
 and (o.value_coded = @arv1 or o.value_coded = @arv2 or o.value_coded = @arv3)
