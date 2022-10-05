@@ -1,0 +1,1 @@
+This folder contains data migration scripts that were not executed by the HIV migration from the legacy HIV EMR into OpenMRS run by liquibase.  These scripts were executed as one-off updates as indicated within each script.

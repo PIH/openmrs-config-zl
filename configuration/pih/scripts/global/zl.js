@@ -98,58 +98,58 @@ function setUpExpandableContacts(badPhoneNumberMsg) {
  *    2) Apply "startDate" class to the start datepicker element, and "endDate" to the end datepicker element
  *    3) Call setupDatepickerStartAndEndDateValidation() upon page load
  */
-function setUpDatepickerStartAndEndDateValidation(){
+function setUpDatepickerStartAndEndDateValidation() {
 
-    jq(".startDateEndDate").each(function (j, domEl) {
+  jq(".startDateEndDate").each(function (j, domEl) {
 
-        const startDatepicker = jq(jq(this).find('.startDate'));
-        const endDatepicker = jq(jq(this).find('.endDate'));
+    const startDatepicker = jq(jq(this).find('.startDate'));
+    const endDatepicker = jq(jq(this).find('.endDate'));
 
-        if (startDatepicker) {
-            startDatepicker.change(function () {
-                let startDate = startDatepicker.find('input[type=text]').datepicker('getDate');
-                if (startDate) {
-                    endDatepicker.find('input[type=text]').datepicker('option', 'minDate', startDate);
-                }
-            });
+    if (startDatepicker) {
+      startDatepicker.change(function () {
+        let startDate = startDatepicker.find('input[type=text]').datepicker('getDate');
+        if (startDate) {
+          endDatepicker.find('input[type=text]').datepicker('option', 'minDate', startDate);
         }
+      });
+    }
 
-        if (endDatepicker) {
-            endDatepicker.change(function () {
-                let endDate = endDatepicker.find('input[type=text]').datepicker('getDate');
-                if (endDate) {
-                    startDatepicker.find('input[type=text]').datepicker('option', 'maxDate', endDate);
-                }
-            });
+    if (endDatepicker) {
+      endDatepicker.change(function () {
+        let endDate = endDatepicker.find('input[type=text]').datepicker('getDate');
+        if (endDate) {
+          startDatepicker.find('input[type=text]').datepicker('option', 'maxDate', endDate);
         }
-    });
+      });
+    }
+  });
 }
 
 function setUpPhoneNumberRegex(badPhoneNumberMsg) {
 
-    jq('.phoneRegex').each(function (j, domEl) {
+  jq('.phoneRegex').each(function (j, domEl) {
 
-        jq(this).change(function (e) {
-            let phone = e.target.value;
-            if (phone.match(phoneNumberPattern().pattern1) || phone.match(phoneNumberPattern().pattern2) || phone.match(phoneNumberPattern().pattern3) ) {
-                jq(this).find('span').first().hide();
-                jq(this).find('span').first().text('');
-                setButtonsDisabled(false);
-            } else {
-                jq(this).find('span').first().show();
-                jq(this).find('span').first().text(badPhoneNumberMsg);
-                setButtonsDisabled(true);setUpPhoneNumberRegex
-            }
-        })
+    jq(this).change(function (e) {
+      let phone = e.target.value;
+      if (phone.match(phoneNumberPattern().pattern1) || phone.match(phoneNumberPattern().pattern2) || phone.match(phoneNumberPattern().pattern3)) {
+        jq(this).find('span').first().hide();
+        jq(this).find('span').first().text('');
+        setButtonsDisabled(false);
+      } else {
+        jq(this).find('span').first().show();
+        jq(this).find('span').first().text(badPhoneNumberMsg);
+        setButtonsDisabled(true); setUpPhoneNumberRegex
+      }
     })
+  })
 }
 
-function phoneNumberPattern(){
-    return{
-        pattern1:/^\d{8}$/,
-        pattern2:/^\d{4}(?:\)|[-|\s])?\s*?\d{4}$/,
-        pattern3:/^\+?(?:\d ?){6,14}\d$/
-    }
+function phoneNumberPattern() {
+  return {
+    pattern1: /^\d{8}$/,
+    pattern2: /^\d{4}(?:\)|[-|\s])?\s*?\d{4}$/,
+    pattern3: /^\+?(?:\d ?){6,14}\d$/
+  }
 }
 
 /**
@@ -168,52 +168,56 @@ function phoneNumberPattern(){
  *
  * @param widgetId
  */
-function setUpObsWithObsDateTime(widgetId){
-    if (getField(widgetId + '.date') && getField(widgetId + '.value')) {
-      getField(widgetId + '.date').hide();
-      getField(widgetId + '.date').datepicker('option', 'maxDate', new Date());
+function setUpObsWithObsDateTime(widgetId) {
+  if (getField(widgetId + '.date') && getField(widgetId + '.value')) {
+    getField(widgetId + '.date').hide();
+    getField(widgetId + '.date').datepicker('option', 'maxDate', new Date());
 
-      getField(widgetId + '.value').change(function () {
-        const isChecked = getValue(widgetId + '.value');
-        if (isChecked) {
-          getField(widgetId + '.date').show();
-        } else {
-          setValue(widgetId + '.date', '')
-          getField(widgetId + '.date').hide();
-        }
-      })
-    }
+    getField(widgetId + '.value').change(function () {
+      const isChecked = getValue(widgetId + '.value');
+      if (isChecked) {
+        getField(widgetId + '.date').show();
+      } else {
+        setValue(widgetId + '.date', '')
+        getField(widgetId + '.date').hide();
+      }
+    })
+  }
 }
 
-function setupReturnVisitDateValidation(encounterDate,returnVisitDateLessThanEncounterDateMsg,badReturnVisitDateMsg){
+function setupReturnVisitDateValidation(encounterDate, returnVisitDateLessThanEncounterDateMsg, badReturnVisitDateMsg) {
 
-   const domEl= getField('apptDate.value');
-   const yrRange = encounterDate.getFullYear() + ":" + (new Date().getFullYear() + 1);
-   domEl.datepicker('option','yearRange', yrRange);
-   domEl.prop("readonly", "readonly");
+  const domEl = getField('apptDate.value');
+  const yrRange = encounterDate.getFullYear() + ":" + (new Date().getFullYear() + 1);
+  domEl.datepicker('option', 'yearRange', yrRange);
+  domEl.prop("readonly", "readonly");
 
-   const returnVisitDateValidation = function() {
-     const nextVisitDate = domEl.datepicker('getDate');
-     const differnenceInYears = nextVisitDate.getFullYear() - encounterDate.getFullYear();
+  const returnVisitDateValidation = function () {
+    const nextVisitDate = domEl.datepicker('getDate');
+    if (nextVisitDate) {
+      const differnenceInYears = nextVisitDate.getFullYear() - encounterDate.getFullYear();
 
-     if (differnenceInYears < 1  && nextVisitDate > encounterDate) {
-       getField('apptDate.error').text('').hide();
-       return true;
-     }
-     else if(differnenceInYears == 1 && nextVisitDate.getMonth() <= encounterDate.getMonth()) {
-       getField('apptDate.error').text('').hide();
-       return true;
-     }
-     else if(differnenceInYears <= 0 && encounterDate > nextVisitDate) {
-       getField('apptDate.error').text(returnVisitDateLessThanEncounterDateMsg).show();
-       return false;
-     }
-     else {
-       getField('apptDate.error').text(badReturnVisitDateMsg).show();
-       return false;
-     }
-   }
+      if (differnenceInYears < 1 && nextVisitDate > encounterDate) {
+        getField('apptDate.error').text('').hide();
+        return true;
+      }
+      else if (differnenceInYears == 1 && nextVisitDate.getMonth() <= encounterDate.getMonth()) {
+        getField('apptDate.error').text('').hide();
+        return true;
+      }
+      else if (differnenceInYears <= 0 && encounterDate > nextVisitDate) {
+        getField('apptDate.error').text(returnVisitDateLessThanEncounterDateMsg).show();
+        return false;
+      }
+      else {
+        getField('apptDate.error').text(badReturnVisitDateMsg).show();
+        return false;
+      }
+    } else {
+      return true;
+    }
+  }
 
-    jq(domEl).change(returnVisitDateValidation);
-    beforeSubmit.push(returnVisitDateValidation);
+  jq(domEl).change(returnVisitDateValidation);
+  beforeSubmit.push(returnVisitDateValidation);
 }
