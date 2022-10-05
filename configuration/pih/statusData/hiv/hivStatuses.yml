@@ -44,3 +44,11 @@
   statusDataQuery: "lastCd4.sql"
   valueExpression: "#if($cd4)$cd4 $fn.translate('general.onDate') $fn.formatDate($cd4Date)#{else}$fn.translate('zl.status.lastCd4.none')#end"
   formatExpression: ""
+
+- id: "firstArtStartDate"
+  labelCode: "zl.status.firstArtStartDate"
+  statusDataQuery: "firstArtStartDate.sql"
+  valueExpression: "#if(!$artDispenseEncounterDate)N/A #elseif($artDispenseEncounterDate)$fn.formatDate($artDispenseEncounterDate) #{else}$fn.translate('zl.status.artStartDateIncomplete')#end"
+  formatExpression: ""
+
+  
