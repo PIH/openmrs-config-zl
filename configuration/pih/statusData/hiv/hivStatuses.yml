@@ -46,6 +46,13 @@
   formatExpression: ""
 
 - id: "lastDispensedHivMedication"
+- id: "firstArtStartDate"
+  labelCode: "zl.status.firstArtStartDate"
+  statusDataQuery: "firstArtStartDate.sql"
+  valueExpression: "#if(!$artDispenseEncounterDate)N/A #elseif($artDispenseEncounterDate)$fn.formatDate($artDispenseEncounterDate) #{else}$fn.translate('zl.status.artStartDateIncomplete')#end"
+  formatExpression: ""
+
+- id: "lastDispensedHivMedication"
   labelCode: "zl.status.regimen.lastDispensedMedication"
   statusDataQuery: "lastDispensedHivMedication.sql"
   valueExpression: "#if(!$arv1DrugName && !$arv2DrugName && !$arv3DrugName) $fn.translate('pihcore.none.label') #end  #if($arv1DrugName) $arv1Name : $arv1DrugName ($arv1DrugQuantity) <br/> #end #if($arv2DrugName) $arv2Name : $arv2DrugName ($arv2DrugQuantity) <br/> #end #if($arv3DrugName) $arv3Name : $arv3DrugName ($arv3DrugQuantity) #end"
