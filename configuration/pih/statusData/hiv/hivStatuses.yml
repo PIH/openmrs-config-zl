@@ -45,6 +45,7 @@
   valueExpression: "#if($cd4)$cd4 $fn.translate('general.onDate') $fn.formatDate($cd4Date)#{else}$fn.translate('zl.status.lastCd4.none')#end"
   formatExpression: ""
 
+- id: "lastDispensedHivMedication"
 - id: "firstArtStartDate"
   labelCode: "zl.status.firstArtStartDate"
   statusDataQuery: "firstArtStartDate.sql"
