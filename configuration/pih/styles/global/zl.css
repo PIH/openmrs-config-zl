@@ -101,6 +101,18 @@ a.button.confirm:hover {
     border-color: #3F746D;
 }
 
+/* Login, submit buttons (disabled should stay grey on hover) */
+.button.confirm:hover:disabled,
+button.confirm:hover:disabled,
+input[type="submit"].confirm:hover:disabled,
+input[type="button"].confirm:hover:disabled,
+a.button.confirm:hover:disabled {
+    background: #EEE;
+    border: #CCC 1px solid;
+    color: #CCC;
+    cursor: default;
+}
+
 .button, button,
 input[type="submit"], input[type="button"],
 a.button {
