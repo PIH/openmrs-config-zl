@@ -1,8 +1,10 @@
 {
   "welcomeMessage": "Bienvenue dans l'EMR de l'Hôpital Universitaire de Mirebalais",
   "browserWarning": "Veuillez utiliser un navigateur <b>Google Chrome</b>",
+
   "country": "HAITI",
   "site": "MIREBALAIS",
+
   "globalProperties": {
     "mirebalais.checkIn.paymentAmounts": "300,250,200,150,100,75,50,0",
     "mirebalais.checkIn.paymentAmountLabels": "300,250,200,150,100,75,50,Exempt",
@@ -12,18 +14,24 @@
     "coreapps.defaultPatientIdentifierLocation": "a084f714-a536-473b-94e6-ec317b152b43",
     "registrationapp.paperRecordIdentifierDefinition": "paperrecord.patientDataDefinition.paperRecordIdentifier"
   },
+
   "scheduleBackupReports": "false",
   "providerIdentifierPrefix": "M",
+
   "dashboardUrl": "/coreapps/patientdashboard/patientDashboard.page?patientId={{patientId}}",
   "visitsPageUrl": "/pihcore/visit/visit.page?patient={{patient.uuid}}#/visitList",
   "visitsPageWithSpecificUrl": "/pihcore/visit/visit.page?patient={{patient.uuid}}&visit={{visit.uuid}}#/overview",
+
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json",
+
   "extraIdentifierTypes": [
     "e66645eb-03a8-4991-b4ce-e87318e37566",
     "139766e8-15f5-102d-96e4-000c29c2a5d7"
   ],
+
   "idCardLabel": "Zanmi Lasante Patient ID Card",
   "idCardLocale": "ht",
+
   "registrationConfig": {
     "allowUnknownPatients": true,
     "allowManualEntryOfPrimaryIdentifier": true,
