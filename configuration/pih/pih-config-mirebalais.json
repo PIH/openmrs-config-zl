@@ -74,54 +74,5 @@
         "regex": "(^\\d{8}$)|(^\\d{4}(?:[-| ])?\\d{4}$)|(^\\+?(?:\\d ?){7,14}\\d$)"
       }
     }
-  },
-  "authenticationConfig": {
-    "scheme": "basic",
-    "schemes": {
-      "basic": {
-        "type": "org.openmrs.module.pihcore.PihBasicAuthenticationScheme",
-        "config": {
-          "loginPage": "/login.htm",
-          "usernameParam": "username",
-          "passwordParam": "password"
-        }
-      },
-      "secret": {
-        "type": "org.openmrs.module.authentication.web.SecretQuestionAuthenticationScheme",
-        "config": {
-          "loginPage": "/pihcore/loginSecret.page",
-          "configurationPage": "/pihcore/account/changeSecurityQuestion.page?schemeId={schemeId}&userId={userId}",
-          "passwordParam": "password"
-        }
-      },
-      "totp": {
-        "type": "org.openmrs.module.pihcore.TotpAuthenticationScheme",
-        "config": {
-          "loginPage": "/pihcore/account/loginTotp.page",
-          "configurationPage": "/pihcore/account/configureTotp.page?schemeId={schemeId}&userId={userId}"
-        }
-      },
-      "2fa": {
-        "type": "org.openmrs.module.authentication.web.TwoFactorAuthenticationScheme",
-        "config": {
-          "primaryOptions": "basic",
-          "secondaryOptions": "secret,totp"
-        }
-      }
-    },
-    "whitelist": [
-      "/csrfguard",
-      "*.js",
-      "*.css",
-      "*.gif",
-      "*.jpg",
-      "*.png",
-      "*.ico",
-      "*.ttf",
-      "*.woff",
-      "/appui/session/getLoginLocations.action",
-      "/login.htm",
-      "/pihcore/login.page"
-    ]
   }
 }

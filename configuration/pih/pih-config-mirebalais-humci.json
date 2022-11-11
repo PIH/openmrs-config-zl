@@ -84,7 +84,14 @@
   "localZlIdentifierGeneratorPrefix": "Y",
 
   "authenticationConfig": {
-    "scheme": "2fa"
+    "scheme": "2fa",
+    "schemes": {
+      "2fa": {
+        "config": {
+          "secondaryOptions": "secret,totp"
+        }
+      }
+    }
   },
 
   "extensions": [
