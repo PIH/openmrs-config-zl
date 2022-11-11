@@ -82,6 +82,11 @@
 
   "localZlIdentifierGeneratorEnabled": "true",
   "localZlIdentifierGeneratorPrefix": "Y",
+
+  "authenticationConfig": {
+    "scheme": "2fa"
+  },
+
   "extensions": [
     {
       "id": "zl.report.hiv.powerbilink.dispensing.humci",
