@@ -10,7 +10,6 @@
 
   "components": [
     "allergies",
-    "biometricsFingerPrints",
     "checkIn",
     "checkInHomepageApp",
     "chwApp",
