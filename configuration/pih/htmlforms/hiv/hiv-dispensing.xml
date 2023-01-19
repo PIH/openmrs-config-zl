@@ -703,12 +703,14 @@
                                 85153088-b868-4723-aacd-27f25f121685,
                                 54972d88-156e-465e-8483-9a9e97d5898f,
                                 160d7a20-f710-48b3-9c9b-0a1b98ab5871,
-                                b3910fb7-2b17-44e6-8a52-8543af46c935"
+                                b3910fb7-2b17-44e6-8a52-8543af46c935,
+                                1156a9ca-14f3-4c57-9ed2-7154e82447c7"
                              answerLabels="
                                 TMS 960 mg,
                                 TMS 480 mg,
                                 TMS 120 mg,
-                                TMS 240 mg sp" />
+                                TMS 240 mg sp,
+                                Dapsone 100 mg" />
                     </td>
                     <td>
                         <obs class="drugQty" conceptId="CIEL:1443" />
