@@ -27,6 +27,10 @@
 
                 setUpPhoneNumberRegex('<uimessage code="pihcore.invalid.phoneNumber"/>');
 
+                beforeSubmit.push(function() {
+                   return phoneNumberRegex(getValue('contactPhoneNumber.value'));
+                });
+
             });
         </script>
     </ifMode>
