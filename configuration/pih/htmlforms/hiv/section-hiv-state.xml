@@ -374,7 +374,7 @@
                    
                     jq('#treatmentLine input[type="radio"]').each(function(i,domEl){
 
-                         if(lastRecordedTreatmenLine.treatmenLine.display==="Primaire"  &amp;&amp; i==0){
+                         if(lastRecordedTreatmenLine.treatmenLine.display==="Primary" || lastRecordedTreatmenLine.treatmenLine.display==="Primaire"  &amp;&amp; i==0){
                              jq(this).prop("checked",true)
                              jq(this).prop("disabled",false)
                              jq('#treatmentId').prop("style",'opacity:none!important;')
@@ -390,19 +390,8 @@
                    
                    }
                   }
-            
-
          
           });
-
-           jq('#Isoniazide input:checkbox').change(function(domEl){
-
-                
-                 var elm = jq('#Isoniazide input:checkbox').val();
-                
-                        console.log("---------------------",elm)
-
-            })
 
     });
 </script>
