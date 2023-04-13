@@ -1531,10 +1531,10 @@
                                     </p>
                                 </td>
                                 <td class="{drugname}-hx">
-                                    <obs conceptId="CIEL:1190" class="startDate"/>
+                                    <obs conceptId="CIEL:164852" class="startDate" allowFutureDates="true" allowPastDates="false"/>
                                 </td>
                                 <td class="{drugname}-hx">
-                                    <obs conceptId="CIEL:1191" class="endDate"/>
+                                    <obs conceptId="PIH:14535" class="endDate" allowFutureDates="true" allowPastDates="false"/>
                                 </td>
                             </tr>
                         </obsgroup>

@@ -1,18 +1,22 @@
 # This retrieves all of the data points needed to provide information as to the INH Prophylaxis for the patient
 
-select concept_from_mapping('CIEL', '78280') into @inh;
+select concept_from_mapping('PIH', '14534') into @inhStartDate;
+select concept_from_mapping('PIH', '14535') into @inhEndDate;
 
-select      ifnull(o.scheduled_date, o.date_activated),
-            ifnull(o.date_stopped, o.auto_expire_date)
-            into @startDate, @endDate
-from        orders o
-where       o.patient_id = @patientId
+
+select     value_datetime into @startDate
+from        obs o
+join        encounter e on e.encounter_id=o.encounter_id
+where       e.patient_id = @patientId
 and         o.voided = 0
-and         o.order_action != 'DISCONTINUE'
-and         o.concept_id = @inh
-order by    ifnull(o.scheduled_date, o.date_activated) desc
-limit 1
-;
+and         o.concept_id = @inhStartDate;
+
+select     value_datetime into @endDate
+from        obs o
+join        encounter e on e.encounter_id=o.encounter_id
+where       e.patient_id = @patientId
+and         o.voided = 0
+and         o.concept_id = @inhEndDate;
 
 select
     date(@startDate) as startDate,
