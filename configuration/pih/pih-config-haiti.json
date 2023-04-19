@@ -15,6 +15,17 @@
         "registrationapp.paperRecordIdentifierDefinition": "paperrecord.patientDataDefinition.paperRecordIdentifier"
     },
 
+    "authenticationConfig": {
+      "scheme": "2fa",
+      "schemes": {
+        "2fa": {
+          "config": {
+            "secondaryOptions": "secret"
+          }
+        }
+      }
+    },
+
     "scheduleBackupReports": "false",
     "dashboardUrl": "/coreapps/clinicianfacing/patient.page?patientId={{patientId}}&app=pih.app.clinicianDashboard",
     "afterMergeUrl": "/registrationapp/registrationSummary.page?patientId={{patientId}}&app=registrationapp.registerPatient",
