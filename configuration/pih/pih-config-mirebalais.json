@@ -20,7 +20,7 @@
     "schemes": {
       "2fa": {
         "config": {
-          "secondaryOptions": "secret"
+          "secondaryOptions": "secret,totp"
         }
       }
     }
