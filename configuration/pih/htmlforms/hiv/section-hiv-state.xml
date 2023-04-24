@@ -161,6 +161,7 @@
 </script>
 </excludeIf>
 
+<!-- This method allows you to retrieve the last date of completion of izoniazid -->
 <excludeIf velocityTest="$fn.getObs($encounter, 'PIH:14535')">
 <script type="text/javascript">
 
@@ -231,7 +232,7 @@
 </script>
 </excludeIf>
 
-
+<!-- This method allows you to retrieve the last start date of izoniazid -->
 <excludeIf velocityTest="$fn.getObs($encounter, 'PIH:14534')">
 <script type="text/javascript">
 
@@ -304,6 +305,7 @@
 </excludeIf>
 
 
+<!-- This method allows to recover the type of izoniazide, if it is primary or secondary -->
 <excludeIf velocityTest="$fn.getObs($encounter, 'PIH:13786')">
 <script type="text/javascript">
 
@@ -350,10 +352,7 @@
                                 tmpTreatmentLineObs.treatmenLine = treatmentLineObs.value;
                                 tmpTreatmentLineObs.date = treatmentLineObsDate;
                                 tmpTreatmentLineObs.encounterDisplay = treatmentLineObs.encounter.display;
-                                   
-
-                                
-                              }
+                    }
                     }
                     if ( (tmpTreatmentLineObs.date != null) &amp;&amp;
                         ((lastRecordedTreatmenLine.date == null) || (lastRecordedTreatmenLine.date.getTime() &lt; tmpTreatmentLineObs.date.getTime()) ) ) {
@@ -396,6 +395,8 @@
     });
 </script>
 </excludeIf>
+
+
 
     <ifMode mode="VIEW" include="false" >
         <h3>
@@ -520,7 +521,7 @@
 
                     <!-- Viral Load -->
                     <repeat>
-                        <template>syph-checkbox
+                        <template>
                             <obsgroup groupingConceptId="PIH:HIV viral load construct">
                                 <tr>
                                     <td>
