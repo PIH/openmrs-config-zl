@@ -10,6 +10,7 @@
     "clinicianDashboard",
     "consult",
     "dataExports",
+    "dbevent",
     "echocardiogram",
     "exportPatients",
     "growthChart",
