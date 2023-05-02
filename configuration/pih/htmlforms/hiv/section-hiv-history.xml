@@ -1530,11 +1530,13 @@
                                              answerConceptIds="CIEL:159943, CIEL:159944" />
                                     </p>
                                 </td>
-                                <td class="{drugname}-hx">
-                                    <obs conceptId="CIEL:164852" class="startDate" allowFutureDates="true" allowPastDates="false"/>
+                                 <td class="{drugname}-hx">
+                                    <obs conceptId="CIEL:163526" class="startDate" allowFutureDates="true" allowPastDates="true"/>
                                 </td>
+                               
                                 <td class="{drugname}-hx">
-                                    <obs conceptId="PIH:14535" class="endDate" allowFutureDates="true" allowPastDates="false"/>
+                                    <obs conceptId="CIEL:164384" class="endDate"  allowFutureDates="true" allowPastDates="true"/>
+                                    
                                 </td>
                             </tr>
                         </obsgroup>
