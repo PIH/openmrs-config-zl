@@ -612,11 +612,11 @@
                                              answerConceptIds="CIEL:159943, CIEL:159944"  id="treatmentLine"/>
                                     </p>
                                 </td>
-                                <td class="{drugname}-hx">
+                                <td class="{drugname}-current-treat">
                                     <obs conceptId="CIEL:163526" class="startDate" allowFutureDates="true" allowPastDates="true"/>
                                 </td>
                                
-                                <td class="{drugname}-hx">
+                                <td class="{drugname}-current-treat">
                                     <obs conceptId="CIEL:164384" class="endDate" allowFutureDates="true" allowPastDates="true"/>
                                     
                                 </td>

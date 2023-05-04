@@ -21,9 +21,9 @@ and         o.concept_id = @currentIsoniazidConstructConceptId
 order by    o.obs_datetime desc
 limit 1;
 
-select obs_from_group_id_value_datetime(obs_group_id_of_value_coded(ifnull(@currentEncounterId,@encounterId), 'PIH',if(@currentEncounterId > 0,'2289','1282'), 'PIH','656'), 'PIH','11131') into @startDate; 
+select obs_from_group_id_value_datetime(obs_group_id_of_value_coded(ifnull(@currentEncounterId,@encounterId), 'PIH',if(@currentEncounterId > 0,'2289','1282'), 'PIH','656'), 'PIH',if(@currentEncounterId > 0,'11131','1190')) into @startDate; 
 
-select obs_from_group_id_value_datetime(obs_group_id_of_value_coded(ifnull(@currentEncounterId,@encounterId), 'PIH',if(@currentEncounterId > 0,'2289','1282'), 'PIH','656'), 'PIH','12748') into @endDate; 
+select obs_from_group_id_value_datetime(obs_group_id_of_value_coded(ifnull(@currentEncounterId,@encounterId), 'PIH',if(@currentEncounterId > 0,'2289','1282'), 'PIH','656'), 'PIH',if(@currentEncounterId > 0,'12748','1191')) into @endDate; 
 
 select
     date(@startDate) as startDate,
