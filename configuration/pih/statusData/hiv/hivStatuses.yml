@@ -25,19 +25,20 @@
   valueExpression: "#if($vlDetectable != 1 || !$vlQuantitativeResult)$fn.format($fn.concept($vlQualitativeResult))#{else}$vlQuantitativeResult#end"
   formatExpression: ""
 
+   
 - id: "pregnancyStatus"
   labelCode: "zl.status.pregnancyStatus.result"
   statusDataQuery: "lastPregnancyStatus.sql"
-  conditionExpression: "#if($gender == 'F')true#{else}false#end"
-  valueExpression: "#if($pregnant == 1)$fn.translate('pihcore.pregnant')#{else}$fn.translate('pihcore.notPregnant')#end"
-  formatExpression: "#if($pregnant == 1)status-data-alert#end"
+  conditionExpression: "#if($gender == 'F' && $lastMenstrutionDate)true#{else}false#end"
+  valueExpression: "#if($lastMenstrutionDate)$fn.translate('pihcore.pregnant')#{else}$fn.translate('pihcore.notPregnant')#end"
+  formatExpression: "#if($lastMenstrutionDate)status-data-alert#end"
 
 - id: "pregnancyDueDate"
   labelCode: "zl.status.pregnancyStatus.dueDate"
   statusDataQuery: "lastPregnancyStatus.sql"
-  conditionExpression: "#if($gender == 'F' && $pregnant == 1)true#{else}false#end"
-  valueExpression: "$fn.format($dueDate)"
-  formatExpression: "#if($pregnant == 1)status-data-alert#end"
+  conditionExpression: "#if($gender == 'F' && $estimatedDeliveryDate)true#{else}false#end"
+  valueExpression: "$fn.format($estimatedDeliveryDate)"
+  formatExpression: "#if($estimatedDeliveryDate)status-data-alert#end"
 
 - id: "lastCd4Result"
   labelCode: "zl.status.lastCd4.result"
