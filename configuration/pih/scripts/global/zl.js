@@ -288,7 +288,7 @@ function manageInputActivationForRadioButton(checkboxId = null, radioButtonId, w
 
   // Function to determine if the input widgets specified by requiredWidgetIds are required.
   const returnRequiredInputWidgets = function () {
-    
+
     // Loop through each input widget of type text under the elements specified by widgetRequiredIds.
     jq(requiredWidgetIds + ' input[type=text]').each(function (i, domEl) {
 
@@ -349,4 +349,48 @@ function setRequiredForTextInputs(requiredWidgetIds) {
 */
 function setRequiredForRadioButton(radioButtonId, value) {
   jq(radioButtonId).find("input[type=radio]").prop('required', value);
+}
+
+
+
+// Function to check if any checkboxes are selected
+function anyCheckboxesSelected(containerSelector) {
+  return jq(`${containerSelector} input[type="checkbox"]:checked`).length > 0;
+}
+
+/**
+ * Updates the required attribute of the last checkbox in the given container.
+ * @param {string} containerSelector - The selector for the container containing checkboxes.
+ * @returns {boolean} - Returns true if the last checkbox is required, false otherwise.
+ */
+function updateLastCheckboxRequired(containerSelector) {
+  // Initialize the flag to keep track of the last checkbox state.
+  let islastCheckbox = true;
+
+  // Function to update the required attribute of the last checkbox
+  const updateLastCheckbox = function () {
+
+    // Select the last checkbox within the container using the given selector
+    let lastCheckbox = jq(`${containerSelector} input[type="checkbox"]`).last();
+
+    // Check if any checkboxes are selected within the container using the anyCheckboxesSelected function.
+    if (!anyCheckboxesSelected(containerSelector)) {
+      lastCheckbox.prop('required', true);
+      islastCheckbox = false;
+    } else {
+      lastCheckbox.prop('required', false);
+      islastCheckbox = true;
+    }
+    return islastCheckbox;
+  }
+
+  // Initial call to updateLastCheckboxRequired to set the required attribute on page load.
+  updateLastCheckbox()
+
+  // Attach event listeners to the checkboxes in the container to update the required attribute dynamically.
+  jq(`${containerSelector} input[type="checkbox"]`).change(updateLastCheckbox)
+  jq(`${containerSelector} input[type="checkbox"]`).keyup(updateLastCheckbox)
+
+  // Add the updateLastCheckboxRequired function to the beforeSubmit array to call it before form submission.
+  beforeSubmit.push(updateLastCheckbox);
 }

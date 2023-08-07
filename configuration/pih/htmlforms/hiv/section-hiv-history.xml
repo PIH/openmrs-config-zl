@@ -128,6 +128,7 @@
                 setUpNextAndSubmitButtons();
 
                 manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",[".inhStartDate",".inhEndDate"],[".inhStartDate"])
+                updateLastCheckboxRequired("#transmission")
             });
         </script>
     </ifMode>
@@ -991,7 +992,7 @@
                                              answerConceptIds="CIEL:1066,CIEL:1065,CIEL:1067"
                                              answerCodes="pihcore.no.oneChar,pihcore.yes.oneChar,pihcore.unknown.oneChar"
                                              style="radio" answerSeparator=""
-                                             toggle="{id: '{toggle}-risk-date', style: 'dim'}"/>
+                                             toggle="{id: '{toggle}-risk-date', style: 'dim'}" required="true"/>
                                     </p>
                                 </td>
                                 <td id="{toggle}-risk-date">
