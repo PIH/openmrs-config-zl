@@ -5,7 +5,7 @@ description: "mirebalaisreports.j9CaseRegistration.description"
 parameters:
   - key: "maxMonthsEnrolled"
     type: "java.lang.Integer"
-    label: "zl.j9Report.limitMaxMonthsEnrolled"
+    label: "zl.report.j9.limitMaxMonthsEnrolled"
 datasets:
   - key: "j9CaseRegistration"
     type: "sql"
