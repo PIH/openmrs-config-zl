@@ -1,3 +1,6 @@
+-- set @maxMonthsEnrolled = null;
+set @minEnrollmentDate = if(@maxMonthsEnrolled is null, null, date_sub(now(), INTERVAL @maxMonthsEnrolled MONTH));
+
 select program_workflow_id into @MCH_treatment from program_workflow pw where uuid = '41a277d0-8a14-11e8-9a94-a6cf71072f73';
 select program_id into @matHealthProgram from program where uuid = '41a2715e-8a14-11e8-9a94-a6cf71072f73';
 select concept_id into @mothersGroup from concept where uuid = 'c1b2db38-8f72-4290-b6ad-99826734e37e';
@@ -43,6 +46,7 @@ where pp.patient_program_id =
          	and pp2.program_id = @matHealthProgram 
          	and pp2.voided = 0  
          	and pp2.date_completed is null
+         	and (@minEnrollmentDate is null or pp2.date_enrolled >= @minEnrollmentDate)
          	order by pp2.date_enrolled desc limit 1);
 
 create index temp_J9_patients_pi on temp_J9_patients(patient_id);

@@ -2,6 +2,10 @@ key: "j9CaseRegistration"
 uuid: "ed980032-3c77-11ea-8806-0242ac110002"
 name: "mirebalaisreports.j9CaseRegistration.name"
 description: "mirebalaisreports.j9CaseRegistration.description"
+parameters:
+  - key: "maxMonthsEnrolled"
+    type: "java.lang.Integer"
+    label: "zl.j9Report.limitMaxMonthsEnrolled"
 datasets:
   - key: "j9CaseRegistration"
     type: "sql"
