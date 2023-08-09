@@ -6,6 +6,7 @@ parameters:
   - key: "maxMonthsEnrolled"
     type: "java.lang.Integer"
     label: "zl.report.j9.limitMaxMonthsEnrolled"
+    required: false
 datasets:
   - key: "j9CaseRegistration"
     type: "sql"
