@@ -394,3 +394,87 @@ function updateLastCheckboxRequired(containerSelector) {
   // Add the updateLastCheckboxRequired function to the beforeSubmit array to call it before form submission.
   beforeSubmit.push(updateLastCheckbox);
 }
+
+usePatientAddressAsContactAddress();
+
+function usePatientAddressAsContactAddress(){
+  jq(document).ready(function() {
+  
+   // change the ckeckbox message based on the languade
+    var message='';
+    var url = window.location.href;
+    var urlParams = new URLSearchParams(new URL(url).search);
+    var langParam = urlParams.get('lang');
+    message=langParam === 'fr'? "Utilisez l'adresse du patient ?":"Use the patient address ?"
+
+    //target the div containing the contact address
+    const divElement = jq('#contactQuestionLabel div');
+
+    //creating a check, to be checked if clinician wants to use patient address as contact one
+    const checkboxElement = $("<input>", {
+      type: "checkbox",
+      id: "question_address",
+      name: "question_address"
+    });
+  
+    //Creating a label to show the checkbox title
+    const labelElement = $("<label>", {
+      for: "question_address",
+      text: message
+    });
+
+   //creating a break line to push other elements a litle bit down
+    const brElement = $("<br>");
+    divElement.prepend(checkboxElement, labelElement, brElement);
+    
+   // checkbox event occurs here
+    jq('#question_address').on('change', function() {
+      if (this.checked) {
+        //disable other input if the want to use the patient address as contact address
+        isInputDisabled(true);
+        // get and set the new address detail from patient to contact
+        getPatienAddressInfo();
+       
+      } else {
+        //Enable the inputs to put value manually
+        isInputDisabled(false);
+        clearInputValue();
+      }
+    });
+  });
+  
+}
+
+function getPatienAddressInfo(){
+
+  //creating an array to store patient adress
+  var valuesArray = [];
+  var manualEntryAddress;
+  $("#personAddressQuestion div input[type='text']").each(function() {
+    valuesArray.push($(this).val());
+  });
+  manualEntryAddress=$("#personAddressQuestion div input[type='text']:last").val()
+  $("#contactQuestionLabel div input[type='text']:last").val(manualEntryAddress);
+
+
+  // target the contact address input and set the new value
+  $("#contactQuestionLabel div input[type='text']").each(function(index) {
+    if (index < valuesArray.length) {
+      $(this).val(valuesArray[index]);
+      //No need to show this error if value presents
+      $("#contactQuestionLabel .field-error").val('');
+    }
+  });
+}
+
+function isInputDisabled(value){
+  $("#contactQuestionLabel div input[type='text']").each(function() {
+    $(this).prop("disabled", value);
+  });
+}
+  function clearInputValue(){
+    $("#contactQuestionLabel div input[type='text']").each(function(index) {
+      $(this).val('');
+  });
+ 
+}
