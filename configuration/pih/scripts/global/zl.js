@@ -430,8 +430,6 @@ function usePatientAddressAsContactAddress(){
    // checkbox event occurs here
     jq('#question_address').on('change', function() {
       if (this.checked) {
-        //disable other input if the want to use the patient address as contact address
-        isInputDisabled(true);
         // get and set the new address detail from patient to contact
         getPatienAddressInfo();
        
@@ -467,11 +465,6 @@ function getPatienAddressInfo(){
   });
 }
 
-function isInputDisabled(value){
-  jq("#contactQuestionLabel div input[type='text']").each(function() {
-    jq(this).prop("disabled", value);
-  });
-}
   function clearInputValue(){
     jq("#contactQuestionLabel div input[type='text']").each(function(index) {
       jq(this).val('');
