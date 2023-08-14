@@ -434,8 +434,6 @@ function usePatientAddressAsContactAddress(){
         getPatienAddressInfo();
        
       } else {
-        //Enable the inputs to put value manually
-        isInputDisabled(false);
         clearInputValue();
       }
     });
@@ -458,6 +456,7 @@ function getPatienAddressInfo(){
   // target the contact address input and set the new value
   jq("#contactQuestionLabel div input[type='text']").each(function(index) {
     if (index < valuesArray.length) {
+      // jq(this).data('legalValues', [ valuesArray[index] ])
       jq(this).val(valuesArray[index]);
       //No need to show this error if value presents
       jq("#contactQuestionLabel .field-error").val('');
