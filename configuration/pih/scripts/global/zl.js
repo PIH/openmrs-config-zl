@@ -443,15 +443,18 @@ function usePatientAddressAsContactAddress(){
 
 function getPatienAddressInfo(){
 
+
   //creating an array to store patient adress
   var valuesArray = [];
   var manualEntryAddress;
   jq("#personAddressQuestion div input[type='text']").each(function() {
     valuesArray.push(jq(this).val());
   });
+ 
+  console.table(valuesArray)
   manualEntryAddress=$("#personAddressQuestion div input[type='text']:last").val()
   jq("#contactQuestionLabel div input[type='text']:last").val(manualEntryAddress);
-
+  jq("#contactQuestionLabel div input[type='text']:first").addClass("focused");
 
   // target the contact address input and set the new value
   jq("#contactQuestionLabel div input[type='text']").each(function(index) {
