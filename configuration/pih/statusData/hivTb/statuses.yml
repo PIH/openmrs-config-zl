@@ -36,3 +36,23 @@
   statusDataQuery: "inhStatus.sql"
   valueExpression: "#if(!$startDate)N/A #elseif($endDate && $isCompleted == 1)$fn.formatDate($endDate) #{else}$fn.translate('zl.status.hivTb.inhNotComplete')#end"
   formatExpression: ""
+
+- id: "tbTreatmentStatus"
+  labelCode: "zl.hivTb.treatmentStatus"
+  statusDataQuery: "coinfectionStatus.sql"
+  valueExpression: "#if(!$tbTreatmentStatus) $fn.translate('pihcore.none.label') #{else} $fn.format($fn.concept($tbTreatmentStatus).getName()) #end"
+  formatExpression: ""
+  
+- id: "tbTreatmentRegimen"
+  labelCode: "zl.hivTb.treatmentRegimen"
+  statusDataQuery: "coinfectionStatus.sql"
+  conditionExpression: "#if($tbTreatmentRegimen)true#{else}false#end"
+  valueExpression: "#if(!$tbTreatmentRegimen) $fn.translate('pihcore.none.label') #{else} $fn.format($fn.concept($tbTreatmentRegimen).getName()) #end"
+  formatExpression: ""
+
+- id: "tbTreatmentDate"
+  labelCode: "zl.hivTb.treatmentDate"
+  statusDataQuery: "coinfectionStatus.sql"
+  conditionExpression: "#if($tbTreatmentDate)true#{else}false#end"
+  valueExpression: "$fn.formatDate($tbTreatmentDate)"
+  formatExpression: ""
