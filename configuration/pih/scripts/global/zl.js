@@ -454,7 +454,13 @@ function getPatienAddressInfo(){
   console.table(valuesArray)
   manualEntryAddress=$("#personAddressQuestion div input[type='text']:last").val()
   jq("#contactQuestionLabel div input[type='text']:last").val(manualEntryAddress);
-  jq("#contactQuestionLabel div input[type='text']:first").addClass("focused");
+  jq("#contactQuestionLabel div input[type='text']:last").change();
+
+  jq("#contactQuestionLabel div input[type='text']:last").change(function() {
+    jq(this).focus(); 
+    jq(this).trigger('change'); 
+  
+  });
 
   // target the contact address input and set the new value
   jq("#contactQuestionLabel div input[type='text']").each(function(index) {
