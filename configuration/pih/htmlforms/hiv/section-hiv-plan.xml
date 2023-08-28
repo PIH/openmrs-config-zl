@@ -94,6 +94,9 @@
         .small-input input[type=text] {
             width: 12em;
         }
+        .ifYesReason{
+            margin-left: -5px !important;
+        }
     </style>
 
 
@@ -617,21 +620,18 @@
     <section id="id-treatment-art" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.arvTreatment">
         <div class="section-container-color">
 
-            <div class="two-columns">
-                <p class="radio">
+            <div class="one-columns">
+                <p class="radio art-treatments">
                     <label>
                         <uimessage code="pihcore.hiv.needsART" />
                     </label>
                     <br/>
 
                     <obs conceptId="CIEL:162703" style="radio"
-                         answerConceptIds="CIEL:1066,CIEL:127750,PIH:14666,PIH:2222,PIH:1619,CIEL:160037,PIH:7262,PIH:7261"
-                         answerCodes="pihcore.noNotIndicated,pihcore.yesButRefused,pihcore.yesDenyStatus,pihcore.yesAfterCHW,pihcore.yesStartNow,pihcore.yesTreatmentStarted,pihcore.yesDelayed,pihcore.yesOtherReason"
+                         answerConceptIds="CIEL:1066,CIEL:127750,PIH:14666,PIH:2222,PIH:1619,CIEL:160037,PIH:14842,PIH:7262"
+                         answerCodes="pihcore.noNotIndicated,pihcore.yesButRefused,pihcore.yesDenyStatus,pihcore.yesAfterCHW,pihcore.yesStartNow,pihcore.yesTreatmentStarted,pihcore.yesDelayedForMedicalReason,pihcore.yesDelayed"
                          answerSeparator="&lt;br /&gt;" />
                     <!-- Reason about delay -->
-                    <label>
-                        <uimessage code="pihcore.ifYesReason"/>
-                    </label>
                     <obs conceptId="PIH:13021" style="text"/>
                 </p>
 

@@ -371,7 +371,7 @@ function setInputWidgetsDisabled(widgetIds, disabled) {
 function setRequiredForRadioButton(radioButtonId, requiredMsg, checkboxElm, radioButtonElm) {
 
   if (checkboxElm.val() == undefined) {
-     // If the checkbox element is undefined, hide the error message.
+    // If the checkbox element is undefined, hide the error message.
     getField(`${radioButtonId.substring(1)}.error`).text('').hide();
   } else if (checkboxElm.val() != undefined && radioButtonElm.val() == undefined) {
     // If checkbox is defined but radio button is not, show the required error message.
@@ -406,7 +406,7 @@ function updateLastCheckboxRequired(containerSelector, transRequiredMsgId, requi
     // Select the last checkbox within the container using the given selector
     let lastCheckbox = jq(`${containerSelector} input[type="checkbox"]`).last();
 
-     // Clear and hide the required message
+    // Clear and hide the required message
     jq(transRequiredMsgId).text('').hide()
 
     // Check if any checkboxes are selected within the container using the anyCheckboxesSelected function.
