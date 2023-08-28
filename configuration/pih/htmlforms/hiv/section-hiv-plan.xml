@@ -94,9 +94,6 @@
         .small-input input[type=text] {
             width: 12em;
         }
-        .ifYesReason{
-            margin-left: -5px !important;
-        }
     </style>
 
 
@@ -621,7 +618,7 @@
         <div class="section-container-color">
 
             <div class="one-columns">
-                <p class="radio art-treatments">
+                <p class="radio">
                     <label>
                         <uimessage code="pihcore.hiv.needsART" />
                     </label>
