@@ -237,20 +237,19 @@ function restrictInputOnlyNumber(input_id) {
 
 
 /**
- * Manages the activation of widget inputs based on the state of a radio button and an optional checkbox.
+ * Manages the activation of widget inputs based on the state of a radio button.
  *
  * @param {string|null} checkboxId - The ID of the checkbox associated with the radio button (optional).
  * @param {string} radioButtonId - The ID of the radio button controlling the widget inputs.
  * @param {string[]} widgetIds - The IDs of the widgets whose inputs should be enabled or disabled.
  * @param {string[]} requiredWidgetIds - The IDs of the input widgets that may be required based on the radio button state.
- * @param {string} requiredMsg - The message to display when a widget input is required.
  */
-function manageInputActivationForRadioButton(checkboxId = null, radioButtonId, widgetIds, requiredWidgetIds, requiredMsg) {
+function manageInputActivationForRadioButton(checkboxId = null, radioButtonId, widgetIds, requiredWidgetIds) {
 
   let isRequired = true;
   let checkboxValue = null;
-  let radioButtonElm = jq(radioButtonId).find('input:checked');
-  let checkboxElm = jq(checkboxId).find('input:checked');
+
+  setRequiredForTextInputs(requiredWidgetIds)
 
   const radioButtonValue = jq(radioButtonId).find('input:checked').val();
   // Check if the radio button has a value (i.e., it is checked).
@@ -269,15 +268,10 @@ function manageInputActivationForRadioButton(checkboxId = null, radioButtonId, w
       const elem = jq(this).find('input:checked');
       if (elem.val() == undefined) {
         setInputWidgetsDisabled(widgetIds, true)
-        checkboxElm = elem
-        radioButtonElm = jq(checkboxId).find('input:checked');
-        setRequiredForRadioButton(radioButtonId, requiredMsg, checkboxElm, radioButtonElm)
-        returnRequiredInputWidgets();
-
+        checkboxValue = elem.val();
       } else {
-        checkboxElm = elem
-        setRequiredForRadioButton(radioButtonId, requiredMsg, checkboxElm, radioButtonElm)
-        returnRequiredInputWidgets()
+        checkboxValue = elem.val();
+        setRequiredForRadioButton(radioButtonId, "true")
       }
     })
   }
@@ -285,52 +279,31 @@ function manageInputActivationForRadioButton(checkboxId = null, radioButtonId, w
   // Enable input when the radio button is checked.
   jq(radioButtonId).change(function () {
     const elem = jq(this).find('input:checked');
-    if (elem.val() == undefined) {
-      setInputWidgetsDisabled(widgetIds, true)
-      radioButtonElm = elem
-      setRequiredForRadioButton(radioButtonId, requiredMsg, checkboxElm, radioButtonElm)
-      returnRequiredInputWidgets()
-    } else {
-      radioButtonElm = elem
+    if (elem.val()) {
       setInputWidgetsDisabled(widgetIds, false)
-      setRequiredForRadioButton(radioButtonId, requiredMsg, checkboxElm, radioButtonElm)
-      returnRequiredInputWidgets()
+    } else {
+      setInputWidgetsDisabled(widgetIds, true)
     }
   })
 
   // Function to determine if the input widgets specified by requiredWidgetIds are required.
   const returnRequiredInputWidgets = function () {
 
-    jq(requiredWidgetIds).each(function (i, domEl) {
+    // Loop through each input widget of type text under the elements specified by widgetRequiredIds.
+    jq(requiredWidgetIds + ' input[type=text]').each(function (i, domEl) {
 
-      let el = jq(domEl).find('input[type=text]')
-
-      if (checkboxElm.val() == undefined) {
-        setValue(`${domEl.substring(1)}.value`, '');
-        getField(`${domEl.substring(1)}.error`).text('').hide();
-        isRequired = true;
-      } else if (checkboxElm.val() == undefined && radioButtonElm.val() == undefined) {
-        setValue(`${domEl.substring(1)}.value`, '');
-        getField(`${domEl.substring(1)}.error`).text('').hide();
-        isRequired = true;
-      } else if (checkboxElm.val() != undefined && radioButtonElm.val() == undefined) {
-        setValue(`${domEl.substring(1)}.value`, '');
-        getField(`${domEl.substring(1)}.error`).text('').hide();
-        jq(radioButtonId).find('input[type="radio"]').focus()
-        isRequired = false;
+      const elem = jq(domEl);
+      if (checkboxValue == undefined) {
+        isRequired = true
+      }
+      else if (elem.val()) {
+        isRequired = true
       } else {
-        if (el.val() && checkboxElm.val() != undefined && radioButtonElm.val() != undefined) {
-          getField(`${domEl.substring(1)}.error`).text('').hide();
-          isRequired = true;
-        } else {
-          getField(`${domEl.substring(1)}.error`).text(requiredMsg).show();
-          el.focus()
-          isRequired = false
-        }
+        isRequired = false
       }
     })
-    return isRequired;
 
+    return isRequired;
   }
 
   // Attach the returnInputWidgetsRequired function as a change event handler to each element specified by requiredWidgetIds
@@ -360,26 +333,22 @@ function setInputWidgetsDisabled(widgetIds, disabled) {
   }
 }
 
+// Function to set 'required' attribute for input[type=text] elements under elements specified by requiredWidgetIds.
+function setRequiredForTextInputs(requiredWidgetIds) {
+  jq(requiredWidgetIds + ' input[type=text]').each(function (i, domEl) {
+    if (i >= 0) {
+      jq(domEl).prop('required', true);
+    }
+  })
+}
 
-/**
- * Function to set the 'required' attribute for radio buttons under the specified radioButtonId.
- * @param {string} radioButtonId - The ID of the radio button element containing the radio buttons to set the 'required' attribute for.
- * @param {string} requiredMsg - The message to display when the radio buttons are required.
- * @param {jQuery} checkboxElm - The jQuery object representing the checkbox element to be checked for presence.
- * @param {jQuery} radioButtonElm - The jQuery object representing the radio button element.
- */
-function setRequiredForRadioButton(radioButtonId, requiredMsg, checkboxElm, radioButtonElm) {
 
-  if (checkboxElm.val() == undefined) {
-     // If the checkbox element is undefined, hide the error message.
-    getField(`${radioButtonId.substring(1)}.error`).text('').hide();
-  } else if (checkboxElm.val() != undefined && radioButtonElm.val() == undefined) {
-    // If checkbox is defined but radio button is not, show the required error message.
-    getField(`${radioButtonId.substring(1)}.error`).text(requiredMsg).show();
-  } else {
-    // Otherwise, hide the error message.
-    getField(`${radioButtonId.substring(1)}.error`).text('').hide();
-  }
+/** Function to set the 'required' attribute for radio buttons under the specified radioButtonId.
+* @param {string} radioButtonId - The ID of the radio button element containing the radio buttons to set the 'required' attribute for.
+* @param {boolean} value - A boolean value indicating whether to set the 'required' attribute to true or false.
+*/
+function setRequiredForRadioButton(radioButtonId, value) {
+  jq(radioButtonId).find("input[type=radio]").prop('required', value);
 }
 
 
@@ -392,13 +361,11 @@ function anyCheckboxesSelected(containerSelector) {
 /**
  * Updates the required attribute of the last checkbox in the given container.
  * @param {string} containerSelector - The selector for the container containing checkboxes.
- * @param {string} transRequiredMsgId - The selector for the element to display the required message.
- * @param {string} requiredMsg - The message to display when the last checkbox is required.
  * @returns {boolean} - Returns true if the last checkbox is required, false otherwise.
  */
-function updateLastCheckboxRequired(containerSelector, transRequiredMsgId, requiredMsg) {
+function updateLastCheckboxRequired(containerSelector) {
   // Initialize the flag to keep track of the last checkbox state.
-  let islastCheckbox = false;
+  let islastCheckbox = true;
 
   // Function to update the required attribute of the last checkbox
   const updateLastCheckbox = function () {
@@ -406,19 +373,12 @@ function updateLastCheckboxRequired(containerSelector, transRequiredMsgId, requi
     // Select the last checkbox within the container using the given selector
     let lastCheckbox = jq(`${containerSelector} input[type="checkbox"]`).last();
 
-     // Clear and hide the required message
-    jq(transRequiredMsgId).text('').hide()
-
     // Check if any checkboxes are selected within the container using the anyCheckboxesSelected function.
     if (!anyCheckboxesSelected(containerSelector)) {
-
-      // Display the required message and focus on the last checkbox
-      jq(transRequiredMsgId).text(requiredMsg).show()
-      lastCheckbox.focus()
+      lastCheckbox.prop('required', true);
       islastCheckbox = false;
-
     } else {
-      jq(transRequiredMsgId).text('').hide()
+      lastCheckbox.prop('required', false);
       islastCheckbox = true;
     }
     return islastCheckbox;
@@ -433,4 +393,168 @@ function updateLastCheckboxRequired(containerSelector, transRequiredMsgId, requi
 
   // Add the updateLastCheckboxRequired function to the beforeSubmit array to call it before form submission.
   beforeSubmit.push(updateLastCheckbox);
+}
+
+usePatientAddressAsContactAddress();
+saveSelectedLocation();
+patientDossierEditAlert();
+
+
+function usePatientAddressAsContactAddress() {
+  jq(document).ready(function () {
+  
+    // change the ckeckbox message based on the languade
+    var message = '';
+    var url = window.location.href;
+    var urlParams = new URLSearchParams(new URL(url).search);
+    var langParam = urlParams.get('lang');
+    message = langParam === 'fr' ? "Utilisez l'adresse du patient ?" : "Use the patient address ?"
+
+    //target the div containing the contact address
+    const divElement = jq('#contactQuestionLabel div');
+
+    //creating a check, to be checked if clinician wants to use patient address as contact one
+    const checkboxElement = jq("<input>", {
+      type: "checkbox",
+      id: "question_address",
+      name: "question_address"
+    });
+
+    //Creating a label to show the checkbox title
+    const labelElement = jq("<label>", {
+      for: "question_address",
+      text: message
+    });
+
+    //creating a break line to push other elements a litle bit down
+    const brElement = $("<br>");
+    divElement.prepend(checkboxElement, labelElement, brElement);
+
+    // checkbox event occurs here
+    jq('#question_address').on('change', function () {
+      if (this.checked) {
+        // get and set the new address detail from patient to contact
+        getPatienAddressInfo();
+
+      } else {
+        clearInputValue();
+      }
+    });
+  });
+
+}
+
+function getPatienAddressInfo() {
+
+  //creating an array to store patient adress
+  var valuesArray = [];
+  var manualEntryAddress;
+  jq("#personAddressQuestion div input[type='text']").each(function () {
+    valuesArray.push(jq(this).val());
+
+  });
+
+  console.table(valuesArray)
+  manualEntryAddress = $("#personAddressQuestion div input[type='text']:last").val()
+  jq("#contactQuestionLabel div input[type='text']:last").val(manualEntryAddress);
+
+  // target the contact address input and set the new value
+  jq("#contactQuestionLabel input[type='text']").each(function (index) {
+    if (index < valuesArray.length) {
+      jq(this).val(valuesArray[index]);
+      jq(this).data('legalValues', [valuesArray[index]])
+    }
+  });
+}
+
+function clearInputValue() {
+  jq("#contactQuestionLabel div input[type='text']").each(function () {
+    jq(this).val('');
+  });
+
+}
+
+function patientDossierEditAlert(){
+  jq(document).ready(function () {
+    var message="You are not in the right location to perform this action. \nYou need to be in the same location as the patient to proceed";
+
+    var loggedInUserLocation=localStorage.getItem("location");
+    var patientID = jq('div.float-sm-right:first-child span').text().trim();
+    var patientLocation="Test"
+    jq("li.float-left:eq(1)").click(function(e) {
+    if(loggedInUserLocation!=patientLocation){
+      createOverlayAlert(message);
+      // alert("You are not in the right location to perform this action. \nYou need to be in the same location as the patient")
+      return false;
+    }else{
+      return true;
+    }
+
+  });
+    
+});
+}
+
+function saveSelectedLocation(){
+  document.addEventListener("DOMContentLoaded", function() {
+    var spanElement = document.getElementById("selected-location");
+    var locationText = spanElement.textContent;
+    localStorage.setItem("location",locationText);
+  });
+}
+
+
+function createOverlayAlert(message){
+
+  $(document).ready(function() {
+    // Create overlay div with inline CSS styles
+    const overlay = $('<div class="overlay"></div>').css({
+        position: 'fixed', // Use fixed position for better overlay behavior
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 1000,
+    });
+
+    // Create overlay content with inline CSS styles
+    const overlayContent = $(`<div class="overlay-content">${message}</div>`).css({
+        backgroundColor: 'white',
+        width:'500px',
+        padding: '20px',
+        borderRadius: '5px',
+        position: 'relative', // Allow for positioning of the close button
+    });
+
+    // Create close button for overlay
+    const closeButton = $('<button class="overlay-close-button">Close</button>').css({
+      position: 'absolute',
+      bottom: '10px', // Position the button at the bottom
+      right: '10px', // Adjust the right position as needed
+      backgroundColor: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '5px 10px',
+      borderRadius: '5px',
+      zIndex: 1, // Ensure the close button is above the content
+  });
+
+  const redLine = $('<hr class="red-line">').css({
+    borderTop: '3px solid #ffc107',
+    margin: '20px 5px', // Adjust margin as needed
+});
+    // Append overlay content to overlay and overlay to .patient-header
+    $('.patient-header').append(overlay.append(overlayContent.append(redLine, closeButton)));
+
+
+    // Close overlay when close button is clicked
+    closeButton.on('click', function() {
+        overlay.remove(); // Remove the overlay and its content
+    });
+});
+
 }
