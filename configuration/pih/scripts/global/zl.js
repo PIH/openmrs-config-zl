@@ -434,3 +434,79 @@ function updateLastCheckboxRequired(containerSelector, transRequiredMsgId, requi
   // Add the updateLastCheckboxRequired function to the beforeSubmit array to call it before form submission.
   beforeSubmit.push(updateLastCheckbox);
 }
+
+usePatientAddressAsContactAddress();
+
+function usePatientAddressAsContactAddress() {
+  jq(document).ready(function () {
+
+    // change the ckeckbox message based on the languade
+    var message = '';
+    var url = window.location.href;
+    var urlParams = new URLSearchParams(new URL(url).search);
+    var langParam = urlParams.get('lang');
+    message = langParam === 'fr' ? "Utilisez l'adresse du patient ?" : "Use the patient address ?"
+
+    //target the div containing the contact address
+    const divElement = jq('#contactQuestionLabel div');
+
+    //creating a check, to be checked if clinician wants to use patient address as contact one
+    const checkboxElement = jq("<input>", {
+      type: "checkbox",
+      id: "question_address",
+      name: "question_address"
+    });
+
+    //Creating a label to show the checkbox title
+    const labelElement = jq("<label>", {
+      for: "question_address",
+      text: message
+    });
+
+    //creating a break line to push other elements a litle bit down
+    const brElement = $("<br>");
+    divElement.prepend(checkboxElement, labelElement, brElement);
+
+    // checkbox event occurs here
+    jq('#question_address').on('change', function () {
+      if (this.checked) {
+        // get and set the new address detail from patient to contact
+        getPatienAddressInfo();
+
+      } else {
+        clearInputValue();
+      }
+    });
+  });
+
+}
+
+function getPatienAddressInfo() {
+
+  //creating an array to store patient adress
+  var valuesArray = [];
+  var manualEntryAddress;
+  jq("#personAddressQuestion div input[type='text']").each(function () {
+    valuesArray.push(jq(this).val());
+
+  });
+
+  console.table(valuesArray)
+  manualEntryAddress = $("#personAddressQuestion div input[type='text']:last").val()
+  jq("#contactQuestionLabel div input[type='text']:last").val(manualEntryAddress);
+
+  // target the contact address input and set the new value
+  jq("#contactQuestionLabel input[type='text']").each(function (index) {
+    if (index < valuesArray.length) {
+      jq(this).val(valuesArray[index]);
+      jq(this).data('legalValues', [valuesArray[index]])
+    }
+  });
+}
+
+function clearInputValue() {
+  jq("#contactQuestionLabel div input[type='text']").each(function () {
+    jq(this).val('');
+  });
+
+}
