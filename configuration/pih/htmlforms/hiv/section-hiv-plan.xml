@@ -94,6 +94,9 @@
         .small-input input[type=text] {
             width: 12em;
         }
+        .space-remove {
+            margin-left: -5px !important;
+        }
     </style>
 
 
@@ -629,6 +632,9 @@
                          answerCodes="pihcore.noNotIndicated,pihcore.yesButRefused,pihcore.yesDenyStatus,pihcore.yesAfterCHW,pihcore.yesStartNow,pihcore.yesTreatmentStarted,pihcore.yesDelayedForMedicalReason,pihcore.yesDelayed"
                          answerSeparator="&lt;br /&gt;" />
                     <!-- Reason about delay -->
+                    <label class="space-remove">
+                        <uimessage code="pihcore.ifYesReason" />
+                    </label>
                     <obs conceptId="PIH:13021" style="text"/>
                 </p>
 
