@@ -476,6 +476,7 @@ function clearInputValue() {
 
 function patientDossierEditAlert(){
   jq(document).ready(function () {
+
     var message="You are not in the right location to perform this action. \nYou need to be in the same location as the patient to proceed";
 
     var loggedInUserLocation=localStorage.getItem("location");
@@ -531,7 +532,7 @@ function createOverlayAlert(message){
     });
 
     // Create close button for overlay
-    const closeButton = $('<button class="overlay-close-button">Close</button>').css({
+    const closeButton = $('<button class="overlay-close-button">Continue</button>').css({
       position: 'absolute',
       bottom: '10px', // Position the button at the bottom
       right: '10px', // Adjust the right position as needed
