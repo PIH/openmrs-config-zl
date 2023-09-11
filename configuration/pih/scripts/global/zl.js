@@ -397,12 +397,13 @@ function updateLastCheckboxRequired(containerSelector) {
 
 usePatientAddressAsContactAddress();
 saveSelectedLocation();
+savePatientLocation();
 patientDossierEditAlert();
 
 
 function usePatientAddressAsContactAddress() {
   jq(document).ready(function () {
-  
+
     // change the ckeckbox message based on the languade
     var message = '';
     var url = window.location.href;
@@ -474,61 +475,92 @@ function clearInputValue() {
 
 }
 
-function patientDossierEditAlert(){
+function patientDossierEditAlert() {
   jq(document).ready(function () {
+    var loggedInUserLocation = localStorage.getItem("location");
+    var arraysValue=[]
+    jq("li.float-left:eq(2)").click(function (e) {
 
-    var message="You are not in the right location to perform this action. \nYou need to be in the same location as the patient to proceed";
+      jq('fieldset.programstatus-fieldset').each(function () {
+    
+        var firstPTag = $(this).find('p.programstatus-field:nth-child(2):first');
+        var locations = firstPTag.text().trim();
+        arraysValue.push(locations)
+     
+    });
+    var uniqueArrays = arraysValue.filter((array, index, self) => {
+  
+      return self.indexOf(array) === index;
+    });
+  
+      var patientLocation=uniqueArrays[1];
 
-    var loggedInUserLocation=localStorage.getItem("location");
-    var patientID = jq('div.float-sm-right:first-child span').text().trim();
-    var patientLocation="Test"
-    jq("li.float-left:eq(1)").click(function(e) {
-    if(loggedInUserLocation!=patientLocation){
-      createOverlayAlert(message);
-      // alert("You are not in the right location to perform this action. \nYou need to be in the same location as the patient")
-      return false;
-    }else{
-      return true;
-    }
+      if (loggedInUserLocation != patientLocation) {
+       
+        createOverlayAlert();
+        return false;
+      } else {
+        return true;
+      }
+
+    });
 
   });
-    
-});
 }
 
-function saveSelectedLocation(){
-  document.addEventListener("DOMContentLoaded", function() {
+function saveSelectedLocation() {
+  document.addEventListener("DOMContentLoaded", function () {
+
     var spanElement = document.getElementById("selected-location");
     var locationText = spanElement.textContent;
-    localStorage.setItem("location",locationText);
+    localStorage.setItem("location", locationText);
   });
 }
 
+function savePatientLocation() {
+ 
+  document.addEventListener("DOMContentLoaded", function () {
+    var firstPTag = jq('p.programstatus-field:first');
+        var value = firstPTag.text().trim(); 
+        console.log(value);
+    
+  });
 
-function createOverlayAlert(message){
+}
 
-  $(document).ready(function() {
+async function createOverlayAlert() {
+
+    var messageEn = "You are not in the right location to perform this action. \nYou need to be in the same location as the patient to proceed";
+    var messageF = "Vous n'êtes pas au bon endroit pour effectuer cette action. \Vous devez être au même site que le patient pour continuer";
+
+    var url = window.location.href;
+    var urlParams = new URLSearchParams(new URL(url).search);
+    var langParam = urlParams.get('lang');
+    var message = langParam === 'fr' ? messageF : messageEn;
+    var click = false;
+  
+  $(document).ready(function () {
     // Create overlay div with inline CSS styles
     const overlay = $('<div class="overlay"></div>').css({
-        position: 'fixed', // Use fixed position for better overlay behavior
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        zIndex: 1000,
+      position: 'fixed', // Use fixed position for better overlay behavior
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      zIndex: 2000,
     });
 
     // Create overlay content with inline CSS styles
     const overlayContent = $(`<div class="overlay-content">${message}</div>`).css({
-        backgroundColor: 'white',
-        width:'500px',
-        padding: '20px',
-        borderRadius: '5px',
-        position: 'relative', // Allow for positioning of the close button
+      backgroundColor: 'white',
+      width: '500px',
+      padding: '20px',
+      borderRadius: '5px',
+      position: 'relative', // Allow for positioning of the close button
     });
 
     // Create close button for overlay
@@ -542,20 +574,21 @@ function createOverlayAlert(message){
       padding: '5px 10px',
       borderRadius: '5px',
       zIndex: 1, // Ensure the close button is above the content
-  });
+    });
 
-  const redLine = $('<hr class="red-line">').css({
-    borderTop: '3px solid #ffc107',
-    margin: '20px 5px', // Adjust margin as needed
-});
+    const redLine = $('<hr class="red-line">').css({
+      borderTop: '3px solid #ffc107',
+      margin: '20px 5px', // Adjust margin as needed
+    });
     // Append overlay content to overlay and overlay to .patient-header
     $('.patient-header').append(overlay.append(overlayContent.append(redLine, closeButton)));
 
-
     // Close overlay when close button is clicked
-    closeButton.on('click', function() {
-        overlay.remove(); // Remove the overlay and its content
+    closeButton.on('click', function () {
+      overlay.remove(); 
     });
-});
+    
+  });
+
 
 }
