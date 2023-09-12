@@ -1,14 +1,16 @@
 {
   "@openmrs/esm-login-app": {
+  "logo": {
+    "src": "site/pih-logo.png",
+    "alt": "Partners In Health"
+  }
+},
+  "@openmrs/esm-primary-navigation-app": {
     "logo": {
-      "src": "${openmrsSpaBase}/site/pih-logo.png",
-      "alt": "Partners in Health"
-    }
-  },
-  "@pih/esm-refapp-navbar-app": {
-    "brand": {
-      "src": "${openmrsSpaBase}/site/zl-logo.png",
-      "alt": "Zanmi Lasante"
+      "src": "site/zl-logo.png",
+      "alt": "Partners In Health",
+      "name": "Partners In Health",
+      "link": "${openmrsBase}/pihcore/home.page"
     }
   }
 }
