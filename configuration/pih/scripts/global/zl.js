@@ -397,7 +397,6 @@ function updateLastCheckboxRequired(containerSelector) {
 
 usePatientAddressAsContactAddress();
 saveSelectedLocation();
-savePatientLocation();
 patientDossierEditAlert();
 
 
