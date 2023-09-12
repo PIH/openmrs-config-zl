@@ -474,40 +474,43 @@ function clearInputValue() {
   });
 
 }
-
+//Creating this function to alert the clinician when He/She wants to modify
+// Patient info which is not in the same location
 function patientDossierEditAlert() {
   jq(document).ready(function () {
-    var loggedInUserLocation = localStorage.getItem("location");
-    var arraysValue=[]
-    jq("li.float-left:eq(2)").click(function (e) {
 
+    //Track the previously saved loggeInUserLocation/Clinician from the localStorage
+    let loggedInUserLocation = localStorage.getItem("location");
+    let arraysValue=[]
+ 
+    jq("li.float-left:eq(2)").click(function (e) {
+      // Getting the patient location
       jq('fieldset.programstatus-fieldset').each(function () {
-    
-        var firstPTag = $(this).find('p.programstatus-field:nth-child(2):first');
-        var locations = firstPTag.text().trim();
+       // put all data from the fieldset in a array
+        let firstPTag = jq(this).find('p.programstatus-field:nth-child(2):first');
+        let locations = firstPTag.text().trim();
         arraysValue.push(locations)
      
     });
-    var uniqueArrays = arraysValue.filter((array, index, self) => {
+    //Remove duplication
+    let uniqueArrays = arraysValue.filter((array, index, self) => {
   
       return self.indexOf(array) === index;
     });
-  
+      //get the location of the patient
       var patientLocation=uniqueArrays[1];
 
       if (loggedInUserLocation != patientLocation) {
-       
-        createOverlayAlert();
+        
+        createOverlayAlert(function (){
+          visit.showQuickVisitCreationDialog(0);
+        });
         return false;
-      } else {
-        return true;
-      }
-
+      } 
     });
-
   });
 }
-
+//Save teh clinician Location in localStorage
 function saveSelectedLocation() {
   document.addEventListener("DOMContentLoaded", function () {
 
@@ -516,32 +519,21 @@ function saveSelectedLocation() {
     localStorage.setItem("location", locationText);
   });
 }
+//Creating an overlay Alert 
+ function createOverlayAlert(onContinue) {
 
-function savePatientLocation() {
- 
-  document.addEventListener("DOMContentLoaded", function () {
-    var firstPTag = jq('p.programstatus-field:first');
-        var value = firstPTag.text().trim(); 
-        console.log(value);
-    
-  });
+  let messageEn = "You try to modify a patient who is not in your location";
+  let messageF = "Vous essayez de modifier un patient qui n'est pas à votre emplacement.";
 
-}
-
-async function createOverlayAlert() {
-
-    var messageEn = "You are not in the right location to perform this action. \nYou need to be in the same location as the patient to proceed";
-    var messageF = "Vous n'êtes pas au bon endroit pour effectuer cette action. \Vous devez être au même site que le patient pour continuer";
-
-    var url = window.location.href;
-    var urlParams = new URLSearchParams(new URL(url).search);
-    var langParam = urlParams.get('lang');
-    var message = langParam === 'fr' ? messageF : messageEn;
-    var click = false;
+  let url = window.location.href;
+  let urlParams = new URLSearchParams(new URL(url).search);
+  let langParam = urlParams.get('lang');
+  let message = langParam === 'fr' ? messageF : messageEn;
   
-  $(document).ready(function () {
+  
+  jq(document).ready(function () {
     // Create overlay div with inline CSS styles
-    const overlay = $('<div class="overlay"></div>').css({
+    const overlay = jq('<div class="overlay"></div>').css({
       position: 'fixed', // Use fixed position for better overlay behavior
       top: 0,
       left: 0,
@@ -555,39 +547,80 @@ async function createOverlayAlert() {
     });
 
     // Create overlay content with inline CSS styles
-    const overlayContent = $(`<div class="overlay-content">${message}</div>`).css({
+    const overlayContent = jq(`<div class="overlay-content">
+    <div>${message}</div>
+    <div class="actions">
+    <button class="cancel-button">Cancel</button>
+    <button class="overlay-close-button">Continue</button>
+    </div>
+    </div>`).css({
+      display: 'flex',
+      justifyContent: 'space-between',
+      flexDirection:'column',
+      alignItems: 'center',
       backgroundColor: 'white',
+      textAlign:'center',
+      fontweight:'bold',
       width: '500px',
-      padding: '20px',
-      borderRadius: '5px',
-      position: 'relative', // Allow for positioning of the close button
+      padding: '10px',
+      borderRadius: '15px',
+      gap:'20px',
+      paddingTop:'30px',
+      paddingBottom: '2px'
     });
 
     // Create close button for overlay
-    const closeButton = $('<button class="overlay-close-button">Continue</button>').css({
+   jq('.overlay-close-button').css({
       position: 'absolute',
       bottom: '10px', // Position the button at the bottom
       right: '10px', // Adjust the right position as needed
-      backgroundColor: 'transparent',
       border: 'none',
       cursor: 'pointer',
-      padding: '5px 10px',
+      padding: '5px 5px',
       borderRadius: '5px',
+      fontSize:'12px',
       zIndex: 1, // Ensure the close button is above the content
     });
+ 
+  jq('.cancel-button').css({
+      position: 'absolute',
+      bottom: '10px', // Position the button at the bottom
+      right: '10px', // Adjust the right position as needed
+      backgroundColor: 'gray',
+      border: 'none',
+      cursor: 'pointer',
+      padding: '5px 5px',
+      borderRadius: '5px',
+      fontSize:'12px',
+      zIndex: 1, // Ensure the close button is above the content
+    });
+    jq('.actions').css({
+      backgroundColor: 'red',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    })
 
-    const redLine = $('<hr class="red-line">').css({
+    const redLine = jq('<hr class="red-line">').css({
       borderTop: '3px solid #ffc107',
       margin: '20px 5px', // Adjust margin as needed
     });
     // Append overlay content to overlay and overlay to .patient-header
-    $('.patient-header').append(overlay.append(overlayContent.append(redLine, closeButton)));
-
+    jq('.patient-header').append(overlay.append(overlayContent.append(redLine)));
     // Close overlay when close button is clicked
-    closeButton.on('click', function () {
+    jq('.overlay-close-button').click(function(){
       overlay.remove(); 
-    });
+      if (typeof onContinue === 'function') {
     
+        onContinue();
+      }
+    })
+    
+    jq('.cancel-button').click(function(){
+      overlay.remove(); 
+     jq(".quick-visit-creation-dialog").close();
+    })
+     
   });
 
 
