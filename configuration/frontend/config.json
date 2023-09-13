@@ -10,7 +10,7 @@
       "src": "site/zl-logo.png",
       "alt": "Partners In Health",
       "name": "Partners In Health",
-      "link": "${openmrsBase}/pihcore/home.page"
+      "link": "${openmrsBase}/home.page"
     }
   }
 }
