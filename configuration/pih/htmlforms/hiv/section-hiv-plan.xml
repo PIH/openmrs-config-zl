@@ -628,8 +628,8 @@
                     <br/>
 
                     <obs conceptId="CIEL:162703" style="radio"
-                         answerConceptIds="CIEL:1066,CIEL:127750,PIH:14666,PIH:2222,PIH:1619,CIEL:160037,PIH:14842,PIH:7262"
-                         answerCodes="pihcore.noNotIndicated,pihcore.yesButRefused,pihcore.yesDenyStatus,pihcore.yesAfterCHW,pihcore.yesStartNow,pihcore.yesTreatmentStarted,pihcore.yesDelayedForMedicalReason,pihcore.yesDelayed"
+                         answerConceptIds="CIEL:1066,CIEL:127750,PIH:14666,PIH:2222,PIH:1619,CIEL:160037,PIH:14842,CIEL:160034,CIEL:160036,PIH:7262"
+                         answerCodes="pihcore.noNotIndicated,pihcore.yesButRefused,pihcore.yesDenyStatus,pihcore.yesAfterCHW,pihcore.yesStartNow,pihcore.yesTreatmentStarted,pihcore.yesDelayedForMedicalReason,pihcore.yesPatientDiedBeforeEnrollingART,pihcore.yesPatientTransferredAnotherSite,pihcore.yesDelayed"
                          answerSeparator="&lt;br /&gt;" />
                     <!-- Reason about delay -->
                     <label class="space-remove">
