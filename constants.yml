@@ -28,3 +28,9 @@ patientIdentifierType:
 encounterType:
   PATIENT_REGISTRATION:
     name: "Enregistrement de patient"
+  CHECK_IN:
+    name: "Inscription"
+  MEDICATION_DISPENSED:
+    name: "Médicaments administrés"
+  VITALS:
+    name: "Signes vitaux"
