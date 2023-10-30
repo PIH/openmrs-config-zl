@@ -90,6 +90,39 @@
                 width: 95%;
             }
 
+            .date-one-line {
+                display: flex;
+            }
+            
+            .date-one-line label {
+                align-self: center;
+                margin-right: 1em;
+            }
+            
+            .date-one-line span {
+                display: flex;
+            }
+            
+            .hasDatepicker {
+                min-width: 120px;
+                margin-top: 0px;
+             }
+             
+             .hfe-hours, .hfe-minutes, .hfe-seconds {
+                width: 70px;
+                min-width: 70px;
+                margin: 0px 10px 0px 10px;
+             }
+
+             .hpd input[type="radio"] {
+                float: none;
+                display: inline-block;
+            }
+
+            .hpd label {
+                display: inline-block;
+            }
+
         </ifMode>
     </style>
 
@@ -328,36 +361,73 @@
                     </p>
                 </div>
             </div>
+            <br/>
+            <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F' &amp;&amp; $encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).valueDatetime.getTime() &amp;&amp; !($fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).valueDatetime.getTime()) || $encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).valueDatetime.getTime() > $fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).valueDatetime.getTime()">
+                <!-- Pregnant info -->
+                <p class="side-by-side">
+                        <label style="color:grey">
+                            <i>
+                                <uimessage code="pihcore.pregnant"/>:
+                                <lookup expression="fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).valueCoded.name"/>
+                            </i>
+                        </label>
+                </p>
+                <p class="side-by-side">
+                    <label style="color:grey">
+                        <i>
+                            <uimessage code="pihcore.pregnancy.lastPeriod"/>:
+                            <lookup expression="fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).valueDatetime"/>
+                        </i>
+                    </label>
+                </p>
 
-            <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F' ">
-                <br/>
+                <p class="side-by-side">
+                    <label style="color:grey">
+                        <i>
+                            <uimessage code="pihcore.pregnancy.dueDate"/>:
+                            <lookup expression="fn.latestObs('CIEL:5596', $encounter.getEncounterDatetime()).valueDatetime"/>
+                        </i>
+                    </label>
+                </p> 
+            </includeIf>
+            <includeIf velocityTest="(($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F' &amp;&amp; !($fn.latestObs('CIEL:5272', $encounterDate).valueCoded.name) || $encounter.getEncounterDatetime().getTime() == $fn.latestObs('CIEL:5272', $encounterDate).obsDatetime.getTime() || ($fn.latestObs('CIEL:1427', $encounterDate).obsId) &lt; ($fn.latestObs('CIEL:5599', $encounterDate).obsId) )">
                 <!-- Pregnant -->
-                <p>
-                    <obs conceptId="CIEL:5272" toggle="pregnant"
-                         answerConceptId="CIEL:1065"
-                         answerCode="pihcore.pregnancy.status"
-                         style="checkbox"/>
+                <p class="hpd">
+                    <label>
+                        <uimessage code="pihcore.pregnant"/>
+                    </label>
+                    <obs conceptId="CIEL:5272" id="hivpregnant"
+                         answerConceptIds="CIEL:1065,CIEL:1066"
+                         style="radio">
+                         <controls>
+                            <when value="CIEL:1065" thenDisplay="#pregnant"/>
+                        </controls>
+                        </obs>
 
                     <div id="pregnant">
-                        <div class="two-column">
-                            <!-- Last menstrual period (LMP or DDR) -->
+                        <div class="two-columns">
                             <div>
-                                <label>
-                                    <uimessage code="pihcore.pregnancy.lastPeriod"/>
-                                </label>
-                                <span class="small">
-                                    <obs id="lastPeriodDate" conceptId="CIEL:1427" allowFutureDates="false"/>
-                                </span>
+                                <!-- Last menstrual period (LMP or DDR) -->
+                                <p>
+                                    <label>
+                                        <uimessage code="pihcore.pregnancy.lastPeriod"/>
+                                    </label>
+                                    <span class="small">
+                                        <obs id="lastPeriodDate" conceptId="CIEL:1427" />
+                                    </span>
+                                </p>
                             </div>
 
                             <!-- Due date (DPA) -->
                             <div>
-                                <label>
-                                    <uimessage code="pihcore.pregnancy.dueDate"/>
-                                </label>
-                                <span class="small">
-                                    <obs id="edd" conceptId="CIEL:5596" allowFutureDates="true"/>
-                                </span>
+                                <p>
+                                    <label>
+                                        <uimessage code="pihcore.pregnancy.dueDate"/>
+                                    </label>
+                                    <span class="small">
+                                        <obs id="edd" conceptId="CIEL:5596" allowFutureDates="true"/>
+                                    </span>
+                                </p>
                             </div>
                         </div>
 
@@ -382,10 +452,38 @@
                     </div>
                 </p>
             </includeIf>
+            <includeIf velocityTest="$encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId &amp;&amp; !$fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId || ($fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId) &gt; ($fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId)">
+                <br/>
+                <!-- Delivery -->
+                <p class="hpd">
+                    <label>
+                        <uimessage code="pihcore.delivery"/>
+                    </label>
+                    <obs id="hiv-delivery" conceptId="PIH:14990"
+                         answerConceptIds="CIEL:1065,CIEL:1066"
+                         answerCode="pihcore.delivered"
+                         style="radio">
+                         <controls>
+                            <when value="CIEL:1065" thenDisplay="#delivery"/>
+                        </controls>
+                        </obs>
+
+                    <div id="delivery">
+                        <p class="date-one-line">
+                            <label>
+                                <uimessage code="pihcore.mch.deliveryDateTime"/>
+                            </label>
+            
+                            <obs id="deliveryDate" conceptId="CIEL:5599" defaultDatetime="today" allowFutureDates="false" allowFutureTimes="true"/>
+                        </p>
+                    </div>
+                </p>
+            </includeIf>
         </div>
     </section>
 
     <includeIf velocityTest="$patient.gender == 'F' ">
+        <includeIf velocityTest="$patient.gender == 'F' &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId &lt; $fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId ">
         <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
                  headerStyle="title" headerCode="zl.maternalBreastfeeding">
             <div class="section-container">
@@ -406,6 +504,7 @@
                 </div>
             </div>
         </section>
+        </includeIf>
         <br/>
     </includeIf>
 
