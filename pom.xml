@@ -144,10 +144,6 @@
                                     <sourceFile>${dataExportSqlDir}/labResultsExport.sql</sourceFile>
                                     <destinationFile>${petlJobExtractionSqlDir}/all_lab_results.sql</destinationFile>
                                 </fileSet>
-                                <fileSet>
-                                    <sourceFile>${dataExportSqlDir}/backup_restore_dates.sql</sourceFile>
-                                    <destinationFile>${petlJobExtractionSqlDir}/backup_restore_dates.sql</destinationFile>
-                                </fileSet>                                
                             </fileSets>
                         </configuration>
                     </execution>
