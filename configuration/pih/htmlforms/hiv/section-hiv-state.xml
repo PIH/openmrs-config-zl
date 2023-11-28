@@ -899,35 +899,7 @@
                     <td></td>
                 </tr>
             </table>
-             <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F' &amp;&amp; $encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).valueDatetime.getTime() &amp;&amp; !($fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).valueDatetime.getTime()) || $encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).valueDatetime.getTime() > $fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).valueDatetime.getTime()">
-                <!-- Pregnant info -->
-                <p class="side-by-side">
-                        <label style="color:grey">
-                            <i>
-                                <uimessage code="pihcore.pregnant"/>:
-                                <lookup expression="fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).valueCoded.name"/>
-                            </i>
-                        </label>
-                </p>
-                <p class="side-by-side">
-                    <label style="color:grey">
-                        <i>
-                            <uimessage code="pihcore.pregnancy.lastPeriod"/>:
-                            <lookup expression="fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).valueDatetime"/>
-                        </i>
-                    </label>
-                </p>
-
-                <p class="side-by-side">
-                    <label style="color:grey">
-                        <i>
-                            <uimessage code="pihcore.pregnancy.dueDate"/>:
-                            <lookup expression="fn.latestObs('CIEL:5596', $encounter.getEncounterDatetime()).valueDatetime"/>
-                        </i>
-                    </label>
-                </p> 
-            </includeIf>
-            <includeIf velocityTest="(($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F' &amp;&amp; !($fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).valueCoded.name) || $encounter.getEncounterDatetime().getTime() == $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() || ($fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId) &lt; ($fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId) )">
+            <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F'">
                 <!-- Pregnant -->
                 <p>
                     <label>
@@ -989,6 +961,14 @@
                     </div>
                 </p>
             </includeIf>
+
+        </div>
+    </section>
+
+    <section id="delivery-activity" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="zl.consultNote.delivery.label">
+        <div class="section-container">
+            <div class="one-columns">
             <includeIf velocityTest="$encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId &amp;&amp; !$fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId || ($fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId) &gt; ($fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId)">
                 <br/>
                 <!-- Delivery -->
@@ -1017,12 +997,13 @@
                 </p>
             </includeIf>
 
-        </div>
+            </div>
+         </div> 
     </section>
 
     <!-- This section for Females and HIV followup form -->
     <includeIf velocityTest="$encounter.encounterType.uuid == 'c31d3312-40c4-11e7-a919-92ebcb67fe33'">
-        <includeIf velocityTest="$patient.gender == 'F' &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId &lt; $fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId ">
+        <includeIf velocityTest="$patient.gender == 'F'">
             <section id="id-breastfeeding" sectionTag="fieldset" headerTag="legend"
                      headerStyle="title" headerCode="zl.maternalBreastfeeding">
                 <div class="section-container">
