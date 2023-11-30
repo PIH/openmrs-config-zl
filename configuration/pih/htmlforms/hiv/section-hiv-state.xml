@@ -966,7 +966,7 @@
     </section>
 
     <section id="delivery-activity" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="zl.consultNote.delivery.label">
+             headerCode="pihcore.anc.delivery.title">
         <div class="section-container">
             <div class="one-columns">
             <includeIf velocityTest="$encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId &amp;&amp; !$fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId || ($fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId) &gt; ($fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId)">

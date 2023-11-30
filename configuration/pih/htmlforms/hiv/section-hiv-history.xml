@@ -434,7 +434,7 @@
 </section>
 
     <section id="delivery-activity" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="zl.consultNote.delivery.label">
+             headerCode="pihcore.anc.delivery.title">
         <div class="section-container">
             <div class="one-columns">
             <includeIf velocityTest="(($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F')">
