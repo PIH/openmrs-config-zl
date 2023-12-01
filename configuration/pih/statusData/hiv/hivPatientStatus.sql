@@ -14,11 +14,12 @@ select program_id into @hivProgramId from program where uuid='b1cb1fc1-5190-4f7a
 select  programStartDate( patientProgramId(@patientId, @hivProgramId,NOW())) into @enrollmentDate;
 select program_workflow_id  into @hivTreatmentWorkflow  from program_workflow pw where concept_id = concept_from_mapping('PIH','11449') and retired = 0;
 
-select currentProgramState(patientProgramId(@patientId, @hivProgramId,NOW()), @hivTreatmentWorkflow,'en') into @currentStatus;
+select currentProgramState(patientProgramId(@patientId, @hivProgramId,NOW()), @hivTreatmentWorkflow,@locale) into @currentStatus;
 
-SELECT 
+-- noinspection SqlDialectInspection
+SELECT
     CASE 
-        WHEN @patientProgramDate is not null or @outcomeConceptId is not null then concept_name(@outcomeConceptId,'en')
+        WHEN @patientProgramDate is not null or @outcomeConceptId is not null then concept_name(@outcomeConceptId,@locale)
         WHEN DATEDIFF(NOW(), COALESCE(@nextDispensingDate,@enrollmentDate)) <= 28 THEN 'active - on arvs' 
         WHEN DATEDIFF(NOW(), COALESCE(@nextDispensingDate,@enrollmentDate)) >= 28 AND @currentStatus IS NOT NULL THEN @currentStatus
         ELSE 'ltfu' 
