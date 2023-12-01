@@ -72,8 +72,7 @@
 - id: "hivPatientStatus"
   labelCode: "zl.status.hivPatientStatus"
   statusDataQuery: "hivPatientStatus.sql"
-#  valueExpression: "#if(!$Status)$fn.translate('pihcore.none.label')#elseif($Status=='ltfu')$fn.translate('pihcore.hiv.status #else #end"
-  valueExpression: "#if(!$Status)$fn.translate('pihcore.none.label')#elseif($Status=='ltfu')$fn.translate('pihcore.hiv.status.ltfu')#else$Status#end"
+  valueExpression: "#if(!$Status)$fn.translate('pihcore.none.label')#elseif($Status=='ltfu')$fn.translate('pihcore.hiv.status.ltfu')#elseif($Status=='active_on_arvs')$fn.translate('pihcore.onARV')#else$Status#end"
   formatExpression: ""
  
 
