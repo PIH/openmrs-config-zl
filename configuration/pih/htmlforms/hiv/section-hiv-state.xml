@@ -969,7 +969,7 @@
              headerCode="pihcore.anc.delivery.title">
         <div class="section-container">
             <div class="one-columns">
-            <includeIf velocityTest="$encounter.getEncounterDatetime().getTime() != $fn.latestObs('CIEL:5272', $encounter.getEncounterDatetime()).obsDatetime.getTime() &amp;&amp; $fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId &amp;&amp; !$fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId || ($fn.latestObs('CIEL:1427', $encounter.getEncounterDatetime()).obsId) &gt; ($fn.latestObs('CIEL:5599', $encounter.getEncounterDatetime()).obsId)">
+            <includeIf velocityTest="(($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F')">
                 <br/>
                 <!-- Delivery -->
                 <p>
