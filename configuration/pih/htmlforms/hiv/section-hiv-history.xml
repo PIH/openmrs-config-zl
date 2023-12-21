@@ -160,8 +160,7 @@
                 // handlers for next and submit buttons, see nextAndSubmitButtons.js
                 setUpNextAndSubmitButtons();
 
-                manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>')
-                updateLastCheckboxRequired("#transmission","#trans-required-msg",'<uimessage code="pihcore.required"/>')
+                manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
             });
         </script>
     </ifMode>
@@ -993,6 +992,11 @@
     </section>
 
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 9">
+        <script type="text/javascript">
+            jq( function() {
+                updateLastCheckboxRequired("#transmission","#trans-required-msg",'<uimessage code="pihcore.required"/>');
+            });
+        </script>
         <section id="transmission" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.modeOfTransmission">
         <div class="section-container">
