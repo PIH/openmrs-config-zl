@@ -385,7 +385,7 @@
                             <label><uimessage code="general.fromDate" />:</label>
                             <span id="lastRecordedCHWEncounter" class="value"></span>
                             <br />
-                            <ifMode mode="EDIT" include="true">
+                            <ifMode mode="VIEW" include="false">
                                 <div>
                                     <label>
                                         <uimessage code="pihcore.change.nameCHW" />? </label>
@@ -407,8 +407,6 @@
                             <obs id="chwName" conceptId="CIEL:164141" />
                         </div>
                     </excludeIf>
-
-
                 </p>
             </div>
         </div>
@@ -473,8 +471,7 @@
                 <label>
                     <uimessage code="pihcore.ActionToReinforceAdhrence" />
                 </label>
-                <obs conceptId="PIH:14627"
-                    style="radio" answerConceptIds="CIEL:1065,CIEL:1066" answerSeparator="" />
+                <obs conceptId="PIH:14627" style="checkbox" answerConceptId="CIEL:1065"/>
             </p>
 
         </div>
