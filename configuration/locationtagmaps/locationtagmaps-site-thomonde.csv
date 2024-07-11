@@ -6,6 +6,7 @@ Ijans | Thomonde,,,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,TRUE,TRU
 Klinik Ekstèn | Thomonde,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,TRUE,,,TRUE,,TRUE,,,TRUE,,,TRUE
 Klinik Ekstèn Jeneral | Thomonde,,,TRUE,,,TRUE,,,,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,TRUE
 Klinik Ekstèn Famasi | Thomonde,,,TRUE,,,,,,TRUE,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,
+Klinik MNT | Thomonde,,,,,,TRUE,,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,TRUE,,,,TRUE,,TRUE,TRUE,,TRUE,,,,,TRUE
 Onkoloji | Thomonde,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE
 Sal Aprè Akouchman | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE
 Sal Aprè Operasyon | Thomonde,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,TRUE
@@ -17,6 +18,7 @@ Sal Izolman | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,TR
 Sal Reyabilitasyon | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
 Sal Timoun | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,TRUE,,,TRUE
 Sante Fanm | Thomonde,,,TRUE,,TRUE,TRUE,,TRUE,,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,TRUE
+Sante Mantal | Thomonde,,,,,,TRUE,,TRUE,,,,,,,,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE
 Swen Entansif | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
 Swen Entansif Neonatal | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE
 Travay e Akouchman | Thomonde,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,TRUE
