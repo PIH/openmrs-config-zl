@@ -1,7 +1,7 @@
 SET sql_safe_updates = 0;
 SET @locale = GLOBAL_PROPERTY_VALUE('default_locale', 'en');
-set @startDate = '2024-03-31'; -- for testing
- set @endDate = '2024-09-25';
+-- set @startDate = '2024-03-31'; -- for testing
+-- set @endDate = '2024-09-25';
 
 SET @obgyn_encounter = (SELECT encounter_type_id FROM encounter_type WHERE uuid = 'd83e98fd-dc7b-420f-aa3f-36f648b4483d');
 
