@@ -28,6 +28,15 @@
                 display: inline-block;
                 float: none;
             }
+
+            .check-inline input[type="checkbox"] {
+                margin: 0px 5px;
+                top:5px;
+            }
+
+            .check-inline label {
+                margin: 0px;
+            }
         </ifMode>
     </style>
     <ifMode mode="VIEW" include="false">
@@ -44,16 +53,13 @@
     <div id="data-collection">
         <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
 
-        <p class="list-inline">
-            <label>
-                <uimessage code="mirebalaisreports.noncodeddiagnoses.name" />
-            </label>
-            <obsgroup groupingConceptId="PIH:Visit Diagnoses">
-                <obs conceptId="PIH:7416" style="textarea" cols="28" rows="1" />
-                <obs conceptId="PIH:Diagnosis order" style="radio"
-                     answerConceptIds="PIH:primary,PIH:secondary" defaultValue="PIH:secondary"
-                     answerSeparator="&amp;nbsp;" />
-            </obsgroup>
+        <p class="list-inline check-inline">
+            <obs conceptId="PIH:20580" style="checkbox" toggle="nonCodedDiagnosis"
+                 answerConceptId="CIEL:1065" answerCode="mirebalaisreports.noncodeddiagnoses.name" />
+            <div id="nonCodedDiagnosis">
+                <obs conceptId="PIH:7572" style="textarea" cols="28" rows="1"
+                     labelCode="pihcore.ifNoncodedSpecify"/>
+            </div>
         </p>
 
         <p>
