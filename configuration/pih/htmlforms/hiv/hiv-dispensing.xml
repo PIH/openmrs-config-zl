@@ -118,6 +118,7 @@
 
         var dispensedToChwConceptId = <lookup expression="fn.getConcept('CIEL:1555').id"/>;
         var dispensedToPatientConceptId = <lookup expression="fn.getConcept('CIEL:162571').id"/>;
+        var dispensedInCommunityId = <lookup expression="fn.getConcept('PIH:9361').id" />
 
         var currentEncounterDate = new Date();
         var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
@@ -205,26 +206,25 @@
     dispensedToValue= getValue('dispensedTo.value');
     if (dispensedToValue == dispensedToPatientConceptId) {
         // medication dispensed to patient
-        //do not allow entering the name of CHW and disable "Dispensed in Community" checkbox
+        // do not allow entering the name of CHW
         setValue('chwName.value','');
         getField('chwName.value').fadeTo(250,0.33);
         getField('chwName.value').prop( 'disabled', true );
-        getField('dispensedInCommunity.value').prop( 'disabled', false );
     } else if (dispensedToValue == dispensedToChwConceptId) {
         // medication dispensed to CHW
-        // enable CHW name input and disable and uncheck "Dispensed in Community" checkbox
+        // enable CHW name input
         getField('chwName.value').prop('disabled', false );
         getField('chwName.value').fadeTo(250,1);
-        getField('dispensedInCommunity.value').prop( 'disabled', true );
-        getField('dispensedInCommunity.value').prop( 'checked', false );
-    } else if (dispensedToValue == false) {
-        // all radio buttons are un-selected
-        getField('dispensedInCommunity.value').prop( 'disabled', false );
+    } else if (dispensedToValue == dispensedInCommunityId) {
+        // medication dispensed in Community
+        // disable CHW name input
+        setValue('chwName.value','');
+        getField('chwName.value').fadeTo(250,0.33);
+        getField('chwName.value').prop( 'disabled', true );
     }
 
     });
-
-
+    
     jq("#chwName input").change(function() {
         var chwName= getValue('chwName.value');
         if (chwName.length > 0) {
@@ -488,11 +488,12 @@
                 <tr>
                     <td>
                         <label>
-                            <uimessage code="pihcore.dispensedTo" />
+                            <uimessage code="pihcore.dispensed" />
                         </label>
+                        <br/>
                         <obs id="dispensedTo" conceptId="PIH:12071" style="radio"
-                             answerConceptIds="CIEL:162571,CIEL:1555"
-                             answerCodes="ui.i18n.RelationshipType.bIsToA.8d919b58-c2cc-11de-8d13-0010c6dffd0f,pihcore.chw">
+                             answerConceptIds="CIEL:162571,CIEL:1555,PIH:9361"
+                             answerCodes="pihcore.toPatient,pihcore.toCHW,pihcore.inCommunity">
                         </obs>
                     </td>
                     <td>
@@ -503,15 +504,18 @@
                     </td>
 
                 </tr>
+                <!-- ToDo:  Remove this
                 <tr>
                     <td colspan="2">
                         <p>
                             <obs id="dispensedInCommunity" conceptId="PIH:3671" style="checkbox"
                                  answerConceptId="PIH:9361" answerCode="pihcore.communityDispensing"/>
                         </p>
-                            </td>
-                            </tr>
-                            <tr><td colspan="2">
+                    </td>
+                </tr>
+                -->
+                <tr>
+                    <td colspan="2">
                         <p class="radio">
                             <label>
                                 <uimessage code="pihcore.treatmentLine" />
