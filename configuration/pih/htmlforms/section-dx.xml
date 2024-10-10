@@ -51,7 +51,7 @@
     </ifMode>
 
     <div id="data-collection">
-        <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target"/>
+        <encounterDiagnosesByObs selectedDiagnosesTarget="#encounter-diagnoses-target" allowNonCoded="false"/>
 
         <p class="list-inline check-inline">
             <obs conceptId="PIH:20580" style="checkbox" toggle="nonCodedDiagnosis"
