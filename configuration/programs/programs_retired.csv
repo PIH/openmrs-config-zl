@@ -1,0 +1,16 @@
+Uuid,Name,Description,Void/Retire
+${program.anc.uuid},ANC,Antenatal Care Program,true
+${program.asthma.uuid},Asthma,Asthma Program,true
+${program.ayfs.uuid},AYFS,AYFS Program,true
+${program.diabetes.uuid},Diabetes,Diabetes Program,true
+${program.epilepsy.uuid},Epilepsy,Epilepsy Program,true
+${program.familyPlanning.uuid},Family Planning,Family Planning Program,true
+${program.gynecology.uuid},Gynecology,Gynecology Program,true
+${program.hypertension.uuid},Hypertension,Hypertension Program,true
+${program.infant.uuid},Infant,Infant Program,true
+${program.malnutrition.uuid},Malnutrition,Malnutrition Program,true
+${program.ovc.uuid},OVC,USAID orphans and vulnerable children program,true
+${program.pmtct.uuid},PMTCT,PMTCT Program,true
+${program.pregnancy.uuid},Pregnancy,Pregnancy Program,true
+${program.pregnancyMentalHealth.uuid},Pregnancy Mental Health,Pregnancy Mental Health Program,true
+${program.tb.uuid},TB,Tuberculosis Program,true

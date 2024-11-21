@@ -1,0 +1,9 @@
+Uuid,Name,Description,Void/Retire,Program concept,Outcomes concept,_order:1
+${program.covid19.uuid},COVID-19,COVID-19 Program,,CIEL:166009,PIH:Generic outcome,
+${program.eid.uuid},EID,HIV Exposed Infant Program,,PIH:EID program,PIH:EID outcome,
+${program.hiv.uuid},HIV,HIV Program,,PIH:HIV PROGRAM,PIH:HIV outcome,
+${program.mentalHealth.uuid},Mental Health,Mental Health Program,,PIH:Mental Health Program,PIH:Mental Health outcome,
+${program.mch.uuid},MCH,Maternal and Child Health Program,,CIEL:159937,PIH:MCH outcome,
+${program.ncd.uuid},NCD,NCD Program,,PIH:NCD Program,PIH:NCD outcome,
+${program.oncology.uuid},Oncology,ONCOLOGY Program,,PIH:Oncology program,PIH:Oncology outcome,
+${program.zika.uuid},Zika,Zika Program,,PIH:Zika program,PIH:Study outcome,

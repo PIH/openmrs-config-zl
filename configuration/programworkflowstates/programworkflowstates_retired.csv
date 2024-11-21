@@ -1,0 +1,7 @@
+Uuid,Void/Retire,Workflow
+${programWorkflow.pregnancyProgramTypeOfTreatment.state.prenatalIndividual.uuid},true,${programWorkflow.pregnancyProgramTypeOfTreatment.uuid}
+${programWorkflow.pregnancyProgramTypeOfTreatment.state.postpartum.uuid},true,${programWorkflow.pregnancyProgramTypeOfTreatment.uuid}
+483b4e4a-39b7-4793-9f95-cc121fded9b7,true,PIH:OVC program status
+84fc28a6-0450-42fc-9820-e6c2a760a7b6,true,PIH:OVC program status
+fdcd3bec-7beb-45e8-8c01-0cb14a9a2b75,true,${programWorkflow.infantProgramEidTreatmentStatus.uuid}
+2332EC51-80CF-4FB4-88E1-9B74427BAC1E,true,${programWorkflow.hivTreatmentStatus.uuid}

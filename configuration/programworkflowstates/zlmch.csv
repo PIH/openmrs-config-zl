@@ -1,5 +1,0 @@
-Uuid,Void/Retire,Workflow,State concept,Initial,Terminal
-${programWorkflow.mchProgramTypeOfTreatment.state.prenatalGroup.uuid},,${programWorkflow.mchProgramTypeOfTreatment.uuid},${concept.prenatalGroup.uuid},true,
-${programWorkflow.mchProgramTypeOfTreatment.state.prenatalIndividual.uuid},,${programWorkflow.mchProgramTypeOfTreatment.uuid},${concept.prenatalIndividual.uuid},true,
-${programWorkflow.mchProgramTypeOfTreatment.state.pedsGroup.uuid},,${programWorkflow.mchProgramTypeOfTreatment.uuid},${concept.pedsGroup.uuid},true,
-${programWorkflow.mchProgramTypeOfTreatment.state.pedsIndividual.uuid},,${programWorkflow.mchProgramTypeOfTreatment.uuid},${concept.pedsIndividual.uuid},true,
