@@ -4,5 +4,5 @@ ${programWorkflow.pregnancyProgramTypeOfTreatment.state.postpartum.uuid},true,${
 483b4e4a-39b7-4793-9f95-cc121fded9b7,true,PIH:OVC program status,CIEL:161636,,
 84fc28a6-0450-42fc-9820-e6c2a760a7b6,true,PIH:OVC program status,PIH:LOST TO FOLLOWUP,,
 fdcd3bec-7beb-45e8-8c01-0cb14a9a2b75,true,${programWorkflow.infantProgramEidTreatmentStatus.uuid},PIH:On prophylaxis,,
-04de4ef3-c06d-46d1-9f2c-8f3ae37ad618,,${programWorkflow.infantProgramEidTreatmentStatus.uuid},PIH:ON ANTIRETROVIRALS,,
+04de4ef3-c06d-46d1-9f2c-8f3ae37ad618,true,${programWorkflow.infantProgramEidTreatmentStatus.uuid},PIH:ON ANTIRETROVIRALS,,
 2332EC51-80CF-4FB4-88E1-9B74427BAC1E,true,${programWorkflow.hivTreatmentStatus.uuid},PIH:TREATMENT STOPPED,,
