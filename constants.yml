@@ -44,17 +44,3 @@ concept:
     uuid: "d087f783-de30-4aea-8a4d-50ec72ed656a"
   pedsIndividual:
     uuid: "59f75bbf-4a6f-42b9-92d4-9259cba548d2"
-
-programWorkflow:
-  mchProgramTypeOfTreatment:
-    # this is referred to by UUID because the concept used it fairly generic (and likely to be reused elsewhere?)
-    uuid: "41a277d0-8a14-11e8-9a94-a6cf71072f73"
-    state:
-      prenatalGroup:
-        uuid: "41a2753c-8a14-11e8-9a94-a6cf71072f73"
-      prenatalIndividual:
-        uuid: "41a27d48-8a14-11e8-9a94-a6cf71072f73"
-      pedsGroup:
-        uuid: "2fa7008c-aa58-11e8-98d0-529269fb1459"
-      pedsIndividual:
-        uuid: "d31c4de9-48ac-4d60-9689-f3669bd1382d"
