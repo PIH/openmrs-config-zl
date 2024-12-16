@@ -588,4 +588,29 @@ function saveSelectedLocation() {
 
 }*/
 
+jq(document).ready(function () {
+  // Check if the URL contains the specified parameter
+  const urlContainsParam = window.location.href.includes('editHtmlFormWithStandardUi.page');
+
+  if (urlContainsParam) {
+    // Iterate through each collapsible-content element
+    jq('.collapsible-content').each(function () {
+      const content = jq(this);
+      // Check if any checkboxes inside are checked
+      if (content.find('input[type="checkbox"]:checked').length > 0) {
+        content.addClass('open'); // Add the open class
+        content.css('max-height', content[0].scrollHeight + 'px'); // Dynamically set max-height
+      }
+    });
+  }
+  jq('.toggle-div').on('click', function () {
+    const content = jq(this).next('.collapsible-content');
+    content.toggleClass('open');
+    // content.css('max-height', content.hasClass('open') ? content[0].scrollHeight + 'px' : '0');
+  });
+
+});
+
+
+
 

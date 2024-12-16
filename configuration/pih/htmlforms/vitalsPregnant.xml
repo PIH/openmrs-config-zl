@@ -651,7 +651,7 @@
 		</fieldset>
 		<fieldset field-separator=" ">
 			<legend>
-				<uimessage code="mirebalais.vitals.map.short" />
+				<uimessage code="mirebalais.vitals.map" />
 			</legend>
 			<h3>
 				<uimessage code="mirebalais.vitals.map" />
@@ -688,29 +688,7 @@
 		</fieldset>
 		<fieldset field-separator=" ">
 			<legend>
-				<uimessage code="mirebalais.vitals.oxygen.flow.rate" />
-			</legend>
-			<h3>
-				<uimessage code="mirebalais.vitals.oxygen.flow.rate" />
-			</h3>
-			<p class="left">
-				<obs conceptId="CIEL:165986" showUnits=" lt" />
-			</p>
-		</fieldset>
-		<fieldset field-separator=" ">
-			<legend>
-				<uimessage code="mirebalais.vitals.gcs.short" />
-			</legend>
-			<h3>
-				<uimessage code="mirebalais.vitals.gcs" />
-			</h3>
-			<p class="left">
-				<obs conceptId="CIEL:160347" />
-			</p>
-		</fieldset>
-		<fieldset field-separator=" ">
-			<legend>
-				<uimessage code="mirebalais.vitals.rass.short" />
+				<uimessage code="mirebalais.vitals.rass" />
 			</legend>
 			<h3>
 				<uimessage code="mirebalais.vitals.rass" />
@@ -721,42 +699,51 @@
 		</fieldset>
 		<fieldset field-separator=" ">
 			<legend>
-				<uimessage code="pihcore.pain" />
-			</legend>
-			<h5>
 				<uimessage code="mirebalais.vitals.pain.scale" />
-			</h5>
-			<p class="left">
-				<obs conceptId="PIH:20668" />
-			</p>
-			<br />
-			<br />
-			<h5>
-				<uimessage code="mirebalais.vitals.svs" />
-			</h5>
-			<p class="left">
-				<obs conceptId="PIH:20665" />
-			</p>
-			<br />
-			<br />
-			<h5>
-				<uimessage code="mirebalais.vitals.nrs" />
-			</h5>
-			<p class="left">
-				<obs conceptId="PIH:20667" />
-			</p>
-			<br />
-			<br />
-			<h5>
-				<uimessage code="mirebalais.vitals.bps" />
-			</h5>
+			</legend>
+			<h3>
+				<uimessage code="mirebalais.vitals.pain.scale" />
+			</h3>
 			<p class="left">
 				<obs conceptId="PIH:20668" />
 			</p>
 		</fieldset>
 		<fieldset field-separator=" ">
 			<legend>
-				<uimessage code="mirebalais.vitals.fetal.heart.rate.short" />
+				<uimessage code="mirebalais.vitals.svs" />
+			</legend>
+			<h3>
+				<uimessage code="mirebalais.vitals.svs" />
+			</h3>
+			<p class="left">
+				<obs conceptId="PIH:20665" />
+			</p>
+		</fieldset>
+		<fieldset field-separator=" ">
+			<legend>
+				<uimessage code="mirebalais.vitals.nrs" />
+			</legend>
+			<h3>
+				<uimessage code="mirebalais.vitals.nrs" />
+			</h3>
+			<p class="left">
+				<obs conceptId="PIH:20667" />
+			</p>
+		</fieldset>
+		<fieldset field-separator=" ">
+			<legend>
+				<uimessage code="mirebalais.vitals.bps" />
+			</legend>
+			<h3>
+				<uimessage code="mirebalais.vitals.bps" />
+			</h3>
+			<p class="left">
+				<obs conceptId="PIH:20668" />
+			</p>
+		</fieldset>
+		<fieldset field-separator=" ">
+			<legend>
+				<uimessage code="mirebalais.vitals.fetal.heart.rate" />
 			</legend>
 			<h3>
 				<uimessage code="mirebalais.vitals.fetal.heart.rate" />
