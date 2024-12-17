@@ -9,7 +9,10 @@
     <packaging>pom</packaging>
 
     <properties>
+        <pihemrContentGroupId>org.pih.openmrs</pihemrContentGroupId>
+        <pihemrContentArtifactId>pihemr-content</pihemrContentArtifactId>
         <pihemrContentVersion>1.0.0-SNAPSHOT</pihemrContentVersion>
+
         <parentBuildDir>${project.build.directory}/parent</parentBuildDir>
         <childBuildDir>${project.build.directory}/child</childBuildDir>
         <parentConfigDir>${parentBuildDir}/configuration</parentConfigDir>
@@ -31,8 +34,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>pihemr-content</artifactId>
+            <groupId>${pihemrContentGroupId}</groupId>
+            <artifactId>${pihemrContentArtifactId}</artifactId>
             <version>${pihemrContentVersion}</version>
             <type>zip</type>
         </dependency>
@@ -54,8 +57,8 @@
                         </goals>
                         <phase>process-resources</phase>
                         <configuration>
-                            <includeGroupIds>org.pih.openmrs</includeGroupIds>
-                            <includeArtifactIds>pihemr-content</includeArtifactIds>
+                            <includeGroupIds>${pihemrContentGroupId}</includeGroupIds>
+                            <includeArtifactIds>${pihemrContentArtifactId}</includeArtifactIds>
                             <outputDirectory>${parentBuildDir}</outputDirectory>
                             <type>jar</type>
                         </configuration>
