@@ -17,12 +17,6 @@
             <value>8fcd0b0c-f977-4a66-a1b5-ad7ce68e6770</value>
         </globalProperty>
 
-        <globalProperty>
-            <property>drugOrder.requireOutpatientQuantity</property>
-            <!-- This allows entering drug orders without having to specify the amount to dispense at the time of order -->
-            <value>false</value>
-        </globalProperty>
-
         <!-- Paper Record Global Properties -->
         <globalProperty>
             <property>emr.paperRecordIdentifierType</property>
