@@ -14,30 +14,27 @@
 <htmlform id="vitals-form" formUuid="68728aa6-4985-11e2-8815-657001b58a90" formName="Vitals" formEncounterType="4fb47712-34a6-40d2-8ed3-e153abbd25b7" formVersion="2.2">
 	<ifMode mode="VIEW" include="false">
 		<style type="text/css">
-
 			form input[type="radio"], form input[type="radio"]
 			.form input[type="radio"], .form input[type="radio"] {
-				float: none;
-				display: inline-block;
-				margin-left: 10px;
+			float: none;
+			display: inline-block;
+			margin-left: 10px;
 			}
-
+			
 			#vitals-form .append-to-value {
-				padding-left: 5px;
-				margin: 10px 10px;
+			padding-left: 5px;
+			margin: 10px 10px;
 			}
-
+			
 			form label, .form label {
-				display: inline-block;
+			display: inline-block;
 			}
-
+			
 			- .section {
 			width: 100%;
 			}
 		</style>
 	</ifMode>
-
-
 	<ifMode mode="VIEW" include="true">
 		<!--
 		a template to display the "view" version of an html form provided by the htmlfromentryui getAsHtml method
@@ -45,35 +42,35 @@
 		-->
 		<style>
 			#vitals-form legend {
-				display: none;
+			display: none;
 			}
 			
 			#vitals-form fieldset {
-				margin: 0px;
-				border: 0px;
-				padding: 0px;
+			margin: 0px;
+			border: 0px;
+			padding: 0px;
 			}
 			
 			#vitals-form fieldset h3 {
-				font-size: 1em;
-				width: 200px;
-				display: inline-block;
-				margin: 0px;
-				margin-right: 10px;
-				color: #3E3E3E;
-				vertical-align: top;
+			font-size: 1em;
+			width: 200px;
+			display: inline-block;
+			margin: 0px;
+			margin-right: 10px;
+			color: #3E3E3E;
+			vertical-align: top;
 			}
 			
 			#vitals-form fieldset p {
-				vertical-align: top;
-				display: inline-block;
-				float: none;
+			vertical-align: top;
+			display: inline-block;
+			float: none;
 			}
 			
 			#vitals-form fieldset .left {
-				vertical-align: top;
-				display: inline-block;
-				float: none;
+			vertical-align: top;
+			display: inline-block;
+			float: none;
 			}
 			
 			#vitals-form .title {
@@ -89,27 +86,25 @@
 			}
 			
 			#vitals-form .encounter-location {
-				display: none;
+			display: none;
 			}
 			
 			#vitals-form .append-to-value {
-				padding-left: 5px;
+			padding-left: 5px;
 			}
-
+			
 			form input[type="radio"], form input[type="radio"]
 			.form input[type="radio"], .form input[type="radio"] {
-				float: none;
-				display: inline-block;
-				margin-left: 10px;
+			float: none;
+			display: inline-block;
+			margin-left: 10px;
 			}
-
+			
 			.side-by-side label {
-				display: inline-block;
+			display: inline-block;
 			}
 		</style>
 	</ifMode>
-
-
 	<!-- only show/handle the English conversion fields if we are in 'ENTER' or 'EDIT' mode -->
 	<ifMode mode="VIEW" include="false">
 		<script type="text/javascript">
@@ -415,7 +410,6 @@
 	<span id="most-recent-encounter-title" style="display:none">
 		<!-- The Most Recent Encounter app in Core Apps replaces this with the "most recent" label -->
 	</span>
-
 	<section id="vitals" sectionTag="section" headerStyle="title" headerCode="mirebalais.vitals.title">
 		<ifMode mode="VIEW" include="false">
 			<!-- allow editing provider, location, or date if NOT an active visit and user has retro privileges -->
@@ -752,7 +746,6 @@
 				<obs conceptId="PIH:20664" />
 			</p>
 		</fieldset>
-
 		<fieldset>
 			<legend>
 				<uimessage code="pihcore.pain" />
@@ -761,28 +754,24 @@
 				<uimessage code="mirebalais.vitals.pain.scale" />
 			</h3>
 			<p class="side-by-side">
-				<obs id="pain" conceptId="PIH:20668" style="radio"
-					 answers="0,2,4,6,8,10"  answerLabels="0,2,4,6,8,10" />
+				<obs id="pain" conceptId="PIH:20668" style="radio" answers="0,2,4,6,8,10" answerLabels="0,2,4,6,8,10" />
 			</p>
-
 			<h3>
 				<uimessage code="mirebalais.vitals.svs" />
 			</h3>
 			<p class="left">
-				<obs conceptId="PIH:20665" style="radio"
-					 answerConceptIds="PIH:1107,PIH:1901,PIH:1900,PIH:1903,PIH:20666"
-					 answerSeparator="" />
+				<obs conceptId="PIH:20665" style="radio" answerConceptIds="PIH:1107,PIH:1901,PIH:1900,PIH:1903,PIH:20666" answerSeparator="" />
 			</p>
-			<br/><br/>
-
+			<br />
+			<br />
 			<h3>
 				<uimessage code="mirebalais.vitals.nrs" />
 			</h3>
 			<p class="left">
 				<obs conceptId="PIH:20667" />
 			</p>
-			<br/><br/>
-
+			<br />
+			<br />
 			<h3>
 				<uimessage code="mirebalais.vitals.bps" />
 			</h3>
@@ -790,20 +779,6 @@
 				<obs conceptId="PIH:20668" />
 			</p>
 		</fieldset>
-		<includeIf velocityTest="$patient.gender == 'F' ">
-			<fieldset field-separator=" ">
-				<legend>
-					<uimessage code="mirebalais.vitals.fhr" />
-				</legend>
-				<h3>
-					<uimessage code="mirebalais.vitals.fetal.heart.rate" />
-				</h3>
-				<p class="left">
-					<obs conceptId="CIEL:1440" showUnits="true"/>
-				</p>
-			</fieldset>
-		</includeIf>
-
 		<!-- only show Head circumference if patient is less than 3 years old (on the encounterDate) -->
 		<includeIf velocityTest="3 > $patient.getAge($encounter.getEncounterDatetime())">
 			<fieldset>
