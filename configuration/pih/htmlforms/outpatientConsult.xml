@@ -87,7 +87,7 @@
             var isValid =   jq('#where select').val() != '' &amp;&amp;
                             jq('#who select').val() != '' &amp;&amp;
                             jq('#when input').val() != '' &amp;&amp;      // does this actually work?
-                            jq('.diagnosis').length;
+                            (jq('.diagnosis').length || getValue('non-coded-diagnosis.value'));
 
             if (hasDisposition || needsDisposition) {
                 // make sure disposition and all related field have been filled out
@@ -201,7 +201,7 @@
 
     <div id="data-collection">
 
-        <encounterDiagnosesByObs required="true" selectedDiagnosesTarget="#encounter-diagnoses-target" allowNonCoded="false" />
+        <encounterDiagnosesByObs required="false" selectedDiagnosesTarget="#encounter-diagnoses-target" allowNonCoded="false" />
 
         <p class="list-inline check-inline">
             <obs id="non-coded-diagnosis-toggle" conceptId="PIH:20580" style="checkbox" toggle="non-coded-diagnosis-div"
