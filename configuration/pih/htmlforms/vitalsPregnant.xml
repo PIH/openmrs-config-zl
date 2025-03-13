@@ -388,7 +388,7 @@
 	<span id="most-recent-encounter-title" style="display:none">
 		<!-- The Most Recent Encounter app in Core Apps replaces this with the "most recent" label -->
 	</span>
-	
+
 	<section id="vitals" sectionTag="section" headerStyle="title" headerCode="mirebalais.vitals.title">
 		<ifMode mode="VIEW" include="false">
 			<!-- allow editing provider, location, or date if NOT an active visit and user has retro privileges -->
