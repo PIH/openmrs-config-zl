@@ -1,0 +1,23 @@
+key: "msppReport"
+uuid: "bfac0d81-09fc-4981-adf2-d6fa9e5ec859"
+name: "mirebalaisreports.msppReport.name"
+description: "mirebalaisreports.msppReport.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "msppReport"
+    type: "sql"
+    config: "sql/msppReport.sql"
+designs:
+  - type: "excel"
+    template: "templates/mspp.xls"
+config:
+  category: "MONITORING"
+  order: 6
+  components:
+    - "monitoringReports"
