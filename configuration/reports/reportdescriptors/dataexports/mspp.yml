@@ -16,7 +16,3 @@ datasets:
 designs:
   - type: "excel"
     template: "templates/mspp.xls"
-config:
-  category: "MONITORING"
-  order: 6
-  components:
