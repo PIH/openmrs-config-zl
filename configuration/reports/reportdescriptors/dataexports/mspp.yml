@@ -20,4 +20,3 @@ config:
   category: "MONITORING"
   order: 6
   components:
-    - "monitoringReports"
