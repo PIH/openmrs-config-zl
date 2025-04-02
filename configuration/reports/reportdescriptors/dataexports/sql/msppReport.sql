@@ -40,23 +40,23 @@ SELECT
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE())
            AND e.encounter_datetime = first_visit.first_visit_this_year 
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 1 AND 4 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=1 AND DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<5
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
            AND e.encounter_datetime = first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 5 AND 9 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=5 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<10 
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
            AND e.encounter_datetime = first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 10 AND 14 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=10 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<15 
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
            AND e.encounter_datetime = first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 15 AND 19 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=15 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<20
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
            AND e.encounter_datetime = first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 20 AND 24 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=20 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<25
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
            AND e.encounter_datetime = first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
@@ -70,23 +70,23 @@ SELECT
            AND YEAR(e.encounter_datetime) <= YEAR(CURDATE())
            AND e.encounter_datetime != first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 1 AND 4 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=1 AND DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<5
            AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 5 AND 9 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=5 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<10 
            AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 10 AND 14 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=10 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<15 
            AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 15 AND 19 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=15 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<20
            AND YEAR(e.encounter_datetime) < YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 BETWEEN 20 AND 24 
+    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=20 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<25
            AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
