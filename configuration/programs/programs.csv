@@ -6,4 +6,5 @@ ${program.mentalHealth.uuid},Mental Health,Mental Health Program,,PIH:Mental Hea
 ${program.mch.uuid},MCH,Maternal and Child Health Program,,CIEL:159937,PIH:MCH outcome,
 ${program.ncd.uuid},NCD,NCD Program,,PIH:NCD Program,PIH:NCD outcome,
 ${program.oncology.uuid},Oncology,ONCOLOGY Program,,PIH:Oncology program,PIH:Oncology outcome,
+${program.prep.uuid},PrEP,Pre-Exposure Prophylaxis (PrEP) treatment program,,PIH:20766,PIH:Generic outcome,
 ${program.zika.uuid},Zika,Zika Program,,PIH:Zika program,PIH:Study outcome,
