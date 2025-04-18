@@ -4,37 +4,52 @@
   "dossierIdentifierPrefix": "CLS",
 
   "components": [
+    "activeVisits",
+    "adt",
     "allergies",
     "checkIn",
     "checkInHomepageApp",
     "clinicianDashboard",
+    "consult",
+    "covid19",
     "dataExports",
     "dbevent",
+    "dispensing",
     "echocardiogram",
+    "edConsult",
+    "edTriage",
+    "edTriageQueue",
     "exportPatients",
+    "growthChart",
     "importPatients",
     "labResults",
+    "labs",
     "markPatientDead",
     "mch",
     "monitoringReports",
     "myAccount",
     "ncd",
     "obgyn",
+    "oncology",
     "overviewReports",
+    "patientDocuments",
     "patientRegistration",
+    "primaryCare",
     "programs",
     "relationships",
     "socioEconomics",
+    "surgery",
     "systemAdministration",
     "todaysVisits",
-    "uhmVitals",
+    "vct",
     "visitManagement",
     "visitNote",
-    "vitalsHomepageApp"
+    "vitals",
+    "vitalsHomepageApp",
+    "waitingForConsult"
   ],
 
   "globalProperties": {
-    "haiti.checkIn.reasonsForVisit":"PIH:9359,PIH:5489,PIH:11504",
     "coreapps.defaultPatientIdentifierLocation": "c741e25d-eb07-4efc-89e4-38ac73948ae1"
   },
 
@@ -45,6 +60,7 @@
     "matchUrl": "http://localhost:9000/match",
     "scanUrl": "https://localhost:9443/fingerprint/scan",
     "devicesUrl": "https://localhost:9443/fingerprint/devices"
-  }
+  },
 
+  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json"
 }
