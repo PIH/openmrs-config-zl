@@ -1,8 +1,8 @@
 
 CALL initialize_global_metadata();
 
--- set  @startDate = '2025-04-16';
--- set  @endDate = '2025-04-18';
+-- set  @startDate = '2025-04-18';
+-- set  @endDate = '2025-04-19';
 SET @firstDate = CONCAT(YEAR(CURDATE()), '-01-01');
 
 SET  @locale = GLOBAL_PROPERTY_VALUE('default_locale', 'en');
@@ -153,7 +153,7 @@ LEFT JOIN (
     FROM obs o
     WHERE o.concept_id = concept_from_mapping('PIH', '5596')
     AND o.voided = 0
-    AND DATE(o.obs_datetime) >= @startDate
+    AND DATE(o.obs_datetime) >= @firstDate
    AND DATE(o.obs_datetime) < @endDate
 ) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
 
@@ -162,7 +162,7 @@ LEFT JOIN (
     SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
     FROM encounter
     WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
-     AND DATE(encounter_datetime) >= @startDate
+     AND DATE(encounter_datetime) >= @firstDate
    AND DATE(encounter_datetime) < @endDate
     GROUP BY patient_id
 ) AS first_visit ON e.patient_id = first_visit.patient_id
@@ -175,8 +175,7 @@ AND p.patient_id NOT IN (
     AND person_attribute_type_id = @testPt 
     AND voided = 0
 )
-AND DATE(e.encounter_datetime) >= @startDate
-AND DATE(e.encounter_datetime) < @endDate;
+AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate;
 
 
 
@@ -218,7 +217,7 @@ LEFT JOIN (
     JOIN obs o2 ON e.encounter_id=o2.encounter_id
     WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
     AND o2.value_coded =concept_from_mapping('PIH','5483')
-    AND date(e.encounter_datetime) >= @startDate
+    AND date(e.encounter_datetime) >= @firstDate
 	AND date(e.encounter_datetime) < @endDate
     GROUP BY e.patient_id
 ) AS first_visit ON e.patient_id = first_visit.patient_id
@@ -254,6 +253,4 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             0 'PEOPLE_REDUCED_MOB_MOTOR_N',0 'PEOPLE_REDUCED_MOB_MOTOR_S',
             0 'PEOPLE_REDUCED_MOB_SENSORY_N',0 'PEOPLE_REDUCED_MOB_SENSORY_S'
        FROM visits_distribution_temp;
-      
-      
-      
+
