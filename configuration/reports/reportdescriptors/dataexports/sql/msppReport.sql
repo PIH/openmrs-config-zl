@@ -34,7 +34,7 @@ CREATE TEMPORARY TABLE visits_distribution_temp (
 -- New visits (First visit of the year)
 INSERT INTO visits_distribution_temp 
 (child_under_1_n, child_between_1_4_n, child_between_5_9_n, child_between_10_14_n, 
- young_adult_between_15_19_n, young_adult_between_20_24_n, other_adult_n,pregnant_visits_n)
+ young_adult_between_15_19_n, young_adult_between_20_24_n, other_adult_n)
 SELECT 
     SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 < 1 
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE())
@@ -64,25 +64,12 @@ SELECT
     SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 >= 25 
            AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
            AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)),
-
-     SUM(IF(pregnancy_status.is_pregnant = 1  AND YEAR(e.encounter_datetime) = YEAR(CURDATE())
-           AND e.encounter_datetime = first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0))
 FROM patient p
 -- Person
 INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
 -- Check in encounter
 INNER JOIN encounter e ON p.patient_id = e.patient_id AND e.voided = 0 AND e.encounter_type = @chkEnc
-
-LEFT JOIN (
-    SELECT DISTINCT o.person_id, IF(o.value_datetime > CURDATE() ,1, 0) AS is_pregnant
-    FROM obs o
-    WHERE o.concept_id = concept_from_mapping('PIH', '5596')
-    AND o.voided = 0
-    AND DATE(o.obs_datetime) >= @firstDate
-   AND DATE(o.obs_datetime) < @endDate
-) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
 
 -- Determining the first visit of the year
 LEFT JOIN (
@@ -109,7 +96,7 @@ AND DATE(e.encounter_datetime) < @endDate;
 -- Subsequent visits 
 INSERT INTO visits_distribution_temp 
 (child_under_1_s, child_between_1_4_s, child_between_5_9_s, child_between_10_14_s, 
- young_adult_between_15_19_s, young_adult_between_20_24_s, other_adult_s, pregnant_visits_s)
+ young_adult_between_15_19_s, young_adult_between_20_24_s, other_adult_s)
 SELECT 
     SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 < 1 
            AND YEAR(e.encounter_datetime) <= YEAR(CURDATE())
@@ -138,7 +125,80 @@ SELECT
     SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 >= 25 
            AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
+           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0))
+FROM patient p
+-- Person
+INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
+-- Check in encounter
+INNER JOIN encounter e ON p.patient_id = e.patient_id AND e.voided = 0 AND e.encounter_type = @chkEnc
+-- Determining the first visit of the year
+LEFT JOIN (
+    SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
+    FROM encounter
+    WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
+     AND DATE(encounter_datetime) >= @firstDate
+   AND DATE(encounter_datetime) < @endDate
+    GROUP BY patient_id
+) AS first_visit ON e.patient_id = first_visit.patient_id
+WHERE p.voided = 0
+-- Exclude test patients
+AND p.patient_id NOT IN (
+    SELECT person_id 
+    FROM person_attribute 
+    WHERE value = 'true' 
+    AND person_attribute_type_id = @testPt 
+    AND voided = 0
+)
+AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate;
+
+
+-- New visits Of pregnancy women
+INSERT INTO visits_distribution_temp 
+(pregnant_visits_n)
+SELECT 
+     SUM(IF(pregnancy_status.is_pregnant = 1  AND YEAR(e.encounter_datetime) = YEAR(CURDATE())
+           AND e.encounter_datetime = first_visit.first_visit_this_year
+           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0))
+FROM patient p
+-- Person
+INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
+-- Check in encounter
+INNER JOIN encounter e ON p.patient_id = e.patient_id AND e.voided = 0
+
+LEFT JOIN (
+    SELECT DISTINCT o.person_id, IF(o.value_datetime > CURDATE() ,1, 0) AS is_pregnant
+    FROM obs o
+    WHERE o.concept_id = concept_from_mapping('PIH', '5596')
+    AND o.voided = 0
+    AND DATE(o.obs_datetime) >= @firstDate
+   AND DATE(o.obs_datetime) < @endDate
+) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
+-- Determining the first visit of the year
+LEFT JOIN (
+    SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
+    FROM encounter
+    WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
+     AND DATE(encounter_datetime) >= @firstDate
+   AND DATE(encounter_datetime) < @endDate
+    GROUP BY patient_id
+) AS first_visit ON e.patient_id = first_visit.patient_id
+WHERE p.voided = 0
+-- Exclude test patients
+AND p.patient_id NOT IN (
+    SELECT person_id 
+    FROM person_attribute 
+    WHERE value = 'true' 
+    AND person_attribute_type_id = @testPt 
+    AND voided = 0
+)
+AND DATE(e.encounter_datetime) >= @firstDate
+AND DATE(e.encounter_datetime) < @endDate;
+
+
+-- Subsequent visits for pregnancy women
+INSERT INTO visits_distribution_temp 
+(pregnant_visits_s)
+SELECT
      SUM(IF(pregnancy_status.is_pregnant=1 AND  YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
            AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0))
@@ -146,7 +206,7 @@ FROM patient p
 -- Person
 INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
 -- Check in encounter
-INNER JOIN encounter e ON p.patient_id = e.patient_id AND e.voided = 0 AND e.encounter_type = @chkEnc
+INNER JOIN encounter e ON p.patient_id = e.patient_id AND e.voided = 0 
 
 LEFT JOIN (
     SELECT DISTINCT o.person_id, IF(o.value_datetime > CURDATE() ,1, 0) AS is_pregnant
@@ -176,8 +236,6 @@ AND p.patient_id NOT IN (
     AND voided = 0
 )
 AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate;
-
-
 
 -- NEW CLIENT PF
 SELECT 
