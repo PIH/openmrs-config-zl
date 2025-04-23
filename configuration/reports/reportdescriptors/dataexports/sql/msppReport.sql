@@ -170,6 +170,7 @@ LEFT JOIN (
     FROM obs o
     WHERE o.concept_id = concept_from_mapping('PIH', '5596')
     AND o.voided = 0
+    AND o.value_datetime > CURDATE()
     AND DATE(o.obs_datetime) >= @firstDate
    AND DATE(o.obs_datetime) < @endDate
 ) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
@@ -178,7 +179,7 @@ LEFT JOIN (
     SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
     FROM encounter
     WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
-     AND DATE(encounter_datetime) >= @firstDate
+    AND DATE(encounter_datetime) >= @firstDate
    AND DATE(encounter_datetime) < @endDate
     GROUP BY patient_id
 ) AS first_visit ON e.patient_id = first_visit.patient_id
@@ -212,7 +213,8 @@ LEFT JOIN (
     SELECT DISTINCT o.person_id, IF(o.value_datetime > CURDATE() ,1, 0) AS is_pregnant
     FROM obs o
     WHERE o.concept_id = concept_from_mapping('PIH', '5596')
-    AND o.voided = 0
+     AND o.voided = 0
+     AND o.value_datetime > CURDATE()
     AND DATE(o.obs_datetime) >= @firstDate
    AND DATE(o.obs_datetime) < @endDate
 ) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
