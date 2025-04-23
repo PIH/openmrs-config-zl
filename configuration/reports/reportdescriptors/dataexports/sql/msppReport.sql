@@ -171,8 +171,6 @@ LEFT JOIN (
     WHERE o.concept_id = concept_from_mapping('PIH', '5596')
     AND o.voided = 0
     AND o.value_datetime > CURDATE()
-    AND DATE(o.obs_datetime) >= @firstDate
-   AND DATE(o.obs_datetime) < @endDate
     GROUP BY o.person_id
 ) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
 -- Determining the first visit of the year
@@ -217,8 +215,6 @@ LEFT JOIN (
     WHERE o.concept_id = concept_from_mapping('PIH', '5596')
      AND o.voided = 0
      AND o.value_datetime > CURDATE()
-    AND DATE(o.obs_datetime) >= @firstDate
-   AND DATE(o.obs_datetime) < @endDate
   GROUP BY o.person_id
 ) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
 
