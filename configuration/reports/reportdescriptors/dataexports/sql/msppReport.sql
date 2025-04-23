@@ -156,9 +156,9 @@ AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate;
 INSERT INTO visits_distribution_temp 
 (pregnant_visits_n)
 SELECT 
-     SUM(IF(pregnancy_status.is_pregnant = 1  AND YEAR(e.encounter_datetime) = YEAR(CURDATE())
+      IF(pregnancy_status.is_pregnant = 1  AND YEAR(e.encounter_datetime) = YEAR(CURDATE())
            AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0))
+           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)
 FROM patient p
 -- Person
 INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
@@ -173,6 +173,7 @@ LEFT JOIN (
     AND o.value_datetime > CURDATE()
     AND DATE(o.obs_datetime) >= @firstDate
    AND DATE(o.obs_datetime) < @endDate
+    GROUP BY o.person_id
 ) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
 -- Determining the first visit of the year
 LEFT JOIN (
@@ -193,16 +194,17 @@ AND p.patient_id NOT IN (
     AND voided = 0
 )
 AND DATE(e.encounter_datetime) >= @firstDate
-AND DATE(e.encounter_datetime) < @endDate;
+AND DATE(e.encounter_datetime) < @endDate
+GROUP BY e.visit_id;
 
 
 -- Subsequent visits for pregnancy women
 INSERT INTO visits_distribution_temp 
 (pregnant_visits_s)
 SELECT
-     SUM(IF(pregnancy_status.is_pregnant=1 AND  YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
+      IF(pregnancy_status.is_pregnant=1 AND  YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
            AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0))
+           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)
 FROM patient p
 -- Person
 INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
@@ -217,6 +219,7 @@ LEFT JOIN (
      AND o.value_datetime > CURDATE()
     AND DATE(o.obs_datetime) >= @firstDate
    AND DATE(o.obs_datetime) < @endDate
+  GROUP BY o.person_id
 ) AS pregnancy_status ON p.patient_id = pregnancy_status.person_id
 
 -- Determining the first visit of the year
@@ -237,7 +240,9 @@ AND p.patient_id NOT IN (
     AND person_attribute_type_id = @testPt 
     AND voided = 0
 )
-AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate;
+AND DATE(e.encounter_datetime) >= @startDate
+AND DATE(e.encounter_datetime) < @endDate
+GROUP BY e.visit_id;
 
 -- NEW CLIENT PF
 SELECT 
