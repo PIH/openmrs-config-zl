@@ -773,6 +773,27 @@ and o.voided =0
 AND date(e.encounter_datetime) >= @startDate
 AND date(e.encounter_datetime) < @endDate;
 
+-- Urgences Medico-Chirurgicales
+SELECT 
+SUM(IF(o.value_coded=concept_from_mapping('PIH','10710') OR o.value_coded=concept_from_mapping('PIH','10694')
+OR o.value_coded=concept_from_mapping('PIH','10695') OR o.value_coded=concept_from_mapping('PIH','8567') 
+OR o.value_coded=concept_from_mapping('PIH','10697') OR o.value_coded=concept_from_mapping('PIH','10696') 
+OR o.value_coded=concept_from_mapping('PIH','10698'),1,0)),
+SUM(IF(o.value_coded=concept_from_mapping('PIH','8419') OR o.value_coded=concept_from_mapping('PIH','10688'),1,0)),
+SUM(IF(o.value_coded=concept_from_mapping('PIH','10704') OR o.value_coded=concept_from_mapping('PIH','10705'),1,0)),
+SUM(IF(o.value_coded=concept_from_mapping('PIH','9321') OR o.value_coded=concept_from_mapping('PIH','7226'),1,0)),
+SUM(IF(o.value_coded=concept_from_mapping('PIH','10706') OR o.value_coded=concept_from_mapping('PIH','136') 
+OR o.value_coded=concept_from_mapping('PIH','10707') OR o.value_coded=concept_from_mapping('PIH','151'),1,0)),
+SUM(IF(o.value_coded=concept_from_mapping('PIH','83'),1,0))
+INTO @UMC_TRAUMA,@UMC_DIGESTIVE,@UMC_RESPIRATORY,@UMC_OBSTETRICS,@UMC_OSTEO_ARTICULAR,@UMC_OTHER
+FROM obs o 
+INNER JOIN encounter e on o.encounter_id =e.encounter_id
+WHERE o.concept_id =concept_from_mapping("PIH","Triage diagnosis")
+AND o.voided =0
+AND e.voided =0
+AND date(e.encounter_datetime) >= @startDate
+AND date(e.encounter_datetime) < @endDate;
+
 
 SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_1_S",
         SUM(child_between_1_4_n) "CHILD_BETWEEN_1_4_N", SUM(child_between_1_4_s) "CHILD_BETWEEN_1_4_S",
@@ -884,5 +905,6 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             @OTHER_SEX_VIOL_KID_TREATED AS 'OTHER_SEX_VIOL_KID_TREATED',
             @OTHER_SEX_VIOL_KID_TRANSFER AS 'OTHER_SEX_VIOL_KID_TRANSFER',
             @OTHER_SEX_VIOL_KID_LEFT AS 'OTHER_SEX_VIOL_KID_LEFT',
-            IFNULL(@OTHER_SEX_VIOL_KID_DEAD, 0) + IFNULL(@OTHER_SEX_VIOL_KID_TREATED, 0) + IFNULL(@OTHER_SEX_VIOL_KID_TRANSFER, 0) + IFNULL(@OTHER_SEX_VIOL_KID_LEFT, 0) AS 'OTHER_SEX_VIOL_KID_TOTAL'
+            IFNULL(@OTHER_SEX_VIOL_KID_DEAD, 0) + IFNULL(@OTHER_SEX_VIOL_KID_TREATED, 0) + IFNULL(@OTHER_SEX_VIOL_KID_TRANSFER, 0) + IFNULL(@OTHER_SEX_VIOL_KID_LEFT, 0) AS 'OTHER_SEX_VIOL_KID_TOTAL',
+            @UMC_TRAUMA AS 'UMC_TRAUMA',@UMC_DIGESTIVE AS 'UMC_DIGESTIVE',@UMC_RESPIRATORY AS 'UMC_RESPIRATORY',@UMC_OBSTETRICS AS 'UMC_OBSTETRICS',@UMC_OSTEO_ARTICULAR AS 'UMC_OSTEO_ARTICULAR',@UMC_OTHER AS 'UMC_OTHER'
 FROM visits_distribution_temp;
