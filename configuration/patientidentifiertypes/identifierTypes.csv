@@ -11,3 +11,4 @@ ${patientIdentifierType.dentalDossierNumber.uuid},,Dental Dossier Number,Dental 
 ${patientIdentifierType.hivDossierNumber.uuid},,HIV Nimewo Dosye,HIV EMR Dossier number,FALSE,,,,NOT_USED,NON_UNIQUE
 ${patientIdentifierType.hivemrV1InfantId.uuid},,HIV EMR V1 Infant ID,Internal INFANT_ID for this patient in the Haiti EMR V1 system,FALSE,,,,NOT_USED,NON_UNIQUE
 ${patientIdentifierType.hivemrV1InfantCode.uuid},,HIV EMR V1 Infant Code,Code referencing the HIV EMR INFANT_CODE field in the Haiti EMR V1 system,FALSE,,,,NOT_USED,NON_UNIQUE
+${patientIdentifierType.otherZlEmrId.uuid},,Other ZL EMR ID,"Used to store manually-entered ZL EMR IDs, which may occur when a patient shows up at a clinic with charts or a card bearing a ZL EMR ID from another site.",FALSE,\\[A-Za-z0-9]{6},A1B2C3,org.openmrs.module.idgen.validator.LuhnMod30IdentifierValidator,NOT_USED,NON_UNIQUE

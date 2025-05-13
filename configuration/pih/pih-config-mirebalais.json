@@ -37,7 +37,8 @@
 
   "extraIdentifierTypes": [
     "e66645eb-03a8-4991-b4ce-e87318e37566",
-    "139766e8-15f5-102d-96e4-000c29c2a5d7"
+    "139766e8-15f5-102d-96e4-000c29c2a5d7",
+    "d2a4f69e-f5f5-4a8a-af90-3b150a4bf424"
   ],
 
   "idCardLabel": "Zanmi Lasante Patient ID Card",
@@ -64,7 +65,8 @@
       "d9009bd0-eac9-11e5-a837-0800200c9a66",
       "b5d0a5bd-adf3-4fe0-a231-5a488f6d2c61",
       "e797f826-8e8f-11e7-bb31-be2e44b06b34",
-      "e797face-8e8f-11e7-bb31-be2e44b06b34"
+      "e797face-8e8f-11e7-bb31-be2e44b06b34",
+      "d2a4f69e-f5f5-4a8a-af90-3b150a4bf424"
     ],
     "maxPatientMatchResults": 50,
     "similarPatientsSearch": {
