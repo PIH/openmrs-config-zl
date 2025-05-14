@@ -794,6 +794,222 @@ AND e.voided =0
 AND date(e.encounter_datetime) >= @startDate
 AND date(e.encounter_datetime) < @endDate;
 
+-- ACCOUCHEMENT
+
+SELECT 
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) < 15 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 THEN 1 
+        ELSE 0 
+    END), 
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 29 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >= 30 THEN 1 
+        ELSE 0 
+    END), 
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) IS NULL THEN 1 
+        ELSE 0 
+    END) 
+    INTO
+    @UNDER_15_NORMAL,
+    @BETWEEN_15_19_NORMAL,
+    @BETWEEN_20_24_NORMAL,
+    @BETWEEN_25_29_NORMAL,
+    @THIRTY_AND_ABOVE_NORMAL,
+    @UNKNOWN_AGE_NORMAL
+
+FROM obs o 
+JOIN encounter e 
+    ON o.encounter_id = e.encounter_id 
+    AND o.value_coded=concept_from_mapping("PIH",11785)
+ JOIN person p 
+    ON p.person_id = o.person_id
+WHERE o.voided = 0
+  AND e.voided = 0
+  AND DATE(e.encounter_datetime) >= @startDate
+  AND DATE(e.encounter_datetime) < @endDate;
+
+ 
+ 
+--   ACCOUCHEMENT NORMAL PAR RANG D'AGE Accouchement par césarienne
+
+SELECT 
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) < 15 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 29 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >= 30 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) IS NULL THEN 1 
+        ELSE 0 
+    END)
+INTO 
+  @LESS_THAN_15_CESA,
+  @BETWEEN_15_19_CESA,
+  @BETWEEN_20_24_CESA,
+  @BETWEEN_25_29_CESA,
+  @THIRTY_AND_ABOVE_CESA,
+  @UNKNOWN_AGE_CESA
+
+FROM obs o 
+JOIN encounter e 
+    ON o.encounter_id = e.encounter_id 
+      AND o.value_coded=concept_from_mapping("PIH",9336)
+ JOIN person p 
+    ON p.person_id = o.person_id
+WHERE o.voided = 0
+  AND e.voided = 0
+  AND DATE(e.encounter_datetime) >= @startDate
+  AND DATE(e.encounter_datetime) < @endDate;
+
+
+--   ACCOUCHEMENT NORMAL PAR RANG D'AGE instrumental
+
+SELECT 
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) < 15 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 29 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >= 30 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) IS NULL THEN 1 
+        ELSE 0 
+    END)
+INTO 
+  @LESS_THAN_15_INST,
+  @BETWEEN_15_19_INST,
+  @BETWEEN_20_24_INST,
+  @BETWEEN_25_29_INST,
+  @THIRTY_AND_ABOVE_INST,
+ @UNKNOWN_AGE_INST
+
+FROM obs o 
+JOIN encounter e 
+    ON o.encounter_id = e.encounter_id 
+    AND o.value_coded= concept_from_mapping("PIH",11784)
+JOIN person p 
+    ON p.person_id = o.person_id
+WHERE o.voided = 0
+  AND e.voided = 0
+  AND DATE(e.encounter_datetime) >= @startDate
+  AND DATE(e.encounter_datetime) < @endDate;
+
+ 
+
+
+ 
+  --   ACCOUCHEMENT NORMAL PAR RANG D'AGE OTHER
+SELECT 
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) < 15 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 29 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >= 30 THEN 1 
+        ELSE 0 
+    END),
+    
+    SUM(CASE 
+        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) IS NULL THEN 1 
+        ELSE 0 
+    END)
+INTO 
+@LESS_THAN_15_OTHER,
+@BETWEEN_15_19_OTHER,
+@BETWEEN_20_24_OTHER,
+@BETWEEN_25_29_OTHER,
+@THIRTY_AND_ABOVE_OTHER,
+@UNKNOWN_AGE_OTHER
+ 
+FROM obs o 
+JOIN encounter e 
+    ON o.encounter_id = e.encounter_id 
+    AND (
+         o.value_coded=concept_from_mapping("PIH",9775)
+          OR  o.value_coded=concept_from_mapping("PIH",9768)
+          OR  o.value_coded=concept_from_mapping("PIH",46)
+          )
+JOIN person p 
+    ON p.person_id = o.person_id
+WHERE o.voided = 0
+  AND e.voided = 0
+  AND DATE(e.encounter_datetime) >= @startDate
+  AND DATE(e.encounter_datetime) < @endDate;
+ 
+ 
+
 
 SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_1_S",
         SUM(child_between_1_4_n) "CHILD_BETWEEN_1_4_N", SUM(child_between_1_4_s) "CHILD_BETWEEN_1_4_S",
@@ -906,5 +1122,29 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             @OTHER_SEX_VIOL_KID_TRANSFER AS 'OTHER_SEX_VIOL_KID_TRANSFER',
             @OTHER_SEX_VIOL_KID_LEFT AS 'OTHER_SEX_VIOL_KID_LEFT',
             IFNULL(@OTHER_SEX_VIOL_KID_DEAD, 0) + IFNULL(@OTHER_SEX_VIOL_KID_TREATED, 0) + IFNULL(@OTHER_SEX_VIOL_KID_TRANSFER, 0) + IFNULL(@OTHER_SEX_VIOL_KID_LEFT, 0) AS 'OTHER_SEX_VIOL_KID_TOTAL',
-            @UMC_TRAUMA AS 'UMC_TRAUMA',@UMC_DIGESTIVE AS 'UMC_DIGESTIVE',@UMC_RESPIRATORY AS 'UMC_RESPIRATORY',@UMC_OBSTETRICS AS 'UMC_OBSTETRICS',@UMC_OSTEO_ARTICULAR AS 'UMC_OSTEO_ARTICULAR',@UMC_OTHER AS 'UMC_OTHER'
+            @UMC_TRAUMA AS 'UMC_TRAUMA',@UMC_DIGESTIVE AS 'UMC_DIGESTIVE',@UMC_RESPIRATORY AS 'UMC_RESPIRATORY',@UMC_OBSTETRICS AS 'UMC_OBSTETRICS',@UMC_OSTEO_ARTICULAR AS 'UMC_OSTEO_ARTICULAR',@UMC_OTHER AS 'UMC_OTHER',
+            @LESS_THAN_15_NORMAL       'LESS_THAN_15_NORMAL',
+            @BETWEEN_15_19_NORMAL      'BETWEEN_15_19_NORMAL',
+            @BETWEEN_20_24_NORMAL      'BETWEEN_20_24_NORMAL',
+            @BETWEEN_25_29_NORMAL      'BETWEEN_25_29_NORMAL',
+            @THIRTY_AND_ABOVE_NORMAL   'THIRTY_AND_ABOVE_NORMAL',
+            @UNKNOWN_AGE_NORMAL        'UNKNOWN_AGE_NORMAL',
+            @LESS_THAN_15_CESA         'LESS_THAN_15_CESA',
+            @BETWEEN_15_19_CESA        'BETWEEN_15_19_CESA',
+            @BETWEEN_20_24_CESA        'BETWEEN_20_24_CESA',
+            @BETWEEN_25_29_CESA        'BETWEEN_25_29_CESA',
+            @THIRTY_AND_ABOVE_CESA     'THIRTY_AND_ABOVE_CESA',
+            @UNKNOWN_AGE_CESA          'UNKNOWN_AGE_CESA',
+            @LESS_THAN_15_INST         'LESS_THAN_15_INST',
+            @BETWEEN_15_19_INST        'BETWEEN_15_19_INST',
+            @BETWEEN_20_24_INST        'BETWEEN_20_24_INST',
+            @BETWEEN_25_29_INST        'BETWEEN_25_29_INST',
+            @THIRTY_AND_ABOVE_INST     'THIRTY_AND_ABOVE_INST',
+            @UNKNOWN_AGE_INST          'UNKNOWN_AGE_INST',
+            @LESS_THAN_15_OTHER        'LESS_THAN_15_OTHER',
+            @BETWEEN_15_19_OTHER       'BETWEEN_15_19_OTHER',
+            @BETWEEN_20_24_OTHER       'BETWEEN_20_24_OTHER',
+            @BETWEEN_25_29_OTHER       'BETWEEN_25_29_OTHER',
+            @THIRTY_AND_ABOVE_OTHER    'THIRTY_AND_ABOVE_OTHER',
+            @UNKNOWN_AGE_OTHER         'UNKNOWN_AGE_OTHER'
 FROM visits_distribution_temp;
