@@ -573,20 +573,23 @@ SELECT  (@malaria_test_microscopique_vivax +
 
 -- PHYSICAL VIOLENCE
 SELECT 
-SUM(IF(disp.value_coded=@death AND p.gender ='F',1,0)),
-SUM(IF(disp.value_coded=@death AND p.gender ='M',1,0)),
+SUM(IF(disp.value_coded=@death AND p.gender ='F'  AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
+SUM(IF(disp.value_coded=@death AND p.gender ='M' AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
 SUM(IF(disp.value_coded=@death AND age_at_enc(p.person_id,e.encounter_id) <=@kid_age,1,0)),
-SUM(IF(disp.value_coded=@discharged AND p.gender ='F',1,0)),
-SUM(IF(disp.value_coded=@discharged AND p.gender ='M',1,0)),
+SUM(IF(disp.value_coded=@discharged AND p.gender ='F' AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
+SUM(IF(disp.value_coded=@discharged AND p.gender ='M' AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
 SUM(IF(disp.value_coded=@discharged AND age_at_enc(p.person_id,e.encounter_id) <=@kid_age,1,0)),
-SUM(IF(disp.value_coded=@TransferOutOfHospital AND p.gender ='F',1,0)),
-SUM(IF(disp.value_coded=@TransferOutOfHospital AND p.gender ='M',1,0)),
+SUM(IF(disp.value_coded=@TransferOutOfHospital AND p.gender ='F' AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
+SUM(IF(disp.value_coded=@TransferOutOfHospital AND p.gender ='M' AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
 SUM(IF(disp.value_coded=@TransferOutOfHospital AND age_at_enc(p.person_id,e.encounter_id) <=@kid_age,1,0)),
-SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='F',1,0)),
-SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='M',1,0)),
+SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='F' AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
+SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='M' AND age_at_enc(p.person_id,e.encounter_id) > @kid_age,1,0)),
 SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND age_at_enc(p.person_id,e.encounter_id) <=@kid_age,1,0)) 
-INTO @PHYSICAL_VIOL_WOMEN_DEAD,@PHYSICAL_VIOL_MEN_DEAD,@PHYSICAL_VIOL_KID_DEAD,@PHYSICAL_VIOL_WOMEN_TREATED,@PHYSICAL_VIOL_MEN_TREATED,@PHYSICAL_VIOL_KID_TREATED,
-@PHYSICAL_VIOL_WOMEN_TRANSFER,@PHYSICAL_VIOL_MEN_TRANSFER,@PHYSICAL_VIOL_KID_TRANSFER,@PHYSICAL_VIOL_WOMEN_LEFT,@PHYSICAL_VIOL_MEN_LEFT,@PHYSICAL_VIOL_KID_LEFT
+INTO 
+@PHYSICAL_VIOL_WOMEN_DEAD,@PHYSICAL_VIOL_MEN_DEAD,@PHYSICAL_VIOL_KID_DEAD,
+@PHYSICAL_VIOL_WOMEN_TREATED,@PHYSICAL_VIOL_MEN_TREATED,@PHYSICAL_VIOL_KID_TREATED,
+@PHYSICAL_VIOL_WOMEN_TRANSFER,@PHYSICAL_VIOL_MEN_TRANSFER,@PHYSICAL_VIOL_KID_TRANSFER,
+@PHYSICAL_VIOL_WOMEN_LEFT,@PHYSICAL_VIOL_MEN_LEFT,@PHYSICAL_VIOL_KID_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
 INNER JOIN person p ON p.person_id = o.person_id
@@ -620,8 +623,11 @@ SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='F',1,0)),
 SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='M',1,0)),
 SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='F' AND age_at_enc(p.person_id,e.encounter_id) <=@kid_age,1,0)),
 SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician AND p.gender ='M' AND age_at_enc(p.person_id,e.encounter_id) <=@kid_age,1,0))
-INTO @SEX_VIOL_WOMEN_DEAD,@SEX_VIOL_MEN_DEAD,@SEX_VIOL_KIDF_DEAD,@SEX_VIOL_KIDM_DEAD,@SEX_VIOL_WOMEN_TREATED,@SEX_VIOL_MEN_TREATED,@SEX_VIOL_KIDF_TREATED,@SEX_VIOL_KIDM_TREATED,@SEX_VIOL_WOMEN_TRANSFER,
-@SEX_VIOL_MEN_LEFT,@SEX_VIOL_KIDF_TRANSFER,@SEX_VIOL_KIDM_TRANSFER,@SEX_VIOL_WOMEN_LEFT,@SEX_VIOL_MEN_DEAD,@SEX_VIOL_KIDF_LEFT,@SEX_VIOL_KIDM_LEFT
+INTO
+@SEX_VIOL_WOMEN_DEAD,@SEX_VIOL_MEN_DEAD,@SEX_VIOL_KIDF_DEAD,@SEX_VIOL_KIDM_DEAD,
+@SEX_VIOL_WOMEN_TREATED,@SEX_VIOL_MEN_TREATED,@SEX_VIOL_KIDF_TREATED,@SEX_VIOL_KIDM_TREATED,
+@SEX_VIOL_WOMEN_TRANSFER,@SEX_VIOL_MEN_TRANSFER,@SEX_VIOL_KIDF_TRANSFER,@SEX_VIOL_KIDM_TRANSFER,
+@SEX_VIOL_WOMEN_LEFT,@SEX_VIOL_MEN_LEFT,@SEX_VIOL_KIDF_LEFT,@SEX_VIOL_KIDM_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
 INNER JOIN person p ON p.person_id = o.person_id
