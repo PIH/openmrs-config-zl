@@ -802,6 +802,7 @@ AND date(e.encounter_datetime) < @endDate;
 
 -- ACCOUCHEMENT
 
+
 SELECT 
     SUM(CASE 
         WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) < 15 THEN 1 
@@ -948,72 +949,13 @@ INTO
 FROM obs o 
 JOIN encounter e 
     ON o.encounter_id = e.encounter_id 
-    AND o.value_coded= concept_from_mapping("PIH",11784)
+    AND o.value_coded= concept_from_mapping("PIH",10755)
 JOIN person p 
     ON p.person_id = o.person_id
 WHERE o.voided = 0
   AND e.voided = 0
   AND DATE(e.encounter_datetime) >= @startDate
   AND DATE(e.encounter_datetime) < @endDate;
-
- 
-
-
- 
-  --   ACCOUCHEMENT NORMAL PAR RANG D'AGE OTHER
-SELECT 
-    SUM(CASE 
-        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) < 15 THEN 1 
-        ELSE 0 
-    END),
-    
-    SUM(CASE 
-        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 THEN 1 
-        ELSE 0 
-    END),
-    
-    SUM(CASE 
-        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 THEN 1 
-        ELSE 0 
-    END),
-    
-    SUM(CASE 
-        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 29 THEN 1 
-        ELSE 0 
-    END),
-    
-    SUM(CASE 
-        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >= 30 THEN 1 
-        ELSE 0 
-    END),
-    
-    SUM(CASE 
-        WHEN p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) IS NULL THEN 1 
-        ELSE 0 
-    END)
-INTO 
-@LESS_THAN_15_OTHER,
-@BETWEEN_15_19_OTHER,
-@BETWEEN_20_24_OTHER,
-@BETWEEN_25_29_OTHER,
-@THIRTY_AND_ABOVE_OTHER,
-@UNKNOWN_AGE_OTHER
- 
-FROM obs o 
-JOIN encounter e 
-    ON o.encounter_id = e.encounter_id 
-    AND (
-         o.value_coded=concept_from_mapping("PIH",9775)
-          OR  o.value_coded=concept_from_mapping("PIH",9768)
-          OR  o.value_coded=concept_from_mapping("PIH",46)
-          )
-JOIN person p 
-    ON p.person_id = o.person_id
-WHERE o.voided = 0
-  AND e.voided = 0
-  AND DATE(e.encounter_datetime) >= @startDate
-  AND DATE(e.encounter_datetime) < @endDate;
- 
  
 
 
@@ -1146,11 +1088,6 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             @BETWEEN_20_24_INST        'BETWEEN_20_24_INST',
             @BETWEEN_25_29_INST        'BETWEEN_25_29_INST',
             @THIRTY_AND_ABOVE_INST     'THIRTY_AND_ABOVE_INST',
-            @UNKNOWN_AGE_INST          'UNKNOWN_AGE_INST',
-            @LESS_THAN_15_OTHER        'LESS_THAN_15_OTHER',
-            @BETWEEN_15_19_OTHER       'BETWEEN_15_19_OTHER',
-            @BETWEEN_20_24_OTHER       'BETWEEN_20_24_OTHER',
-            @BETWEEN_25_29_OTHER       'BETWEEN_25_29_OTHER',
-            @THIRTY_AND_ABOVE_OTHER    'THIRTY_AND_ABOVE_OTHER',
-            @UNKNOWN_AGE_OTHER         'UNKNOWN_AGE_OTHER'
+            @UNKNOWN_AGE_INST          'UNKNOWN_AGE_INST'
+
 FROM visits_distribution_temp;
