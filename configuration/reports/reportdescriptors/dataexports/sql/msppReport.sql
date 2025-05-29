@@ -950,6 +950,7 @@ FROM obs o
 JOIN encounter e 
     ON o.encounter_id = e.encounter_id 
     AND o.value_coded= concept_from_mapping("PIH",10755)
+    OR o.value_coded= concept_from_mapping("PIH",10752)
 JOIN person p 
     ON p.person_id = o.person_id
 WHERE o.voided = 0
