@@ -957,6 +957,75 @@ WHERE o.voided = 0
   AND DATE(e.encounter_datetime) >= @startDate
   AND DATE(e.encounter_datetime) < @endDate;
  
+-- NAISSANCES
+
+SELECT 
+  
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "11785")  AND weight.value_numeric <1.5,1,0)) ,
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "11785")  AND weight.value_numeric >= 1.5 AND weight.value_numeric < 2.5 , 1 , 0)),
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "11785")  AND weight.value_numeric >=2.5,1,0)) ,
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "11785")  AND weight.value_numeric IS NULL,1,0)) ,
+    
+    
+     SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "9336")  AND weight.value_numeric < 1.5,1,0)),
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "9336")  AND (weight.value_numeric >= 1.5 AND weight.value_numeric < 2.5), 1, 0)),
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "9336")  AND weight.value_numeric >=2.5,1,0)),
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "9336")  AND weight.value_numeric IS NULL,1,0)),
+    
+    
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "10752")  AND weight.value_numeric < 1.5,1,0)) ,
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "10752")  AND (weight.value_numeric >= 1.5 AND weight.value_numeric < 2.5), 1, 0)),
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "10752")  AND weight.value_numeric >=2.5,1,0)) ,
+    
+    SUM(IF(delivery_type.value_coded= concept_from_mapping("PIH", "10752")  AND weight.value_numeric IS NULL,1,0))
+    
+    
+    INTO
+    @VAGINAL_NIMUS_1_5 ,
+	@VAGINAL_BETWEEN_2_5,
+	@VAGINAL_EQUAL_OR_MORE_2_5,
+	@VAGINAL_NO_WEIGHT,
+	@CESA_NIMUS_1_5,
+	@CESA_BETWEEN_2_5,
+	@CESA_EQUAL_OR_MORE_2_5,
+	@CESA_NO_WEIGHT,
+	@INST_NIMUS_1_5,
+	@INST_BETWEEN_2_5,
+	@INST_EQUAL_OR_MORE_2_5,
+	@INST_NO_WEIGHT
+FROM 
+
+    obs o 
+INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+INNER JOIN person p ON p.person_id = o.person_id
+LEFT JOIN (
+    SELECT encounter_id, value_coded
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "11663")
+   
+) AS delivery_type ON o.encounter_id = delivery_type.encounter_id
+LEFT JOIN (
+    SELECT encounter_id,  value_numeric
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "11067")
+) AS weight ON o.encounter_id = weight.encounter_id
+
+WHERE 
+    o.concept_id = concept_from_mapping("PIH", "12899")
+   AND o.value_coded = concept_from_mapping("PIH", "12897")
+   AND e.voided = 0
+   AND o.voided = 0
+   AND DATE(e.encounter_datetime) >= @startDate
+   AND DATE(e.encounter_datetime) < @endDate;
 
 
 SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_1_S",
@@ -1088,6 +1157,18 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             @BETWEEN_20_24_INST        'BETWEEN_20_24_INST',
             @BETWEEN_25_29_INST        'BETWEEN_25_29_INST',
             @THIRTY_AND_ABOVE_INST     'THIRTY_AND_ABOVE_INST',
-            @UNKNOWN_AGE_INST          'UNKNOWN_AGE_INST'
+            @UNKNOWN_AGE_INST          'UNKNOWN_AGE_INST',
+            @VAGINAL_NIMUS_1_5  'VAGINAL_NIMUS_1_5',
+            @VAGINAL_BETWEEN_2_5 'VAGINAL_BETWEEN_2_5',
+            @VAGINAL_EQUAL_OR_MORE_2_5 'VAGINAL_EQUAL_OR_MORE_2_5',
+            @VAGINAL_NO_WEIGHT 'VAGINAL_NO_WEIGHT',
+            @CESA_NIMUS_1_5 'CESA_NIMUS_1_5',
+            @CESA_BETWEEN_2_5 'CESA_BETWEEN_2_5',
+            @CESA_EQUAL_OR_MORE_2_5 'CESA_EQUAL_OR_MORE_2_5',
+            @CESA_NO_WEIGHT 'CESA_NO_WEIGHT',
+            @INST_NIMUS_1_5 'INST_NIMUS_1_5',
+            @INST_BETWEEN_2_5 'INST_BETWEEN_2_5',
+            @INST_EQUAL_OR_MORE_2_5 'INST_EQUAL_OR_MORE_2_5',
+            @INST_NO_WEIGHT 'INST_NO_WEIGHT'
 
 FROM visits_distribution_temp;
