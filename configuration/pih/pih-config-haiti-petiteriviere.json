@@ -1,6 +1,6 @@
 {
-  "welcomeMessage": "Bienvenue dans l'EMR de Petite Reviere",
-  "site": "PETITEREVIERE",
+  "welcomeMessage": "Bienvenue dans l'EMR de Petite Riviere",
+  "site": "PETITERIVIERE",
 
   "components": [
     "chwApp",
