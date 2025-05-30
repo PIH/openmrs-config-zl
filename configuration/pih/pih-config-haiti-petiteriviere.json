@@ -1,0 +1,39 @@
+{
+  "welcomeMessage": "Bienvenue dans l'EMR de Petite Riviere",
+  "site": "PETITERIVIERE",
+
+  "components": [
+    "chwApp",
+    "clinicianDashboard",
+    "dataExports",
+    "dbevent",
+    "exportPatients",
+    "importPatients",
+    "markPatientDead",
+    "mentalHealth",
+    "myAccount",
+    "patientRegistration",
+    "programs",
+    "systemAdministration",
+    "visitManagement",
+    "visitNote"
+  ],
+
+  "globalProperties": {
+    "coreapps.defaultPatientIdentifierLocation": "a7af173a-f623-445a-bf01-e6a64c0b2c98"
+  },
+
+  "extraIdentifierTypes": [
+    "d9009bd0-eac9-11e5-a837-0800200c9a66"
+  ],
+
+  "registrationConfig": {
+    "afterCreatedActions": [
+    ],
+    "demographics": {
+      "mothersName": {
+        "required": false
+      }
+    }
+  }
+}
