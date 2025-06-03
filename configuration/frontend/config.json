@@ -12,5 +12,10 @@
       "name": "Partners In Health",
       "link": "${openmrsBase}/index.htm"
     }
+  },
+  "@openmrs/esm-patient-tests-app": {
+    "orders": {
+      "labOrderableConcepts": "2ceab591-9edc-4ef1-a409-e437cfe65271"
+    }
   }
 }
