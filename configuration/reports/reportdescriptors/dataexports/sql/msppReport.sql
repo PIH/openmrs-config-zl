@@ -825,7 +825,7 @@ SELECT
     SUM(IF((o.value_coded= concept_from_mapping("PIH",11785) AND instr_type.value_coded IS NOT NULL) AND age_at_enc(p.person_id, e.encounter_id) >= 30, 1, 0)),
     SUM(IF((o.value_coded= concept_from_mapping("PIH",11785) AND instr_type.value_coded IS NOT NULL) AND age_at_enc(p.person_id, e.encounter_id) IS NULL, 1, 0))
     INTO
-    @UNDER_15_NORMAL,
+    @LESS_THAN_15_NORMAL,
     @BETWEEN_15_19_NORMAL,
     @BETWEEN_20_24_NORMAL,
     @BETWEEN_25_29_NORMAL,
