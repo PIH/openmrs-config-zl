@@ -914,6 +914,211 @@ JOIN person p  ON p.person_id = o.person_id
    AND e.voided = 0
    AND DATE(e.encounter_datetime) >= @startDate
    AND DATE(e.encounter_datetime) < @endDate;
+--    Client PF
+    
+  SELECT 
+  
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+     SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) 
+    
+    INTO
+            @MET_CONDOM_BET15_19_ACCEPTED,@MET_CONDOM_BET20_24_ACCEPTED,@MET_CONDOM_MORE_25_ACCEPTED,@MET_CONDOM_BET15_19_USED,@MET_CONDOM_BET20_24_USED,@MET_CONDOM_MORE_25_USED, 
+			@MET_CONDOM_BET15_19_ACCEPTED_M,@MET_CONDOM_BET20_24_ACCEPTED_M,@MET_CONDOM_MORE_25_ACCEPTED_M,@MET_CONDOM_BET15_19_USED_M,@MET_CONDOM_BET20_24_USED_M,@MET_CONDOM_MORE_25_USED_M,
+			@MET_DEPO_PROVERA_BET15_19_ACCEPTED,@MET_DEPO_PROVERA_BET20_24_ACCEPTED,@MET_DEPO_PROVERA_MORE_25_ACCEPTED,@MET_DEPO_PROVERA_BET15_19_USED,@MET_DEPO_PROVERA_BET20_24_USED,@MET_DEPO_PROVERA_MORE_25_USED,
+			@MET_LIGATURE_BET15_19_ACCEPTED,@MET_LIGATURE_BET20_24_ACCEPTED,@MET_LIGATURE_MORE_25_ACCEPTED,@MET_LIGATURE_BET15_19_USED,@MET_LIGATURE_BET20_24_USED,@MET_LIGATURE_MORE_25_USED,
+			@MET_MAMA_BET15_19_ACCEPTED,@MET_MAMA_BET20_24_ACCEPTED,@MET_MAMA_MORE_25_ACCEPTED,@MET_MAMA_BET15_19_USED,@MET_MAMA_BET20_24_USED,@MET_MAMA_MORE_25_USED,
+			@MET_COLIS_BET15_19_ACCEPTED,@MET_COLIS_BET20_24_ACCEPTED,@MET_COLIS_MORE_25_ACCEPTED,@MET_COLIS_BET15_19_USED,@MET_COLIS_BET20_24_USED,@MET_COLIS_MORE_25_USED,
+			@MET_DIU_BET15_19_ACCEPTED,@MET_DIU_BET20_24_ACCEPTED,@MET_DIU_MORE_25_ACCEPTED,@MET_DIU_BET15_19_USED,@MET_DIU_BET20_24_USED,@MET_DIU_MORE_25_USED,
+            @MET_IMPL_BET15_19_ACCEPTED,@MET_IMPL_BET20_24_ACCEPTED,@MET_IMPL_MORE_25_ACCEPTED,@MET_IMPL_BET15_19_USED,@MET_IMPL_BET20_24_USED,@MET_IMPL_MORE_25_USED,
+			@MET_LIGATURE_CCV_BET15_19_ACCEPTED,@MET_LIGATURE_CCV_BET20_24_ACCEPTED,@MET_LIGATURE_CCV_MORE_25_ACCEPTED,@MET_LIGATURE_CCV_BET15_19_USED,
+            @MET_LIGATURE_CCV_BET20_24_USED,@MET_LIGATURE_CCV_MORE_25_USED
+
+ 
+   FROM 
+   
+    obs o 
+   INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+   INNER JOIN person p ON p.person_id = o.person_id
+  LEFT JOIN (
+    SELECT encounter_id, value_coded
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "374") ) AS planing_method ON o.encounter_id = planing_method.encounter_id
+ LEFT JOIN (
+    SELECT encounter_id, value_coded
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "14321") ) AS planing_service_status ON o.encounter_id = planing_service_status.encounter_id
+ LEFT JOIN (
+    SELECT encounter_id, value_coded
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "13008") ) AS depistage ON o.encounter_id = depistage.encounter_id
+
+WHERE 
+    o.value_coded = concept_from_mapping("PIH", "5483")
+   
+   AND e.voided = 0
+   AND o.voided = 0
+   AND DATE(e.encounter_datetime) >= @startDate
+   AND DATE(e.encounter_datetime) < @endDate;
 
 SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_1_S",
         SUM(child_between_1_4_n) "CHILD_BETWEEN_1_4_N", SUM(child_between_1_4_s) "CHILD_BETWEEN_1_4_S",
@@ -1056,6 +1261,60 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             @INST_MINUS_1_5 'INST_MINUS_1_5',
             @INST_BETWEEN_2_5 'INST_BETWEEN_2_5',
             @INST_EQUAL_OR_MORE_2_5 'INST_EQUAL_OR_MORE_2_5',
-            @INST_NO_WEIGHT 'INST_NO_WEIGHT'
+            @INST_NO_WEIGHT 'INST_NO_WEIGHT',
+             @MET_CONDOM_BET15_19_ACCEPTED 'MET_CONDOM_BET15_19_ACCEPTED',
+			@MET_CONDOM_BET20_24_ACCEPTED 'MET_CONDOM_BET20_24_ACCEPTED',
+			@MET_CONDOM_MORE_25_ACCEPTED 'MET_CONDOM_MORE_25_ACCEPTED',
+			@MET_CONDOM_BET15_19_USED 'MET_CONDOM_BET15_19_USED',
+			@MET_CONDOM_BET20_24_USED 'MET_CONDOM_BET20_24_USED',
+			@MET_CONDOM_MORE_25_USED 'MET_CONDOM_MORE_25_USED',
+			@MET_CONDOM_BET15_19_ACCEPTED_M 'MET_CONDOM_BET15_19_ACCEPTED_M',
+			@MET_CONDOM_BET20_24_ACCEPTED_M 'MET_CONDOM_BET20_24_ACCEPTED_M',
+			@MET_CONDOM_MORE_25_ACCEPTED_M 'MET_CONDOM_MORE_25_ACCEPTED_M',
+			@MET_CONDOM_BET15_19_USED_M 'MET_CONDOM_BET15_19_USED_M' ,
+			@MET_CONDOM_BET20_24_USED_M 'MET_CONDOM_BET20_24_USED_M',
+			@MET_CONDOM_MORE_25_USED_M 'MET_CONDOM_MORE_25_USED_M',
+			@MET_DEPO_PROVERA_BET15_19_ACCEPTED 'MET_DEPO_PROVERA_BET15_19_ACCEPTED',
+			@MET_DEPO_PROVERA_BET20_24_ACCEPTED 'MET_DEPO_PROVERA_BET20_24_ACCEPTED',
+			@MET_DEPO_PROVERA_MORE_25_ACCEPTED 'MET_DEPO_PROVERA_MORE_25_ACCEPTED',
+			@MET_DEPO_PROVERA_BET15_19_USED 'MET_DEPO_PROVERA_BET15_19_USED',
+			@MET_DEPO_PROVERA_BET20_24_USED 'MET_DEPO_PROVERA_BET20_24_USED',
+			@MET_DEPO_PROVERA_MORE_25_USED 'MET_DEPO_PROVERA_MORE_25_USED',
+			@MET_LIGATURE_BET15_19_ACCEPTED 'MET_LIGATURE_BET15_19_ACCEPTED',
+			@MET_LIGATURE_BET20_24_ACCEPTED 'MET_LIGATURE_BET20_24_ACCEPTED',
+			@MET_LIGATURE_MORE_25_ACCEPTED 'MET_LIGATURE_MORE_25_ACCEPTED',
+			@MET_LIGATURE_BET15_19_USED 'MET_LIGATURE_BET15_19_USED',
+			@MET_LIGATURE_BET20_24_USED 'MET_LIGATURE_BET20_24_USED',
+			@MET_LIGATURE_MORE_25_USED 'MET_LIGATURE_MORE_25_USED',
+			@MET_MAMA_BET15_19_ACCEPTED 'MET_MAMA_BET15_19_ACCEPTED',
+			@MET_MAMA_BET20_24_ACCEPTED 'MET_MAMA_BET20_24_ACCEPTED',
+			@MET_MAMA_MORE_25_ACCEPTED 'MET_MAMA_MORE_25_ACCEPTED',
+			@MET_MAMA_BET15_19_USED 'MET_MAMA_BET15_19_USED',
+			@MET_MAMA_BET20_24_USED 'MET_MAMA_BET20_24_USED',
+			@MET_MAMA_MORE_25_USED 'MET_MAMA_MORE_25_USED',
+			@MET_COLIS_BET15_19_ACCEPTED 'MET_COLIS_BET15_19_ACCEPTED',
+			@MET_COLIS_BET20_24_ACCEPTED 'MET_COLIS_BET20_24_ACCEPTED',
+			@MET_COLIS_MORE_25_ACCEPTED 'MET_COLIS_MORE_25_ACCEPTED',		
+			@MET_COLIS_BET15_19_USED 'MET_COLIS_BET15_19_USED',
+			@MET_COLIS_BET20_24_USED 'MET_COLIS_BET20_24_USED',
+			@MET_COLIS_MORE_25_USED 'MET_COLIS_MORE_25_USED',
+			@MET_DIU_BET15_19_ACCEPTED 'MET_DIU_BET15_19_ACCEPTED',
+			@MET_DIU_BET20_24_ACCEPTED 'MET_DIU_BET20_24_ACCEPTED',
+			@MET_DIU_MORE_25_ACCEPTED 'MET_DIU_MORE_25_ACCEPTED',
+			@MET_DIU_BET15_19_USED 'MET_DIU_BET15_19_USED',
+			@MET_DIU_BET20_24_USED 'MET_DIU_BET20_24_USED',
+			@MET_DIU_MORE_25_USED 'MET_DIU_MORE_25_USED',
+			@MET_IMPL_BET15_19_ACCEPTED 'MET_IMPL_BET15_19_ACCEPTED',
+			@MET_IMPL_BET20_24_ACCEPTED 'MET_IMPL_BET20_24_ACCEPTED',
+			@MET_IMPL_MORE_25_ACCEPTED 'MET_IMPL_MORE_25_ACCEPTED',
+			@MET_IMPL_BET15_19_USED 'MET_IMPL_BET15_19_USED',
+			@MET_IMPL_BET20_24_USED 'MET_IMPL_BET20_24_USED',
+			@MET_IMPL_MORE_25_USED 'MET_IMPL_MORE_25_USED',
+			@MET_LIGATURE_CCV_BET15_19_ACCEPTED 'MET_LIGATURE_CCV_BET15_19_ACCEPTED',
+			@MET_LIGATURE_CCV_BET20_24_ACCEPTED 'MET_LIGATURE_CCV_BET20_24_ACCEPTED',
+			@MET_LIGATURE_CCV_MORE_25_ACCEPTED 'MET_LIGATURE_CCV_MORE_25_ACCEPTED',
+			@MET_LIGATURE_CCV_BET15_19_USED 'MET_LIGATURE_CCV_BET15_19_USED',
+			@MET_LIGATURE_CCV_BET20_24_USED 'MET_LIGATURE_CCV_BET20_24_USED',
+			@MET_LIGATURE_CCV_MORE_25_USED 'MET_LIGATURE_CCV_MORE_25_USED'
 
 FROM visits_distribution_temp;
