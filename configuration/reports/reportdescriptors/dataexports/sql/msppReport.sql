@@ -865,7 +865,7 @@ SELECT
     SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric <1.5,1,0)),
     SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric >= 1.5 AND weight.value_numeric < 2.5 , 1 , 0)),
     SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric >=2.5,1,0)) ,
-    SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric IS NULL,1,0)) ,
+    SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND instr_type.value_coded IS NULL  AND weight.value_numeric IS NULL,1,0)) ,
  
 
     SUM(IF(o.value_coded= concept_from_mapping("PIH",9336) AND weight.value_numeric <1.5,1,0)),
