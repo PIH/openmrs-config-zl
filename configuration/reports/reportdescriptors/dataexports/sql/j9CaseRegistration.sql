@@ -1,4 +1,6 @@
 -- set @maxMonthsEnrolled = null;
+SET @partition = '${partitionNum}';
+
 set @minEnrollmentDate = if(@maxMonthsEnrolled is null, null, date_sub(now(), INTERVAL @maxMonthsEnrolled MONTH));
 
 select program_workflow_id into @MCH_treatment from program_workflow pw where uuid = '41a277d0-8a14-11e8-9a94-a6cf71072f73';
@@ -175,7 +177,7 @@ update temp_J9_patients t
 set t.mama_dossier = dosId(rm.person_a);
 
 select
-    patient_id,
+    if(@partition REGEXP '^[0-9]+$' = 1,concat(@partition,'-',patient_id),patient_id) "patient_id",
     patient_uuid,
     given_name,
     family_name,
