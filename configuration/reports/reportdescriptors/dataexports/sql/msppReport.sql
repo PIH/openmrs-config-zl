@@ -1149,10 +1149,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		  
-		  SUM(CASE WHEN  disposition.value_coded = concept_from_mapping("PIH", "DEATH") AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital") AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN  p.dead=1 AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN  disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		  
-	    
+	     
 
 		   -- Malaria + confirmée + traitée 
    
@@ -1230,12 +1230,12 @@ WHERE
 		  
 		   SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
 		   AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
-		   AND  disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		   AND  p.dead=1
 		   AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		   
 		   SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
 		   AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
-		   AND  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		   AND  disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		   AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		  
 		 
@@ -1300,11 +1300,11 @@ WHERE
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") 
+		  AND p.dead=1 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
-		  AND disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital	") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL	") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") THEN 1 ELSE 0 END) ,
 		  
 		
@@ -1314,82 +1314,82 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized")
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END) ,
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized")
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END) ,
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END) ,
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END) ,
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END) ,
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized")
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized")
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END) ,
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized")
-		  AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		    SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		    AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized") 
-		   AND disposition.value_coded = concept_from_mapping("PIH", "DEATH") THEN 1 ELSE 0 END),
+		   AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "hospitalized")
-		  AND disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital") THEN 1 ELSE 0 END),
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END),
 		  
 		
 		  
@@ -1435,10 +1435,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN  disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN  p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
 		  
@@ -1484,10 +1484,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "	Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "	ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 	
 	
@@ -1533,10 +1533,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
 		  
@@ -1583,10 +1583,10 @@ WHERE
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		     -- Stress aiguë
@@ -1631,10 +1631,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
 		     -- Trouble Bipolaire
@@ -1680,10 +1680,10 @@ WHERE
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
 		  
-		   SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		   SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 	  		  
 		     -- Troubles lies a la consomation de drogues 
@@ -1728,10 +1728,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
-		    SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		    SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
 		  
@@ -1777,10 +1777,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
  
@@ -1826,10 +1826,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
 		  --  		Trouble de stress post-traumatique
@@ -1874,10 +1874,10 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
 		  --  		Idéation suicidaire
@@ -1922,13 +1922,13 @@ WHERE
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END),
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "DEATH")
+		  SUM(CASE WHEN p.dead=1
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) 
-    
-			    INTO 
+		
+        INTO 
 			  -- Cas Febrile
 			 @FE_AGE_0_F, @FE_AGE_0_M, @FE_AGE_1_4_F, @FE_AGE_1_4_M, @FE_AGE_5_9_F, @FE_AGE_5_9_M, @FE_AGE_10_14_F, @FE_AGE_10_14_M,
              @FE_AGE_15_19_F, @FE_AGE_15_19_M, @FE_AGE_20_24_F, @FE_AGE_20_24_M, @FE_AGE_25_49_F, @FE_AGE_25_49_M, @FE_AGE_50_PLUS_F, @FE_AGE_50_PLUS_M,
