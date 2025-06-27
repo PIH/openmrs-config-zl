@@ -865,7 +865,7 @@ SELECT
     SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric <1.5,1,0)),
     SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric >= 1.5 AND weight.value_numeric < 2.5 , 1 , 0)),
     SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric >=2.5,1,0)) ,
-    SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND weight.value_numeric IS NULL,1,0)) ,
+    SUM(IF(o.value_coded= concept_from_mapping("PIH",11785) AND instr_type.value_coded IS NULL  AND weight.value_numeric IS NULL,1,0)) ,
  
 
     SUM(IF(o.value_coded= concept_from_mapping("PIH",9336) AND weight.value_numeric <1.5,1,0)),
@@ -914,7 +914,1445 @@ JOIN person p  ON p.person_id = o.person_id
    AND e.voided = 0
    AND DATE(e.encounter_datetime) >= @startDate
    AND DATE(e.encounter_datetime) < @endDate;
+--    Client PF
+    
+  SELECT 
+  
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'M' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","CONDOMS") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+     SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","907") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","13158") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5277") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","5275") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)),
+    SUM(IF(p.gender = 'F' AND age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","12106") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","13958"),1,0)),
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) ,
+    SUM(IF( age_at_enc(p.person_id, e.encounter_id) >=25
+    AND planing_method.value_coded=concept_from_mapping("PIH","1719") AND depistage.value_coded=concept_from_mapping("PIH","13003") 
+    AND planing_service_status.value_coded=concept_from_mapping("PIH","10867"),1,0)) 
+    
+    INTO
+            @MET_CONDOM_BET15_19_ACCEPTED,@MET_CONDOM_BET20_24_ACCEPTED,@MET_CONDOM_MORE_25_ACCEPTED,@MET_CONDOM_BET15_19_USED,@MET_CONDOM_BET20_24_USED,@MET_CONDOM_MORE_25_USED, 
+			@MET_CONDOM_BET15_19_ACCEPTED_M,@MET_CONDOM_BET20_24_ACCEPTED_M,@MET_CONDOM_MORE_25_ACCEPTED_M,@MET_CONDOM_BET15_19_USED_M,@MET_CONDOM_BET20_24_USED_M,@MET_CONDOM_MORE_25_USED_M,
+			@MET_DEPO_PROVERA_BET15_19_ACCEPTED,@MET_DEPO_PROVERA_BET20_24_ACCEPTED,@MET_DEPO_PROVERA_MORE_25_ACCEPTED,@MET_DEPO_PROVERA_BET15_19_USED,@MET_DEPO_PROVERA_BET20_24_USED,@MET_DEPO_PROVERA_MORE_25_USED,
+			@MET_LIGATURE_BET15_19_ACCEPTED,@MET_LIGATURE_BET20_24_ACCEPTED,@MET_LIGATURE_MORE_25_ACCEPTED,@MET_LIGATURE_BET15_19_USED,@MET_LIGATURE_BET20_24_USED,@MET_LIGATURE_MORE_25_USED,
+			@MET_MAMA_BET15_19_ACCEPTED,@MET_MAMA_BET20_24_ACCEPTED,@MET_MAMA_MORE_25_ACCEPTED,@MET_MAMA_BET15_19_USED,@MET_MAMA_BET20_24_USED,@MET_MAMA_MORE_25_USED,
+			@MET_COLIS_BET15_19_ACCEPTED,@MET_COLIS_BET20_24_ACCEPTED,@MET_COLIS_MORE_25_ACCEPTED,@MET_COLIS_BET15_19_USED,@MET_COLIS_BET20_24_USED,@MET_COLIS_MORE_25_USED,
+			@MET_DIU_BET15_19_ACCEPTED,@MET_DIU_BET20_24_ACCEPTED,@MET_DIU_MORE_25_ACCEPTED,@MET_DIU_BET15_19_USED,@MET_DIU_BET20_24_USED,@MET_DIU_MORE_25_USED,
+            @MET_IMPL_BET15_19_ACCEPTED,@MET_IMPL_BET20_24_ACCEPTED,@MET_IMPL_MORE_25_ACCEPTED,@MET_IMPL_BET15_19_USED,@MET_IMPL_BET20_24_USED,@MET_IMPL_MORE_25_USED,
+			@MET_LIGATURE_CCV_BET15_19_ACCEPTED,@MET_LIGATURE_CCV_BET20_24_ACCEPTED,@MET_LIGATURE_CCV_MORE_25_ACCEPTED,@MET_LIGATURE_CCV_BET15_19_USED,
+            @MET_LIGATURE_CCV_BET20_24_USED,@MET_LIGATURE_CCV_MORE_25_USED
 
+ 
+   FROM 
+   
+    obs o 
+   INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+   INNER JOIN person p ON p.person_id = o.person_id
+  LEFT JOIN (
+    SELECT encounter_id, value_coded
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "374") ) AS planing_method ON o.encounter_id = planing_method.encounter_id
+ LEFT JOIN (
+    SELECT encounter_id, value_coded
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "14321") ) AS planing_service_status ON o.encounter_id = planing_service_status.encounter_id
+ LEFT JOIN (
+    SELECT encounter_id, value_coded
+    FROM obs
+    WHERE concept_id = concept_from_mapping("PIH", "13008") ) AS depistage ON o.encounter_id = depistage.encounter_id
+
+WHERE 
+    o.value_coded = concept_from_mapping("PIH", "5483")
+   
+   AND e.voided = 0
+   AND o.voided = 0
+   AND DATE(e.encounter_datetime) >= @startDate
+   AND DATE(e.encounter_datetime) < @endDate;
+
+
+   SELECT 
+   
+          -- Cas Febrile
+		   
+		 SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN  p.dead=1 AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital") AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END)
+		  
+		     INTO 
+			  -- Cas Febrile
+			 @FE_AGE_0_F, @FE_AGE_0_M, @FE_AGE_1_4_F, @FE_AGE_1_4_M, @FE_AGE_5_9_F, @FE_AGE_5_9_M, @FE_AGE_10_14_F, @FE_AGE_10_14_M,
+             @FE_AGE_15_19_F, @FE_AGE_15_19_M, @FE_AGE_20_24_F, @FE_AGE_20_24_M, @FE_AGE_25_49_F, @FE_AGE_25_49_M, @FE_AGE_50_PLUS_F, @FE_AGE_50_PLUS_M,
+             @FE_DEATH, @FE_TRANSFER
+		 FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+	  
+		  SELECT 
+		  
+		   -- Malaria + confirmée + traitée 
+   
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")  
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
+		  
+		   SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
+		   AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		   AND  p.dead=1
+		   AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
+		   
+		   SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
+		   AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		   AND  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		   AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) 
+		  
+		  INTO
+		  	 -- Malaria + confirmée + traitée 
+			@MCT_AGE_0_F, @MCT_AGE_0_M, @MCT_AGE_1_4_F, @MCT_AGE_1_4_M, @MCT_AGE_5_9_F, @MCT_AGE_5_9_M, @MCT_AGE_10_14_F, @MCT_AGE_10_14_M,
+            @MCT_AGE_15_19_F, @MCT_AGE_15_19_M, @MCT_AGE_20_24_F, @MCT_AGE_20_24_M, @MCT_AGE_25_49_F, @MCT_AGE_25_49_M, @MCT_AGE_50_PLUS_F, @MCT_AGE_50_PLUS_M,
+            @MCT_DEATH, @MCT_TRANSFER
+		  
+		   FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+  
+		  SELECT 
+		  
+		  
+		     -- Malaria Severe  + Hospitalise 
+		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND p.dead=1 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital	") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) 
+		  
+		  INTO 
+		  
+		  	 -- Malaria Severe  + Hospitalise 
+			@MSH_AGE_0_F, @MSH_AGE_0_M, @MSH_AGE_1_4_F, @MSH_AGE_1_4_M, @MSH_AGE_5_9_F, @MSH_AGE_5_9_M, @MSH_AGE_10_14_F, @MSH_AGE_10_14_M,
+            @MSH_AGE_15_19_F, @MSH_AGE_15_19_M, @MSH_AGE_20_24_F, @MSH_AGE_20_24_M, @MSH_AGE_25_49_F, @MSH_AGE_25_49_M, @MSH_AGE_50_PLUS_F, @MSH_AGE_50_PLUS_M,
+            @MSH_DEATH, @MSH_TRANSFER
+
+		     FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		      -- Malaria Severe  + Hospitalise + decedee
+		  SELECT 
+		  
+		    
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  AND p.dead=1 THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND p.dead=1 THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  AND disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital") THEN 1 ELSE 0 END)
+		  
+		  INTO
+		  
+		  	  -- Malaria Severe  + Hospitalise + decedee
+			@MSHD_AGE_0_F, @MSHD_AGE_0_M, @MSHD_AGE_1_4_F, @MSHD_AGE_1_4_M, @MSHD_AGE_5_9_F, @MSHD_AGE_5_9_M, @MSHD_AGE_10_14_F, @MSHD_AGE_10_14_M,
+            @MSHD_AGE_15_19_F, @MSHD_AGE_15_19_M, @MSHD_AGE_20_24_F, @MSHD_AGE_20_24_M, @MSHD_AGE_25_49_F, @MSHD_AGE_25_49_M, @MSHD_AGE_50_PLUS_F, @MSHD_AGE_50_PLUS_M,
+            @MSHD_DEATH, @MSHD_TRANSFER
+		  
+		     FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+  
+		  
+		  SELECT 
+		  
+		   
+		   -- Anxiete
+		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END)  ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN  p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) 
+		  
+		  INTO
+		  
+		    @ANX_AGE_0_F, @ANX_AGE_0_M, @ANX_AGE_1_4_F, @ANX_AGE_1_4_M, @ANX_AGE_5_9_F, @ANX_AGE_5_9_M, @ANX_AGE_10_14_F, @ANX_AGE_10_14_M,
+            @ANX_AGE_15_19_F, @ANX_AGE_15_19_M, @ANX_AGE_20_24_F, @ANX_AGE_20_24_M, @ANX_AGE_25_49_F, @ANX_AGE_25_49_M, @ANX_AGE_50_PLUS_F, @ANX_AGE_50_PLUS_M,
+            @ANX_DEATH,@ANX_TRANSFER
+		     FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  SELECT
+		   -- Démence
+		    SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "	Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) 
+		  
+		  INTO 
+		  
+		  
+		  	@DEMENTIA_AGE_0_F, @DEMENTIA_AGE_0_M, @DEMENTIA_AGE_1_4_F, @DEMENTIA_AGE_1_4_M, @DEMENTIA_AGE_5_9_F, @DEMENTIA_AGE_5_9_M, @DEMENTIA_AGE_10_14_F, @DEMENTIA_AGE_10_14_M,
+			@DEMENTIA_AGE_15_19_F, @DEMENTIA_AGE_15_19_M, @DEMENTIA_AGE_20_24_F, @DEMENTIA_AGE_20_24_M, @DEMENTIA_AGE_25_49_F, @DEMENTIA_AGE_25_49_M, @DEMENTIA_AGE_50_PLUS_F, @DEMENTIA_AGE_50_PLUS_M,
+		    @DEMENTIA_DEATH,@DEMENTIA_TRANSFER
+		    
+		      FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+
+		  SELECT 
+		  
+		  
+		  -- Dépression
+		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) 
+		  
+		  INTO
+		  
+		   @DEPRESSION_AGE_0_F, @DEPRESSION_AGE_0_M, @DEPRESSION_AGE_1_4_F, @DEPRESSION_AGE_1_4_M, @DEPRESSION_AGE_5_9_F, @DEPRESSION_AGE_5_9_M, @DEPRESSION_AGE_10_14_F, @DEPRESSION_AGE_10_14_M,
+			@DEPRESSION_AGE_15_19_F, @DEPRESSION_AGE_15_19_M, @DEPRESSION_AGE_20_24_F, @DEPRESSION_AGE_20_24_M, @DEPRESSION_AGE_25_49_F, @DEPRESSION_AGE_25_49_M, @DEPRESSION_AGE_50_PLUS_F, @DEPRESSION_AGE_50_PLUS_M,
+			@DEPRESSION_DEATH,@DEPRESSION_TRANSFER
+		  
+		        FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  SELECT
+		     -- Schizophrénie
+		 
+		   SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA")  THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END)
+		  
+		  INTO
+		  
+		     @SCHIZOPHRENIA_AGE_0_F, @SCHIZOPHRENIA_AGE_0_M, @SCHIZOPHRENIA_AGE_1_4_F, @SCHIZOPHRENIA_AGE_1_4_M, @SCHIZOPHRENIA_AGE_5_9_F, @SCHIZOPHRENIA_AGE_5_9_M, @SCHIZOPHRENIA_AGE_10_14_F, @SCHIZOPHRENIA_AGE_10_14_M,
+			@SCHIZOPHRENIA_AGE_15_19_F, @SCHIZOPHRENIA_AGE_15_19_M, @SCHIZOPHRENIA_AGE_20_24_F, @SCHIZOPHRENIA_AGE_20_24_M, @SCHIZOPHRENIA_AGE_25_49_F, @SCHIZOPHRENIA_AGE_25_49_M, @SCHIZOPHRENIA_AGE_50_PLUS_F, @SCHIZOPHRENIA_AGE_50_PLUS_M,
+		    @SCHIZOPHRENIA_DEATH, @SCHIZOPHRENIA_TRANSFER
+		         FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  SELECT
+		  
+		    -- Stress aiguë
+		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END)
+		  
+		  INTO 
+		   @STRESS_AIG_AGE_0_F, @STRESS_AIG_AGE_0_M, @STRESS_AIG_AGE_1_4_F, @STRESS_AIG_AGE_1_4_M, @STRESS_AIG_AGE_5_9_F, @STRESS_AIG_AGE_5_9_M, @STRESS_AIG_AGE_10_14_F, @STRESS_AIG_AGE_10_14_M,
+			@STRESS_AIG_AGE_15_19_F, @STRESS_AIG_AGE_15_19_M, @STRESS_AIG_AGE_20_24_F, @STRESS_AIG_AGE_20_24_M, @STRESS_AIG_AGE_25_49_F, @STRESS_AIG_AGE_25_49_M, @STRESS_AIG_AGE_50_PLUS_F, @STRESS_AIG_AGE_50_PLUS_M,
+			@STRESS_AIG_DEATH, @STRESS_AIG_TRANSFER
+		  
+		  FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+		
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  
+		  SELECT
+-- 		    Trouble Bipolaire
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) 
+		  
+		  INTO
+		  
+		  			@BIPOLAR_DISO_AGE_0_F, @BIPOLAR_DISO_AGE_0_M, @BIPOLAR_DISO_AGE_1_4_F, @BIPOLAR_DISO_AGE_1_4_M, @BIPOLAR_DISO_AGE_5_9_F, @BIPOLAR_DISO_AGE_5_9_M, @BIPOLAR_DISO_AGE_10_14_F, @BIPOLAR_DISO_AGE_10_14_M,
+			@BIPOLAR_DISO_AGE_15_19_F, @BIPOLAR_DISO_AGE_15_19_M, @BIPOLAR_DISO_AGE_20_24_F, @BIPOLAR_DISO_AGE_20_24_M, @BIPOLAR_DISO_AGE_25_49_F, @BIPOLAR_DISO_AGE_25_49_M, @BIPOLAR_DISO_AGE_50_PLUS_F, @BIPOLAR_DISO_AGE_50_PLUS_M,
+			@BIPOLAR_DISO_DEATH,@BIPOLAR_DISO_TRANSFER
+		  FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+	
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  SELECT
+		  
+		   -- Troubles lies a la consomation de drogues 
+		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201")  THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  
+		    SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) 
+		  
+		  INTO
+		  
+		  @DROG_USED_DISO_AGE_0_F, @DROG_USED_DISO_AGE_0_M, @DROG_USED_DISO_AGE_1_4_F, @DROG_USED_DISO_AGE_1_4_M, @DROG_USED_DISO_AGE_5_9_F, @DROG_USED_DISO_AGE_5_9_M, @DROG_USED_DISO_AGE_10_14_F, @DROG_USED_DISO_AGE_10_14_M,
+			@DROG_USED_DISO_AGE_15_19_F, @DROG_USED_DISO_AGE_15_19_M, @DROG_USED_DISO_AGE_20_24_F, @DROG_USED_DISO_AGE_20_24_M, @DROG_USED_DISO_AGE_25_49_F, @DROG_USED_DISO_AGE_25_49_M, @DROG_USED_DISO_AGE_50_PLUS_F, @DROG_USED_DISO_AGE_50_PLUS_M,
+			@DROG_USED_DISO_DEATH, @DROG_USED_DISO_TRANSFER
+		  
+		  
+		    FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+	
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  
+		  
+		  
+		  SELECT 
+		  
+		  
+		   -- Troubles developmental
+		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) 
+		  
+		   INTO
+		   @DEVELOP_DISO_AGE_0_F, @DEVELOP_DISO_AGE_0_M, @DEVELOP_DISO_AGE_1_4_F, @DEVELOP_DISO_AGE_1_4_M, @DEVELOP_DISO_AGE_5_9_F, @DEVELOP_DISO_AGE_5_9_M, @DEVELOP_DISO_AGE_10_14_F, @DEVELOP_DISO_AGE_10_14_M,
+			@DEVELOP_DISO_AGE_15_19_F, @DEVELOP_DISO_AGE_15_19_M, @DEVELOP_DISO_AGE_20_24_F, @DEVELOP_DISO_AGE_20_24_M, @DEVELOP_DISO_AGE_25_49_F, @DEVELOP_DISO_AGE_25_49_M, @DEVELOP_DISO_AGE_50_PLUS_F, @DEVELOP_DISO_AGE_50_PLUS_M,
+			@DEVELOP_DISO_DEATH,  @DEVELOP_DISO_TRANSFER
+		  
+		     FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+	
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  
+		  SELECT 
+		  
+-- 		  Troubles Lies a la consommation de l'alcool
+		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END)
+		  
+		  INTO
+		  
+		    @ALCOHOL_USED_DISO_AGE_0_F, @ALCOHOL_USED_DISO_AGE_0_M, @ALCOHOL_USED_DISO_AGE_1_4_F, @ALCOHOL_USED_DISO_AGE_1_4_M, @ALCOHOL_USED_DISO_AGE_5_9_F, @ALCOHOL_USED_DISO_AGE_5_9_M, @ALCOHOL_USED_DISO_AGE_10_14_F, @ALCOHOL_USED_DISO_AGE_10_14_M,
+			@ALCOHOL_USED_DISO_AGE_15_19_F, @ALCOHOL_USED_DISO_AGE_15_19_M, @ALCOHOL_USED_DISO_AGE_20_24_F, @ALCOHOL_USED_DISO_AGE_20_24_M, @ALCOHOL_USED_DISO_AGE_25_49_F, @ALCOHOL_USED_DISO_AGE_25_49_M, @ALCOHOL_USED_DISO_AGE_50_PLUS_F, @ALCOHOL_USED_DISO_AGE_50_PLUS_M,
+			@ALCOHOL_USED_DISO_DEATH,   @ALCOHOL_USED_DISO_TRANSFER
+		       FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+	
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  
+		  SELECT 
+		    --  		Trouble de stress post-traumatique
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) 
+		  
+		  
+		  INTO
+		  
+		    @POST_TRAUMATIC_DISO_AGE_0_F, @POST_TRAUMATIC_DISO_AGE_0_M, @POST_TRAUMATIC_DISO_AGE_1_4_F, @POST_TRAUMATIC_DISO_AGE_1_4_M, @POST_TRAUMATIC_DISO_AGE_5_9_F, @POST_TRAUMATIC_DISO_AGE_5_9_M, @POST_TRAUMATIC_DISO_AGE_10_14_F, @POST_TRAUMATIC_DISO_AGE_10_14_M,
+			@POST_TRAUMATIC_DISO_AGE_15_19_F, @POST_TRAUMATIC_DISO_AGE_15_19_M, @POST_TRAUMATIC_DISO_AGE_20_24_F, @POST_TRAUMATIC_DISO_AGE_20_24_M, @POST_TRAUMATIC_DISO_AGE_25_49_F, @POST_TRAUMATIC_DISO_AGE_25_49_M, @POST_TRAUMATIC_DISO_AGE_50_PLUS_F, @POST_TRAUMATIC_DISO_AGE_50_PLUS_M,
+		    @POST_TRAUMATIC_DISO_DEATH,@POST_TRAUMATIC_DISO_TRANSFER
+		    
+		  FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+	
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+		  SELECT
+		    --  		Idéation suicidaire
+		  		 
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633")  THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633")  THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END),
+		  
+		  SUM(CASE WHEN p.dead=1
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  
+		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
+		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) 
+		  
+		  INTO
+		  
+		  	@SUICIDAL_IDEATION_AGE_0_F, @SUICIDAL_IDEATION_AGE_0_M, @SUICIDAL_IDEATION_AGE_1_4_F, @SUICIDAL_IDEATION_AGE_1_4_M, @SUICIDAL_IDEATION_AGE_5_9_F, @SUICIDAL_IDEATION_AGE_5_9_M, @SUICIDAL_IDEATION_AGE_10_14_F, @SUICIDAL_IDEATION_AGE_10_14_M,
+			@SUICIDAL_IDEATION_AGE_15_19_F, @SUICIDAL_IDEATION_AGE_15_19_M, @SUICIDAL_IDEATION_AGE_20_24_F, @SUICIDAL_IDEATION_AGE_20_24_M, @SUICIDAL_IDEATION_AGE_25_49_F, @SUICIDAL_IDEATION_AGE_25_49_M, @SUICIDAL_IDEATION_AGE_50_PLUS_F, @SUICIDAL_IDEATION_AGE_50_PLUS_M,
+            @SUICIDAL_IDEATION_DEATH,@SUICIDAL_IDEATION_TRANSFER
+		  
+		    FROM  obs o 
+		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN person p ON p.person_id = o.person_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  LEFT JOIN (
+		    SELECT encounter_id, value_coded
+		    FROM obs
+		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
+	
+		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND DATE(e.encounter_datetime) >= @startDate
+		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+	 
 SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_1_S",
         SUM(child_between_1_4_n) "CHILD_BETWEEN_1_4_N", SUM(child_between_1_4_s) "CHILD_BETWEEN_1_4_S",
         SUM(child_between_5_9_n) "CHILD_BETWEEN_5_9_N",SUM(child_between_5_9_s) "CHILD_BETWEEN_5_9_S",
@@ -1056,6 +2494,167 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             @INST_MINUS_1_5 'INST_MINUS_1_5',
             @INST_BETWEEN_2_5 'INST_BETWEEN_2_5',
             @INST_EQUAL_OR_MORE_2_5 'INST_EQUAL_OR_MORE_2_5',
-            @INST_NO_WEIGHT 'INST_NO_WEIGHT'
+            @INST_NO_WEIGHT 'INST_NO_WEIGHT',
+             @MET_CONDOM_BET15_19_ACCEPTED 'MET_CONDOM_BET15_19_ACCEPTED',
+			@MET_CONDOM_BET20_24_ACCEPTED 'MET_CONDOM_BET20_24_ACCEPTED',
+			@MET_CONDOM_MORE_25_ACCEPTED 'MET_CONDOM_MORE_25_ACCEPTED',
+			@MET_CONDOM_BET15_19_USED 'MET_CONDOM_BET15_19_USED',
+			@MET_CONDOM_BET20_24_USED 'MET_CONDOM_BET20_24_USED',
+			@MET_CONDOM_MORE_25_USED 'MET_CONDOM_MORE_25_USED',
+			@MET_CONDOM_BET15_19_ACCEPTED_M 'MET_CONDOM_BET15_19_ACCEPTED_M',
+			@MET_CONDOM_BET20_24_ACCEPTED_M 'MET_CONDOM_BET20_24_ACCEPTED_M',
+			@MET_CONDOM_MORE_25_ACCEPTED_M 'MET_CONDOM_MORE_25_ACCEPTED_M',
+			@MET_CONDOM_BET15_19_USED_M 'MET_CONDOM_BET15_19_USED_M' ,
+			@MET_CONDOM_BET20_24_USED_M 'MET_CONDOM_BET20_24_USED_M',
+			@MET_CONDOM_MORE_25_USED_M 'MET_CONDOM_MORE_25_USED_M',
+			@MET_DEPO_PROVERA_BET15_19_ACCEPTED 'MET_DEPO_PROVERA_BET15_19_ACCEPTED',
+			@MET_DEPO_PROVERA_BET20_24_ACCEPTED 'MET_DEPO_PROVERA_BET20_24_ACCEPTED',
+			@MET_DEPO_PROVERA_MORE_25_ACCEPTED 'MET_DEPO_PROVERA_MORE_25_ACCEPTED',
+			@MET_DEPO_PROVERA_BET15_19_USED 'MET_DEPO_PROVERA_BET15_19_USED',
+			@MET_DEPO_PROVERA_BET20_24_USED 'MET_DEPO_PROVERA_BET20_24_USED',
+			@MET_DEPO_PROVERA_MORE_25_USED 'MET_DEPO_PROVERA_MORE_25_USED',
+			@MET_LIGATURE_BET15_19_ACCEPTED 'MET_LIGATURE_BET15_19_ACCEPTED',
+			@MET_LIGATURE_BET20_24_ACCEPTED 'MET_LIGATURE_BET20_24_ACCEPTED',
+			@MET_LIGATURE_MORE_25_ACCEPTED 'MET_LIGATURE_MORE_25_ACCEPTED',
+			@MET_LIGATURE_BET15_19_USED 'MET_LIGATURE_BET15_19_USED',
+			@MET_LIGATURE_BET20_24_USED 'MET_LIGATURE_BET20_24_USED',
+			@MET_LIGATURE_MORE_25_USED 'MET_LIGATURE_MORE_25_USED',
+			@MET_MAMA_BET15_19_ACCEPTED 'MET_MAMA_BET15_19_ACCEPTED',
+			@MET_MAMA_BET20_24_ACCEPTED 'MET_MAMA_BET20_24_ACCEPTED',
+			@MET_MAMA_MORE_25_ACCEPTED 'MET_MAMA_MORE_25_ACCEPTED',
+			@MET_MAMA_BET15_19_USED 'MET_MAMA_BET15_19_USED',
+			@MET_MAMA_BET20_24_USED 'MET_MAMA_BET20_24_USED',
+			@MET_MAMA_MORE_25_USED 'MET_MAMA_MORE_25_USED',
+			@MET_COLIS_BET15_19_ACCEPTED 'MET_COLIS_BET15_19_ACCEPTED',
+			@MET_COLIS_BET20_24_ACCEPTED 'MET_COLIS_BET20_24_ACCEPTED',
+			@MET_COLIS_MORE_25_ACCEPTED 'MET_COLIS_MORE_25_ACCEPTED',		
+			@MET_COLIS_BET15_19_USED 'MET_COLIS_BET15_19_USED',
+			@MET_COLIS_BET20_24_USED 'MET_COLIS_BET20_24_USED',
+			@MET_COLIS_MORE_25_USED 'MET_COLIS_MORE_25_USED',
+			@MET_DIU_BET15_19_ACCEPTED 'MET_DIU_BET15_19_ACCEPTED',
+			@MET_DIU_BET20_24_ACCEPTED 'MET_DIU_BET20_24_ACCEPTED',
+			@MET_DIU_MORE_25_ACCEPTED 'MET_DIU_MORE_25_ACCEPTED',
+			@MET_DIU_BET15_19_USED 'MET_DIU_BET15_19_USED',
+			@MET_DIU_BET20_24_USED 'MET_DIU_BET20_24_USED',
+			@MET_DIU_MORE_25_USED 'MET_DIU_MORE_25_USED',
+			@MET_IMPL_BET15_19_ACCEPTED 'MET_IMPL_BET15_19_ACCEPTED',
+			@MET_IMPL_BET20_24_ACCEPTED 'MET_IMPL_BET20_24_ACCEPTED',
+			@MET_IMPL_MORE_25_ACCEPTED 'MET_IMPL_MORE_25_ACCEPTED',
+			@MET_IMPL_BET15_19_USED 'MET_IMPL_BET15_19_USED',
+			@MET_IMPL_BET20_24_USED 'MET_IMPL_BET20_24_USED',
+			@MET_IMPL_MORE_25_USED 'MET_IMPL_MORE_25_USED',
+			@MET_LIGATURE_CCV_BET15_19_ACCEPTED 'MET_LIGATURE_CCV_BET15_19_ACCEPTED',
+			@MET_LIGATURE_CCV_BET20_24_ACCEPTED 'MET_LIGATURE_CCV_BET20_24_ACCEPTED',
+			@MET_LIGATURE_CCV_MORE_25_ACCEPTED 'MET_LIGATURE_CCV_MORE_25_ACCEPTED',
+			@MET_LIGATURE_CCV_BET15_19_USED 'MET_LIGATURE_CCV_BET15_19_USED',
+			@MET_LIGATURE_CCV_BET20_24_USED 'MET_LIGATURE_CCV_BET20_24_USED',
+			@MET_LIGATURE_CCV_MORE_25_USED 'MET_LIGATURE_CCV_MORE_25_USED',
+            @FE_AGE_0_F 'FE_AGE_0_F',  @FE_AGE_0_M 'FE_AGE_0_M', @FE_AGE_1_4_F 'FE_AGE_1_4_F', 
+                @FE_AGE_1_4_M 'FE_AGE_1_4_M', @FE_AGE_5_9_F 'FE_AGE_5_9_F',  @FE_AGE_5_9_M 'FE_AGE_5_9_M',
+                @FE_AGE_10_14_F 'FE_AGE_10_14_F',  @FE_AGE_10_14_M 'FE_AGE_10_14_M',@FE_AGE_15_19_F 'FE_AGE_15_19_F', 
+                @FE_AGE_15_19_M 'FE_AGE_15_19_M',@FE_AGE_20_24_F 'FE_AGE_20_24_F', @FE_AGE_20_24_M 'FE_AGE_20_24_M', @FE_AGE_25_49_F 'FE_AGE_25_49_F', 
+                @FE_AGE_25_49_M 'FE_AGE_25_49_M', @FE_AGE_50_PLUS_F 'FE_AGE_50_PLUS_F',  @FE_AGE_50_PLUS_M 'FE_AGE_50_PLUS_M',
+                @FE_DEATH 'FE_DEATH',@FE_TRANSFER 'FE_TRANSFER',
+                
+                @MCT_AGE_0_F 'MCT_AGE_0_F', @MCT_AGE_0_M 'MCT_AGE_0_M', @MCT_AGE_1_4_F 'MCT_AGE_1_4_F', 
+                @MCT_AGE_1_4_M 'MCT_AGE_1_4_M', @MCT_AGE_5_9_F 'MCT_AGE_5_9_F',@MCT_AGE_5_9_M 'MCT_AGE_5_9_M',
+                @MCT_AGE_10_14_F 'MCT_AGE_10_14_F', @MCT_AGE_10_14_M 'MCT_AGE_10_14_M', @MCT_AGE_15_19_F 'MCT_AGE_15_19_F', 
+                @MCT_AGE_15_19_M 'MCT_AGE_15_19_M', @MCT_AGE_20_24_F 'MCT_AGE_20_24_F', @MCT_AGE_20_24_M 'MCT_AGE_20_24_M',
+                @MCT_AGE_25_49_F 'MCT_AGE_25_49_F', @MCT_AGE_25_49_M 'MCT_AGE_25_49_M', @MCT_AGE_50_PLUS_F 'MCT_AGE_50_PLUS_F',
+                @MCT_AGE_50_PLUS_M 'MCT_AGE_50_PLUS_M',@MCT_DEATH 'MCT_DEATH',@MCT_TRANSFER 'MCT_TRANSFER',
+                
+                @MSH_AGE_0_F 'MSH_AGE_0_F', @MSH_AGE_0_M 'MSH_AGE_0_M', @MSH_AGE_1_4_F 'MSH_AGE_1_4_F',
+                @MSH_AGE_1_4_M 'MSH_AGE_1_4_M', @MSH_AGE_5_9_F 'MSH_AGE_5_9_F', @MSH_AGE_5_9_M 'MSH_AGE_5_9_M',
+                @MSH_AGE_10_14_F 'MSH_AGE_10_14_F', @MSH_AGE_10_14_M 'MSH_AGE_10_14_M', @MSH_AGE_15_19_F 'MSH_AGE_15_19_F',
+                @MSH_AGE_15_19_M 'MSH_AGE_15_19_M', @MSH_AGE_20_24_F 'MSH_AGE_20_24_F', @MSH_AGE_20_24_M 'MSH_AGE_20_24_M',
+                @MSH_AGE_25_49_F 'MSH_AGE_25_49_F', @MSH_AGE_25_49_M 'MSH_AGE_25_49_M', @MSH_AGE_50_PLUS_F 'MSH_AGE_50_PLUS_F',
+                @MSH_AGE_50_PLUS_M 'MSH_AGE_50_PLUS_M',@MSH_DEATH 'MSH_DEATH',@MSH_TRANSFER 'MSH_TRANSFER',
+                
+                @MSHD_AGE_0_F 'MSHD_AGE_0_F', @MSHD_AGE_0_M 'MSHD_AGE_0_M', @MSHD_AGE_1_4_F 'MSHD_AGE_1_4_F',
+                @MSHD_AGE_1_4_M 'MSHD_AGE_1_4_M', @MSHD_AGE_5_9_F 'MSHD_AGE_5_9_F', @MSHD_AGE_5_9_M 'MSHD_AGE_5_9_M',
+                @MSHD_AGE_10_14_F 'MSHD_AGE_10_14_F', @MSHD_AGE_10_14_M 'MSHD_AGE_10_14_M', @MSHD_AGE_15_19_F 'MSHD_AGE_15_19_F',
+                @MSHD_AGE_15_19_M 'MSHD_AGE_15_19_M', @MSHD_AGE_20_24_F 'MSHD_AGE_20_24_F', @MSHD_AGE_20_24_M 'MSHD_AGE_20_24_M',
+                @MSHD_AGE_25_49_F 'MSHD_AGE_25_49_F', @MSHD_AGE_25_49_M 'MSHD_AGE_25_49_M', @MSHD_AGE_50_PLUS_F 'MSHD_AGE_50_PLUS_F',
+                @MSHD_AGE_50_PLUS_M 'MSHD_AGE_50_PLUS_M', @MSHD_DEATH 'MSHD_DEATH', @MSHD_TRANSFER 'MSHD_TRANSFER',
+                
+                @ANX_AGE_0_F 'ANX_AGE_0_F', @ANX_AGE_0_M 'ANX_AGE_0_M', @ANX_AGE_1_4_F 'ANX_AGE_1_4_F',
+                @ANX_AGE_1_4_M 'ANX_AGE_1_4_M', @ANX_AGE_5_9_F 'ANX_AGE_5_9_F', @ANX_AGE_5_9_M 'ANX_AGE_5_9_M',
+                @ANX_AGE_10_14_F 'ANX_AGE_10_14_F', @ANX_AGE_10_14_M 'ANX_AGE_10_14_M', @ANX_AGE_15_19_F 'ANX_AGE_15_19_F',
+                @ANX_AGE_15_19_M 'ANX_AGE_15_19_M', @ANX_AGE_20_24_F 'ANX_AGE_20_24_F', @ANX_AGE_20_24_M 'ANX_AGE_20_24_M',
+                @ANX_AGE_25_49_F 'ANX_AGE_25_49_F', @ANX_AGE_25_49_M 'ANX_AGE_25_49_M', @ANX_AGE_50_PLUS_F 'ANX_AGE_50_PLUS_F',
+                @ANX_AGE_50_PLUS_M 'ANX_AGE_50_PLUS_M',@ANX_DEATH 'ANX_DEATH', @ANX_TRANSFER 'ANX_TRANSFER',
+                
+                @DEMENTIA_AGE_0_F 'DEMENTIA_AGE_0_F', @DEMENTIA_AGE_0_M 'DEMENTIA_AGE_0_M', @DEMENTIA_AGE_1_4_F 'DEMENTIA_AGE_1_4_F',
+                @DEMENTIA_AGE_1_4_M 'DEMENTIA_AGE_1_4_M', @DEMENTIA_AGE_5_9_F 'DEMENTIA_AGE_5_9_F', @DEMENTIA_AGE_5_9_M 'DEMENTIA_AGE_5_9_M',
+                @DEMENTIA_AGE_10_14_F 'DEMENTIA_AGE_10_14_F', @DEMENTIA_AGE_10_14_M 'DEMENTIA_AGE_10_14_M', @DEMENTIA_AGE_15_19_F 'DEMENTIA_AGE_15_19_F',
+                @DEMENTIA_AGE_15_19_M 'DEMENTIA_AGE_15_19_M', @DEMENTIA_AGE_20_24_F 'DEMENTIA_AGE_20_24_F', @DEMENTIA_AGE_20_24_M 'DEMENTIA_AGE_20_24_M',
+                @DEMENTIA_AGE_25_49_F 'DEMENTIA_AGE_25_49_F', @DEMENTIA_AGE_25_49_M 'DEMENTIA_AGE_25_49_M', @DEMENTIA_AGE_50_PLUS_F 'DEMENTIA_AGE_50_PLUS_F',
+                @DEMENTIA_AGE_50_PLUS_M 'DEMENTIA_AGE_50_PLUS_M', @DEMENTIA_DEATH 'DEMENTIA_DEATH', @DEMENTIA_TRANSFER 'DEMENTIA_TRANSFER',
+                
+                @DEPRESSION_AGE_0_F 'DEPRESSION_AGE_0_F', @DEPRESSION_AGE_0_M 'DEPRESSION_AGE_0_M', @DEPRESSION_AGE_1_4_F 'DEPRESSION_AGE_1_4_F',
+                @DEPRESSION_AGE_1_4_M 'DEPRESSION_AGE_1_4_M', @DEPRESSION_AGE_5_9_F 'DEPRESSION_AGE_5_9_F', @DEPRESSION_AGE_5_9_M 'DEPRESSION_AGE_5_9_M',
+                @DEPRESSION_AGE_10_14_F 'DEPRESSION_AGE_10_14_F', @DEPRESSION_AGE_10_14_M 'DEPRESSION_AGE_10_14_M', @DEPRESSION_AGE_15_19_F 'DEPRESSION_AGE_15_19_F',
+                @DEPRESSION_AGE_15_19_M 'DEPRESSION_AGE_15_19_M', @DEPRESSION_AGE_20_24_F 'DEPRESSION_AGE_20_24_F', @DEPRESSION_AGE_20_24_M 'DEPRESSION_AGE_20_24_M',
+                @DEPRESSION_AGE_25_49_F 'DEPRESSION_AGE_25_49_F', @DEPRESSION_AGE_25_49_M 'DEPRESSION_AGE_25_49_M', @DEPRESSION_AGE_50_PLUS_F 'DEPRESSION_AGE_50_PLUS_F',
+                @DEPRESSION_AGE_50_PLUS_M 'DEPRESSION_AGE_50_PLUS_M', @DEPRESSION_DEATH 'DEPRESSION_DEATH', @DEPRESSION_TRANSFER 'DEPRESSION_TRANSFER',
+
+                
+                @SCHIZOPHRENIA_AGE_0_F 'SCHIZOPHRENIA_AGE_0_F', @SCHIZOPHRENIA_AGE_0_M 'SCHIZOPHRENIA_AGE_0_M', @SCHIZOPHRENIA_AGE_1_4_F 'SCHIZOPHRENIA_AGE_1_4_F',
+                @SCHIZOPHRENIA_AGE_1_4_M 'SCHIZOPHRENIA_AGE_1_4_M', @SCHIZOPHRENIA_AGE_5_9_F 'SCHIZOPHRENIA_AGE_5_9_F', @SCHIZOPHRENIA_AGE_5_9_M 'SCHIZOPHRENIA_AGE_5_9_M',
+                @SCHIZOPHRENIA_AGE_10_14_F 'SCHIZOPHRENIA_AGE_10_14_F', @SCHIZOPHRENIA_AGE_10_14_M 'SCHIZOPHRENIA_AGE_10_14_M', @SCHIZOPHRENIA_AGE_15_19_F 'SCHIZOPHRENIA_AGE_15_19_F',
+                @SCHIZOPHRENIA_AGE_15_19_M 'SCHIZOPHRENIA_AGE_15_19_M', @SCHIZOPHRENIA_AGE_20_24_F 'SCHIZOPHRENIA_AGE_20_24_F', @SCHIZOPHRENIA_AGE_20_24_M 'SCHIZOPHRENIA_AGE_20_24_M',
+                @SCHIZOPHRENIA_AGE_25_49_F 'SCHIZOPHRENIA_AGE_25_49_F', @SCHIZOPHRENIA_AGE_25_49_M 'SCHIZOPHRENIA_AGE_25_49_M', @SCHIZOPHRENIA_AGE_50_PLUS_F 'SCHIZOPHRENIA_AGE_50_PLUS_F',
+                @SCHIZOPHRENIA_AGE_50_PLUS_M 'SCHIZOPHRENIA_AGE_50_PLUS_M', @SCHIZOPHRENIA_DEATH 'SCHIZOPHRENIA_DEATH', @SCHIZOPHRENIA_TRANSFER 'SCHIZOPHRENIA_TRANSFER',
+                
+                @STRESS_AIG_AGE_0_F 'STRESS_AIG_AGE_0_F', @STRESS_AIG_AGE_0_M 'STRESS_AIG_AGE_0_M', @STRESS_AIG_AGE_1_4_F 'STRESS_AIG_AGE_1_4_F',
+                @STRESS_AIG_AGE_1_4_M 'STRESS_AIG_AGE_1_4_M', @STRESS_AIG_AGE_5_9_F 'STRESS_AIG_AGE_5_9_F', @STRESS_AIG_AGE_5_9_M 'STRESS_AIG_AGE_5_9_M',
+                @STRESS_AIG_AGE_10_14_F 'STRESS_AIG_AGE_10_14_F', @STRESS_AIG_AGE_10_14_M 'STRESS_AIG_AGE_10_14_M', @STRESS_AIG_AGE_15_19_F 'STRESS_AIG_AGE_15_19_F',
+                @STRESS_AIG_AGE_15_19_M 'STRESS_AIG_AGE_15_19_M', @STRESS_AIG_AGE_20_24_F 'STRESS_AIG_AGE_20_24_F', @STRESS_AIG_AGE_20_24_M 'STRESS_AIG_AGE_20_24_M',
+                @STRESS_AIG_AGE_25_49_F 'STRESS_AIG_AGE_25_49_F', @STRESS_AIG_AGE_25_49_M 'STRESS_AIG_AGE_25_49_M', @STRESS_AIG_AGE_50_PLUS_F 'STRESS_AIG_AGE_50_PLUS_F',
+                @STRESS_AIG_AGE_50_PLUS_M 'STRESS_AIG_AGE_50_PLUS_M',  @STRESS_AIG_DEATH 'STRESS_AIG_DEATH', @STRESS_AIG_TRANSFER 'STRESS_AIG_TRANSFER',
+                
+                @BIPOLAR_DISO_AGE_0_F 'BIPOLAR_DISO_AGE_0_F', @BIPOLAR_DISO_AGE_0_M 'BIPOLAR_DISO_AGE_0_M', @BIPOLAR_DISO_AGE_1_4_F 'BIPOLAR_DISO_AGE_1_4_F',
+                @BIPOLAR_DISO_AGE_1_4_M 'BIPOLAR_DISO_AGE_1_4_M', @BIPOLAR_DISO_AGE_5_9_F 'BIPOLAR_DISO_AGE_5_9_F', @BIPOLAR_DISO_AGE_5_9_M 'BIPOLAR_DISO_AGE_5_9_M',
+                @BIPOLAR_DISO_AGE_10_14_F 'BIPOLAR_DISO_AGE_10_14_F', @BIPOLAR_DISO_AGE_10_14_M 'BIPOLAR_DISO_AGE_10_14_M', @BIPOLAR_DISO_AGE_15_19_F 'BIPOLAR_DISO_AGE_15_19_F',
+                @BIPOLAR_DISO_AGE_15_19_M 'BIPOLAR_DISO_AGE_15_19_M', @BIPOLAR_DISO_AGE_20_24_F 'BIPOLAR_DISO_AGE_20_24_F', @BIPOLAR_DISO_AGE_20_24_M 'BIPOLAR_DISO_AGE_20_24_M',
+                @BIPOLAR_DISO_AGE_25_49_F 'BIPOLAR_DISO_AGE_25_49_F', @BIPOLAR_DISO_AGE_25_49_M 'BIPOLAR_DISO_AGE_25_49_M', @BIPOLAR_DISO_AGE_50_PLUS_F 'BIPOLAR_DISO_AGE_50_PLUS_F',
+                @BIPOLAR_DISO_AGE_50_PLUS_M 'BIPOLAR_DISO_AGE_50_PLUS_M', @BIPOLAR_DISO_DEATH 'BIPOLAR_DISO_DEATH',@BIPOLAR_DISO_TRANSFER 'BIPOLAR_DISO_TRANSFER',
+
+                
+                @DROG_USED_DISO_AGE_0_F 'DROG_USED_DISO_AGE_0_F', @DROG_USED_DISO_AGE_0_M 'DROG_USED_DISO_AGE_0_M', @DROG_USED_DISO_AGE_1_4_F 'DROG_USED_DISO_AGE_1_4_F',
+                @DROG_USED_DISO_AGE_1_4_M 'DROG_USED_DISO_AGE_1_4_M', @DROG_USED_DISO_AGE_5_9_F 'DROG_USED_DISO_AGE_5_9_F', @DROG_USED_DISO_AGE_5_9_M 'DROG_USED_DISO_AGE_5_9_M',
+                @DROG_USED_DISO_AGE_10_14_F 'DROG_USED_DISO_AGE_10_14_F', @DROG_USED_DISO_AGE_10_14_M 'DROG_USED_DISO_AGE_10_14_M', @DROG_USED_DISO_AGE_15_19_F 'DROG_USED_DISO_AGE_15_19_F',
+                @DROG_USED_DISO_AGE_15_19_M 'DROG_USED_DISO_AGE_15_19_M', @DROG_USED_DISO_AGE_20_24_F 'DROG_USED_DISO_AGE_20_24_F', @DROG_USED_DISO_AGE_20_24_M 'DROG_USED_DISO_AGE_20_24_M',
+                @DROG_USED_DISO_AGE_25_49_F 'DROG_USED_DISO_AGE_25_49_F', @DROG_USED_DISO_AGE_25_49_M 'DROG_USED_DISO_AGE_25_49_M', @DROG_USED_DISO_AGE_50_PLUS_F 'DROG_USED_DISO_AGE_50_PLUS_F',
+                @DROG_USED_DISO_AGE_50_PLUS_M 'DROG_USED_DISO_AGE_50_PLUS_M', @DROG_USED_DISO_DEATH 'DROG_USED_DISO_DEATH', @DROG_USED_DISO_TRANSFER 'DROG_USED_DISO_TRANSFER',
+
+
+                @DEVELOP_DISO_AGE_0_F 'DEVELOP_DISO_AGE_0_F', @DEVELOP_DISO_AGE_0_M 'DEVELOP_DISO_AGE_0_M', @DEVELOP_DISO_AGE_1_4_F 'DEVELOP_DISO_AGE_1_4_F',
+                @DEVELOP_DISO_AGE_1_4_M 'DEVELOP_DISO_AGE_1_4_M', @DEVELOP_DISO_AGE_5_9_F 'DEVELOP_DISO_AGE_5_9_F', @DEVELOP_DISO_AGE_5_9_M 'DEVELOP_DISO_AGE_5_9_M',
+                @DEVELOP_DISO_AGE_10_14_F 'DEVELOP_DISO_AGE_10_14_F', @DEVELOP_DISO_AGE_10_14_M 'DEVELOP_DISO_AGE_10_14_M', @DEVELOP_DISO_AGE_15_19_F 'DEVELOP_DISO_AGE_15_19_F',
+                @DEVELOP_DISO_AGE_15_19_M 'DEVELOP_DISO_AGE_15_19_M', @DEVELOP_DISO_AGE_20_24_F 'DEVELOP_DISO_AGE_20_24_F', @DEVELOP_DISO_AGE_20_24_M 'DEVELOP_DISO_AGE_20_24_M',
+                @DEVELOP_DISO_AGE_25_49_F 'DEVELOP_DISO_AGE_25_49_F', @DEVELOP_DISO_AGE_25_49_M 'DEVELOP_DISO_AGE_25_49_M', @DEVELOP_DISO_AGE_50_PLUS_F 'DEVELOP_DISO_AGE_50_PLUS_F',
+                @DEVELOP_DISO_AGE_50_PLUS_M 'DEVELOP_DISO_AGE_50_PLUS_M',  @DEVELOP_DISO_DEATH 'DEVELOP_DISO_DEATH',  @DEVELOP_DISO_TRANSFER 'DEVELOP_DISO_TRANSFER',
+                
+                @ALCOHOL_USED_DISO_AGE_0_F 'ALCOHOL_USED_DISO_AGE_0_F', @ALCOHOL_USED_DISO_AGE_0_M 'ALCOHOL_USED_DISO_AGE_0_M', @ALCOHOL_USED_DISO_AGE_1_4_F 'ALCOHOL_USED_DISO_AGE_1_4_F',
+                @ALCOHOL_USED_DISO_AGE_1_4_M 'ALCOHOL_USED_DISO_AGE_1_4_M', @ALCOHOL_USED_DISO_AGE_5_9_F 'ALCOHOL_USED_DISO_AGE_5_9_F', @ALCOHOL_USED_DISO_AGE_5_9_M 'ALCOHOL_USED_DISO_AGE_5_9_M',
+                @ALCOHOL_USED_DISO_AGE_10_14_F 'ALCOHOL_USED_DISO_AGE_10_14_F', @ALCOHOL_USED_DISO_AGE_10_14_M 'ALCOHOL_USED_DISO_AGE_10_14_M', @ALCOHOL_USED_DISO_AGE_15_19_F 'ALCOHOL_USED_DISO_AGE_15_19_F',
+                @ALCOHOL_USED_DISO_AGE_15_19_M 'ALCOHOL_USED_DISO_AGE_15_19_M', @ALCOHOL_USED_DISO_AGE_20_24_F 'ALCOHOL_USED_DISO_AGE_20_24_F', @ALCOHOL_USED_DISO_AGE_20_24_M 'ALCOHOL_USED_DISO_AGE_20_24_M',
+                @ALCOHOL_USED_DISO_AGE_25_49_F 'ALCOHOL_USED_DISO_AGE_25_49_F', @ALCOHOL_USED_DISO_AGE_25_49_M 'ALCOHOL_USED_DISO_AGE_25_49_M', @ALCOHOL_USED_DISO_AGE_50_PLUS_F 'ALCOHOL_USED_DISO_AGE_50_PLUS_F',
+                @ALCOHOL_USED_DISO_AGE_50_PLUS_M 'ALCOHOL_USED_DISO_AGE_50_PLUS_M', @ALCOHOL_USED_DISO_DEATH 'ALCOHOL_USED_DISO_DEATH',   @ALCOHOL_USED_DISO_TRANSFER 'ALCOHOL_USED_DISO_TRANSFER',
+
+                @POST_TRAUMATIC_DISO_AGE_0_F 'POST_TRAUMATIC_DISO_AGE_0_F', @POST_TRAUMATIC_DISO_AGE_0_M 'POST_TRAUMATIC_DISO_AGE_0_M', @POST_TRAUMATIC_DISO_AGE_1_4_F 'POST_TRAUMATIC_DISO_AGE_1_4_F',
+                @POST_TRAUMATIC_DISO_AGE_1_4_M 'POST_TRAUMATIC_DISO_AGE_1_4_M', @POST_TRAUMATIC_DISO_AGE_5_9_F 'POST_TRAUMATIC_DISO_AGE_5_9_F', @POST_TRAUMATIC_DISO_AGE_5_9_M 'POST_TRAUMATIC_DISO_AGE_5_9_M',
+                @POST_TRAUMATIC_DISO_AGE_10_14_F 'POST_TRAUMATIC_DISO_AGE_10_14_F', @POST_TRAUMATIC_DISO_AGE_10_14_M 'POST_TRAUMATIC_DISO_AGE_10_14_M', @POST_TRAUMATIC_DISO_AGE_15_19_F 'POST_TRAUMATIC_DISO_AGE_15_19_F',
+                @POST_TRAUMATIC_DISO_AGE_15_19_M 'POST_TRAUMATIC_DISO_AGE_15_19_M', @POST_TRAUMATIC_DISO_AGE_20_24_F 'POST_TRAUMATIC_DISO_AGE_20_24_F', @POST_TRAUMATIC_DISO_AGE_20_24_M 'POST_TRAUMATIC_DISO_AGE_20_24_M',
+                @POST_TRAUMATIC_DISO_AGE_25_49_F 'POST_TRAUMATIC_DISO_AGE_25_49_F', @POST_TRAUMATIC_DISO_AGE_25_49_M 'POST_TRAUMATIC_DISO_AGE_25_49_M', @POST_TRAUMATIC_DISO_AGE_50_PLUS_F 'POST_TRAUMATIC_DISO_AGE_50_PLUS_F',
+                @POST_TRAUMATIC_DISO_AGE_50_PLUS_M 'POST_TRAUMATIC_DISO_AGE_50_PLUS_M', @POST_TRAUMATIC_DISO_DEATH 'POST_TRAUMATIC_DISO_DEATH',@POST_TRAUMATIC_DISO_TRANSFER 'POST_TRAUMATIC_DISO_TRANSFER',
+
+                @SUICIDAL_IDEATION_AGE_0_F 'SUICIDAL_IDEATION_AGE_0_F', @SUICIDAL_IDEATION_AGE_0_M 'SUICIDAL_IDEATION_AGE_0_M', @SUICIDAL_IDEATION_AGE_1_4_F 'SUICIDAL_IDEATION_AGE_1_4_F',
+                @SUICIDAL_IDEATION_AGE_1_4_M 'SUICIDAL_IDEATION_AGE_1_4_M', @SUICIDAL_IDEATION_AGE_5_9_F 'SUICIDAL_IDEATION_AGE_5_9_F', @SUICIDAL_IDEATION_AGE_5_9_M 'SUICIDAL_IDEATION_AGE_5_9_M',
+                @SUICIDAL_IDEATION_AGE_10_14_F 'SUICIDAL_IDEATION_AGE_10_14_F', @SUICIDAL_IDEATION_AGE_10_14_M 'SUICIDAL_IDEATION_AGE_10_14_M', @SUICIDAL_IDEATION_AGE_15_19_F 'SUICIDAL_IDEATION_AGE_15_19_F',
+                @SUICIDAL_IDEATION_AGE_15_19_M 'SUICIDAL_IDEATION_AGE_15_19_M', @SUICIDAL_IDEATION_AGE_20_24_F 'SUICIDAL_IDEATION_AGE_20_24_F', @SUICIDAL_IDEATION_AGE_20_24_M 'SUICIDAL_IDEATION_AGE_20_24_M',
+                @SUICIDAL_IDEATION_AGE_25_49_F 'SUICIDAL_IDEATION_AGE_25_49_F', @SUICIDAL_IDEATION_AGE_25_49_M 'SUICIDAL_IDEATION_AGE_25_49_M', @SUICIDAL_IDEATION_AGE_50_PLUS_F 'SUICIDAL_IDEATION_AGE_50_PLUS_F',
+                @SUICIDAL_IDEATION_AGE_50_PLUS_M 'SUICIDAL_IDEATION_AGE_50_PLUS_M',  @SUICIDAL_IDEATION_DEATH 'SUICIDAL_IDEATION_DEATH', @SUICIDAL_IDEATION_TRANSFER 'SUICIDAL_IDEATION_TRANSFER'
 
 FROM visits_distribution_temp;
