@@ -1,2 +1,28 @@
-Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Lab Results Location,Login Location,Maternal and Child Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location
-Belladère,TRUE,TRUE,TRUE,,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,TRUE,TRUE,TRUE
+Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location,Vitals Inpatient Location,Vitals ANC Location
+Belladère,,,,,,,,,,,,,,,,,,,,,,,,,,,,TRUE,,,,,,,,TRUE,,,
+Achiv Santral | Belladere,,,,TRUE,,,,,,,,,,,TRUE,,,TRUE,,,,,,,,,,,,TRUE,,,,,,,,,
+COVID-19 | Izolman | Belladere,TRUE,,,,TRUE,TRUE,,,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
+Dantis | Belladere,,,TRUE,,,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,TRUE,,,TRUE,,
+Ijans | Belladere,,,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,TRUE,,,,TRUE,
+Klinik Ekstèn | Belladere,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,,TRUE,,
+Klinik Ekstèn Famasi | Belladere,,,TRUE,,,,,,TRUE,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,,
+Klinik Ekstèn Jeneral | Belladere,,,TRUE,,,TRUE,,,,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,,,TRUE,,TRUE,TRUE,TRUE,,,,,,TRUE,,
+Klinik MNT | Belladere,,,,,TRUE,,,TRUE,,TRUE,,,,,,TRUE,,TRUE,,,,,TRUE,,,,TRUE,,,,,,,,,,TRUE,,
+Onkoloji | Belladere,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,,TRUE,
+Radyografi | Belladere,,,TRUE,,,,,,,,,,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,,,,,,
+Sal Aprè Akouchman | Belladere,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,
+Sal Aprè Operasyon | Belladere,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,TRUE,
+Sal Aprè Operasyon | Sante Fanm | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,TRUE,
+Sal Avan Akouchman | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,,TRUE,
+Sal Fanm | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,,TRUE
+Sal Gason | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,
+Sal Izolman | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,
+Sal Operasyon | Belladere,,TRUE,,,TRUE,,,,,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,TRUE,,,,,,TRUE,
+Sal Reyabilitasyon | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,
+Sal Timoun | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,TRUE,,,,TRUE,
+Sante Fanm | Belladere,,,TRUE,,TRUE,TRUE,,TRUE,,,,,TRUE,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,TRUE,,,,TRUE
+Sante Kominotè | Belladere,,,TRUE,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,
+Swen Entansif | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,
+Swen Entansif Neonatal | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,,TRUE,
+Travay e Akouchman | Belladere,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,,TRUE,
+UMI | Belladere,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
