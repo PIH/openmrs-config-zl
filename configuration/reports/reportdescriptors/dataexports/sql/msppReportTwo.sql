@@ -8,36 +8,36 @@ SET @firstDate = CONCAT(YEAR(CURDATE()), '-01-01');
 SET  @locale = GLOBAL_PROPERTY_VALUE('default_locale', 'en');
 SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 
-  SELECT 
+  	  SELECT 
    
           -- Cas Febrile
 		   
-		 SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		  
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		  
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M' AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M' AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
 		  
-		  SUM(CASE WHEN  p.dead=1 AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
-		  SUM(CASE WHEN  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital") AND diagnostic.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END)
+		  SUM(CASE WHEN  p.dead=1 AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END),
+		  SUM(CASE WHEN  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital") AND o.value_coded = concept_from_mapping("PIH", "FEVER") THEN 1 ELSE 0 END)
 		  
 		     INTO 
 			  -- Cas Febrile
@@ -50,19 +50,16 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
+		  
+		  
+		  
+    
 		  
 		  
 		  
@@ -72,83 +69,83 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		   -- Malaria + confirmée + traitée 
    
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")  
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA")  
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA")
+		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA") 
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA") 
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
+		  AND o.value_coded = concept_from_mapping("PIH", "MALARIA")
 		  AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		  
-		   SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
+		   SUM(CASE WHEN o.value_coded = concept_from_mapping("PIH", "MALARIA")
 		   AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		   AND  p.dead=1
 		   AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) ,
 		   
-		   SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "MALARIA")
+		   SUM(CASE WHEN o.value_coded = concept_from_mapping("PIH", "MALARIA")
 		   AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
 		   AND  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
 		   AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) 
@@ -169,16 +166,12 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
-		  
 		  
 		  
 		  SELECT 
@@ -187,66 +180,66 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		     -- Malaria Severe  + Hospitalise 
 		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END)  ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")  
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")  
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  SUM(CASE WHEN  o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND p.dead=1 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) ,
 		  
-		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  SUM(CASE WHEN  o.value_coded = concept_from_mapping("PIH", "Severe malaria")
 		  AND disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital	") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") THEN 1 ELSE 0 END) 
 		  
@@ -260,106 +253,102 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		 
+		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		  AND concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
+	    
 		      -- Malaria Severe  + Hospitalise + decedee
 		  SELECT 
 		  
 		    
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")  
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND p.dead=1 THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")  
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")  
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
 		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  AND o.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
-		  SUM(CASE WHEN diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria") 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
+		  SUM(CASE WHEN o.value_coded = concept_from_mapping("PIH", "Severe malaria") 
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL") 
 		  AND p.dead=1 THEN 1 ELSE 0 END),
 		  
-		  SUM(CASE WHEN  diagnostic.value_coded = concept_from_mapping("PIH", "Severe malaria")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
+		  SUM(CASE WHEN  o.value_coded = concept_from_mapping("PIH", "Severe malaria")
+		  AND disposition.value_coded = concept_from_mapping("PIH", "ADMIT TO HOSPITAL")
 		  AND disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital") THEN 1 ELSE 0 END)
 		  
 		  INTO
@@ -376,73 +365,70 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		  AND  o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
 		  
-		  
-		  SELECT 
+		   SELECT 
 		  
 		   
 		   -- Anxiete
 		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END)  ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END)  ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN  p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "ANXIETY DISORDER") THEN 1 ELSE 0 END) 
 		  
 		  INTO
 		  
@@ -456,68 +442,67 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
-		  
+		
+		   
 		  SELECT
 		   -- Démence
 		    SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "	Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "DEMENTIA") THEN 1 ELSE 0 END) 
 		  
 		  INTO 
 		  
@@ -529,76 +514,71 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		      FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
-		  LEFT JOIN (
+		   LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
-		  WHERE  e.voided = 0 AND o.voided = 0
+		   WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
+
 		  
 		  
+		
 		  SELECT 
 		  
-		  
+		 
 		  -- Dépression
 		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "DEPRESSION") THEN 1 ELSE 0 END) 
 		  
 		  INTO
 		  
@@ -609,74 +589,69 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		        FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		 
+		 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		  AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
-		  SELECT
+		 SELECT
 		     -- Schizophrénie
 		 
 		   SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA")  THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA")  THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END)
+		  AND o.value_coded = concept_from_mapping("PIH", "SCHIZOPHRENIA") THEN 1 ELSE 0 END)
 		  
 		  INTO
 		  
@@ -686,74 +661,69 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		         FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		 
+		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		  AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
-		  SELECT
+		 SELECT
 		  
 		    -- Stress aiguë
 		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END)
+		  AND o.value_coded = concept_from_mapping("PIH", "7950") THEN 1 ELSE 0 END)
 		  
 		  INTO 
 		   @STRESS_AIG_AGE_0_F, @STRESS_AIG_AGE_0_M, @STRESS_AIG_AGE_1_4_F, @STRESS_AIG_AGE_1_4_M, @STRESS_AIG_AGE_5_9_F, @STRESS_AIG_AGE_5_9_M, @STRESS_AIG_AGE_10_14_F, @STRESS_AIG_AGE_10_14_M,
@@ -763,73 +733,66 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  
+		 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
-		  
-		  
-		  SELECT
+	 SELECT
 -- 		    Trouble Bipolaire
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "Bipolar disorder") THEN 1 ELSE 0 END) 
 		  
 		  INTO
 		  
@@ -839,74 +802,67 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
+		  AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
-		  
-		  SELECT
+		 SELECT
 		  
 		   -- Troubles lies a la consomation de drogues 
 		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201")  THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7201")  THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
 		    SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "7201") THEN 1 ELSE 0 END) 
 		  
 		  INTO
 		  
@@ -918,20 +874,15 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		    FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		 
+		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
+		  AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
@@ -939,57 +890,56 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		  
 		  
 		  
-		  
-		  SELECT 
+		SELECT 
 		  
 		  
 		   -- Troubles developmental
 		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "7951") THEN 1 ELSE 0 END) 
 		  
 		   INTO
 		   @DEVELOP_DISO_AGE_0_F, @DEVELOP_DISO_AGE_0_M, @DEVELOP_DISO_AGE_1_4_F, @DEVELOP_DISO_AGE_1_4_M, @DEVELOP_DISO_AGE_5_9_F, @DEVELOP_DISO_AGE_5_9_M, @DEVELOP_DISO_AGE_10_14_F, @DEVELOP_DISO_AGE_10_14_M,
@@ -999,75 +949,71 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		   
+		 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
 		  
-		  SELECT 
+		  
+SELECT 
 		  
 -- 		  Troubles Lies a la consommation de l'alcool
 		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END)
+		  AND o.value_coded = concept_from_mapping("PIH", "9522") THEN 1 ELSE 0 END)
 		  
 		  INTO
 		  
@@ -1077,73 +1023,67 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		       FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		   
+		
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
-		  
-		  SELECT 
+		 SELECT 
 		    --  		Trouble de stress post-traumatique
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END),
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "7197") THEN 1 ELSE 0 END) 
 		  
 		  
 		  INTO
@@ -1155,73 +1095,67 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		 
+		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
-		  
-		  SELECT
+		 SELECT
 		    --  		Idéation suicidaire
 		  		 
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) < 1 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'F'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 1 AND 4 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633")  THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 5 AND 9 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633")  THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633")  THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'F' 
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  SUM(CASE WHEN age_at_enc(p.person_id, e.encounter_id) >= 50 AND p.gender = 'M'
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END),
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END),
 		  
 		  SUM(CASE WHEN p.dead=1
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) ,
 		  
 		  SUM(CASE WHEN disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		  AND diagnostic.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) 
+		  AND o.value_coded = concept_from_mapping("PIH", "10633") THEN 1 ELSE 0 END) 
 		  
 		  INTO
 		  
@@ -1232,20 +1166,15 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 		    FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "3064") AND voided=0 ) AS diagnostic ON o.encounter_id = diagnostic.encounter_id
+		  
+		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
+		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
 
