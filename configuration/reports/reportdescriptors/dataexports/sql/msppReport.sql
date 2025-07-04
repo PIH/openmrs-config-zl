@@ -2431,6 +2431,816 @@ SELECT
 		   AND o.concept_id = concept_from_mapping("PIH", "3064")
 		   AND DATE(e.encounter_datetime) >= @startDate
 		   AND DATE(e.encounter_datetime) < @endDate;
+
+		  -- Maladie Chroniques
+
+			SELECT 
+			 -- Diabetes
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)),
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)),
+			    
+				-- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)) ,
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO 
+				@NEW_DIAB_MINUS_10_F,@OLD_DIAB_MINUS_10_F,@NEW_DIAB_MINUS_10_M,@OLD_DIAB_MINUS_10_M,
+				@NEW_DIAB_BET_10_AND_14_F,@OLD_DIAB_BET_10_AND_14_F,@NEW_DIAB_BET_10_AND_14_M,@OLD_DIAB_BET_10_AND_14_M,
+				@NEW_DIAB_BET_15_AND_19_F,@OLD_DIAB_BET_15_AND_19_F,@NEW_DIAB_BET_15_AND_19_M,@OLD_DIAB_BET_15_AND_19_M,
+				@NEW_DIAB_BET_20_AND_24_F,@OLD_DIAB_BET_20_AND_24_F,@NEW_DIAB_BET_20_AND_24_M,@OLD_DIAB_BET_20_AND_24_M,
+				@NEW_DIAB_BET_25_AND_49_F,@OLD_DIAB_BET_25_AND_49_F,@NEW_DIAB_BET_25_AND_49_M,@OLD_DIAB_BET_25_AND_49_M,
+				@NEW_DIAB_BET_50_AND_MORE_F,@OLD_DIAB_BET_50_AND_MORE_F,@NEW_DIAB_BET_50_AND_MORE_M,@OLD_DIAB_BET_50_AND_MORE_M,
+				@DIAB_DEAD,@NEW_DIAB_DISCHARGED,@OLD_DIAB_DISCHARGED
+
+			FROM obs o 
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', 'DIABETES')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', 'DIABETES')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+
+ 
+
+			SELECT 
+			 -- HYPERTENSION
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+				-- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)),
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_HYPER_MINUS_10_F,@OLD_HYPER_MINUS_10_F,@NEW_HYPER_MINUS_10_M,@OLD_HYPER_MINUS_10_M,
+				@NEW_HYPER_BET_10_AND_14_F,@OLD_HYPER_BET_10_AND_14_F,@NEW_HYPER_BET_10_AND_14_M,@OLD_HYPER_BET_10_AND_14_M,
+				@NEW_HYPER_BET_15_AND_19_F,@OLD_HYPER_BET_15_AND_19_F,@NEW_HYPER_BET_15_AND_19_M,@OLD_HYPER_BET_15_AND_19_M,
+				@NEW_HYPER_BET_20_AND_24_F,@OLD_HYPER_BET_20_AND_24_F,@NEW_HYPER_BET_20_AND_24_M,@OLD_HYPER_BET_20_AND_24_M,
+				@NEW_HYPER_BET_25_AND_49_F,@OLD_HYPER_BET_25_AND_49_F,@NEW_HYPER_BET_25_AND_49_M,@OLD_HYPER_BET_25_AND_49_M,
+				@NEW_HYPER_BET_50_AND_MORE_F,@OLD_HYPER_BET_50_AND_MORE_F,@NEW_HYPER_BET_50_AND_MORE_M,@OLD_HYPER_BET_50_AND_MORE_M,
+				@HYPER_DEAD,@NEW_HYPER_DISCHARGED,@OLD_HYPER_DISCHARGED
+							
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', 'HYPERTENSION')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', 'HYPERTENSION')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+			
+
+			
+			SELECT 
+			 -- Tumeur de Burkit
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+				-- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)) ,
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_TUMEUR_MINUS_10_F,@OLD_TUMEUR_MINUS_10_F,@NEW_TUMEUR_MINUS_10_M,@OLD_TUMEUR_MINUS_10_M,
+				@NEW_TUMEUR_BET_10_AND_14_F,@OLD_TUMEUR_BET_10_AND_14_F,@NEW_TUMEUR_BET_10_AND_14_M,@OLD_TUMEUR_BET_10_AND_14_M,
+				@NEW_TUMEUR_BET_15_AND_19_F,@OLD_TUMEUR_BET_15_AND_19_F,@NEW_TUMEUR_BET_15_AND_19_M,@OLD_TUMEUR_BET_15_AND_19_M,
+				@NEW_TUMEUR_BET_20_AND_24_F,@OLD_TUMEUR_BET_20_AND_24_F,@NEW_TUMEUR_BET_20_AND_24_M,@OLD_TUMEUR_BET_20_AND_24_M,
+				@NEW_TUMEUR_BET_25_AND_49_F,@OLD_TUMEUR_BET_25_AND_49_F,@NEW_TUMEUR_BET_25_AND_49_M,@OLD_TUMEUR_BET_25_AND_49_M,
+				@NEW_TUMEUR_BET_50_AND_MORE_F,@OLD_TUMEUR_BET_50_AND_MORE_F,@NEW_TUMEUR_BET_50_AND_MORE_M,@OLD_TUMEUR_BET_50_AND_MORE_M,
+				@TUMEUR_DEAD,@NEW_TUMEUR_DISCHARGED,@OLD_TUMEUR_DISCHARGED
+								
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', '8414')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', '8414')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+
+			
+			
+			SELECT 
+			 -- Cancer du col de l'uterus
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+				-- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)) ,
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_CANCER_COL_MINUS_10_F,@OLD_CANCER_COL_MINUS_10_F,@NEW_CANCER_COL_MINUS_10_M,@OLD_CANCER_COL_MINUS_10_M,
+				@NEW_CANCER_COL_BET_10_AND_14_F,@OLD_CANCER_COL_BET_10_AND_14_F,@NEW_CANCER_COL_BET_10_AND_14_M,@OLD_CANCER_COL_BET_10_AND_14_M,
+				@NEW_CANCER_COL_BET_15_AND_19_F,@OLD_CANCER_COL_BET_15_AND_19_F,@NEW_CANCER_COL_BET_15_AND_19_M,@OLD_CANCER_COL_BET_15_AND_19_M,
+				@NEW_CANCER_COL_BET_20_AND_24_F,@OLD_CANCER_COL_BET_20_AND_24_F,@NEW_CANCER_COL_BET_20_AND_24_M,@OLD_CANCER_COL_BET_20_AND_24_M,
+				@NEW_CANCER_COL_BET_25_AND_49_F,@OLD_CANCER_COL_BET_25_AND_49_F,@NEW_CANCER_COL_BET_25_AND_49_M,@OLD_CANCER_COL_BET_25_AND_49_M,
+				@NEW_CANCER_COL_BET_50_AND_MORE_F,@OLD_CANCER_COL_BET_50_AND_MORE_F,@NEW_CANCER_COL_BET_50_AND_MORE_M,@OLD_CANCER_COL_BET_50_AND_MORE_M,
+				@CANCER_COL_DEAD,@NEW_CANCER_COL_DISCHARGED,@OLD_CANCER_COL_DISCHARGED
+				
+				
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', '7914')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', '7914')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+
+		 
+			SELECT 
+			 -- Cancer du Sein
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+				-- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)) ,
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_CANCER_SEIN_MINUS_10_F,@OLD_CANCER_SEIN_MINUS_10_F,@NEW_CANCER_SEIN_MINUS_10_M,@OLD_CANCER_SEIN_MINUS_10_M,
+				@NEW_CANCER_SEIN_BET_10_AND_14_F,@OLD_CANCER_SEIN_BET_10_AND_14_F,@NEW_CANCER_SEIN_BET_10_AND_14_M,@OLD_CANCER_SEIN_BET_10_AND_14_M,
+				@NEW_CANCER_SEIN_BET_15_AND_19_F,@OLD_CANCER_SEIN_BET_15_AND_19_F,@NEW_CANCER_SEIN_BET_15_AND_19_M,@OLD_CANCER_SEIN_BET_15_AND_19_M,
+				@NEW_CANCER_SEIN_BET_20_AND_24_F,@OLD_CANCER_SEIN_BET_20_AND_24_F,@NEW_CANCER_SEIN_BET_20_AND_24_M,@OLD_CANCER_SEIN_BET_20_AND_24_M,
+				@NEW_CANCER_SEIN_BET_25_AND_49_F,@OLD_CANCER_SEIN_BET_25_AND_49_F,@NEW_CANCER_SEIN_BET_25_AND_49_M,@OLD_CANCER_SEIN_BET_25_AND_49_M,
+				@NEW_CANCER_SEIN_BET_50_AND_MORE_F,@OLD_CANCER_SEIN_BET_50_AND_MORE_F,@NEW_CANCER_SEIN_BET_50_AND_MORE_M,@OLD_CANCER_SEIN_BET_50_AND_MORE_M,
+				@CANCER_SEIN_DEAD,@NEW_CANCER_SEIN_DISCHARGED,@OLD_CANCER_SEIN_DISCHARGED
+								
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', '7581')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', '7581')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+
+ 
+        SELECT 
+			 -- Cancer de la prostate
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+				-- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)),
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_CANCER_PROSTATE_MINUS_10_F,@OLD_CANCER_PROSTATE_MINUS_10_F,@NEW_CANCER_PROSTATE_MINUS_10_M,@OLD_CANCER_PROSTATE_MINUS_10_M,
+				@NEW_CANCER_PROSTATE_BET_10_AND_14_F,@OLD_CANCER_PROSTATE_BET_10_AND_14_F,@NEW_CANCER_PROSTATE_BET_10_AND_14_M,@OLD_CANCER_PROSTATE_BET_10_AND_14_M,
+				@NEW_CANCER_PROSTATE_BET_15_AND_19_F,@OLD_CANCER_PROSTATE_BET_15_AND_19_F,@NEW_CANCER_PROSTATE_BET_15_AND_19_M,@OLD_CANCER_PROSTATE_BET_15_AND_19_M,
+				@NEW_CANCER_PROSTATE_BET_20_AND_24_F,@OLD_CANCER_PROSTATE_BET_20_AND_24_F,@NEW_CANCER_PROSTATE_BET_20_AND_24_M,@OLD_CANCER_PROSTATE_BET_20_AND_24_M,
+				@NEW_CANCER_PROSTATE_BET_25_AND_49_F,@OLD_CANCER_PROSTATE_BET_25_AND_49_F,@NEW_CANCER_PROSTATE_BET_25_AND_49_M,@OLD_CANCER_PROSTATE_BET_25_AND_49_M,
+				@NEW_CANCER_PROSTATE_BET_50_AND_MORE_F,@OLD_CANCER_PROSTATE_BET_50_AND_MORE_F,@NEW_CANCER_PROSTATE_BET_50_AND_MORE_M,@OLD_CANCER_PROSTATE_BET_50_AND_MORE_M,
+				@CANCER_PROSTATE_DEAD,@NEW_CANCER_PROSTATE_DISCHARGED,@OLD_CANCER_PROSTATE_DISCHARGED
+				
+				
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', '7916')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', '7916')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+
+
+			
+			
+
+			SELECT 
+			 -- Obesite
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			  -- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)) ,
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_OBESITY_MINUS_10_F,@OLD_OBESITY_MINUS_10_F,@NEW_OBESITY_MINUS_10_M,@OLD_OBESITY_MINUS_10_M,
+				@NEW_OBESITY_BET_10_AND_14_F,@OLD_OBESITY_BET_10_AND_14_F,@NEW_OBESITY_BET_10_AND_14_M,@OLD_OBESITY_BET_10_AND_14_M,
+				@NEW_OBESITY_BET_15_AND_19_F,@OLD_OBESITY_BET_15_AND_19_F,@NEW_OBESITY_BET_15_AND_19_M,@OLD_OBESITY_BET_15_AND_19_M,
+				@NEW_OBESITY_BET_20_AND_24_F,@OLD_OBESITY_BET_20_AND_24_F,@NEW_OBESITY_BET_20_AND_24_M,@OLD_OBESITY_BET_20_AND_24_M,
+				@NEW_OBESITY_BET_25_AND_49_F,@OLD_OBESITY_BET_25_AND_49_F,@NEW_OBESITY_BET_25_AND_49_M,@OLD_OBESITY_BET_25_AND_49_M,
+				@NEW_OBESITY_BET_50_AND_MORE_F,@OLD_OBESITY_BET_50_AND_MORE_F,@NEW_OBESITY_BET_50_AND_MORE_M,@OLD_OBESITY_BET_50_AND_MORE_M,
+				@OBESITY_DEAD,@NEW_OBESITY_DISCHARGED,@OLD_OBESITY_DISCHARGED
+				
+				 
+				
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', 'Obesity')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', 'Obesity')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+ 
+
+       	SELECT 
+			 -- Glaucome
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+				-- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)),
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_GLAUCOMA_MINUS_10_F,@OLD_GLAUCOMA_MINUS_10_F,@NEW_GLAUCOMA_MINUS_10_M,@OLD_GLAUCOMA_MINUS_10_M,
+				@NEW_GLAUCOMA_BET_10_AND_14_F,@OLD_GLAUCOMA_BET_10_AND_14_F,@NEW_GLAUCOMA_BET_10_AND_14_M,@OLD_GLAUCOMA_BET_10_AND_14_M,
+				@NEW_GLAUCOMA_BET_15_AND_19_F,@OLD_GLAUCOMA_BET_15_AND_19_F,@NEW_GLAUCOMA_BET_15_AND_19_M,@OLD_GLAUCOMA_BET_15_AND_19_M,
+				@NEW_GLAUCOMA_BET_20_AND_24_F,@OLD_GLAUCOMA_BET_20_AND_24_F,@NEW_GLAUCOMA_BET_20_AND_24_M,@OLD_GLAUCOMA_BET_20_AND_24_M,
+				@NEW_GLAUCOMA_BET_25_AND_49_F,@OLD_GLAUCOMA_BET_25_AND_49_F,@NEW_GLAUCOMA_BET_25_AND_49_M,@OLD_GLAUCOMA_BET_25_AND_49_M,
+				@NEW_GLAUCOMA_BET_50_AND_MORE_F,@OLD_GLAUCOMA_BET_50_AND_MORE_F,@NEW_GLAUCOMA_BET_50_AND_MORE_M,@OLD_GLAUCOMA_BET_50_AND_MORE_M,
+				@GLAUCOMA_DEAD,@NEW_GLAUCOMA_DISCHARGED,@OLD_GLAUCOMA_DISCHARGED
+				
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', 'Glaucoma')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', 'Glaucoma')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+ 
+
+			SELECT 
+			 -- Cataracte
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+			  -- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)),
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				INTO
+				@NEW_CATARACT_MINUS_10_F,@OLD_CATARACT_MINUS_10_F,@NEW_CATARACT_MINUS_10_M,@OLD_CATARACT_MINUS_10_M,
+				@NEW_CATARACT_BET_10_AND_14_F,@OLD_CATARACT_BET_10_AND_14_F,@NEW_CATARACT_BET_10_AND_14_M,@OLD_CATARACT_BET_10_AND_14_M,
+				@NEW_CATARACT_BET_15_AND_19_F,@OLD_CATARACT_BET_15_AND_19_F,@NEW_CATARACT_BET_15_AND_19_M,@OLD_CATARACT_BET_15_AND_19_M,
+				@NEW_CATARACT_BET_20_AND_24_F,@OLD_CATARACT_BET_20_AND_24_F,@NEW_CATARACT_BET_20_AND_24_M,@OLD_CATARACT_BET_20_AND_24_M,
+				@NEW_CATARACT_BET_25_AND_49_F,@OLD_CATARACT_BET_25_AND_49_F,@NEW_CATARACT_BET_25_AND_49_M,@OLD_CATARACT_BET_25_AND_49_M,
+				@NEW_CATARACT_BET_50_AND_MORE_F,@OLD_CATARACT_BET_50_AND_MORE_F,@NEW_CATARACT_BET_50_AND_MORE_M,@OLD_CATARACT_BET_50_AND_MORE_M,
+				@CATARACT_DEAD,@NEW_CATARACT_DISCHARGED,@OLD_CATARACT_DISCHARGED
+								
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', 'CATARACT')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', 'CATARACT')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+
+			
+			SELECT 
+			 -- Insuffisance Renale
+ 		     --  -10 ans
+			
+			    SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) < 10 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 10-14 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 10 AND 14 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+				 -- 15-19 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 15 AND 19 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			
+				 -- 20-24 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 20 AND 24 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				
+					 -- 25-49 ans
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) BETWEEN 25 AND 49 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+					 -- 50 ans and more 
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'F' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year = e.encounter_datetime, 1, 0)) ,
+				SUM(IF(age_at_enc(p.person_id, e.encounter_id) >=50 AND p.gender = 'M' AND first_visit.first_visit_this_year < e.encounter_datetime, 1, 0)) ,
+			    
+			  -- décès
+			    SUM(IF(p.dead=1 , 1, 0)) ,
+	
+			   -- référés
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year = e.encounter_datetime , 1, 0)),
+				SUM(IF(disp.value_coded = @discharged AND first_visit.first_visit_this_year < e.encounter_datetime , 1, 0)) 
+				
+				INTO
+				@NEW_RENAL_FAILURE_MINUS_10_F,@OLD_RENAL_FAILURE_MINUS_10_F,@NEW_RENAL_FAILURE_MINUS_10_M,@OLD_RENAL_FAILURE_MINUS_10_M,
+				@NEW_RENAL_FAILURE_BET_10_AND_14_F,@OLD_RENAL_FAILURE_BET_10_AND_14_F,@NEW_RENAL_FAILURE_BET_10_AND_14_M,@OLD_RENAL_FAILURE_BET_10_AND_14_M,
+				@NEW_RENAL_FAILURE_BET_15_AND_19_F,@OLD_RENAL_FAILURE_BET_15_AND_19_F,@NEW_RENAL_FAILURE_BET_15_AND_19_M,@OLD_RENAL_FAILURE_BET_15_AND_19_M,
+				@NEW_RENAL_FAILURE_BET_20_AND_24_F,@OLD_RENAL_FAILURE_BET_20_AND_24_F,@NEW_RENAL_FAILURE_BET_20_AND_24_M,@OLD_RENAL_FAILURE_BET_20_AND_24_M,
+				@NEW_RENAL_FAILURE_BET_25_AND_49_F,@OLD_RENAL_FAILURE_BET_25_AND_49_F,@NEW_RENAL_FAILURE_BET_25_AND_49_M,@OLD_RENAL_FAILURE_BET_25_AND_49_M,
+				@NEW_RENAL_FAILURE_BET_50_AND_MORE_F,@OLD_RENAL_FAILURE_BET_50_AND_MORE_F,@NEW_RENAL_FAILURE_BET_50_AND_MORE_M,@OLD_RENAL_FAILURE_BET_50_AND_MORE_M,
+				@RENAL_FAILURE_DEAD,@NEW_RENAL_FAILURE_DISCHARGED,@OLD_RENAL_FAILURE_DISCHARGED
+								
+			FROM obs o  
+			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN person p ON p.person_id = o.person_id
+			LEFT JOIN (
+				SELECT encounter_id, value_coded  
+				FROM obs 
+				WHERE concept_id = concept_from_mapping("PIH", "8620")
+				GROUP BY encounter_id 
+			) AS disp ON o.encounter_id = disp.encounter_id 
+			LEFT JOIN (
+				SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+				FROM obs o 
+				JOIN encounter e ON o.encounter_id = e.encounter_id
+				WHERE YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
+				AND o.value_coded = concept_from_mapping('PIH', 'RENAL FAILURE')
+				GROUP BY patient_id
+			) AS first_visit ON e.patient_id = first_visit.patient_id
+			WHERE o.concept_id = concept_from_mapping("PIH", "3064")
+			AND o.value_coded = concept_from_mapping('PIH', 'RENAL FAILURE')
+			AND e.voided = 0
+			AND o.voided = 0
+			AND DATE(e.encounter_datetime) >= @startDate
+            AND DATE(e.encounter_datetime) < @endDate;
+		  	
 	 
 SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_1_S",
         SUM(child_between_1_4_n) "CHILD_BETWEEN_1_4_N", SUM(child_between_1_4_s) "CHILD_BETWEEN_1_4_S",
@@ -2741,6 +3551,85 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
             @SUICIDAL_IDEATION_AGE_10_14_F 'SUICIDAL_IDEATION_AGE_10_14_F', @SUICIDAL_IDEATION_AGE_10_14_M 'SUICIDAL_IDEATION_AGE_10_14_M', @SUICIDAL_IDEATION_AGE_15_19_F 'SUICIDAL_IDEATION_AGE_15_19_F',
             @SUICIDAL_IDEATION_AGE_15_19_M 'SUICIDAL_IDEATION_AGE_15_19_M', @SUICIDAL_IDEATION_AGE_20_24_F 'SUICIDAL_IDEATION_AGE_20_24_F', @SUICIDAL_IDEATION_AGE_20_24_M 'SUICIDAL_IDEATION_AGE_20_24_M',
             @SUICIDAL_IDEATION_AGE_25_49_F 'SUICIDAL_IDEATION_AGE_25_49_F', @SUICIDAL_IDEATION_AGE_25_49_M 'SUICIDAL_IDEATION_AGE_25_49_M', @SUICIDAL_IDEATION_AGE_50_PLUS_F 'SUICIDAL_IDEATION_AGE_50_PLUS_F',
-            @SUICIDAL_IDEATION_AGE_50_PLUS_M 'SUICIDAL_IDEATION_AGE_50_PLUS_M',  @SUICIDAL_IDEATION_DEATH 'SUICIDAL_IDEATION_DEATH', @SUICIDAL_IDEATION_TRANSFER 'SUICIDAL_IDEATION_TRANSFER'
+            @SUICIDAL_IDEATION_AGE_50_PLUS_M 'SUICIDAL_IDEATION_AGE_50_PLUS_M',  @SUICIDAL_IDEATION_DEATH 'SUICIDAL_IDEATION_DEATH', @SUICIDAL_IDEATION_TRANSFER 'SUICIDAL_IDEATION_TRANSFER',
+			 @NEW_DIAB_MINUS_10_F 'NEW_DIAB_MINUS_10_F', @OLD_DIAB_MINUS_10_F 'OLD_DIAB_MINUS_10_F', @NEW_DIAB_MINUS_10_M 'NEW_DIAB_MINUS_10_M', @OLD_DIAB_MINUS_10_M 'OLD_DIAB_MINUS_10_M',
+			@NEW_DIAB_BET_10_AND_14_F 'NEW_DIAB_BET_10_AND_14_F', @OLD_DIAB_BET_10_AND_14_F 'OLD_DIAB_BET_10_AND_14_F', @NEW_DIAB_BET_10_AND_14_M 'NEW_DIAB_BET_10_AND_14_M', @OLD_DIAB_BET_10_AND_14_M 'OLD_DIAB_BET_10_AND_14_M',
+			@NEW_DIAB_BET_15_AND_19_F 'NEW_DIAB_BET_15_AND_19_F', @OLD_DIAB_BET_15_AND_19_F 'OLD_DIAB_BET_15_AND_19_F', @NEW_DIAB_BET_15_AND_19_M 'NEW_DIAB_BET_15_AND_19_M', @OLD_DIAB_BET_15_AND_19_M 'OLD_DIAB_BET_15_AND_19_M',
+			@NEW_DIAB_BET_20_AND_24_F 'NEW_DIAB_BET_20_AND_24_F', @OLD_DIAB_BET_20_AND_24_F 'OLD_DIAB_BET_20_AND_24_F', @NEW_DIAB_BET_20_AND_24_M 'NEW_DIAB_BET_20_AND_24_M', @OLD_DIAB_BET_20_AND_24_M 'OLD_DIAB_BET_20_AND_24_M',
+			@NEW_DIAB_BET_25_AND_49_F 'NEW_DIAB_BET_25_AND_49_F', @OLD_DIAB_BET_25_AND_49_F 'OLD_DIAB_BET_25_AND_49_F', @NEW_DIAB_BET_25_AND_49_M 'NEW_DIAB_BET_25_AND_49_M', @OLD_DIAB_BET_25_AND_49_M 'OLD_DIAB_BET_25_AND_49_M',
+			@NEW_DIAB_BET_50_AND_MORE_F 'NEW_DIAB_BET_50_AND_MORE_F', @OLD_DIAB_BET_50_AND_MORE_F 'OLD_DIAB_BET_50_AND_MORE_F', @NEW_DIAB_BET_50_AND_MORE_M 'NEW_DIAB_BET_50_AND_MORE_M', @OLD_DIAB_BET_50_AND_MORE_M 'OLD_DIAB_BET_50_AND_MORE_M',
+			@DIAB_DEAD 'DIAB_DEAD', @NEW_DIAB_DISCHARGED 'NEW_DIAB_DISCHARGED', @OLD_DIAB_DISCHARGED 'OLD_DIAB_DISCHARGED',
+
+			@NEW_HYPER_MINUS_10_F 'NEW_HYPER_MINUS_10_F', @OLD_HYPER_MINUS_10_F 'OLD_HYPER_MINUS_10_F', @NEW_HYPER_MINUS_10_M 'NEW_HYPER_MINUS_10_M', @OLD_HYPER_MINUS_10_M 'OLD_HYPER_MINUS_10_M',
+			@NEW_HYPER_BET_10_AND_14_F 'NEW_HYPER_BET_10_AND_14_F', @OLD_HYPER_BET_10_AND_14_F 'OLD_HYPER_BET_10_AND_14_F', @NEW_HYPER_BET_10_AND_14_M 'NEW_HYPER_BET_10_AND_14_M', @OLD_HYPER_BET_10_AND_14_M 'OLD_HYPER_BET_10_AND_14_M',
+			@NEW_HYPER_BET_15_AND_19_F 'NEW_HYPER_BET_15_AND_19_F', @OLD_HYPER_BET_15_AND_19_F 'OLD_HYPER_BET_15_AND_19_F', @NEW_HYPER_BET_15_AND_19_M 'NEW_HYPER_BET_15_AND_19_M', @OLD_HYPER_BET_15_AND_19_M 'OLD_HYPER_BET_15_AND_19_M',
+			@NEW_HYPER_BET_20_AND_24_F 'NEW_HYPER_BET_20_AND_24_F', @OLD_HYPER_BET_20_AND_24_F 'OLD_HYPER_BET_20_AND_24_F', @NEW_HYPER_BET_20_AND_24_M 'NEW_HYPER_BET_20_AND_24_M', @OLD_HYPER_BET_20_AND_24_M 'OLD_HYPER_BET_20_AND_24_M',
+			@NEW_HYPER_BET_25_AND_49_F 'NEW_HYPER_BET_25_AND_49_F', @OLD_HYPER_BET_25_AND_49_F 'OLD_HYPER_BET_25_AND_49_F', @NEW_HYPER_BET_25_AND_49_M 'NEW_HYPER_BET_25_AND_49_M', @OLD_HYPER_BET_25_AND_49_M 'OLD_HYPER_BET_25_AND_49_M',
+			@NEW_HYPER_BET_50_AND_MORE_F 'NEW_HYPER_BET_50_AND_MORE_F', @OLD_HYPER_BET_50_AND_MORE_F 'OLD_HYPER_BET_50_AND_MORE_F', @NEW_HYPER_BET_50_AND_MORE_M 'NEW_HYPER_BET_50_AND_MORE_M', @OLD_HYPER_BET_50_AND_MORE_M 'OLD_HYPER_BET_50_AND_MORE_M',
+			@HYPER_DEAD 'HYPER_DEAD', @NEW_HYPER_DISCHARGED 'NEW_HYPER_DISCHARGED', @OLD_HYPER_DISCHARGED 'OLD_HYPER_DISCHARGED',
+			
+			 @NEW_TUMEUR_MINUS_10_F 'NEW_TUMEUR_MINUS_10_F', @OLD_TUMEUR_MINUS_10_F 'OLD_TUMEUR_MINUS_10_F', @NEW_TUMEUR_MINUS_10_M 'NEW_TUMEUR_MINUS_10_M', @OLD_TUMEUR_MINUS_10_M 'OLD_TUMEUR_MINUS_10_M',
+			@NEW_TUMEUR_BET_10_AND_14_F 'NEW_TUMEUR_BET_10_AND_14_F', @OLD_TUMEUR_BET_10_AND_14_F 'OLD_TUMEUR_BET_10_AND_14_F', @NEW_TUMEUR_BET_10_AND_14_M 'NEW_TUMEUR_BET_10_AND_14_M', @OLD_TUMEUR_BET_10_AND_14_M 'OLD_TUMEUR_BET_10_AND_14_M',
+			@NEW_TUMEUR_BET_15_AND_19_F 'NEW_TUMEUR_BET_15_AND_19_F', @OLD_TUMEUR_BET_15_AND_19_F 'OLD_TUMEUR_BET_15_AND_19_F', @NEW_TUMEUR_BET_15_AND_19_M 'NEW_TUMEUR_BET_15_AND_19_M', @OLD_TUMEUR_BET_15_AND_19_M 'OLD_TUMEUR_BET_15_AND_19_M',
+			@NEW_TUMEUR_BET_20_AND_24_F 'NEW_TUMEUR_BET_20_AND_24_F', @OLD_TUMEUR_BET_20_AND_24_F 'OLD_TUMEUR_BET_20_AND_24_F', @NEW_TUMEUR_BET_20_AND_24_M 'NEW_TUMEUR_BET_20_AND_24_M', @OLD_TUMEUR_BET_20_AND_24_M 'OLD_TUMEUR_BET_20_AND_24_M',
+			@NEW_TUMEUR_BET_25_AND_49_F 'NEW_TUMEUR_BET_25_AND_49_F', @OLD_TUMEUR_BET_25_AND_49_F 'OLD_TUMEUR_BET_25_AND_49_F', @NEW_TUMEUR_BET_25_AND_49_M 'NEW_TUMEUR_BET_25_AND_49_M', @OLD_TUMEUR_BET_25_AND_49_M 'OLD_TUMEUR_BET_25_AND_49_M',
+			@NEW_TUMEUR_BET_50_AND_MORE_F 'NEW_TUMEUR_BET_50_AND_MORE_F', @OLD_TUMEUR_BET_50_AND_MORE_F 'OLD_TUMEUR_BET_50_AND_MORE_F', @NEW_TUMEUR_BET_50_AND_MORE_M 'NEW_TUMEUR_BET_50_AND_MORE_M', @OLD_TUMEUR_BET_50_AND_MORE_M 'OLD_TUMEUR_BET_50_AND_MORE_M',
+			@TUMEUR_DEAD 'TUMEUR_DEAD', @NEW_TUMEUR_DISCHARGED 'NEW_TUMEUR_DISCHARGED', @OLD_TUMEUR_DISCHARGED 'OLD_TUMEUR_DISCHARGED',
+			
+			@NEW_CANCER_COL_MINUS_10_F 'NEW_CANCER_COL_MINUS_10_F', @OLD_CANCER_COL_MINUS_10_F 'OLD_CANCER_COL_MINUS_10_F', @NEW_CANCER_COL_MINUS_10_M 'NEW_CANCER_COL_MINUS_10_M', @OLD_CANCER_COL_MINUS_10_M 'OLD_CANCER_COL_MINUS_10_M',
+			@NEW_CANCER_COL_BET_10_AND_14_F 'NEW_CANCER_COL_BET_10_AND_14_F', @OLD_CANCER_COL_BET_10_AND_14_F 'OLD_CANCER_COL_BET_10_AND_14_F', @NEW_CANCER_COL_BET_10_AND_14_M 'NEW_CANCER_COL_BET_10_AND_14_M', @OLD_CANCER_COL_BET_10_AND_14_M 'OLD_CANCER_COL_BET_10_AND_14_M',
+			@NEW_CANCER_COL_BET_15_AND_19_F 'NEW_CANCER_COL_BET_15_AND_19_F', @OLD_CANCER_COL_BET_15_AND_19_F 'OLD_CANCER_COL_BET_15_AND_19_F', @NEW_CANCER_COL_BET_15_AND_19_M 'NEW_CANCER_COL_BET_15_AND_19_M', @OLD_CANCER_COL_BET_15_AND_19_M 'OLD_CANCER_COL_BET_15_AND_19_M',
+			@NEW_CANCER_COL_BET_20_AND_24_F 'NEW_CANCER_COL_BET_20_AND_24_F', @OLD_CANCER_COL_BET_20_AND_24_F 'OLD_CANCER_COL_BET_20_AND_24_F', @NEW_CANCER_COL_BET_20_AND_24_M 'NEW_CANCER_COL_BET_20_AND_24_M', @OLD_CANCER_COL_BET_20_AND_24_M 'OLD_CANCER_COL_BET_20_AND_24_M',
+			@NEW_CANCER_COL_BET_25_AND_49_F 'NEW_CANCER_COL_BET_25_AND_49_F', @OLD_CANCER_COL_BET_25_AND_49_F 'OLD_CANCER_COL_BET_25_AND_49_F', @NEW_CANCER_COL_BET_25_AND_49_M 'NEW_CANCER_COL_BET_25_AND_49_M', @OLD_CANCER_COL_BET_25_AND_49_M 'OLD_CANCER_COL_BET_25_AND_49_M',
+			@NEW_CANCER_COL_BET_50_AND_MORE_F 'NEW_CANCER_COL_BET_50_AND_MORE_F', @OLD_CANCER_COL_BET_50_AND_MORE_F 'OLD_CANCER_COL_BET_50_AND_MORE_F', @NEW_CANCER_COL_BET_50_AND_MORE_M 'NEW_CANCER_COL_BET_50_AND_MORE_M', @OLD_CANCER_COL_BET_50_AND_MORE_M 'OLD_CANCER_COL_BET_50_AND_MORE_M',
+			@CANCER_COL_DEAD 'CANCER_COL_DEAD', @NEW_CANCER_COL_DISCHARGED 'NEW_CANCER_COL_DISCHARGED', @OLD_CANCER_COL_DISCHARGED 'OLD_CANCER_COL_DISCHARGED',
+
+			@NEW_CANCER_SEIN_MINUS_10_F 'NEW_CANCER_SEIN_MINUS_10_F', @OLD_CANCER_SEIN_MINUS_10_F 'OLD_CANCER_SEIN_MINUS_10_F', @NEW_CANCER_SEIN_MINUS_10_M 'NEW_CANCER_SEIN_MINUS_10_M', @OLD_CANCER_SEIN_MINUS_10_M 'OLD_CANCER_SEIN_MINUS_10_M',
+			@NEW_CANCER_SEIN_BET_10_AND_14_F 'NEW_CANCER_SEIN_BET_10_AND_14_F', @OLD_CANCER_SEIN_BET_10_AND_14_F 'OLD_CANCER_SEIN_BET_10_AND_14_F', @NEW_CANCER_SEIN_BET_10_AND_14_M 'NEW_CANCER_SEIN_BET_10_AND_14_M', @OLD_CANCER_SEIN_BET_10_AND_14_M 'OLD_CANCER_SEIN_BET_10_AND_14_M',
+			@NEW_CANCER_SEIN_BET_15_AND_19_F 'NEW_CANCER_SEIN_BET_15_AND_19_F', @OLD_CANCER_SEIN_BET_15_AND_19_F 'OLD_CANCER_SEIN_BET_15_AND_19_F', @NEW_CANCER_SEIN_BET_15_AND_19_M 'NEW_CANCER_SEIN_BET_15_AND_19_M', @OLD_CANCER_SEIN_BET_15_AND_19_M 'OLD_CANCER_SEIN_BET_15_AND_19_M',
+			@NEW_CANCER_SEIN_BET_20_AND_24_F 'NEW_CANCER_SEIN_BET_20_AND_24_F', @OLD_CANCER_SEIN_BET_20_AND_24_F 'OLD_CANCER_SEIN_BET_20_AND_24_F', @NEW_CANCER_SEIN_BET_20_AND_24_M 'NEW_CANCER_SEIN_BET_20_AND_24_M', @OLD_CANCER_SEIN_BET_20_AND_24_M 'OLD_CANCER_SEIN_BET_20_AND_24_M',
+			@NEW_CANCER_SEIN_BET_25_AND_49_F 'NEW_CANCER_SEIN_BET_25_AND_49_F', @OLD_CANCER_SEIN_BET_25_AND_49_F 'OLD_CANCER_SEIN_BET_25_AND_49_F', @NEW_CANCER_SEIN_BET_25_AND_49_M 'NEW_CANCER_SEIN_BET_25_AND_49_M', @OLD_CANCER_SEIN_BET_25_AND_49_M 'OLD_CANCER_SEIN_BET_25_AND_49_M',
+			@NEW_CANCER_SEIN_BET_50_AND_MORE_F 'NEW_CANCER_SEIN_BET_50_AND_MORE_F', @OLD_CANCER_SEIN_BET_50_AND_MORE_F 'OLD_CANCER_SEIN_BET_50_AND_MORE_F', @NEW_CANCER_SEIN_BET_50_AND_MORE_M 'NEW_CANCER_SEIN_BET_50_AND_MORE_M', @OLD_CANCER_SEIN_BET_50_AND_MORE_M 'OLD_CANCER_SEIN_BET_50_AND_MORE_M',
+			@CANCER_SEIN_DEAD 'CANCER_SEIN_DEAD', @NEW_CANCER_SEIN_DISCHARGED 'NEW_CANCER_SEIN_DISCHARGED', @OLD_CANCER_SEIN_DISCHARGED 'OLD_CANCER_SEIN_DISCHARGED',
+			
+			@NEW_CANCER_PROSTATE_MINUS_10_F 'NEW_CANCER_PROSTATE_MINUS_10_F', @OLD_CANCER_PROSTATE_MINUS_10_F 'OLD_CANCER_PROSTATE_MINUS_10_F', @NEW_CANCER_PROSTATE_MINUS_10_M 'NEW_CANCER_PROSTATE_MINUS_10_M', @OLD_CANCER_PROSTATE_MINUS_10_M 'OLD_CANCER_PROSTATE_MINUS_10_M',
+			@NEW_CANCER_PROSTATE_BET_10_AND_14_F 'NEW_CANCER_PROSTATE_BET_10_AND_14_F', @OLD_CANCER_PROSTATE_BET_10_AND_14_F 'OLD_CANCER_PROSTATE_BET_10_AND_14_F', @NEW_CANCER_PROSTATE_BET_10_AND_14_M 'NEW_CANCER_PROSTATE_BET_10_AND_14_M', @OLD_CANCER_PROSTATE_BET_10_AND_14_M 'OLD_CANCER_PROSTATE_BET_10_AND_14_M',
+			@NEW_CANCER_PROSTATE_BET_15_AND_19_F 'NEW_CANCER_PROSTATE_BET_15_AND_19_F', @OLD_CANCER_PROSTATE_BET_15_AND_19_F 'OLD_CANCER_PROSTATE_BET_15_AND_19_F', @NEW_CANCER_PROSTATE_BET_15_AND_19_M 'NEW_CANCER_PROSTATE_BET_15_AND_19_M', @OLD_CANCER_PROSTATE_BET_15_AND_19_M 'OLD_CANCER_PROSTATE_BET_15_AND_19_M',
+			@NEW_CANCER_PROSTATE_BET_20_AND_24_F 'NEW_CANCER_PROSTATE_BET_20_AND_24_F', @OLD_CANCER_PROSTATE_BET_20_AND_24_F 'OLD_CANCER_PROSTATE_BET_20_AND_24_F', @NEW_CANCER_PROSTATE_BET_20_AND_24_M 'NEW_CANCER_PROSTATE_BET_20_AND_24_M', @OLD_CANCER_PROSTATE_BET_20_AND_24_M 'OLD_CANCER_PROSTATE_BET_20_AND_24_M',
+			@NEW_CANCER_PROSTATE_BET_25_AND_49_F 'NEW_CANCER_PROSTATE_BET_25_AND_49_F', @OLD_CANCER_PROSTATE_BET_25_AND_49_F 'OLD_CANCER_PROSTATE_BET_25_AND_49_F', @NEW_CANCER_PROSTATE_BET_25_AND_49_M 'NEW_CANCER_PROSTATE_BET_25_AND_49_M', @OLD_CANCER_PROSTATE_BET_25_AND_49_M 'OLD_CANCER_PROSTATE_BET_25_AND_49_M',
+			@NEW_CANCER_PROSTATE_BET_50_AND_MORE_F 'NEW_CANCER_PROSTATE_BET_50_AND_MORE_F', @OLD_CANCER_PROSTATE_BET_50_AND_MORE_F 'OLD_CANCER_PROSTATE_BET_50_AND_MORE_F', @NEW_CANCER_PROSTATE_BET_50_AND_MORE_M 'NEW_CANCER_PROSTATE_BET_50_AND_MORE_M', @OLD_CANCER_PROSTATE_BET_50_AND_MORE_M 'OLD_CANCER_PROSTATE_BET_50_AND_MORE_M',
+			@CANCER_PROSTATE_DEAD 'CANCER_PROSTATE_DEAD', @NEW_CANCER_PROSTATE_DISCHARGED 'NEW_CANCER_PROSTATE_DISCHARGED', @OLD_CANCER_PROSTATE_DISCHARGED 'OLD_CANCER_PROSTATE_DISCHARGED',
+			
+			@NEW_OBESITY_MINUS_10_F 'NEW_OBESITY_MINUS_10_F', @OLD_OBESITY_MINUS_10_F 'OLD_OBESITY_MINUS_10_F', @NEW_OBESITY_MINUS_10_M 'NEW_OBESITY_MINUS_10_M', @OLD_OBESITY_MINUS_10_M 'OLD_OBESITY_MINUS_10_M',
+			@NEW_OBESITY_BET_10_AND_14_F 'NEW_OBESITY_BET_10_AND_14_F', @OLD_OBESITY_BET_10_AND_14_F 'OLD_OBESITY_BET_10_AND_14_F', @NEW_OBESITY_BET_10_AND_14_M 'NEW_OBESITY_BET_10_AND_14_M', @OLD_OBESITY_BET_10_AND_14_M 'OLD_OBESITY_BET_10_AND_14_M',
+			@NEW_OBESITY_BET_15_AND_19_F 'NEW_OBESITY_BET_15_AND_19_F', @OLD_OBESITY_BET_15_AND_19_F 'OLD_OBESITY_BET_15_AND_19_F', @NEW_OBESITY_BET_15_AND_19_M 'NEW_OBESITY_BET_15_AND_19_M', @OLD_OBESITY_BET_15_AND_19_M 'OLD_OBESITY_BET_15_AND_19_M',
+			@NEW_OBESITY_BET_20_AND_24_F 'NEW_OBESITY_BET_20_AND_24_F', @OLD_OBESITY_BET_20_AND_24_F 'OLD_OBESITY_BET_20_AND_24_F', @NEW_OBESITY_BET_20_AND_24_M 'NEW_OBESITY_BET_20_AND_24_M', @OLD_OBESITY_BET_20_AND_24_M 'OLD_OBESITY_BET_20_AND_24_M',
+			@NEW_OBESITY_BET_25_AND_49_F 'NEW_OBESITY_BET_25_AND_49_F', @OLD_OBESITY_BET_25_AND_49_F 'OLD_OBESITY_BET_25_AND_49_F', @NEW_OBESITY_BET_25_AND_49_M 'NEW_OBESITY_BET_25_AND_49_M', @OLD_OBESITY_BET_25_AND_49_M 'OLD_OBESITY_BET_25_AND_49_M',
+			@NEW_OBESITY_BET_50_AND_MORE_F 'NEW_OBESITY_BET_50_AND_MORE_F', @OLD_OBESITY_BET_50_AND_MORE_F 'OLD_OBESITY_BET_50_AND_MORE_F', @NEW_OBESITY_BET_50_AND_MORE_M 'NEW_OBESITY_BET_50_AND_MORE_M', @OLD_OBESITY_BET_50_AND_MORE_M 'OLD_OBESITY_BET_50_AND_MORE_M',
+			@OBESITY_DEAD 'OBESITY_DEAD', @NEW_OBESITY_DISCHARGED 'NEW_OBESITY_DISCHARGED', @OLD_OBESITY_DISCHARGED 'OLD_OBESITY_DISCHARGED',
+
+			@NEW_GLAUCOMA_MINUS_10_F 'NEW_GLAUCOMA_MINUS_10_F', @OLD_GLAUCOMA_MINUS_10_F 'OLD_GLAUCOMA_MINUS_10_F', @NEW_GLAUCOMA_MINUS_10_M 'NEW_GLAUCOMA_MINUS_10_M', @OLD_GLAUCOMA_MINUS_10_M 'OLD_GLAUCOMA_MINUS_10_M',
+			@NEW_GLAUCOMA_BET_10_AND_14_F 'NEW_GLAUCOMA_BET_10_AND_14_F', @OLD_GLAUCOMA_BET_10_AND_14_F 'OLD_GLAUCOMA_BET_10_AND_14_F', @NEW_GLAUCOMA_BET_10_AND_14_M 'NEW_GLAUCOMA_BET_10_AND_14_M', @OLD_GLAUCOMA_BET_10_AND_14_M 'OLD_GLAUCOMA_BET_10_AND_14_M',
+			@NEW_GLAUCOMA_BET_15_AND_19_F 'NEW_GLAUCOMA_BET_15_AND_19_F', @OLD_GLAUCOMA_BET_15_AND_19_F 'OLD_GLAUCOMA_BET_15_AND_19_F', @NEW_GLAUCOMA_BET_15_AND_19_M 'NEW_GLAUCOMA_BET_15_AND_19_M', @OLD_GLAUCOMA_BET_15_AND_19_M 'OLD_GLAUCOMA_BET_15_AND_19_M',
+			@NEW_GLAUCOMA_BET_20_AND_24_F 'NEW_GLAUCOMA_BET_20_AND_24_F', @OLD_GLAUCOMA_BET_20_AND_24_F 'OLD_GLAUCOMA_BET_20_AND_24_F', @NEW_GLAUCOMA_BET_20_AND_24_M 'NEW_GLAUCOMA_BET_20_AND_24_M', @OLD_GLAUCOMA_BET_20_AND_24_M 'OLD_GLAUCOMA_BET_20_AND_24_M',
+			@NEW_GLAUCOMA_BET_25_AND_49_F 'NEW_GLAUCOMA_BET_25_AND_49_F', @OLD_GLAUCOMA_BET_25_AND_49_F 'OLD_GLAUCOMA_BET_25_AND_49_F', @NEW_GLAUCOMA_BET_25_AND_49_M 'NEW_GLAUCOMA_BET_25_AND_49_M', @OLD_GLAUCOMA_BET_25_AND_49_M 'OLD_GLAUCOMA_BET_25_AND_49_M',
+			@NEW_GLAUCOMA_BET_50_AND_MORE_F 'NEW_GLAUCOMA_BET_50_AND_MORE_F', @OLD_GLAUCOMA_BET_50_AND_MORE_F 'OLD_GLAUCOMA_BET_50_AND_MORE_F', @NEW_GLAUCOMA_BET_50_AND_MORE_M 'NEW_GLAUCOMA_BET_50_AND_MORE_M', @OLD_GLAUCOMA_BET_50_AND_MORE_M 'OLD_GLAUCOMA_BET_50_AND_MORE_M',
+			@GLAUCOMA_DEAD 'GLAUCOMA_DEAD', @NEW_GLAUCOMA_DISCHARGED 'NEW_GLAUCOMA_DISCHARGED', @OLD_GLAUCOMA_DISCHARGED 'OLD_GLAUCOMA_DISCHARGED',
+			
+			@NEW_CATARACT_MINUS_10_F 'NEW_CATARACT_MINUS_10_F', @OLD_CATARACT_MINUS_10_F 'OLD_CATARACT_MINUS_10_F', @NEW_CATARACT_MINUS_10_M 'NEW_CATARACT_MINUS_10_M', @OLD_CATARACT_MINUS_10_M 'OLD_CATARACT_MINUS_10_M',
+			@NEW_CATARACT_BET_10_AND_14_F 'NEW_CATARACT_BET_10_AND_14_F', @OLD_CATARACT_BET_10_AND_14_F 'OLD_CATARACT_BET_10_AND_14_F', @NEW_CATARACT_BET_10_AND_14_M 'NEW_CATARACT_BET_10_AND_14_M', @OLD_CATARACT_BET_10_AND_14_M 'OLD_CATARACT_BET_10_AND_14_M',
+			@NEW_CATARACT_BET_15_AND_19_F 'NEW_CATARACT_BET_15_AND_19_F', @OLD_CATARACT_BET_15_AND_19_F 'OLD_CATARACT_BET_15_AND_19_F', @NEW_CATARACT_BET_15_AND_19_M 'NEW_CATARACT_BET_15_AND_19_M', @OLD_CATARACT_BET_15_AND_19_M 'OLD_CATARACT_BET_15_AND_19_M',
+			@NEW_CATARACT_BET_20_AND_24_F 'NEW_CATARACT_BET_20_AND_24_F', @OLD_CATARACT_BET_20_AND_24_F 'OLD_CATARACT_BET_20_AND_24_F', @NEW_CATARACT_BET_20_AND_24_M 'NEW_CATARACT_BET_20_AND_24_M', @OLD_CATARACT_BET_20_AND_24_M 'OLD_CATARACT_BET_20_AND_24_M',
+			@NEW_CATARACT_BET_25_AND_49_F 'NEW_CATARACT_BET_25_AND_49_F', @OLD_CATARACT_BET_25_AND_49_F 'OLD_CATARACT_BET_25_AND_49_F', @NEW_CATARACT_BET_25_AND_49_M 'NEW_CATARACT_BET_25_AND_49_M', @OLD_CATARACT_BET_25_AND_49_M 'OLD_CATARACT_BET_25_AND_49_M',
+			@NEW_CATARACT_BET_50_AND_MORE_F 'NEW_CATARACT_BET_50_AND_MORE_F', @OLD_CATARACT_BET_50_AND_MORE_F 'OLD_CATARACT_BET_50_AND_MORE_F', @NEW_CATARACT_BET_50_AND_MORE_M 'NEW_CATARACT_BET_50_AND_MORE_M', @OLD_CATARACT_BET_50_AND_MORE_M 'OLD_CATARACT_BET_50_AND_MORE_M',
+			@CATARACT_DEAD 'CATARACT_DEAD', @NEW_CATARACT_DISCHARGED 'NEW_CATARACT_DISCHARGED', @OLD_CATARACT_DISCHARGED 'OLD_CATARACT_DISCHARGED',
+			
+			@NEW_RENAL_FAILURE_MINUS_10_F 'NEW_RENAL_FAILURE_MINUS_10_F', @OLD_RENAL_FAILURE_MINUS_10_F 'OLD_RENAL_FAILURE_MINUS_10_F', @NEW_RENAL_FAILURE_MINUS_10_M 'NEW_RENAL_FAILURE_MINUS_10_M', @OLD_RENAL_FAILURE_MINUS_10_M 'OLD_RENAL_FAILURE_MINUS_10_M',
+			@NEW_RENAL_FAILURE_BET_10_AND_14_F 'NEW_RENAL_FAILURE_BET_10_AND_14_F', @OLD_RENAL_FAILURE_BET_10_AND_14_F 'OLD_RENAL_FAILURE_BET_10_AND_14_F', @NEW_RENAL_FAILURE_BET_10_AND_14_M 'NEW_RENAL_FAILURE_BET_10_AND_14_M', @OLD_RENAL_FAILURE_BET_10_AND_14_M 'OLD_RENAL_FAILURE_BET_10_AND_14_M',
+			@NEW_RENAL_FAILURE_BET_15_AND_19_F 'NEW_RENAL_FAILURE_BET_15_AND_19_F', @OLD_RENAL_FAILURE_BET_15_AND_19_F 'OLD_RENAL_FAILURE_BET_15_AND_19_F', @NEW_RENAL_FAILURE_BET_15_AND_19_M 'NEW_RENAL_FAILURE_BET_15_AND_19_M', @OLD_RENAL_FAILURE_BET_15_AND_19_M 'OLD_RENAL_FAILURE_BET_15_AND_19_M',
+			@NEW_RENAL_FAILURE_BET_20_AND_24_F 'NEW_RENAL_FAILURE_BET_20_AND_24_F', @OLD_RENAL_FAILURE_BET_20_AND_24_F 'OLD_RENAL_FAILURE_BET_20_AND_24_F', @NEW_RENAL_FAILURE_BET_20_AND_24_M 'NEW_RENAL_FAILURE_BET_20_AND_24_M', @OLD_RENAL_FAILURE_BET_20_AND_24_M 'OLD_RENAL_FAILURE_BET_20_AND_24_M',
+			@NEW_RENAL_FAILURE_BET_25_AND_49_F 'NEW_RENAL_FAILURE_BET_25_AND_49_F', @OLD_RENAL_FAILURE_BET_25_AND_49_F 'OLD_RENAL_FAILURE_BET_25_AND_49_F', @NEW_RENAL_FAILURE_BET_25_AND_49_M 'NEW_RENAL_FAILURE_BET_25_AND_49_M', @OLD_RENAL_FAILURE_BET_25_AND_49_M 'OLD_RENAL_FAILURE_BET_25_AND_49_M',
+			@NEW_RENAL_FAILURE_BET_50_AND_MORE_F 'NEW_RENAL_FAILURE_BET_50_AND_MORE_F', @OLD_RENAL_FAILURE_BET_50_AND_MORE_F 'OLD_RENAL_FAILURE_BET_50_AND_MORE_F', @NEW_RENAL_FAILURE_BET_50_AND_MORE_M 'NEW_RENAL_FAILURE_BET_50_AND_MORE_M', @OLD_RENAL_FAILURE_BET_50_AND_MORE_M 'OLD_RENAL_FAILURE_BET_50_AND_MORE_M',
+			@RENAL_FAILURE_DEAD 'RENAL_FAILURE_DEAD', @NEW_RENAL_FAILURE_DISCHARGED 'NEW_RENAL_FAILURE_DISCHARGED', @OLD_RENAL_FAILURE_DISCHARGED 'OLD_RENAL_FAILURE_DISCHARGED'
            
 FROM visits_distribution_temp;
