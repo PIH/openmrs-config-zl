@@ -153,7 +153,9 @@
 
         <script type="text/javascript">
             jq(function() {
-                setUpEdd('<lookup expression="encounter.getEncounterDatetime().getTime()"/>', '<uimessage code="pihcore.weeks"/>');
+                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()" />';
+                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks" />');
+                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate" />');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
                 setUpDatepickerStartAndEndDateValidation();
 
