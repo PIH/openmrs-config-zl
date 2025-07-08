@@ -923,7 +923,7 @@
                                         <uimessage code="pihcore.pregnancy.lastPeriod"/>
                                     </label>
                                     <span class="small">
-                                        <obs id="lastPeriodDate" conceptId="CIEL:1427" />
+                                        <obs id="lastPeriodDate" conceptId="CIEL:1427" allowFutureDates="false"/>
                                     </span>
                                 </p>
                             </div>
