@@ -1262,7 +1262,11 @@ select
    @PV5_BETWEEN_0_3,@PV5_BETWEEN_4_6, @PV5_BETWEEN_7_9
    FROM visits_prenatal_temp;
    
-    SELECT 
+   -- Nouveau Episode Maladie
+     
+		  
+		  
+  SELECT 
    
           -- Cas Febrile
 		   
@@ -1307,16 +1311,10 @@ select
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', 'FEVER')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
-		  
-		  
-		  
-    
-		  
-		  
-		  
+		   AND DATE(e.encounter_datetime) <= @endDate;
+		   
 		  
 		  SELECT 
 		  
@@ -1401,8 +1399,7 @@ select
 		   
 		   SUM(CASE WHEN o.value_coded = concept_from_mapping("PIH", "MALARIA")
 		   AND diagnostic_cert.value_coded = concept_from_mapping("PIH", "CONFIRMED") 
-		   AND  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")
-		   AND disposition.value_coded = concept_from_mapping("PIH", "DISCHARGED") THEN 1 ELSE 0 END) 
+		   AND  disposition.value_coded = concept_from_mapping("PIH", "Transfer out of hospital")  THEN 1 ELSE 0 END) 
 		  
 		  INTO
 		  	 -- Malaria + confirmée + traitée 
@@ -1413,19 +1410,19 @@ select
 		   FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
+		 LEFT JOIN (
+		    SELECT encounter_id, value_coded,obs_group_id
 		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
+		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.obs_group_id = diagnostic_cert.obs_group_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', 'MALARIA')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		  SELECT 
@@ -1506,18 +1503,16 @@ select
 
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
-		  INNER JOIN person p ON p.person_id = o.person_id
-		 
-		  
+		  INNER JOIN person p ON p.person_id = o.person_id  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		  AND concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', 'Severe malaria')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 	    
@@ -1618,17 +1613,12 @@ select
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		 
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		  AND  o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', 'Severe malaria')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		  
@@ -1695,17 +1685,12 @@ select
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
-		    WHERE concept_id = concept_from_mapping("PIH", "1379") AND voided=0 ) AS diagnostic_cert ON o.encounter_id = diagnostic_cert.encounter_id
-		
-		  LEFT JOIN (
-		    SELECT encounter_id, value_coded
-		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', 'ANXIETY DISORDER')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		
@@ -1774,9 +1759,9 @@ select
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		   WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', 'DEMENTIA')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 
@@ -1843,17 +1828,15 @@ select
 		        FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		 
-		 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		  AND o.concept_id = concept_from_mapping("PIH", "3064")
+		  AND o.value_coded = concept_from_mapping('PIH', 'DEPRESSION')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		  
@@ -1915,17 +1898,15 @@ select
 		         FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		 
-		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		  AND o.concept_id = concept_from_mapping("PIH", "3064")
-		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		  AND o.value_coded = concept_from_mapping('PIH', 'SCHIZOPHRENIA')
+		  AND DATE(e.encounter_datetime) >= @startDate
+		  AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		  
@@ -1987,17 +1968,15 @@ select
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  
-		 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 		
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', '7950')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 	 SELECT
@@ -2050,22 +2029,21 @@ select
 		  
 		  INTO
 		  
-		  			@BIPOLAR_DISO_AGE_0_F, @BIPOLAR_DISO_AGE_0_M, @BIPOLAR_DISO_AGE_1_4_F, @BIPOLAR_DISO_AGE_1_4_M, @BIPOLAR_DISO_AGE_5_9_F, @BIPOLAR_DISO_AGE_5_9_M, @BIPOLAR_DISO_AGE_10_14_F, @BIPOLAR_DISO_AGE_10_14_M,
+		  	@BIPOLAR_DISO_AGE_0_F, @BIPOLAR_DISO_AGE_0_M, @BIPOLAR_DISO_AGE_1_4_F, @BIPOLAR_DISO_AGE_1_4_M, @BIPOLAR_DISO_AGE_5_9_F, @BIPOLAR_DISO_AGE_5_9_M, @BIPOLAR_DISO_AGE_10_14_F, @BIPOLAR_DISO_AGE_10_14_M,
 			@BIPOLAR_DISO_AGE_15_19_F, @BIPOLAR_DISO_AGE_15_19_M, @BIPOLAR_DISO_AGE_20_24_F, @BIPOLAR_DISO_AGE_20_24_M, @BIPOLAR_DISO_AGE_25_49_F, @BIPOLAR_DISO_AGE_25_49_M, @BIPOLAR_DISO_AGE_50_PLUS_F, @BIPOLAR_DISO_AGE_50_PLUS_M,
 			@BIPOLAR_DISO_DEATH,@BIPOLAR_DISO_TRANSFER
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
-		  AND o.concept_id = concept_from_mapping("PIH", "3064")
-		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		  AND o.value_coded = concept_from_mapping('PIH', 'Bipolar disorder')
+		  AND DATE(e.encounter_datetime) >= @startDate
+		  AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		 SELECT
@@ -2128,17 +2106,15 @@ select
 		    FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		 
-		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
-		  AND o.concept_id = concept_from_mapping("PIH", "3064")
-		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		  AND o.value_coded = concept_from_mapping('PIH', '7201')
+		  AND DATE(e.encounter_datetime) >= @startDate
+		  AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		  
@@ -2203,23 +2179,21 @@ select
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		   
-		 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', '7951')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		  
 		  
 		  
-SELECT 
+       SELECT 
 		  
 -- 		  Troubles Lies a la consommation de l'alcool
 		 
@@ -2277,17 +2251,15 @@ SELECT
 		       FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		   
-		
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', '9522')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		  
@@ -2349,17 +2321,15 @@ SELECT
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
 		  INNER JOIN person p ON p.person_id = o.person_id
-		 
-		  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', '7197')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) <= @endDate;
 		  
 		  
 		 SELECT
@@ -2419,19 +2389,18 @@ SELECT
 		  
 		    FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
-		  INNER JOIN person p ON p.person_id = o.person_id
-		  
-		  
+		  INNER JOIN person p ON p.person_id = o.person_id 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
 		    FROM obs
 		    WHERE concept_id = concept_from_mapping("PIH", "8620") AND voided=0 ) AS disposition ON o.encounter_id = disposition.encounter_id
 	
 		  WHERE  e.voided = 0 AND o.voided = 0
-		   AND o.concept_id = concept_from_mapping("PIH", "3064")
+		   AND o.value_coded = concept_from_mapping('PIH', '10633')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
-
+		   AND DATE(e.encounter_datetime) <= @endDate;
+		
+		 
 		  -- Maladie Chroniques
 
 			SELECT 
