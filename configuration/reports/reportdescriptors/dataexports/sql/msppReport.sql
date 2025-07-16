@@ -1243,7 +1243,7 @@ select
 	    GROUP BY o.person_id 
 	) AS last_date_of_last_menstrual_period on o.person_id  = last_date_of_last_menstrual_period.person_id  
     WHERE o.concept_id = CONCEPT_FROM_MAPPING('PIH', '8879')
-    AND o.value_coded = CONCEPT_FROM_MAPPING('PIH', 'ANC VISIT')
+    AND o.value_coded = CONCEPT_FROM_MAPPING('PIH', '6259')
     AND o.voided = 0
 	AND e.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
