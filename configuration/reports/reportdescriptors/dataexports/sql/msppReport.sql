@@ -1145,91 +1145,107 @@ INSERT INTO visits_prenatal_temp
      categorie_mois_4_visit ,
      categorie_mois_5_visit )
 select 
-    CONCAT('Visite ', @row_num := IF(@current_person = prenatal_visit.person_id, @row_num + 1, 1)) AS numero_visite,
-    @current_person := prenatal_visit.person_id,
+    CONCAT('Visite ', @row_num := IF(@current_person = o.person_id, @row_num + 1, 1)) AS numero_visite,
+    @current_person := o.person_id,
       CASE
-        WHEN @row_num=1 and date(prenatal_visit.encounter_datetime) >= date(date_last_menstrual_period.value_datetime) 
-             AND date(prenatal_visit.encounter_datetime) <= DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH)
+        WHEN @row_num=1 and date(e.encounter_datetime) >= date(last_date_of_last_menstrual_period.last_dlmp) 
+             AND date(e.encounter_datetime) <= DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH)
+             AND last_edd.edd is not null
             THEN '0-3'
-        WHEN @row_num=1 and date(prenatal_visit.encounter_datetime) > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH) 
-             AND  date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH)
+        WHEN @row_num=1 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
+             AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
+              AND last_edd.edd is not null
             THEN '4-6'
-        WHEN @row_num=1 and date(prenatal_visit.encounter_datetime)  > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH) 
-             AND date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 9 MONTH)
+        WHEN @row_num=1 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
+             AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
+              AND last_edd.edd is not null
             THEN '7-9'
         ELSE 'Hors période'
     END AS categorie_mois_1_visit,
     
     CASE
-       WHEN @row_num=2 and date(prenatal_visit.encounter_datetime) >= date(date_last_menstrual_period.value_datetime) 
-             AND date(prenatal_visit.encounter_datetime) <= DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH)
+       WHEN @row_num=2 and date(e.encounter_datetime) >= date(last_date_of_last_menstrual_period.last_dlmp) 
+             AND date(e.encounter_datetime) <= DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH)
+              AND last_edd.edd is not null
             THEN '0-3'
-        WHEN @row_num=2 and date(prenatal_visit.encounter_datetime) > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH) 
-             AND  date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH)
+        WHEN @row_num=2 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
+             AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
+              AND last_edd.edd is not null
             THEN '4-6'
-        WHEN @row_num=2 and date(prenatal_visit.encounter_datetime)  > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH) 
-             AND date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 9 MONTH)
+        WHEN @row_num=2 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
+             AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
+              AND last_edd.edd is not null
             THEN '7-9'
         ELSE 'Hors période'
     END AS categorie_mois_2_visit,
     CASE
-        WHEN @row_num=3 and date(prenatal_visit.encounter_datetime) >= date(date_last_menstrual_period.value_datetime) 
-             AND date(prenatal_visit.encounter_datetime) <= DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH)
+        WHEN @row_num=3 and date(e.encounter_datetime) >= date(last_date_of_last_menstrual_period.last_dlmp) 
+             AND date(e.encounter_datetime) <= DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH)
+              AND last_edd.edd is not null
             THEN '0-3'
-        WHEN @row_num=3 and date(prenatal_visit.encounter_datetime) > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH) 
-             AND  date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH)
+        WHEN @row_num=3 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
+             AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
+              AND last_edd.edd is not null
             THEN '4-6'
-        WHEN @row_num=3 and date(prenatal_visit.encounter_datetime)  > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH) 
-             AND date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 9 MONTH)
+        WHEN @row_num=3 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
+             AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
+              AND last_edd.edd is not null
             THEN '7-9'
         ELSE 'Hors période'
     END AS categorie_mois_3_visit,
      CASE
-        WHEN @row_num=4 and date(prenatal_visit.encounter_datetime) >= date(date_last_menstrual_period.value_datetime) 
-             AND date(prenatal_visit.encounter_datetime) <= DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH)
+        WHEN @row_num=4 and date(e.encounter_datetime) >= date(last_date_of_last_menstrual_period.last_dlmp) 
+             AND date(e.encounter_datetime) <= DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH)
+              AND last_edd.edd is not null
             THEN '0-3'
-        WHEN @row_num=4 and date(prenatal_visit.encounter_datetime) > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH) 
-             AND  date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH)
+        WHEN @row_num=4 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
+             AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
+              AND last_edd.edd is not null
             THEN '4-6'
-        WHEN @row_num=4 and date(prenatal_visit.encounter_datetime)  > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH) 
-             AND date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 9 MONTH)
+        WHEN @row_num=4 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
+             AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
+              AND last_edd.edd is not null
             THEN '7-9'
         ELSE 'Hors période'
     END AS categorie_mois_4_visit,
      CASE
-      WHEN @row_num=5 and date(prenatal_visit.encounter_datetime) >= date(date_last_menstrual_period.value_datetime) 
-             AND date(prenatal_visit.encounter_datetime) <= DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH)
+      WHEN @row_num=5 and date(e.encounter_datetime) >= date(last_date_of_last_menstrual_period.last_dlmp) 
+             AND date(e.encounter_datetime) <= DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH)
+              AND last_edd.edd is not null
             THEN '0-3'
-        WHEN @row_num=5 and date(prenatal_visit.encounter_datetime) > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 3 MONTH) 
-             AND  date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH)
+        WHEN @row_num=5 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
+             AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
+              AND last_edd.edd is not null
             THEN '4-6'
-        WHEN @row_num=5 and date(prenatal_visit.encounter_datetime)  > DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 6 MONTH) 
-             AND date(prenatal_visit.encounter_datetime) < DATE_ADD(date_last_menstrual_period.value_datetime, INTERVAL 9 MONTH)
+        WHEN @row_num=5 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
+             AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
+              AND last_edd.edd is not null
             THEN '7-9'
         ELSE 'Hors période'
     END AS categorie_mois_5_visit
-   from obs o 
-   JOIN encounter e on e.encounter_id =o.encounter_id
-   
-   LEFT JOIN(
-    select e.encounter_id,e.encounter_datetime , o.value_coded,o.person_id  from obs o 
+    from obs o 
     JOIN encounter e on e.encounter_id =o.encounter_id
+     LEFT JOIN(
+		select max(o.value_datetime) as edd,o.person_id  from obs o 
+		JOIN encounter e on e.encounter_id =o.encounter_id
+	    WHERE concept_id = CONCEPT_FROM_MAPPING('PIH', 'ESTIMATED DATE OF CONFINEMENT')
+	    AND o.voided = 0 
+	    AND e.voided = 0
+	    AND DATE(o.value_datetime) > @startDate
+	    GROUP BY o.person_id 
+	) AS last_edd on o.person_id  = last_edd.person_id
+    LEFT JOIN(
+		select max(o.value_datetime) as last_dlmp,o.person_id  from obs o 
+		JOIN encounter e on e.encounter_id =o.encounter_id
+		WHERE o.concept_id = CONCEPT_FROM_MAPPING('PIH', 'DATE OF LAST MENSTRUAL PERIOD')
+	    AND o.voided = 0 
+     	AND e.voided = 0
+	    GROUP BY o.person_id 
+	) AS last_date_of_last_menstrual_period on o.person_id  = last_date_of_last_menstrual_period.person_id  
     WHERE o.concept_id = CONCEPT_FROM_MAPPING('PIH', '8879')
     AND o.value_coded = CONCEPT_FROM_MAPPING('PIH', 'ANC VISIT')
-    AND o.voided = 0 
-   ) AS prenatal_visit on o.person_id =prenatal_visit.person_id 
-   
-    LEFT JOIN(
-    select e.encounter_id,o.value_datetime , o.value_coded,o.person_id  from obs o 
-    JOIN encounter e on e.encounter_id =o.encounter_id
-    WHERE o.concept_id = CONCEPT_FROM_MAPPING('PIH', 'DATE OF LAST MENSTRUAL PERIOD')
-    AND o.voided = 0 
-   ) AS date_last_menstrual_period on o.encounter_id  =date_last_menstrual_period.encounter_id
-   
-    WHERE concept_id = CONCEPT_FROM_MAPPING('PIH', 'ESTIMATED DATE OF CONFINEMENT')
-    AND o.voided = 0 
-    AND e.voided = 0
-    AND DATE(o.value_datetime) > CURDATE()
+    AND o.voided = 0
+	AND e.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate;
 
