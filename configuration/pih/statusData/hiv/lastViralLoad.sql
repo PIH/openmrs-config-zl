@@ -24,7 +24,7 @@ from obs o
 inner join encounter e on o.encounter_id = e.encounter_id
 inner join obs og on o.obs_group_id = og.obs_id
 where e.patient_id = @patientId
-  and og.concept_id = concept_from_mapping('PIH', '11545')
+  and og.concept_id in (concept_from_mapping('PIH', '11545'), concept_from_mapping('PIH', '15124')) -- vl construct (standalone results) or vl panel (lab module) 
   and og.voided = 0
   and o.voided = 0
   and e.voided = 0
