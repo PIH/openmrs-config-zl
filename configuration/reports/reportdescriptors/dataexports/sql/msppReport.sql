@@ -1231,7 +1231,7 @@ select
 	    WHERE concept_id = CONCEPT_FROM_MAPPING('PIH', 'ESTIMATED DATE OF CONFINEMENT')
 	    AND o.voided = 0 
 	    AND e.voided = 0
-	    AND DATE(o.value_datetime) > @startDate
+	    AND DATE(o.value_datetime) > @endDate
 	    GROUP BY o.person_id 
 	) AS last_edd on o.person_id  = last_edd.person_id
     LEFT JOIN(
@@ -1247,12 +1247,14 @@ select
     AND o.voided = 0
 	AND e.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
-    AND DATE(e.encounter_datetime) < @endDate;
+    AND DATE(e.encounter_datetime) < @endDate
+	ORDER BY o.person_id, e.encounter_datetime;
 
    SELECT 
    SUM(IF(categorie_mois_1_visit='0-3',1,0)),
    SUM(IF(categorie_mois_1_visit='4-6',1,0)),
    SUM(IF(categorie_mois_1_visit='7-9',1,0)),
+   
    
    SUM(IF(categorie_mois_2_visit='0-3',1,0)),
    SUM(IF(categorie_mois_2_visit='4-6',1,0)),
