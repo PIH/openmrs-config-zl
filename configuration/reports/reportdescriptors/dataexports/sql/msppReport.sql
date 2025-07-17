@@ -1215,7 +1215,7 @@ select
             THEN '0-3'
         WHEN @row_num=5 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
              AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
-              AND last_edd.edd is not null
+              AND last_edd.edd is not null+
             THEN '4-6'
         WHEN @row_num=5 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
              AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
@@ -1231,7 +1231,7 @@ select
 	    WHERE concept_id = CONCEPT_FROM_MAPPING('PIH', 'ESTIMATED DATE OF CONFINEMENT')
 	    AND o.voided = 0 
 	    AND e.voided = 0
-	    AND DATE(o.value_datetime) > @endDate
+	    AND DATE(o.value_datetime) > @startDate
 	    GROUP BY o.person_id 
 	) AS last_edd on o.person_id  = last_edd.person_id
     LEFT JOIN(
@@ -1254,7 +1254,7 @@ select
    SUM(IF(categorie_mois_1_visit='0-3',1,0)),
    SUM(IF(categorie_mois_1_visit='4-6',1,0)),
    SUM(IF(categorie_mois_1_visit='7-9',1,0)),
-   
+
    
    SUM(IF(categorie_mois_2_visit='0-3',1,0)),
    SUM(IF(categorie_mois_2_visit='4-6',1,0)),
@@ -1331,7 +1331,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'FEVER')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		   
 		  
 		  SELECT 
@@ -1440,7 +1440,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'MALARIA')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  SELECT 
@@ -1530,7 +1530,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'Severe malaria')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 	    
@@ -1636,7 +1636,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'Severe malaria')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
@@ -1708,7 +1708,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'ANXIETY DISORDER')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		
@@ -1779,7 +1779,7 @@ select
 		   WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'DEMENTIA')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 
@@ -1854,7 +1854,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', 'DEPRESSION')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
@@ -1924,7 +1924,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', 'SCHIZOPHRENIA')
 		  AND DATE(e.encounter_datetime) >= @startDate
-		  AND DATE(e.encounter_datetime) <= @endDate;
+		  AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
@@ -1994,7 +1994,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '7950')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 	 SELECT
@@ -2061,7 +2061,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', 'Bipolar disorder')
 		  AND DATE(e.encounter_datetime) >= @startDate
-		  AND DATE(e.encounter_datetime) <= @endDate;
+		  AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		 SELECT
@@ -2132,7 +2132,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', '7201')
 		  AND DATE(e.encounter_datetime) >= @startDate
-		  AND DATE(e.encounter_datetime) <= @endDate;
+		  AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
@@ -2205,7 +2205,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '7951')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
@@ -2277,7 +2277,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '9522')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		  
@@ -2347,7 +2347,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '7197')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		  
 		  
 		 SELECT
@@ -2416,7 +2416,7 @@ select
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '10633')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) <= @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate;
 		
 		 
 		  -- Maladie Chroniques
