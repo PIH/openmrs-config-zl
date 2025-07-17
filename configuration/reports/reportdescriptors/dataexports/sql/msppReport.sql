@@ -1215,7 +1215,7 @@ select
             THEN '0-3'
         WHEN @row_num=5 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
              AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
-              AND last_edd.edd is not null+
+              AND last_edd.edd is not null
             THEN '4-6'
         WHEN @row_num=5 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
              AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
