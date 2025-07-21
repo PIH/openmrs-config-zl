@@ -1248,7 +1248,7 @@ select
 	AND e.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate
-	ORDER BY e.encounter_datetime;
+	ORDER BY e.encounter_datetime ASC;
 
    SELECT 
    SUM(IF(categorie_mois_1_visit='0-3',1,0)),
