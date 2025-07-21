@@ -1,4 +1,13 @@
 [
+    {
+    "uuid": "edObservation",
+    "name": "disposition.mirebalais.edObservation",
+    "conceptCode": "PIH:ED Observation",
+    "keepsVisitOpen": "true",
+    "encounterTypes": ["92fd09b4-5335-4f7e-9f63-b2a663fd09a6"],
+    "actions": [],
+    "additionalObs": []
+  },
   {
     "uuid": "admitToHospital",
     "type": "ADMIT",
