@@ -1209,15 +1209,15 @@ select
         ELSE 'Hors période'
     END AS categorie_mois_4_visit,
      CASE
-      WHEN @row_num=5 and date(e.encounter_datetime) >= date(last_date_of_last_menstrual_period.last_dlmp) 
+      WHEN @row_num >=5 and date(e.encounter_datetime) >= date(last_date_of_last_menstrual_period.last_dlmp) 
              AND date(e.encounter_datetime) <= DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH)
               AND last_edd.edd is not null
             THEN '0-3'
-        WHEN @row_num=5 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
+        WHEN @row_num >=5 and date(e.encounter_datetime) > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 3 MONTH) 
              AND  date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH)
               AND last_edd.edd is not null
             THEN '4-6'
-        WHEN @row_num=5 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
+        WHEN @row_num >=5 and date(e.encounter_datetime)  > DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 6 MONTH) 
              AND date(e.encounter_datetime) < DATE_ADD(last_date_of_last_menstrual_period.last_dlmp, INTERVAL 9 MONTH)
               AND last_edd.edd is not null
             THEN '7-9'
@@ -1248,7 +1248,7 @@ select
 	AND e.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate
-	ORDER BY o.person_id, e.encounter_datetime;
+	ORDER BY e.encounter_datetime ASC;
 
    SELECT 
    SUM(IF(categorie_mois_1_visit='0-3',1,0)),
