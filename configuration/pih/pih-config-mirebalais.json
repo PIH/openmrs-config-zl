@@ -33,7 +33,7 @@
   "visitsPageUrl": "/pihcore/visit/visit.page?patient={{patient.uuid}}#/visitList",
   "visitsPageWithSpecificUrl": "/pihcore/visit/visit.page?patient={{patient.uuid}}&visit={{visit.uuid}}#/overview",
 
-  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-inpatient.json",
+  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti.json",
 
   "extraIdentifierTypes": [
     "e66645eb-03a8-4991-b4ce-e87318e37566",
