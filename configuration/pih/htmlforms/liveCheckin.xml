@@ -205,11 +205,16 @@
                     <h3>
                         <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
                     </h3>
-                        <p class="left">
-                            <obs conceptId="PIH:Payment amount" id="paymentAmount" showUnits="false"
-                                 unitsCssClass="append-to-value" style="dropdown" size="999" answerLabels="$paymentAmtLabels"
-                                 answers="$paymentAmts" defaultValue="$paymentAmtDefault"/>
-                        </p>
+                    <p class="left" style="color:grey">
+                        <obs conceptId="PIH:Payment amount" id="paymentAmount"
+                             showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
+                    </p>
+
+                        <!-- Old version:  Payment amount with defined values and dropdown
+                        <obs conceptId="PIH:Payment amount" id="paymentAmount" showUnits="false"
+                             unitsCssClass="append-to-value" style="dropdown" size="999" answerLabels="$paymentAmtLabels"
+                             answers="$paymentAmts" defaultValue="$paymentAmtDefault"/> -->
+
                 </fieldset>
                 <fieldset id="receipt-number-question">
                     <legend>
