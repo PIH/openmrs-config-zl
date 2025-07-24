@@ -243,10 +243,9 @@
                             <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
                         </h3>
 
-                        <p class="left">
-                            <obs conceptId="PIH:Payment amount" id="paymentAmount" showUnits="false"
-                                 unitsCssClass="append-to-value" style="dropdown" size="3" answerLabels="50,Exempt"
-                                 answers="50,0" defaultValue="50"/>
+                        <p class="left" style="color:grey">
+                            <obs conceptId="PIH:Payment amount" id="paymentAmount"
+                                 showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
                         </p>
                     </fieldset>
 
