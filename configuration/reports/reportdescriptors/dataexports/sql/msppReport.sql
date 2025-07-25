@@ -1125,8 +1125,6 @@ WHERE
 -- 5) PRISE EN CHARGE DE LA FEMME ET DE LA MERE
 SET @row_num := 0;
 SET @current_person := NULL;
-SET @visit_rank := 0;
-SET @prev_person := NULL;
 
 DROP TEMPORARY TABLE IF EXISTS visits_prenatal_temp;
 CREATE TEMPORARY TABLE visits_prenatal_temp (
@@ -1149,9 +1147,11 @@ INSERT INTO visits_prenatal_temp
 SELECT 
     CONCAT('Visite ', visit_rank) AS numero_visite,
     person_id,
+
     CASE WHEN visit_rank = 1 THEN 
         CASE
             WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime < last_dlmp THEN 'Hors période'
             WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
@@ -1162,6 +1162,7 @@ SELECT
     CASE WHEN visit_rank = 2 THEN 
         CASE
             WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime < last_dlmp THEN 'Hors période'
             WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
@@ -1172,16 +1173,18 @@ SELECT
     CASE WHEN visit_rank = 3 THEN 
         CASE
             WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime < last_dlmp THEN 'Hors période'
             WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
             ELSE 'Hors période'
         END
     ELSE NULL END AS categorie_mois_3_visit,
-    
+
     CASE WHEN visit_rank = 4 THEN 
         CASE
             WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime < last_dlmp THEN 'Hors période'
             WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
@@ -1192,6 +1195,7 @@ SELECT
     CASE WHEN visit_rank >= 5 THEN 
         CASE
             WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime < last_dlmp THEN 'Hors période'
             WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
             WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
@@ -1204,8 +1208,8 @@ FROM (
         e.encounter_datetime,
         last_edd.edd,
         last_date_of_last_menstrual_period.last_dlmp,
-        @visit_rank := IF(@prev_person = o.person_id, @visit_rank + 1, 1) AS visit_rank,
-        @prev_person := o.person_id
+        @row_num := IF(@current_person = o.person_id, @row_num + 1, 1) AS visit_rank,
+        @current_person := o.person_id
     FROM obs o 
     JOIN encounter e ON e.encounter_id = o.encounter_id
     LEFT JOIN (
@@ -1239,6 +1243,7 @@ FROM (
     AND DATE(e.encounter_datetime) < @endDate
     ORDER BY o.person_id, e.encounter_datetime
 ) AS ranked_visits;
+
    SELECT 
    SUM(IF(categorie_mois_1_visit='0-3',1,0)),
    SUM(IF(categorie_mois_1_visit='4-6',1,0)),
