@@ -1123,6 +1123,11 @@ WHERE
 
 
 -- 5) PRISE EN CHARGE DE LA FEMME ET DE LA MERE
+SET @row_num := 0;
+SET @current_person := NULL;
+SET @visit_rank := 0;
+SET @prev_person := NULL;
+
 DROP TEMPORARY TABLE IF EXISTS visits_prenatal_temp;
 CREATE TEMPORARY TABLE visits_prenatal_temp (
      visit_number VARCHAR(50),
@@ -1133,9 +1138,6 @@ CREATE TEMPORARY TABLE visits_prenatal_temp (
      categorie_mois_4_visit  VARCHAR(50),
      categorie_mois_5_visit  VARCHAR(50));
 
-SET @row_num := 0;
-SET @current_person := NULL;     
-
 INSERT INTO visits_prenatal_temp 
 ( visit_number,
      person_id,
@@ -1145,52 +1147,98 @@ INSERT INTO visits_prenatal_temp
      categorie_mois_4_visit ,
      categorie_mois_5_visit )
 SELECT 
-    CONCAT('Visite ', visit_rank),
+    CONCAT('Visite ', visit_rank) AS numero_visite,
     person_id,
-    CASE WHEN visit_rank = 1 THEN category ELSE NULL END,
-    CASE WHEN visit_rank = 2 THEN category ELSE NULL END,
-    CASE WHEN visit_rank = 3 THEN category ELSE NULL END,
-    CASE WHEN visit_rank = 4 THEN category ELSE NULL END,
-    CASE WHEN visit_rank >= 5 THEN category ELSE NULL END
+    CASE WHEN visit_rank = 1 THEN 
+        CASE
+            WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
+            ELSE 'Hors période'
+        END
+    ELSE NULL END AS categorie_mois_1_visit,
+    
+    CASE WHEN visit_rank = 2 THEN 
+        CASE
+            WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
+            ELSE 'Hors période'
+        END
+    ELSE NULL END AS categorie_mois_2_visit,
+    
+    CASE WHEN visit_rank = 3 THEN 
+        CASE
+            WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
+            ELSE 'Hors période'
+        END
+    ELSE NULL END AS categorie_mois_3_visit,
+    
+    CASE WHEN visit_rank = 4 THEN 
+        CASE
+            WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
+            ELSE 'Hors période'
+        END
+    ELSE NULL END AS categorie_mois_4_visit,
+    
+    CASE WHEN visit_rank >= 5 THEN 
+        CASE
+            WHEN last_dlmp IS NULL OR edd IS NULL THEN 'Hors période'
+            WHEN encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 12 WEEK) THEN '0-3'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 13 WEEK) AND DATE_ADD(last_dlmp, INTERVAL 26 WEEK) THEN '4-6'
+            WHEN encounter_datetime BETWEEN DATE_ADD(last_dlmp, INTERVAL 27 WEEK) AND edd THEN '7-9'
+            ELSE 'Hors période'
+        END
+    ELSE NULL END AS categorie_mois_5_visit
 FROM (
     SELECT 
         o.person_id,
         e.encounter_datetime,
-        @row_num := IF(@current_person = o.person_id, @row_num + 1, 1) AS visit_rank,
-        @current_person := o.person_id,
-        CASE
-            WHEN e.encounter_datetime BETWEEN last_dlmp AND DATE_ADD(last_dlmp, INTERVAL 3 MONTH) AND edd IS NOT NULL THEN '0-3'
-            WHEN e.encounter_datetime > DATE_ADD(last_dlmp, INTERVAL 3 MONTH) AND e.encounter_datetime < DATE_ADD(last_dlmp, INTERVAL 6 MONTH) AND edd IS NOT NULL THEN '4-6'
-            WHEN e.encounter_datetime > DATE_ADD(last_dlmp, INTERVAL 6 MONTH) AND e.encounter_datetime < DATE_ADD(last_dlmp, INTERVAL 9 MONTH) AND edd IS NOT NULL THEN '7-9'
-            ELSE 'Hors période'
-        END AS category
-    FROM obs o
+        last_edd.edd,
+        last_date_of_last_menstrual_period.last_dlmp,
+        @visit_rank := IF(@prev_person = o.person_id, @visit_rank + 1, 1) AS visit_rank,
+        @prev_person := o.person_id
+    FROM obs o 
     JOIN encounter e ON e.encounter_id = o.encounter_id
     LEFT JOIN (
-        SELECT MAX(o.value_datetime) AS edd, o.person_id
-        FROM obs o
+        SELECT 
+            MAX(o.value_datetime) AS edd,
+            o.person_id  
+        FROM obs o 
         JOIN encounter e ON e.encounter_id = o.encounter_id
         WHERE concept_id = CONCEPT_FROM_MAPPING('PIH', 'ESTIMATED DATE OF CONFINEMENT')
-            AND o.voided = 0 AND e.voided = 0
-            AND DATE(o.value_datetime) > @startDate
-        GROUP BY o.person_id
-    ) last_edd ON o.person_id = last_edd.person_id
+        AND o.voided = 0 
+        AND e.voided = 0
+        AND DATE(o.value_datetime) > @startDate
+        GROUP BY o.person_id 
+    ) AS last_edd ON o.person_id = last_edd.person_id
     LEFT JOIN (
-        SELECT MAX(o.value_datetime) AS last_dlmp, o.person_id
-        FROM obs o
+        SELECT 
+            MAX(o.value_datetime) AS last_dlmp,
+            o.person_id  
+        FROM obs o 
         JOIN encounter e ON e.encounter_id = o.encounter_id
-        WHERE concept_id = CONCEPT_FROM_MAPPING('PIH', 'DATE OF LAST MENSTRUAL PERIOD')
-            AND o.voided = 0 AND e.voided = 0
-        GROUP BY o.person_id
-    ) last_dlmp ON o.person_id = last_dlmp.person_id
+        WHERE o.concept_id = CONCEPT_FROM_MAPPING('PIH', 'DATE OF LAST MENSTRUAL PERIOD')
+        AND o.voided = 0 
+        AND e.voided = 0
+        GROUP BY o.person_id 
+    ) AS last_date_of_last_menstrual_period ON o.person_id = last_date_of_last_menstrual_period.person_id  
     WHERE o.concept_id = CONCEPT_FROM_MAPPING('PIH', '8879')
-        AND o.value_coded = CONCEPT_FROM_MAPPING('PIH', '6259')
-        AND o.voided = 0 AND e.voided = 0
-        AND DATE(e.encounter_datetime) >= @startDate
-        AND DATE(e.encounter_datetime) < @endDate
+    AND o.value_coded = CONCEPT_FROM_MAPPING('PIH', '6259')
+    AND o.voided = 0
+    AND e.voided = 0
+    AND DATE(e.encounter_datetime) >= @startDate
+    AND DATE(e.encounter_datetime) < @endDate
     ORDER BY o.person_id, e.encounter_datetime
-) AS ranked;
-
+) AS ranked_visits;
    SELECT 
    SUM(IF(categorie_mois_1_visit='0-3',1,0)),
    SUM(IF(categorie_mois_1_visit='4-6',1,0)),
