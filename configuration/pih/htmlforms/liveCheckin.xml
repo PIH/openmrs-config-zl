@@ -292,7 +292,7 @@
                 <h3>
                     <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
                 </h3>
-                
+
                 <p class="left" style="color:grey">
                     <obs conceptId="PIH:Payment amount" id="paymentAmount"
                          showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
