@@ -112,6 +112,13 @@
 
     </style>
 
+    <translations defaultLocale="en">
+        <code name="mlminm2">
+            <variant locale="en" value="mL / min / 1.73 m&lt;sup&gt;2&lt;/sup&gt;"/>
+            <variant locale="fr" value="mL / min / 1.73 m&lt;sup&gt;2&lt;/sup&gt;"/>
+        </code>
+    </translations>
+
 
     <div class="print-form-datestamps" style="display:none">
         <p><uimessage code="pihcore.form.created_on"/>:
@@ -259,8 +266,8 @@
                     <label>
                         <uimessage code="pihcore.otherGenderId" />
                     </label>
-                    <!-- ToDo:  Uncomment with a new OCL version
-                    <obs conceptId="PIH:20893" />  -->
+
+                    <obs conceptId="PIH:20893" />
                 </div>
             </p>
 
@@ -279,7 +286,7 @@
                     </template>
 
                     <render aId="CIEL:160578" aLabel="HARSAH" />
-                    <!-- ToDo:  What is PS?  <render aId="CIEL:xx" aLabel="PS" /> -->
+                    <render aId="CIEL:166513" aLabel="PS" />
                     <render aId="CIEL:166415" aLabel="TG" />
                     <render aId="CIEL:105" aLabel="pihcore.ivDrugUser" />
                     <render aId="CIEL:6096" aLabel="discordant" />
@@ -386,7 +393,8 @@
 
                         <div class="three-columns">
                             <div>
-                                <obs conceptId="CIEL:161134" labelCode="pihcore.lab.clCr" showUnits="true"/>
+                                <obs conceptId="CIEL:161134" labelCode="pihcore.lab.clCr"
+                                     showUnits="mlminm2"/>
                             </div>
                             <div>
                                 <p class="side-by-side">
