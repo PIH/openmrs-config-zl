@@ -50,5 +50,11 @@
             <value>e9732df4-971d-4a9a-9129-e2e610552468</value>
         </globalProperty>
 
+       <!-- Core Apps -->
+        <globalProperty>
+            <property>coreapps.patientSearchHandler</property>
+            <value>pihPatientSearch</value>
+        </globalProperty>
+
     </globalProperties>
 </config>
