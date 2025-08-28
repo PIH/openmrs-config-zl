@@ -503,6 +503,105 @@
         </div>
     </section>
 
+    <style type="text/css">
+        .orderwidget-section-header {
+            font-size: 16px;
+        }
+        .order-field {
+            display: inline-block;
+            padding: 0px;
+        }
+        .order-field.action {
+            display: block;
+        }
+        .order-field.dateActivated {
+            padding-right: 20px;
+        }
+
+        .order-field-label {
+            display: inline-block;
+            padding-right: 5px;
+            vertical-align: middle;
+        }
+
+        .order-field-label:after {
+            content: "";
+            white-space: pre;
+        }
+
+        .order-field-widget {
+            display: inline-block;
+        }
+    </style>
+
+    <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.prepDrugOrders">
+
+        <div class="section-container">
+            <drugOrder>
+                <orderTemplate>
+                    <orderProperty name="action"/>
+                    <div style="padding:0px;">
+                        <orderProperty name="concept" label="pihcore.drugOrders.concept" style="autocomplete"/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="drug" label="pihcore.drugOrders.drug">
+                            <option value="78f96a76-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF/3TC 300/300mg"/>
+                            <option value="ac6a5bab-7df4-4275-af88-acdad53ccc97" label="FTC/TDF 200/300mg" />
+                        </orderProperty>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
+                        <orderProperty name="doseUnits" label=" ">
+                            <option value="CIEL:1513"/>    <!-- Tablet -->
+                            <option value="CIEL:1608"/>    <!-- Capsule -->
+                            <option value="CIEL:161553"/>  <!-- mg -->
+                            <option value="CIEL:162264" label="IU"/>  <!-- IU -->
+                        </orderProperty>
+                        <orderProperty name="frequency" label=" x "/>
+                        <orderProperty name="route" label=" ">
+                            <option value="CIEL:160240"/> <!-- Oral -->
+                            <option value="CIEL:160243"/> <!-- Intramuscular -->
+                            <option value="CIEL:160242" label="IV"/> <!-- IV -->
+                        </orderProperty>
+                        <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50" label=" "/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="dateActivated" label="pihcore.starting"/>
+                        <orderProperty name="duration" label="pihcore.visitNote.for"/>
+                        <orderProperty name="durationUnits" label=" "/>
+                    </div>
+                    <div style="padding:0px;">
+                        <orderProperty name="quantity" label="pihcore.quantity"/>
+                        <orderProperty name="quantityUnits" label=" "/>
+                        <orderProperty name="numRefills" label="pihcore.refills"/>
+                    </div>
+                    <div style="display:none;">
+                        <orderProperty name="urgency" value="ROUTINE"/>
+                        <orderProperty name="previousOrder"/>
+                        <orderProperty name="careSetting" value="OUTPATIENT"/>
+                    </div>
+                    <div style="display:none;" class="order-discontinueReason">
+                        <orderProperty name="discontinueReason">
+                            <option value="CIEL:843"/>
+                            <option value="CIEL:102"/>
+                            <option value="CIEL:127750"/>
+                            <option value="CIEL:1754"/>
+                            <option value="CIEL:162853"/>
+                            <option value="CIEL:1434"/>
+                            <option value="CIEL:987"/>
+                            <option value="CIEL:1253"/>
+                            <option value="CIEL:1067"/>
+                            <option value="CIEL:5622"/>
+                        </orderProperty>
+                        <orderProperty name="discontinueReasonNonCoded"/>
+                    </div>
+                </orderTemplate>
+            </drugOrder>
+        </div>
+
+    </section>
+
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
             <submit submitClass="confirm right" submitCode="mirebalais.save"/>
