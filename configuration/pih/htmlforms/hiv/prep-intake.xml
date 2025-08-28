@@ -482,6 +482,27 @@
         </div>
     </section>
 
+    <section id="init-prep" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="pihcore.initPrep">
+
+        <div class="section-container">
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.prepStartDate" />
+                </label>
+                <obs conceptId="PIH:20897" />
+            </p>
+
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.hivRiskCounsel" />
+                </label>
+                <obs conceptId="PIH:20898" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066" />
+            </p>
+        </div>
+    </section>
+
     <ifMode mode="VIEW" include="false">
         <div id="buttons">
             <submit submitClass="confirm right" submitCode="mirebalais.save"/>
