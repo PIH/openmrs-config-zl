@@ -482,62 +482,58 @@
         </div>
     </section>
 
+         <style type="text/css">
+            .orderwidget-section-header {
+                font-size: 16px;
+            }
+            .order-field {
+                display: inline-block;
+                padding: 0px;
+            }
+            .order-field.action {
+                display: block;
+            }
+            .order-field.dateActivated {
+                padding-right: 20px;
+            }
+
+            .order-field-label {
+                display: inline-block;
+                padding-right: 5px;
+                vertical-align: middle;
+            }
+
+            .order-field-label:after {
+                content: "";
+                white-space: pre;
+            }
+
+            .order-field-widget {
+                display: inline-block;
+            }
+        </style>
+
     <section id="init-prep" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.initPrep">
 
         <div class="section-container">
-            <p class="side-by-side">
+            <div class="two-columns">
+                <div>
+                    <p class="side-by-side">
+                        <label>
+                            <uimessage code="pihcore.prepStartDate" />
+                        </label>
+                        <obs conceptId="PIH:20897" />
+                    </p>
+                </div>
+                <div></div>
+            </div>
+
+            <h3>
                 <label>
-                    <uimessage code="pihcore.prepStartDate" />
+                    <uimessage code="pihcore.prepDrugOrders" />
                 </label>
-                <obs conceptId="PIH:20897" />
-            </p>
-
-            <p class="side-by-side">
-                <label>
-                    <uimessage code="pihcore.hivRiskCounsel" />
-                </label>
-                <obs conceptId="PIH:20898" style="radio"
-                     answerConceptIds="CIEL:1065,CIEL:1066" />
-            </p>
-        </div>
-    </section>
-
-    <style type="text/css">
-        .orderwidget-section-header {
-            font-size: 16px;
-        }
-        .order-field {
-            display: inline-block;
-            padding: 0px;
-        }
-        .order-field.action {
-            display: block;
-        }
-        .order-field.dateActivated {
-            padding-right: 20px;
-        }
-
-        .order-field-label {
-            display: inline-block;
-            padding-right: 5px;
-            vertical-align: middle;
-        }
-
-        .order-field-label:after {
-            content: "";
-            white-space: pre;
-        }
-
-        .order-field-widget {
-            display: inline-block;
-        }
-    </style>
-
-    <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-             headerCode="pihcore.prepDrugOrders">
-
-        <div class="section-container">
+            </h3>
             <drugOrder>
                 <orderTemplate>
                     <orderProperty name="action"/>
@@ -598,8 +594,15 @@
                     </div>
                 </orderTemplate>
             </drugOrder>
-        </div>
 
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.hivRiskCounsel" />
+                </label>
+                <obs conceptId="PIH:20898" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066" />
+            </p>
+        </div>
     </section>
 
     <ifMode mode="VIEW" include="false">
