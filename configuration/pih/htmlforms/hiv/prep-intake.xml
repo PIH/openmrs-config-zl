@@ -252,25 +252,6 @@
     <section id="overview" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.lab.overview">
         <div class="section-container">
-            <p class="side-by-side">
-                <obs id="gender-id" conceptId="CIEL:167864" style="radio"
-                     labelCode="pihcore.genderIdentity"
-                     answerConceptIds="CIEL:167865,CIEL:167866,CIEL:5622"
-                     answerCodes="M,F,pihcore.other">
-                    <controls>
-                        <when value="CIEL:5622" thenDisplay="#other-gender"/>
-                    </controls>
-                </obs>
-
-                <div id="other-gender">
-                    <label>
-                        <uimessage code="pihcore.otherGenderId" />
-                    </label>
-
-                    <obs conceptId="PIH:20893" />
-                </div>
-            </p>
-
             <p>
                 <label>
                     <uimessage code="pihcore.populationCat" />
@@ -413,8 +394,8 @@
                                     <uimessage code="pihcore.pregnancy.status"/>
                                     <br/>
                                     <obs conceptId="CIEL:45"
-                                         answerConceptIds="CIEL:703,CIEL:664,CIEL:1175"
-                                         answerCodes="pihcore.positiveSign,pihcore.negativeSign,pihcore.nonapplicable"
+                                         answerConceptIds="CIEL:703,CIEL:664"
+                                         answerCodes="pihcore.positiveSign,pihcore.negativeSign"
                                          answerSeparator="&amp;nbsp;"
                                          style="radio"/>
                                 </includeIf>
@@ -602,6 +583,26 @@
                 <obs conceptId="PIH:20898" style="radio"
                      answerConceptIds="CIEL:1065,CIEL:1066" />
             </p>
+        </div>
+    </section>
+
+    <section id="referral" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="pihcore.transferReferralIn">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <label>
+                        <uimessage code="pihcore.referenceClinic" />
+                    </label>
+                    <obs conceptId="PIH:11483" />
+                </div>
+                <div>
+                    <label>
+                        <uimessage code="pihcore.referenceDate" />
+                    </label>
+                    <obs conceptId="CIEL:163181" allowTime="false" />
+                </div>
+            </div>
         </div>
     </section>
 

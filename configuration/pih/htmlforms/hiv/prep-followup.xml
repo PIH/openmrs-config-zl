@@ -94,10 +94,19 @@
             display: inline-block;
         }
 
-        .two-columns {
-            column-count: 2;
-            -webkit-column-count: 2;
-            -moz-column-count: 2;
+        .five-columns, .four-columns, .three-columns, .two-columns {
+            display: table;
+            height: 100%;
+            width: 100%;
+        }
+
+        .two-columns > div {
+            display: table-cell;
+            width: 50%;
+        }
+
+        .narrow {
+            width: 200px;
         }
 
     </style>
@@ -270,18 +279,16 @@
     <section id="monitor" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.prepMonitoring">
         <div class="section-container">
-
             <div class="two-columns">
                 <div>
                     <label>
                         <uimessage code="pihcore.returnPrepDate" />
                     </label>
-                    <obs conceptId="CIEL:5096" />
+                    <obs conceptId="CIEL:5096" cols="12"/>
                 </div>
-                <div>
-
-                </div>
+                <div></div>
             </div>
+            <br/>
 
             <div class="two-columns">
                 <div>
@@ -333,10 +340,7 @@
                         </repeat>
                     </p>
                 </div>
-
             </div>
-
-
 
             <br/>
             <table>
@@ -402,6 +406,7 @@
                     <td></td>
                 </tr>
             </table>
+            <br/><br/>
 
             <h2>
                 <label>
@@ -477,6 +482,33 @@
                 <obs conceptId="PIH:20898" style="radio"
                      answerConceptIds="CIEL:1065,CIEL:1066" />
             </p>
+
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.condomLubProvided" />
+                </label>
+                <obs conceptId="CIEL:159777" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066" />
+            </p>
+        </div>
+    </section>
+
+    <section id="comments" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="pihcore.other">
+        <div class="section-container">
+            <p class="side-by-side">
+                <label>
+                    <uimessage code="pihcore.prepAdherence" />
+                </label>
+                <!--
+                                <obs conceptId="CIEL:164847" style="radio" />
+                                    answerConceptIds="CIEL:1065,CIEL:1066" /> -->
+            </p>
+
+            <label>
+                <uimessage code="pihcore.remarks" />
+            </label>
+            <obs conceptId="PIH:1620" style="textarea" cols="70"/>
         </div>
     </section>
 
