@@ -101,10 +101,10 @@
       "label": "ui.i18n.PatientIdentifierType.name.3B954DB1-0D41-498E-A3F9-1E20CCC47323",
       "width": "80px"
     },
-    {
-      "type": "identifierLocation",
-      "value": "a541af1e-105c-40bf-b345-ba1fd6a59b85 ",
-      "label": "coreapps.location",
+     {
+      "type": "attribute",
+      "value": "Health Center",
+      "label": "coreapps.healthCenter",
       "width": "150px"
     }
   ],
