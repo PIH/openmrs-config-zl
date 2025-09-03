@@ -356,9 +356,9 @@
                     <th>Date</th>
                 </tr>
 
-                <tr>
+                <obsgroup groupingConceptId="PIH:11522" showIfEmpty="false">
+                    <tr>
                     <!-- HIV test -->
-                    <obsgroup groupingConceptId="PIH:11522">
                         <td>
                             <uimessage code="pihcore.lab.hiv.title"/>
                         </td>
@@ -373,12 +373,12 @@
                         <td>
                             <obs conceptId="PIH:DATE OF LABORATORY TEST" />
                         </td>
-                    </obsgroup>
-                </tr>
+                    </tr>
+                </obsgroup>
 
-                <tr>
-                    <!-- RPR test -->
-                    <obsgroup groupingConceptId="PIH:11523">
+                <!-- RPR test -->
+                <obsgroup groupingConceptId="PIH:11523" showIfEmpty="false">
+                    <tr>
                         <td>
                             <label>
                                 <uimessage code="pihcore.lab.syphilis" />
@@ -394,8 +394,8 @@
                         <td>
                             <obs conceptId="PIH:DATE OF LABORATORY TEST" />
                         </td>
-                    </obsgroup>
-                </tr>
+                    </tr>
+                </obsgroup>
 
                 <tr>
                     <td>
