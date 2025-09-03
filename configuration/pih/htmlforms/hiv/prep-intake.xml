@@ -519,9 +519,6 @@
                 <orderTemplate>
                     <orderProperty name="action"/>
                     <div style="padding:0px;">
-                        <orderProperty name="concept" label="pihcore.drugOrders.concept" style="autocomplete"/>
-                    </div>
-                    <div style="padding:0px;">
                         <orderProperty name="drug" label="pihcore.drugOrders.drug">
                             <option value="78f96a76-dfbe-11e9-8a34-2a2ae2dbcce4" label="TDF/3TC 300/300mg"/>
                             <option value="ac6a5bab-7df4-4275-af88-acdad53ccc97" label="FTC/TDF 200/300mg" />
@@ -529,16 +526,14 @@
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="dose" label="pihcore.visitNote.plan.dose"/>
-                        <orderProperty name="doseUnits" label=" ">
+                        <orderProperty name="doseUnits" value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label=" ">
                             <option value="CIEL:1513"/>    <!-- Tablet -->
                             <option value="CIEL:1608"/>    <!-- Capsule -->
                             <option value="CIEL:161553"/>  <!-- mg -->
-                            <option value="CIEL:162264" label="IU"/>  <!-- IU -->
                         </orderProperty>
-                        <orderProperty name="frequency" label=" x "/>
-                        <orderProperty name="route" label=" ">
+                        <orderProperty name="frequency" value="37328251-6759-4270-8a2e-8cab2c0b315b" label=" x "/>
+                        <orderProperty name="route" value="46aaaca8-1f21-410a-aac9-67bfcc1fd577" label=" ">
                             <option value="CIEL:160240"/> <!-- Oral -->
-                            <option value="CIEL:160243"/> <!-- Intramuscular -->
                             <option value="CIEL:160242" label="IV"/> <!-- IV -->
                         </orderProperty>
                         <orderProperty name="dosingInstructions" textArea="true" textAreaRows="3" textAreaColumns="50" label=" "/>
@@ -546,11 +541,11 @@
                     <div style="padding:0px;">
                         <orderProperty name="dateActivated" label="pihcore.starting"/>
                         <orderProperty name="duration" label="pihcore.visitNote.for"/>
-                        <orderProperty name="durationUnits" label=" "/>
+                        <orderProperty name="durationUnits" value="3cd70b68-26fe-102b-80cb-0017a47871b2" label=" "/>
                     </div>
                     <div style="padding:0px;">
                         <orderProperty name="quantity" label="pihcore.quantity"/>
-                        <orderProperty name="quantityUnits" label=" "/>
+                        <orderProperty name="quantityUnits" value="1513AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label=" "/>
                         <orderProperty name="numRefills" label="pihcore.refills"/>
                     </div>
                     <div style="display:none;">
