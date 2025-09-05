@@ -10,7 +10,8 @@
     "excludedEncounterTypes": [
       "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
       "ca65f5d3-6312-4143-ae4e-0237427f339e",
-      "5e82bea0-fd7b-47f9-858a-91be87521073"
+      "5e82bea0-fd7b-47f9-858a-91be87521073",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
     ],
     "actions": [],
     "additionalObs": [
@@ -60,7 +61,11 @@
     "type": "DISCHARGE",
     "name": "disposition.emrapi.discharge",
     "conceptCode": "PIH:DISCHARGED",
-    "excludedEncounterTypes": ["8d50b938-dcf9-4b8e-9938-e625bd2f0a81","ca65f5d3-6312-4143-ae4e-0237427f339e"],
+    "excludedEncounterTypes": [
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "ca65f5d3-6312-4143-ae4e-0237427f339e",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "actions": [
       "dischargeIfAdmittedDispositionAction"
     ],
@@ -86,7 +91,12 @@
     "uuid": "leftWithoutSeeingAClinician",
     "name": "disposition.emrapi.leftWithoutSeeingAClinician",
     "conceptCode": "PIH:Left without seeing a clinician",
-    "excludedEncounterTypes": ["8d50b938-dcf9-4b8e-9938-e625bd2f0a81","ca65f5d3-6312-4143-ae4e-0237427f339e","5e82bea0-fd7b-47f9-858a-91be87521073"],
+    "excludedEncounterTypes": [
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "ca65f5d3-6312-4143-ae4e-0237427f339e",
+      "5e82bea0-fd7b-47f9-858a-91be87521073",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "actions": [
       "dischargeIfAdmittedDispositionAction"
     ],
@@ -96,7 +106,11 @@
     "uuid": "leftWithoutCompletionOfTreatment",
     "name": "disposition.emrapi.leftWithoutCompletionOfTreatment",
     "conceptCode": "PIH:Departed without medical discharge",
-    "excludedEncounterTypes": ["8d50b938-dcf9-4b8e-9938-e625bd2f0a81","ca65f5d3-6312-4143-ae4e-0237427f339e","5e82bea0-fd7b-47f9-858a-91be87521073"],
+    "excludedEncounterTypes": [
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "ca65f5d3-6312-4143-ae4e-0237427f339e",
+      "5e82bea0-fd7b-47f9-858a-91be87521073",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
     "actions": [
       "dischargeIfAdmittedDispositionAction"
     ],
@@ -106,7 +120,11 @@
     "uuid": "leftAgainstMedicalAdvice",
     "name": "pihcore.disposition.leftAgainstMedicalAdvice",
     "conceptCode": "CIEL:1694",
-    "encounterTypes": ["8d50b938-dcf9-4b8e-9938-e625bd2f0a81","ca65f5d3-6312-4143-ae4e-0237427f339e"],
+    "encounterTypes": [
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "ca65f5d3-6312-4143-ae4e-0237427f339e",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "actions": [
       "dischargeIfAdmittedDispositionAction"
     ],
@@ -116,6 +134,7 @@
     "uuid": "transferOutOfHospital",
     "name": "disposition.emrapi.transferOutOfHospital",
     "conceptCode": "PIH:Transfer out of hospital",
+    "excludedEncounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
     "actions": [
       "dischargeIfAdmittedDispositionAction"
     ],
@@ -134,7 +153,11 @@
     "type": "ADMIT",
     "name": "disposition.emrapi.transferInHospital",
     "conceptCode": "PIH:Transfer within hospital",
-    "excludedEncounterTypes": ["8d50b938-dcf9-4b8e-9938-e625bd2f0a81","5e82bea0-fd7b-47f9-858a-91be87521073"],
+    "excludedEncounterTypes": [
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "5e82bea0-fd7b-47f9-858a-91be87521073",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "actions": [
       "transferToSpecificLocationDispositionAction"
     ],
@@ -156,7 +179,12 @@
     "name": "disposition.mirebalais.stillHospitalized",
     "conceptCode": "PIH:Still hospitalized",
     "keepsVisitOpen": "true",
-    "excludedEncounterTypes": ["ca65f5d3-6312-4143-ae4e-0237427f339e","8d50b938-dcf9-4b8e-9938-e625bd2f0a81","5e82bea0-fd7b-47f9-858a-91be87521073"],
+    "excludedEncounterTypes": [
+      "ca65f5d3-6312-4143-ae4e-0237427f339e",
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "5e82bea0-fd7b-47f9-858a-91be87521073",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "actions": [],
     "additionalObs": []
   },
@@ -165,7 +193,12 @@
     "name": "disposition.mirebalais.edObservation",
     "conceptCode": "PIH:ED Observation",
     "keepsVisitOpen": "true",
-    "excludedEncounterTypes": ["8d50b938-dcf9-4b8e-9938-e625bd2f0a81","ca65f5d3-6312-4143-ae4e-0237427f339e","5e82bea0-fd7b-47f9-858a-91be87521073"],
+    "excludedEncounterTypes": [
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "ca65f5d3-6312-4143-ae4e-0237427f339e",
+      "5e82bea0-fd7b-47f9-858a-91be87521073",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "actions": [],
     "additionalObs": []
   },

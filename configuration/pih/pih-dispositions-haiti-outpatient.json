@@ -5,6 +5,9 @@
     "careSettingTypes": ["OUTPATIENT"],
     "name": "disposition.emrapi.admitToHospital",
     "conceptCode": "PIH:ADMIT TO HOSPITAL",
+    "excludedEncounterTypes": [
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "actions": []
   },
   {
@@ -12,24 +15,36 @@
     "type": "DISCHARGE",
     "name": "disposition.emrapi.discharge",
     "conceptCode": "PIH:DISCHARGED",
+    "excludedEncounterTypes": [
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "additionalObs": []
   },
   {
     "uuid": "leftWithoutSeeingAClinician",
     "name": "disposition.emrapi.leftWithoutSeeingAClinician",
     "conceptCode": "PIH:Left without seeing a clinician",
+    "excludedEncounterTypes": [
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "additionalObs": []
   },
   {
     "uuid": "leftWithoutCompletionOfTreatment",
     "name": "disposition.emrapi.leftWithoutCompletionOfTreatment",
     "conceptCode": "PIH:Departed without medical discharge",
+    "excludedEncounterTypes": [
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "additionalObs": []
   },
   {
     "uuid": "transferOutOfHospital",
     "name": "disposition.emrapi.transferOutOfHospital",
     "conceptCode": "PIH:Transfer out of hospital",
+    "excludedEncounterTypes": [
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "additionalObs": [
       {
         "label": "disposition.emrapi.transferOutOfHospital.sites",
@@ -44,6 +59,18 @@
     "uuid": "transferWithinHospital",
     "name": "disposition.emrapi.transferInHospital",
     "conceptCode": "PIH:Transfer within hospital",
+    "excludedEncounterTypes": [
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
+    "additionalObs": []
+  },
+  {
+    "uuid": "treatmentStopped",
+    "name": "disposition.emrapi.treatmentStopped",
+    "conceptCode": "CIEL:164349",
+    "encounterTypes": [
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
     "additionalObs": []
   },
   {

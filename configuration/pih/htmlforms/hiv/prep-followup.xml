@@ -19,6 +19,8 @@
           formEncounterType="4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
           formVersion="1.0">
 
+    <postSubmissionAction class="org.openmrs.module.pihcore.htmlformentry.action.ApplyDispositionAction"/>
+
     <style type="text/css">
 
         #who-when-where {
@@ -110,6 +112,17 @@
         }
 
     </style>
+
+    <ifMode mode="EDIT">
+        #disposition small {
+            font-size: 100%;
+            display: block;
+        }
+
+        #disposition span {
+            padding-left: 15px;
+        }
+    </ifMode>
 
     <translations defaultLocale="en">
         <code name="mlminm2">
@@ -303,7 +316,7 @@
 
                         <repeat>
                             <template>
-                                <obs conceptId="PIH:1297" style="checkbox"
+                                <obs conceptId="PIH:ADVERSE EFFECT" style="checkbox"
                                      answerConceptId="{cId}" ansSide="{adverse}" />
                                 <br/>
                             </template>
@@ -317,6 +330,11 @@
                             <render cId="CIEL:140238" adverse="fever" />
                             <render cId="CIEL:5622"   adverse="other" />
                         </repeat>
+
+                        <label>
+                            <uimessage code="zl.ifOtherSpecify" />
+                        </label>
+                        <obs conceptId="PIH:1729" />
                     </p>
                 </div>
                 <div>
@@ -341,6 +359,11 @@
                             <render cId="CIEL:137155" stiSympt="inguinalBubo" />
                             <render cId="CIEL:5622"   stiSympt="other" />
                         </repeat>
+
+                        <label>
+                            <uimessage code="zl.ifOtherSpecify" />
+                        </label>
+                        <obs conceptId="PIH:1374" />
                     </p>
                 </div>
             </div>
@@ -472,7 +495,11 @@
                 </orderTemplate>
             </drugOrder>
 
-            <h2></h2>
+            <h2>
+                <label>
+                    <uimessage code="more" />
+                </label>
+            </h2>
             <p class="side-by-side">
                 <label>
                     <uimessage code="pihcore.hivRiskCounsel" />
@@ -488,6 +515,13 @@
                 <obs conceptId="CIEL:159777" style="radio"
                      answerConceptIds="CIEL:1065,CIEL:1066" />
             </p>
+
+            <h2>
+                <uimessage code="pihcore.status" />
+            </h2>
+            <div id="disposition">
+                <encounterDisposition/>
+            </div>
         </div>
     </section>
 
