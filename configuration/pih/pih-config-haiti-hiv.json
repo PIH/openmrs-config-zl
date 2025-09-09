@@ -53,7 +53,8 @@
 
   "extraIdentifierTypes": [
     "3B954DB1-0D41-498E-A3F9-1E20CCC47323",
-    "139766e8-15f5-102d-96e4-000c29c2a5d7"
+    "139766e8-15f5-102d-96e4-000c29c2a5d7",
+    "ea204038-be61-432d-a3fe-df31f784365e"
   ],
 
   "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-outpatient.json",
@@ -101,7 +102,13 @@
       "label": "ui.i18n.PatientIdentifierType.name.3B954DB1-0D41-498E-A3F9-1E20CCC47323",
       "width": "80px"
     },
-     {
+    {
+      "type": "identifier",
+      "value": "ea204038-be61-432d-a3fe-df31f784365e",
+      "label": "ui.i18n.PatientIdentifierType.name.ea204038-be61-432d-a3fe-df31f784365e",
+      "width": "80px"
+    },
+    {
       "type": "attribute",
       "value": "Health Center",
       "label": "coreapps.healthCenter",

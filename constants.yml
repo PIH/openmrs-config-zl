@@ -24,6 +24,8 @@ patientIdentifierType:
     uuid: "B68489FE-7B34-400B-992C-D4C1B5DD2928"
   hivemrV1InfantCode:
     uuid: "5FB435B4-F573-48C0-A715-FEBD42FDBB75"
+  prepCode:
+    uuid: "ea204038-be61-432d-a3fe-df31f784365e"
 
 encounterType:
   PATIENT_REGISTRATION:
