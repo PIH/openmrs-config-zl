@@ -300,7 +300,8 @@
                     <label>
                         <uimessage code="pihcore.returnPrepDate" />
                     </label>
-                    <obs conceptId="CIEL:5096" cols="12"/>
+                    <obs id="apptDate" conceptId="PIH:RETURN VISIT DATE"
+                         allowFutureDates="true" allowPastDates="false" cols="12" />
                 </div>
                 <div></div>
             </div>
@@ -326,7 +327,7 @@
                             <render cId="CIEL:122983" adverse="vomiting" />
                             <render cId="CIEL:142412" adverse="diarrhea" />
                             <render cId="CIEL:140501" adverse="fatigue" />
-                            <render cId="PIH:161"  adverse="swollenGangLymph" />
+                            <render cId="PIH:161"     adverse="swollenGangLymph" />
                             <render cId="CIEL:140238" adverse="fever" />
                             <render cId="CIEL:5622"   adverse="other" />
                         </repeat>
