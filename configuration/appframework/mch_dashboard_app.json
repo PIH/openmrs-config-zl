@@ -208,6 +208,31 @@
     ]
   },
   {
+    "id": "mch.dashboard.prenatalVisits",
+    "order": 1,
+    "config": {
+      "icon": "fas fa-user-md fa-fw",
+      "label": "mch.dashboard.prenatalVisits",
+      "configFile":"mch/statuses.yml"
+      
+    },
+    "extensions": [
+      {
+        "id": "mch.dashboard.prenatalVisits`.extension",
+        "appId": "mch.dashboard.prenatalVisits",
+        "extensionPointId": "${program.mch.uuid}.secondColumnFragments",
+        "order": 1,
+        "requiredPrivilege": "${privilege.app_coreapps_patient_dashboard}",
+        "require": "",
+        "extensionParams": {
+          "provider": "pihcore",
+          "fragment": "dashboardwidgets/statusData"
+        }
+      }
+    ]
+  },
+
+  {
     "id": "mch.dashboard.babyStatus",
     "order": 1,
     "config": {
