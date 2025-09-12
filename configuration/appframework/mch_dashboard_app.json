@@ -210,9 +210,9 @@
   {
     "id": "mch.dashboard.prenatalVisits",
     "order": 1,
+    "icon": "fas fa-user-md fa-fw",
+    "label": "mch.dashboard.prenatalVisits",
     "config": {
-      "icon": "fas fa-user-md fa-fw",
-      "label": "mch.dashboard.prenatalVisits",
       "configFile":"mch/statuses.yml"
       
     },

@@ -13,6 +13,6 @@
 - id: "lastPrenatalVisitDate"
   labelCode: "zl.status.mch.lastPrenatalVisitDate"
   statusDataQuery: "prenatalVisit.sql"
-  valueExpression: "#if($lastPrenatalVisit) $lastPrenatalVisit #{else}$fn.translate('zl.status.mch.lastPrenatalVisitDate.none')#end"
+  valueExpression: "#if($lastPrenatalVisit) $fn.formatDate($lastPrenatalVisit) #{else}$fn.translate('zl.status.mch.lastPrenatalVisitDate.none')#end"
   formatExpression: ""
 

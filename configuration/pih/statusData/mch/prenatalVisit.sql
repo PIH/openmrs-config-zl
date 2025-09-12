@@ -3,8 +3,8 @@ SELECT
             WHEN o.value_coded = concept_from_mapping('PIH', '6259') THEN 1 
             ELSE 0 
         END) AS numberOfVisits,
-    edc.value_datetime AS estimatedDateOfConfinement,
-    max(e.encounter_datetime) AS lastPrenatalVisit
+    DATE(edc.value_datetime) AS estimatedDateOfConfinement,
+    DATE(max(e.encounter_datetime)) AS lastPrenatalVisit
 FROM obs o
 INNER JOIN encounter e ON o.encounter_id = e.encounter_id
 INNER JOIN person p ON p.person_id = o.person_id
