@@ -1,7 +1,7 @@
 SELECT
    DATE(o.value_datetime) AS estimatedDateOfConfinement,
    DATE(MAX(vp.encounter_datetime)) as lastPrenatalVisit,
-   COUNT(*) as numberOfVisits
+   COUNT(DISTINCT vp.encounter_id) as numberOfVisits
   
 FROM obs o
 INNER JOIN encounter e ON o.encounter_id = e.encounter_id
