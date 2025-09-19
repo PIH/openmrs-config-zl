@@ -1,0 +1,23 @@
+-- SELECT 
+--     SUM(CASE 
+--             WHEN o.value_coded = concept_from_mapping('PIH', '6259') THEN 1 
+--             ELSE 0 
+--         END) AS numberOfVisits,
+--     DATE(edc.value_datetime) AS estimatedDateOfConfinement,
+--     DATE(max(e.encounter_datetime)) AS lastPrenatalVisit
+-- FROM obs o
+-- INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+-- INNER JOIN person p ON p.person_id = o.person_id
+-- INNER JOIN (
+--     SELECT person_id, MIN(value_datetime) AS value_datetime
+--     FROM obs
+--     WHERE concept_id = concept_from_mapping('PIH','ESTIMATED DATE OF CONFINEMENT')
+--       AND voided = 0
+--       AND value_datetime >= NOW()
+--     GROUP BY person_id
+-- ) edc ON edc.person_id = p.person_id
+-- WHERE o.value_coded = concept_from_mapping('PIH', '6259')
+--   AND e.patient_id = @patientId
+--   AND e.voided = 0
+--   AND o.voided = 0
+--   AND e.encounter_datetime <= edc.value_datetime;
