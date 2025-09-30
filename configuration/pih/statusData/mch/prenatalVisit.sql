@@ -2,7 +2,7 @@ SELECT
    DATE(o.value_datetime) AS estimatedDateOfConfinement,
    DATE(MAX(vp.encounter_datetime)) as lastPrenatalVisit,
    COUNT(DISTINCT vp.encounter_id) as numberOfVisits
-  
+ 
 FROM obs o
 INNER JOIN encounter e ON o.encounter_id = e.encounter_id
 INNER JOIN person p ON p.person_id = o.person_id
@@ -15,10 +15,10 @@ LEFT JOIN (
    AND o2.voided =0
  
   )AS vp on vp.person_id =o.person_id 
-  AND vp.encounter_datetime BETWEEN e.encounter_datetime AND o.value_datetime
+  AND vp.encounter_datetime BETWEEN DATE_SUB(o.value_datetime, INTERVAL 270 DAY) AND o.value_datetime
   
 WHERE o.concept_id= concept_from_mapping('PIH','ESTIMATED DATE OF CONFINEMENT')
-  AND o.value_datetime >= NOW()
-  AND e.patient_id = @patientId
+  AND DATEDIFF(o.value_datetime, NOW()) <= 270
+  AND e.patient_id =  @patientId
   AND e.voided = 0
   AND o.voided = 0
