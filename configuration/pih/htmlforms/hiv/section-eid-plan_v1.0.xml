@@ -1,100 +1,115 @@
 <htmlform id="hiv-plan"
-          formUuid="d65c4322-1027-4be9-9951-cf20460723f1" formName="EID Plan"
-          formVersion="2.0">
+          formUuid="08399695-3024-491c-9299-7517c4a03112" formName="EID Plan V1"
+          formVersion="1.0">
 
     <style type="text/css">
-        <ifMode mode="VIEW" include="false">
-            form fieldset {
-                display: block;
-            }
 
-            #external-transfer-out input[type=checkbox],
-            #external-transfer-in input[type=checkbox],
-            .cb-align input[type=checkbox] {
-                margin: 0px 5px;
-                top:0px;
-            }
+        form fieldset {
+            display: block;
+        }
 
-            .four-columns, .three-columns, .two-columns, .five-columns {
-                display: table;
-                height: 100%;
-                width: 100%;
-            }
+        #test-orders input[type=checkbox],
+        #id-treatment, #family-plan-section {
+            float: none;
+            vertical-align: middle;
+        }
 
-            .two-columns > div {
-                display: table-cell;
-                width: 50%;
-            }
+        #test-orders p, #id-treatment p {
+            margin-bottom: 5px
+        }
 
-            .three-columns > div {
-                display: table-cell;
-                width: 33%;
-            }
+        #test-orders span, #test-orders label {
+            display: inline !important;
+            vertical-align: middle;
+        }
 
-            .four-columns > div {
-                display: table-cell;
-                width: 25%;
-            }
+        #external-transfer-out input[type=checkbox],
+        #external-transfer-in input[type=checkbox],
+        .cb-align input[type=checkbox] {
+            margin: 0px 5px;
+            top:0px;
+        }
 
-            .five-columns > div {
-                display: table-cell;
-                width: 20%;
-            }
-
-            p.radio > * {
-                display: inline;
-                float: none !important;
-                min-width: initial;
-            }
-
-            .section-container label,
-            .section-container-color label {
-                margin: 0px;
-            }
-
-            .section-container-color {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
-            }
-
-           - .section {
+        .four-columns, .three-columns, .two-columns, .five-columns {
+            display: table;
+            height: 100%;
             width: 100%;
-            }
+        }
 
-            label {
-                padding: 0px 3px 0px 0px
-            }
+        .two-columns > div {
+            display: table-cell;
+            width: 50%;
+        }
 
-            .narrow {
-                width: 200px;
-            }
+        .three-columns > div {
+            display: table-cell;
+            width: 33%;
+        }
 
-            .small-input input[type=text] {
-                width: 12em;
-            }
+        .four-columns > div {
+            display: table-cell;
+            width: 25%;
+        }
 
-            #data-collection {
-                display: inline-block;
-                width: 58%;
-                vertical-align: top;
-            }
+        .five-columns > div {
+            display: table-cell;
+            width: 20%;
+        }
 
-            #encounter-diagnoses-target {
-                display: inline-block;
-                width: 40%;
-                vertical-align: top;
-            }
+        p.radio > * {
+            display: inline;
+            float: none !important;
+            min-width: initial;
+        }
 
-            #encounter-diagnoses-app {
-                margin-bottom: 20px;
-            }
 
-            .hasDatepicker {
-                min-width: 100%;
-            }
-        </ifMode>
+        .section-container label,
+        .section-container-color label {
+            margin: 0px;
+        }
+
+        .section-container-color {
+            background: #F2F2F2;
+            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+            padding: 10px 5px 10px 15px;
+            line-height: 1.5em; /*add this for vertical spacing between elements*/
+        }
+
+       - .section {
+        width: 100%;
+        }
+
+        label {
+            padding: 0px 3px 0px 0px
+        }
+
+        .narrow {
+            width: 200px;
+        }
+
+        .small-input input[type=text] {
+            width: 12em;
+        }
+
+        #data-collection {
+            display: inline-block;
+            width: 58%;
+            vertical-align: top;
+        }
+
+        #encounter-diagnoses-target {
+            display: inline-block;
+            width: 40%;
+            vertical-align: top;
+        }
+
+        #encounter-diagnoses-app {
+            margin-bottom: 20px;
+        }
+
+        .hasDatepicker {
+            min-width: 100%;
+        }
     </style>
 
     <ifMode mode="VIEW" include="false">
@@ -103,10 +118,77 @@
         </h1>
     </ifMode>
 
+    <!-- ToDo: This section is duplicated by the section-lab-order.xml and should be replace
+         with including forms within htmlforms.  Formlets? -->
     <section id="test-orders" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.labExam">
         <div class="section-container-color">
-            <pihLabOrder />
+            <div class="four-columns">
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs conceptId="PIH:Lab test ordered coded"
+                                     answerConceptId="{labName}" answerCode="{codeLabel}"
+                                     style="checkbox"/>
+                            </p>
+                        </template>
+                        <render labName="CIEL:21"     codeLabel="Hemoglobin"/>
+                        <render labName="CIEL:5475"   codeLabel="pihcore.lab.tbSkin" comment="PPD (skin test)"/>
+                    </repeat>
+                </div>
+
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs conceptId="PIH:Lab test ordered coded"
+                                     answerConceptId="{labName}"
+                                     answerCode="{codeLabel}"
+                                     style="checkbox"/>
+                            </p>
+                        </template>
+                        <render labName="CIEL:302"  codeLabel="pihcore.lab.urine"/>
+                        <render labName="CIEL:1030" codeLabel="pihcore.lab.hivpcr" comment="HIV PCR"/>
+                    </repeat>
+                </div>
+
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs conceptId="PIH:Lab test ordered coded"
+                                     answerConceptId="{labName}"
+                                     style="checkbox"/>
+                            </p>
+                        </template>
+                        <render labName="CIEL:304" comment="Stool"/>
+                        <render labName="CIEL:32" comment="Malaria smear"/>
+                        <render labName="CIEL:1643" comment="Malaria RDT"/>
+                    </repeat>
+                </div>
+
+                <div>
+                    <repeat>
+                        <template>
+                            <p>
+                                <obs conceptId="PIH:Lab test ordered coded"
+                                     answerConceptId="{labName}"
+                                     answerCode="{codeLabel}"
+                                     style="checkbox"/>
+                            </p>
+                        </template>
+                        <render labName="CIEL:163722" codeLabel="pihcore.lab.hivRapid" comment="HIV RT"/>
+                    </repeat>
+                    <p>
+                        <obs conceptId="PIH:Lab test ordered coded"
+                             answerConceptId="CIEL:5622"
+                             answerCode="zl.ifOtherSpecify"
+                             style="checkbox"
+                             showCommentField="true" commentFieldLabel=""/>
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -147,6 +229,16 @@
                     </label>
                     <lookup expression="fn.latestObs('CIEL:1030').valueCoded.name" />
                     (<lookup expression="fn.latestObs('CIEL:1030').obsDatetime" />)
+                    <!-- Only 1 PCR
+                    <obsgroup id="hiv-pcr2" groupingConceptId="PIH:11522">
+                        <p class="radio">
+                            <obs conceptId="CIEL:1030" labelCode="PCR2" style="radio"
+                                 answerConceptIds="CIEL:703,CIEL:664,CIEL:1138"/>
+                        </p>
+                        <p class="narrow">
+                            <obs conceptId="CIEL:164400" labelCode="Date:"/>
+                        </p>
+                    </obsgroup> -->
                 </div>
             </div>
         </div>
