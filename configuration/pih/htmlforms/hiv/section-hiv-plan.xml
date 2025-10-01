@@ -15,19 +15,13 @@
         display: inline-block;
         }
 
-        #test-orders input[type=checkbox],
         #id-treatment, #family-plan-section {
             float: none;
             vertical-align: middle;
         }
 
-        #test-orders p, #id-treatment p {
+        #id-treatment p {
             margin-bottom: 5px
-        }
-
-        #test-orders span, #test-orders label {
-            display: inline !important;
-            vertical-align: middle;
         }
 
         #external-transfer-out input[type=checkbox],
