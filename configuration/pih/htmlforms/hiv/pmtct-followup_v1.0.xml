@@ -1,6 +1,6 @@
-<htmlform formUuid="71ad3a72-fafc-4ecf-9613-d6522e5dc7aa"
-          formEncounterType="584124b9-1f10-4757-ba09-91fc9075af92"
-          formName="PMTCT Intake" formVersion="2.0">
+<htmlform formUuid="90725b56-a57c-4e93-85da-d5eb3397174e"
+          formEncounterType="95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5"
+          formName="PMTCT Followup V1" formVersion="1.0">
 
     <style type="text/css">
         #who-when-where {
@@ -90,7 +90,7 @@
 
     <div class="htmlform" style="display:none">
         <ifMode mode="VIEW" include="false">
-            <h2><uimessage code="ui.i18n.EncounterType.name.584124b9-1f10-4757-ba09-91fc9075af92"/></h2>
+            <h2><uimessage code="ui.i18n.EncounterType.name.c31d3312-40c4-11e7-a919-92ebcb67fe33"/></h2>
 
             <!-- users with retroConsultNote privilege can edit provider, location, and date for both retro and active visits -->
             <includeIf velocityTest="$user.hasPrivilege('Task: emr.retroConsultNote')">
@@ -170,7 +170,6 @@
                 </div>
             </includeIf>
         </ifMode>
-
 
         <ifMode mode="VIEW" include="false">
             <div id="buttons">
