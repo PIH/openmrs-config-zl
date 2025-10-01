@@ -322,7 +322,7 @@
                     <div style="padding:0px;">
                         <orderProperty name="quantity" label="pihcore.quantity"/>
                         <orderProperty name="quantityUnits" label=" "/>
-                        <orderProperty name="numRefills" label="pihcore.refills"/>
+                        <orderProperty name="numRefills" value="0" label="pihcore.refills"/>
                     </div>
                     <div style="display:none;">
                         <orderProperty name="urgency" value="ROUTINE"/>
