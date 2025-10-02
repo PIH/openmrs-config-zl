@@ -14,11 +14,9 @@ LEFT JOIN (
    AND e2.voided=0 
    AND o2.voided =0
  
-  )AS vp on vp.person_id =o.person_id 
-  AND vp.encounter_datetime BETWEEN DATE_SUB(o.value_datetime, INTERVAL 270 DAY) AND o.value_datetime
-  
+  )AS vp on vp.person_id =o.person_id AND DATEDIFF(NOW(),vp.encounter_datetime ) <= 270
 WHERE o.concept_id= concept_from_mapping('PIH','ESTIMATED DATE OF CONFINEMENT')
-  AND DATEDIFF(o.value_datetime, NOW()) <= 270
-  AND e.patient_id =  @patientId
+  AND DATEDIFF(NOW(),o.value_datetime) <= 270
+  AND e.patient_id =   @patientId
   AND e.voided = 0
   AND o.voided = 0
