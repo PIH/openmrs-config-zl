@@ -1,5 +1,4 @@
 SELECT
-   DATE(o.value_datetime) AS estimatedDateOfConfinement,
    DATE(MAX(vp.encounter_datetime)) as lastPrenatalVisit,
    COUNT(DISTINCT vp.encounter_id) as numberOfVisits
  
@@ -20,3 +19,4 @@ WHERE o.concept_id= concept_from_mapping('PIH','ESTIMATED DATE OF CONFINEMENT')
   AND e.patient_id =   @patientId
   AND e.voided = 0
   AND o.voided = 0
+ 

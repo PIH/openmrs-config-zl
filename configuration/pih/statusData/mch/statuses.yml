@@ -6,7 +6,7 @@
 
 - id: "expectedDeliveryDate"
   labelCode: "zl.status.mch.expectedDeliveryDate"
-  statusDataQuery: "prenatalVisit.sql"
+  statusDataQuery: "deliveryDate.sql"
   valueExpression: "#if($estimatedDateOfConfinement) $fn.formatDate($estimatedDateOfConfinement) #{else}$fn.translate('zl.status.mch.expectedDeliveryDate.none')#end"
   formatExpression: ""
 
