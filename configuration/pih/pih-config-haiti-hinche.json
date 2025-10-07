@@ -47,45 +47,5 @@
   "extraIdentifierTypes": [
     "59c0c5e5-4ec4-4852-8da4-a1f4d12fcc2d",
     "9f9f8d7f-450d-4142-be44-13e261598faa"
-  ],
-  "findPatientColumnConfig": [
-    {
-      "type": "identifier",
-      "value": "a541af1e-105c-40bf-b345-ba1fd6a59b85",
-      "label": "ui.i18n.PatientIdentifierType.name.a541af1e-105c-40bf-b345-ba1fd6a59b85",
-      "width": "80px"
-    },
-    {
-      "type": "name",
-      "label": "coreapps.search.name",
-      "width": "200px"
-    },
-    {
-      "type": "gender",
-      "label": "coreapps.gender",
-      "width": "65px"
-    },
-    {
-      "type": "age",
-      "label": "coreapps.age",
-      "width": "50px"
-    },
-    {
-      "type": "birthdate",
-      "label": "coreapps.birthdate",
-      "width": "100px"
-    },
-    {
-      "type": "identifier",
-      "value": "59c0c5e5-4ec4-4852-8da4-a1f4d12fcc2d",
-      "label": "ui.i18n.PatientIdentifierType.name.59c0c5e5-4ec4-4852-8da4-a1f4d12fcc2d",
-      "width": "80px"
-    },
-    {
-      "type": "identifier",
-      "value": "9f9f8d7f-450d-4142-be44-13e261598faa",
-      "label": "ui.i18n.PatientIdentifierType.name.9f9f8d7f-450d-4142-be44-13e261598faa",
-      "width": "80px"
-    }
   ]
 }
