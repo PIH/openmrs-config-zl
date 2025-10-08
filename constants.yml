@@ -26,6 +26,10 @@ patientIdentifierType:
     uuid: "5FB435B4-F573-48C0-A715-FEBD42FDBB75"
   prepCode:
     uuid: "ea204038-be61-432d-a3fe-df31f784365e"
+  redCapRecordId:
+    uuid: "59c0c5e5-4ec4-4852-8da4-a1f4d12fcc2d"
+  redCapDossierNumber:
+    uuid: "9f9f8d7f-450d-4142-be44-13e261598faa"
 
 encounterType:
   PATIENT_REGISTRATION:
