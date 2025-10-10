@@ -1,0 +1,12 @@
+[
+  {
+    "id": "zl.diseaseMonitoringReport",
+    "type": "link",
+    "url": "https://app.powerbi.com/links/FHCZw8w1cA?ctid=5254789f-6860-4375-85bc-302509fad508&pbi_source=linkShare",
+    "extensionPointId": "org.openmrs.module.reportingui.reports.overview",
+    "label": "zl.diseaseMonitoringReport",
+    "icon": "",
+    "requiredPrivilege": null,
+    "order": 12
+  }
+]
