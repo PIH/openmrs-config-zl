@@ -1,7 +1,28 @@
-Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location
-Saint-Marc (HSN),,,,,,,,,,,,,,,,TRUE,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,
-Sante Mantal | HSN,,,,,,TRUE,,TRUE,,,,,,,,TRUE,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE
-Sante Fanm | HSN,,,,,TRUE,TRUE,,TRUE,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,TRUE,,,,,,,TRUE
-Klinik MNT | HSN,,,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,,,,,,TRUE
-Onkoloji | HSN,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE
-Sal Reyabilitasyon | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
+Location,Admission Location,Admission Note Location,Appointment Location,Archives Location,COVID-19 Location,Check-In Location,Chemotherapy Location,Consult Note Location,Dispensing Location,Echocardiogram Location,ED Note Location,ED Triage Location,HIV Consult Location,Identifier Assignment Location,Inpatients App Location,Labs Component Location,Lab Results Location,Login Location,Maternal and Child Location,MCH Program Dashboard Location,Medical Record Location,Mental Health Location,NCD Consult Location,Oncology Consult Location,Order Pathology Location,Order Radiology Study Location,Primary Care Consult Location,Program Location,Provider Management Location,Registration Location,Registration and Check-In Location,Surgery Note Location,Tablet Entry Location,Transfer Location,Vaccination Location,Visit Location,Vitals Location,Vitals Inpatient Location,Vitals ANC Location
+Saint-Marc (HSN),,,,,,,,,,,,,,,,TRUE,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,,,
+Achiv Santral | HSN,,,,TRUE,,,,,,,,,,,TRUE,,,TRUE,,,,,,,,,,,,TRUE,,,,,,,,,
+COVID-19 | Izolman | HSN,TRUE,,,,TRUE,TRUE,,,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
+Ijans | HSN,,,,,TRUE,TRUE,,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,TRUE,,,TRUE,,,,TRUE,
+J9 | HSN,,,,,,,,,,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,,
+Klinik Ekstèn Famasi | HSN,,,TRUE,,,,,,TRUE,,,,,,,,,TRUE,,,,,,,,,,,,,,,,,,,,,
+Klinik Ekstèn Jeneral | HSN,,TRUE,TRUE,,TRUE,TRUE,,,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,,,TRUE,,,,TRUE,TRUE,TRUE,,,TRUE,TRUE,,,TRUE,,,TRUE,,
+Klinik Ekstèn | HSN,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,,TRUE,,
+Klinik MNT | HSN,,,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,,,,,,TRUE,,
+Laboratwa Prensipal | HSN,,,TRUE,,,,,,,,,,,,TRUE,TRUE,TRUE,TRUE,,,,,,,TRUE,,,,,,,,,,,,,,
+Onkoloji | HSN,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE,,
+Radyografi | HSN,,,TRUE,,,,,,,,,,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,,,,,,
+Sal Aprè Akouchman | HSN,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,TRUE,,,,TRUE,
+Sal Aprè Operasyon | HSN,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,TRUE,
+Sal Aprè Operasyon | Sante Fanm | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,TRUE,TRUE,,TRUE,,,,TRUE,
+Sal Avan Akouchman | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,,TRUE,
+Sal Fanm | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,,TRUE
+Sal Gason | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,
+Sal Izolman | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,
+Sal Reyabilitasyon | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE,,
+Sal Timoun | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,TRUE,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,TRUE,,,,,TRUE,,,,TRUE,
+Sante Fanm | HSN,,,,,TRUE,TRUE,,TRUE,TRUE,,,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,TRUE,,,,,,,TRUE,,
+Sante Mantal | HSN,,,,,,TRUE,,TRUE,,,,,,,,TRUE,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE,,
+Swen Entansif Neonatal | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,,TRUE,
+Swen Entansif | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,TRUE,,,,,TRUE,TRUE,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,
+Travay e Akouchman | HSN,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,,TRUE,TRUE,,,TRUE,,,,,TRUE,,,,TRUE,
+UMI | HSN,TRUE,TRUE,,,TRUE,TRUE,,TRUE,,,,,,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,,,,TRUE,,,TRUE,TRUE,,,TRUE,,
