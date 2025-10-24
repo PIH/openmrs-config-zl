@@ -11,5 +11,6 @@ ${patientIdentifierType.dentalDossierNumber.uuid},,Dental Dossier Number,Dental 
 ${patientIdentifierType.hivDossierNumber.uuid},,HIV Nimewo Dosye,HIV EMR Dossier number,FALSE,,,,NOT_USED,NON_UNIQUE
 ${patientIdentifierType.hivemrV1InfantId.uuid},,HIV EMR V1 Infant ID,Internal INFANT_ID for this patient in the Haiti EMR V1 system,FALSE,,,,NOT_USED,NON_UNIQUE
 ${patientIdentifierType.hivemrV1InfantCode.uuid},,HIV EMR V1 Infant Code,Code referencing the HIV EMR INFANT_CODE field in the Haiti EMR V1 system,FALSE,,,,NOT_USED,NON_UNIQUE
+${patientIdentifierType.prepCode.uuid},,PrEP Code,PrEP Code for ZL patient,FALSE,,,,NOT_USED,NON_UNIQUE
 ${patientIdentifierType.redCapRecordId.uuid},,REDCap Record ID,REDCap Record Id a.k.a Study ID.It is an unique auto-incremented integer assigned to each patient in the REDCAP system.,FALSE,,,,NOT_USED,UNIQUE
 ${patientIdentifierType.redCapDossierNumber.uuid},,REDCap Dossier Number,REDCap Dossier Number,FALSE,,,,NOT_USED,NON_UNIQUE
