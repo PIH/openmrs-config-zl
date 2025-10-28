@@ -843,7 +843,7 @@
                             </td>
                             <td>
                                 <label>
-                                    <uimessage code="providermanagement.startDate"/>
+                                    <uimessage code="pihcore.startDate"/>
                                 </label>
                             </td>
                         </tr>
