@@ -67,8 +67,7 @@
       "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
     ],
     "actions": [
-      "dischargeIfAdmittedDispositionAction",
-      "closeCurrentVisitDispositionAction"
+      "dischargeIfAdmittedDispositionAction"
     ],
     "additionalObs": []
   },
@@ -99,8 +98,7 @@
       "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
     ],
     "actions": [
-      "dischargeIfAdmittedDispositionAction",
-      "closeCurrentVisitDispositionAction"
+      "dischargeIfAdmittedDispositionAction"
     ],
     "additionalObs": []
   },
@@ -114,8 +112,7 @@
       "5e82bea0-fd7b-47f9-858a-91be87521073",
       "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
     "actions": [
-      "dischargeIfAdmittedDispositionAction",
-      "closeCurrentVisitDispositionAction"
+      "dischargeIfAdmittedDispositionAction"
     ],
     "additionalObs": []
   },
@@ -129,8 +126,7 @@
       "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
     ],
     "actions": [
-      "dischargeIfAdmittedDispositionAction",
-      "closeCurrentVisitDispositionAction"
+      "dischargeIfAdmittedDispositionAction"
     ],
     "additionalObs": []
   },
@@ -140,8 +136,7 @@
     "conceptCode": "PIH:Transfer out of hospital",
     "excludedEncounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
     "actions": [
-      "dischargeIfAdmittedDispositionAction",
-      "closeCurrentVisitDispositionAction"
+      "dischargeIfAdmittedDispositionAction"
     ],
     "additionalObs": [
       {
