@@ -1,0 +1,23 @@
+key: "womenHealthReport"
+uuid: "bfac0d81-09fc-4981-adf2-d6fa9e5ec858"
+name: "mirebalaisreports.womenHealthReport.name"
+description: "mirebalaisreports.womenHealthReport.description"
+parameters:
+  - key: "startDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.startDate"
+  - key: "endDate"
+    type: "java.util.Date"
+    label: "reporting.parameter.endDate"
+datasets:
+  - key: "womenHealthReport"
+    type: "sql"
+    config: "sql/womenHealthReport.sql"
+designs:
+  - type: "excel"
+    template: "templates/womenHealthReport.xls"
+config:
+  category: "MONITORING"
+  order: 7
+  components:
+    - "monitoringReports"
