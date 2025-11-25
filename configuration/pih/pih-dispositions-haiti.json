@@ -88,6 +88,46 @@
     "additionalObs": []
   },
   {
+    "uuid": "onProphylaxis",
+    "name": "pihcore.onPrep",
+    "conceptCode": "PIH:On prophylaxis",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "voluntaryStop",
+    "name": "pihcore.voluntaryStopPrEP",
+    "conceptCode": "PIH:21092",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "interrupt",
+    "name": "pihcore.interruptPrEP",
+    "conceptCode": "PIH:21093",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "discontinue",
+    "name": "pihcore.discontinuePrEPmed",
+    "conceptCode": "PIH:21094",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "seroconversion",
+    "name": "pihcore.seroconversion",
+    "conceptCode": "PIH:20909",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
     "uuid": "leftWithoutSeeingAClinician",
     "name": "disposition.emrapi.leftWithoutSeeingAClinician",
     "conceptCode": "PIH:Left without seeing a clinician",

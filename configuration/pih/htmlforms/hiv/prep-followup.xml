@@ -111,18 +111,17 @@
             width: 200px;
         }
 
+        <ifMode mode="EDIT" include="true">
+            #disposition small {
+                font-size: 100%;
+                display: block;
+            }
+
+            #disposition span {
+                padding-left: 15px;
+            }
+        </ifMode>
     </style>
-
-    <ifMode mode="EDIT">
-        #disposition small {
-            font-size: 100%;
-            display: block;
-        }
-
-        #disposition span {
-            padding-left: 15px;
-        }
-    </ifMode>
 
     <translations defaultLocale="en">
         <code name="mlminm2">
@@ -291,6 +290,8 @@
             display: inline-block;
         }
     </style>
+
+    <enrollInProgram programId="PrEP" locationTag="Program Location"/>
 
     <section id="monitor" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.prepMonitoring">
