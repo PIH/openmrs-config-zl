@@ -693,8 +693,8 @@
 			</p>
 		</fieldset>
 
-		<!-- only show Head circumference if patient is less than 3 years old (on the encounterDate) -->
-		<includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 14">
+		<!-- only show fetal heart rate if patient is of reproductive age -->
+		<includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) >= 10">
 			<fieldset field-separator=" ">
 				<legend>
 					<uimessage code="mirebalais.vitals.fhr" />
