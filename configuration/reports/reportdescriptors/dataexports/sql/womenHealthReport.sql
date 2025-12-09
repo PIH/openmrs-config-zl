@@ -3,7 +3,7 @@ SET  @locale = GLOBAL_PROPERTY_VALUE('default_locale', 'en');
 SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 
 -- Utilisation et Acceptation methode moderne contraception
-  SELECT 
+SELECT 
     SUM(IF(planing_service_status.value_coded=concept_from_mapping("PIH","10867")
     AND planing_method.value_coded=concept_from_mapping("PIH","13249") 
    ,1,0)),
@@ -139,13 +139,12 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
 	    FROM obs
 	    WHERE concept_id = concept_from_mapping("PIH", "14321") AND voided = 0 ) AS planing_service_status ON o.encounter_id = planing_service_status.encounter_id
     WHERE 
-    o.value_coded = concept_from_mapping("PIH", "5483")
+    o.value_coded in (concept_from_mapping("PIH", "13254"),concept_from_mapping("PIH", "6259"),concept_from_mapping("PIH", "6261"), concept_from_mapping("PIH", "5483"))
     AND e.voided = 0
     AND o.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate;
 
--- MÉTHODES PERMANENTES ET DE LONGUE DURÉE --
   SELECT 
   SUM(IF( planing_method.value_coded=concept_from_mapping("PIH","1719") 
    ,1,0)),
@@ -165,14 +164,15 @@ SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
    LEFT JOIN (
 	    SELECT encounter_id, value_coded
 	    FROM obs
-	    WHERE concept_id = concept_from_mapping("PIH", "374")  AND voided = 0)
+	    WHERE concept_id =  concept_from_mapping("PIH", "374")  AND voided = 0)
 	    AS planing_method ON o.encounter_id = planing_method.encounter_id
     WHERE 
-    o.value_coded = concept_from_mapping("PIH", "5483")
+    o.value_coded in (concept_from_mapping("PIH", "13254"),concept_from_mapping("PIH", "6259"),concept_from_mapping("PIH", "6261"), concept_from_mapping("PIH", "5483"))
     AND e.voided = 0
     AND o.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate;
+
 
 
 SELECT @MET_COC_USED 'MET_COC_USED',
