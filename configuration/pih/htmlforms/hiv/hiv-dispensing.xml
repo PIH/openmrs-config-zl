@@ -527,7 +527,27 @@
                 </tr>
             </table>
         </div>
+          <!-- Side effects or allergies: -->
+          <div class="section-container">
+            <table>
+                <tr>
+                    <td>
+                        <label><uimessage code="zl.allergy.drugQuestion"/></label>
+                        <br/>
+                        <obs id="drug_allergy_question"   conceptId="CIEL:165273" style="radio"/>
+                        
+                    </td>
+                    <td>
+                        <label><uimessage code="zl.allergy.specify"/></label>
+                        <obs id="drug_allergy_specify"  conceptId="CIEL:164377" />
+                    
+                    </td>
 
+                </tr>
+             
+               
+            </table>
+        </div>
         <div class="section-container">
             <table>
                 <tr>

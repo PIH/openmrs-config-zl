@@ -591,5 +591,32 @@ function saveSelectedLocation() {
 
 
 
+jq(function() {
+  
+    const radios = jq('#drug_allergy_question input[type=radio]');
+    const yesRadio = radios.eq(2);
 
+    
+    const detailsTd = jq('#drug_allergy_specify').closest('td');
+    const detailsInput = jq('#drug_allergy_details input');
+
+    // Hide at start
+    detailsTd.hide();
+    detailsInput.prop('required', false);
+
+    radios.on('change', function () {
+
+        if (yesRadio.is(':checked')) {
+            detailsTd.show();
+            detailsInput.prop('required', true);
+        } 
+        else {
+            // NO or UNKNOWN or nothing
+            detailsTd.hide();
+            detailsInput.prop('required', false);
+            detailsInput.val('');
+        }
+
+    });
+});
 
