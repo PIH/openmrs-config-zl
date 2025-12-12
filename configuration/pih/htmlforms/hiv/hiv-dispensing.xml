@@ -349,9 +349,22 @@
 
             return true;
         });
+
+    beforeValidation.push(function() {
+    var yesSelected = jq('#drug_allergy_question input[value="1"]').is(':checked');
+    var specifyValue = jq('#drug_allergy_specify_value').val();
+
+    if (yesSelected &amp;&amp; (!specifyValue || specifyValue.trim() === "")) {
+         jq('#specifyMedsError').text("<uimessage code='zl.drugAllergy.specifyRequired'/>").show();
+          return false;
+          }
+        jq('#specifyMedsError').text("").hide();
+        return true;
+      });
     }
 });
 </script>
+
 
     <div class="print-form-datestamps" style="display:none">
         <p><uimessage code="pihcore.form.created_on"/>:
@@ -534,13 +547,23 @@
                     <td>
                         <label><uimessage code="zl.allergy.drugQuestion"/></label>
                         <br/>
-                        <obs id="drug_allergy_question"   conceptId="CIEL:165273" style="radio"/>
-                        
+
+                        <obs id="drug_allergy_question"
+                             conceptId="CIEL:165273"
+                             style="radio"
+                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
+                            <controls>
+                                <when value="PIH:YES" thenDisplay="#drug_allergy_specify"/>
+                            </controls>
+                        </obs>
                     </td>
+
                     <td>
-                        <label><uimessage code="zl.allergy.specify"/></label>
-                        <obs id="drug_allergy_specify"  conceptId="CIEL:164377" />
-                    
+                        <p id="drug_allergy_specify">
+                            <label><uimessage code="zl.allergy.specify"/></label>
+                            <obs id="drug_allergy_specify_value"  conceptId="CIEL:164377"/>
+                            <span id="specifyMedsError" class="error field-error" style="display: none"></span>
+                        </p>
                     </td>
 
                 </tr>
