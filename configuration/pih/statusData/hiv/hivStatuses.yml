@@ -81,3 +81,10 @@
   statusDataQuery: "hivRegimen.sql"
   valueExpression: "#if(!$regimen) $fn.translate('pihcore.none.label') #{else} $regimen #end"
   formatExpression: ""
+
+- id: "medEffect"
+  labelCode: "zl.status.hivTb.medEffect"
+  statusDataQuery: "medEffect.sql"
+  valueExpression: "#if($medication_effect_value && $medication_effect_value.trim() != '') $medication_effect_value #else $fn.translate('pihcore.none.label') #end"
+  formatExpression: "status-data-alert"
+
