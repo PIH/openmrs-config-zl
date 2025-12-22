@@ -777,7 +777,7 @@
                 <obsgroup groupingConceptId="CIEL:1442"  hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:1679">
                 <tr>
                     <td>
-                        <uimessage code="zl.dispensing.inhPrimary" />:
+                        <uimessage code="zl.tbProPrimI" />:
                         <span class="small hidden"><!-- hidden, automatically checked/unchecked by beforeSubmit defined above, be sure not to change ids of the next two obs (inhP, inhPDrug)-->
                             <obs id="inhP" conceptId="PIH:13786" answerConceptId="CIEL:159943"></obs>
                         </span>
@@ -786,20 +786,42 @@
                         <obs id="inhPDrug" conceptId="CIEL:1282"
                              answerDrugIds="
                                 e47fa273-0c52-4f0f-b57b-34001a3e9677,
-                                849218ee-901c-46b3-80f9-7c808132893b"
+                                849218ee-901c-46b3-80f9-7c808132893b,
+                                62cb5ce6-db02-456f-8aaf-1dd4ecd482ec"
                              answerLabels="
                                 INH 100 mg,
-                                INH 300 mg" />
+                                INH 300 mg,
+                                INH/RIF 150/300 mg" />
                     </td>
                     <td>
                         <obs class="drugQty" conceptId="CIEL:1443" />
                     </td>
                 </tr>
                 </obsgroup>
+
+                <obsgroup groupingConceptId="CIEL:1442"  hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:1679">
+                    <tr>
+                        <td>
+                            <uimessage code="zl.tbProPrimII" />:
+                            <span class="small hidden"><!-- ToDo: hidden, automatically checked/unchecked by beforeSubmit defined above, be sure not to change ids of the next two obs (inhP, inhPDrug)-->
+                                <obs id="inhP2" conceptId="PIH:13786" answerConceptId="PIH:21123"></obs>
+                            </span>
+                        </td>
+                        <td>
+                            <obs id="inhP2Drug" conceptId="CIEL:1282"
+                                 answerDrugIds="197cade5-567a-405c-a7fc-ae0fbd36cc4b"
+                                 answerLabels="RIF 150 mg" />
+                        </td>
+                        <td>
+                            <obs class="drugQty" conceptId="CIEL:1443" />
+                        </td>
+                    </tr>
+                </obsgroup>
+
                 <obsgroup groupingConceptId="CIEL:1442" hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:1679">
                     <tr>
                         <td>
-                            <uimessage code="zl.dispensing.inhSecondary" />:
+                            <uimessage code="zl.tbProSecI" />:
                             <span class="small hidden"> <!-- hidden, automatically checked/unchecked by beforeSubmit defined above, be sure not to change ids of the next two obs (inhS, inhSDrug)-->
                                 <obs id="inhS" conceptId="PIH:13786" answerConceptId="CIEL:159944"></obs>
                             </span>
@@ -808,10 +830,31 @@
                             <obs id="inhSDrug" conceptId="CIEL:1282"
                                  answerDrugIds="
                                 e47fa273-0c52-4f0f-b57b-34001a3e9677,
-                                849218ee-901c-46b3-80f9-7c808132893b"
+                                849218ee-901c-46b3-80f9-7c808132893b,
+                                62cb5ce6-db02-456f-8aaf-1dd4ecd482ec"
                                  answerLabels="
                                 INH 100 mg,
-                                INH 300 mg" />
+                                INH 300 mg,
+                                INH/RIF 150/300 mg" />
+                        </td>
+                        <td>
+                            <obs class="drugQty" conceptId="CIEL:1443" />
+                        </td>
+                    </tr>
+                </obsgroup>
+
+                <obsgroup groupingConceptId="CIEL:1442"  hiddenConceptId="PIH:1535" hiddenAnswerConceptId="CIEL:1679">
+                    <tr>
+                        <td>
+                            <uimessage code="zl.tbProSecII" />:
+                            <span class="small hidden"><!-- ToDo: hidden, automatically checked/unchecked by beforeSubmit defined above, be sure not to change ids of the next two obs (inhP, inhPDrug)-->
+                                <obs id="inhS2" conceptId="PIH:13786" answerConceptId="PIH:21124"></obs>
+                            </span>
+                        </td>
+                        <td>
+                            <obs id="inhS2Drug" conceptId="CIEL:1282"
+                                 answerDrugIds="197cade5-567a-405c-a7fc-ae0fbd36cc4b"
+                                 answerLabels="RIF 150 mg" />
                         </td>
                         <td>
                             <obs class="drugQty" conceptId="CIEL:1443" />
