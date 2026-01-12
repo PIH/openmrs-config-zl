@@ -787,11 +787,11 @@
                              answerDrugIds="
                                 e47fa273-0c52-4f0f-b57b-34001a3e9677,
                                 849218ee-901c-46b3-80f9-7c808132893b,
-                                62cb5ce6-db02-456f-8aaf-1dd4ecd482ec"
+                                2f05321c-81f8-4da7-8233-eecf547821ed"
                              answerLabels="
                                 INH 100 mg,
                                 INH 300 mg,
-                                INH/RIF 150/300 mg" />
+                                INH/RPT 300/300 mg" />
                     </td>
                     <td>
                         <obs class="drugQty" conceptId="CIEL:1443" />
@@ -809,8 +809,8 @@
                         </td>
                         <td>
                             <obs id="inhP2Drug" conceptId="CIEL:1282"
-                                 answerDrugIds="197cade5-567a-405c-a7fc-ae0fbd36cc4b"
-                                 answerLabels="RIF 150 mg" />
+                                 answerDrugIds="b52b22d9-a1e2-438c-b10c-deae94155fdb"
+                                 answerLabels="RPT 150 mg" />
                         </td>
                         <td>
                             <obs class="drugQty" conceptId="CIEL:1443" />
@@ -831,11 +831,11 @@
                                  answerDrugIds="
                                 e47fa273-0c52-4f0f-b57b-34001a3e9677,
                                 849218ee-901c-46b3-80f9-7c808132893b,
-                                62cb5ce6-db02-456f-8aaf-1dd4ecd482ec"
+                                2f05321c-81f8-4da7-8233-eecf547821ed"
                                  answerLabels="
                                 INH 100 mg,
                                 INH 300 mg,
-                                INH/RIF 150/300 mg" />
+                                INH/RPT 300/300 mg" />
                         </td>
                         <td>
                             <obs class="drugQty" conceptId="CIEL:1443" />
@@ -853,8 +853,8 @@
                         </td>
                         <td>
                             <obs id="inhS2Drug" conceptId="CIEL:1282"
-                                 answerDrugIds="197cade5-567a-405c-a7fc-ae0fbd36cc4b"
-                                 answerLabels="RIF 150 mg" />
+                                 answerDrugIds="b52b22d9-a1e2-438c-b10c-deae94155fdb"
+                                 answerLabels="RPT 150 mg" />
                         </td>
                         <td>
                             <obs class="drugQty" conceptId="CIEL:1443" />
