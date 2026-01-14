@@ -22,39 +22,39 @@
         <style>
 
             #check-in-form legend {
-            display: none;
+                display: none;
             }
 
             #check-in-form fieldset {
-            margin: 0px;
-            border: 0px;
-            padding: 0px;
+                margin: 0px;
+                border: 0px;
+                padding: 0px;
             }
 
             #check-in-form fieldset h3 {
-            width: 200px;
-            display: inline-block;
-            margin: 0px;
-            margin-right: 10px;
-            color: #3E3E3E;
-            vertical-align: top;
-            font-size:0.9em;
+                width: 200px;
+                display: inline-block;
+                margin: 0px;
+                margin-right: 10px;
+                color: #3E3E3E;
+                vertical-align: top;
+                font-size:0.9em;
             }
 
             #check-in-form fieldset p {
-            vertical-align: top;
-            display: inline-block;
-            float: none;
+                vertical-align: top;
+                display: inline-block;
+                float: none;
             }
 
             #check-in-form fieldset .left {
-            vertical-align: top;
-            display: inline-block;
-            float: none;
+                vertical-align: top;
+                display: inline-block;
+                float: none;
             }
 
             #check-in-form .title {
-            display: none;
+                display: none;
             }
 
             #check-in-form .encounter-date {
@@ -169,6 +169,7 @@
                 <h3>
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </h3>
+
                 <div>
                     <field>
                         <label for="gyneco-visit">
@@ -185,7 +186,7 @@
                             </field>
                         </template>
                         <render acId="CIEL:1637"   aLabel="curetage" />
-                        <!-- render acId="PIH:21174"   aLabel="bartholin" / -->
+                        <render acId="PIH:21174"   aLabel="bartholin" />
                         <!-- kystectomie? -->
                         <render acId="PIH:20149"   aLabel="myomectomy" />
                         <render acId="CIEL:159837" aLabel="hysterectomy" />
@@ -211,9 +212,8 @@
                         </template>
                         <render acId="PIH:7702"  aLabel="healthCert" />
                         <render acId="PIH:7694"  aLabel="prenupCert" />
-                        <!-- ToDo:
                         <render acId="PIH:21166" aLabel="injuryCert" />
-                        <render acId="PIH:21167" aLabel="birthCert" />  -->
+                        <render acId="PIH:21167" aLabel="birthCert" />
                     </repeat>
                 </div>
                 <br/>
@@ -233,12 +233,15 @@
                                 </div>
                             </field>
                         </template>
-                        <render acId="CIEL:161803"  aLabel="circumcision" />
-
-                        <!-- ToDo:
-                        <render acId="CIEL:165166"  aLabel="lipomeCare" />
-                        <render acId="PIH:21170" aLabel="projectile" />
-                        <render acId="PIH:21171" aLabel="keloid" />  -->
+                        <render acId="PIH:21175"   aLabel="ankyloglossy" />
+                        <render acId="PIH:21176"   aLabel="polydactyly" />
+                        <render acId="CIEL:161803" aLabel="circumcision" />
+                        <render acId="PIH:21177"   aLabel="adenofibrome" />
+                        <render acId="CIEL:165166" aLabel="lipomeCare" />
+                        <render acId="PIH:21170"   aLabel="projectile" />
+                        <render acId="PIH:21178"   aLabel="ingrownNail" />
+                        <render acId="PIH:21171"   aLabel="keloid" />
+                        <render acId="PIH:21179"   aLabel="exciseCyst" />
                     </repeat>
                 </div>
                 <br/>
@@ -258,10 +261,9 @@
                                 </div>
                             </field>
                         </template>
-                        <!-- ToDo:
-                            <render acId="PIH:21172" aLabel="hernia" />  -->
-                        <render acId="CIEL:161795"  aLabel="umbilicalHernia" />
-                        <render acId="CIEL:161808"  aLabel="hydrocele" />
+                            <render acId="PIH:21172" aLabel="hernia" />
+                            <render acId="CIEL:161795"  aLabel="umbilicalHernia" />
+                            <render acId="CIEL:161808"  aLabel="hydrocele" />
                     </repeat>
                 </div>
                 <br/>
@@ -292,7 +294,6 @@
                                 <render acId="PIH:x" aLabel="y" />  -->
                     </repeat>
                 </div>
-
             </fieldset>
 
             <obsgroup groupingConceptId="PIH:Payment construct">
@@ -357,12 +358,11 @@
                         <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                     </h3>
 
-                    <!-- p class="left">
+                    <p class="left">
                         <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" showUnits="false"
-                             answerConceptIds="$reasonsForVisit"
-                             unitsCssClass="append-to-value" style="dropdown" size="9">
+                             unitsCssClass="append-to-value" size="9">
                         </obs>
-                    </p -->
+                    </p>
                 </fieldset>
 
                 <obsgroup groupingConceptId="PIH:Payment construct">
