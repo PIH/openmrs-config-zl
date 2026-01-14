@@ -569,7 +569,6 @@
 
     <section id="id-treatment" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.visitNote.orders.medications">
-
         <h4><uimessage code="pihcore.artDrugOrders"/></h4>
 
         <div class="section-container-color">
@@ -607,11 +606,15 @@
                             <option value="78f967ba-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 10mg/mL sp"/>
                             <option value="78f96526-dfbe-11e9-8a34-2a2ae2dbcce4" label="NVP 50mg"/>
                             <option value="78f95bc6-dfbe-11e9-8a34-2a2ae2dbcce4" label="AZT 10mg/mL sp"/>
+
+                            <option value="f19f1e19-32ad-4531-95b8-6e202ea65acc" label="ABC/3TC/DTG 60/30/5mg" />
+                            <option value="3934c65b-f6ed-41fb-9635-46e78b53c5aa" label="TAF/3TC/DTG 25/300/50mg" />
+                            <option value="8d378deb-703e-420c-8481-87e4748bb06d" label="TAF/FTC/DTG 25/200/50mg" />
                         </orderProperty>
                     </div>
-                    <div style="padding:0px;">
+                    <!-- <div style="padding:0px;">
                         <orderProperty name="drugNonCoded" label="Non-coded Formulation"/>
-                    </div>
+                    </div> -->
                     <div style="padding:0px;">
                         <orderProperty name="orderReason" label="pihcore.orderReason">
                             <option value="138405AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" label="pihcore.hiv.treatment"/>
