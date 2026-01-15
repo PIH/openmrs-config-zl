@@ -162,7 +162,7 @@
             </fieldset>
 
 
-            <fieldset class="type-of-visit-question multi-line-confirmation" >
+            <fieldset id="type-of-visit-question" class="multi-line-confirmation" >
                 <legend>
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </legend>
@@ -170,30 +170,32 @@
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </h3>
 
-                <div>
-                    <field>
-                        <label for="gyneco-visit">
-                            <uimessage code="pihcore.gynIntervent" />
-                        </label>
-                    </field>
-                    <repeat>
-                        <template>
-                            <field>
-                                <div class="section-container">
-                                    <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                         answerConceptId="{acId}" answerCodeXX="" />
-                                 </div>
-                            </field>
-                        </template>
-                        <render acId="CIEL:1637"   aLabel="curetage" />
-                        <render acId="PIH:21174"   aLabel="bartholin" />
-                        <!-- kystectomie? -->
-                        <render acId="PIH:20149"   aLabel="myomectomy" />
-                        <render acId="CIEL:159837" aLabel="hysterectomy" />
-                        <render acId="CIEL:1171"   aLabel="c-section" />
-                    </repeat>
-                </div>
-                <br/>
+                <includeIf velocityTest="$patient.gender == 'F' || $patient.age &lt; 10 ">
+                    <div>
+                        <field>
+                            <label for="gyneco-visit">
+                                <uimessage code="pihcore.gynIntervent" />
+                            </label>
+                        </field>
+                        <repeat>
+                            <template>
+                                <field>
+                                    <div class="section-container">
+                                        <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                             answerConceptId="{acId}" answerCodeXX="" />
+                                     </div>
+                                </field>
+                            </template>
+                            <render acId="CIEL:1637"   aLabel="curetage" />
+                            <render acId="PIH:21174"   aLabel="bartholin" />
+                            <!-- kystectomie? -->
+                            <render acId="PIH:20149"   aLabel="myomectomy" />
+                            <render acId="CIEL:159837" aLabel="hysterectomy" />
+                            <render acId="CIEL:1171"   aLabel="c-section" />
+                        </repeat>
+                    </div>
+                    <br/>
+                </includeIf>
 
                 <div>
                     <field>
@@ -257,12 +259,12 @@
                             <field>
                                 <div class="section-container">
                                     <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                         answerConceptId="{acId}" answerCodeXX="pihcore.{aLabel}" />
+                                         answerConceptId="{acId}" answerCode="pihcore.{aLabel}" />
                                 </div>
                             </field>
                         </template>
                             <render acId="PIH:21172" aLabel="hernia" />
-                            <render acId="CIEL:161795"  aLabel="umbilicalHernia" />
+                            <render acId="CIEL:161795"  aLabel="umbilHernia" />
                             <render acId="CIEL:161808"  aLabel="hydrocele" />
                     </repeat>
                 </div>
@@ -279,15 +281,15 @@
                             <field>
                                 <div class="section-container">
                                     <obs conceptId="PIH:Type of HUM visit" style="checkbox"
-                                         answerConceptId="{acId}" answerCodeXX="pihcore.{aLabel}" />
+                                         answerConceptId="{acId}" answerCode="pihcore.{aLabel}" />
                                 </div>
                             </field>
                         </template>
                         <render acId="PIH:7705"     aLabel="generalConsult" />
-                        <render acId="CIEL:165013"  aLabel="gyneConsult" />
+                        <render acId="CIEL:165013"  aLabel="obGynConsult.title" />
                         <render acId="CIEL:165019"  aLabel="intMedConsult" />
                         <render acId="CIEL:165048"  aLabel="pedConsult" />
-                        <render acId="PIH:7706"     aLabel="dentClinic" />
+                        <render acId="PIH:7706"     aLabel="location.dental" />
                         <render acId="PIH:9355"     aLabel="radiology" /> <!-- ?? -->
                         <!-- ToDo:
                         xray
@@ -350,64 +352,62 @@
 
             <span id="most-recent-encounter-title" style="display:none"><!--The Most Recent Encounter app in Core Apps replaces this with the "most recent" label--></span>
 
-            <fieldset class="type-of-visit-question">
+            <fieldset id="type-of-visit-question">
+                <legend>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </legend>
+                <h3>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </h3>
+
+                <p class="multilines-display">
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                </p>
+            </fieldset>
+
+            <obsgroup groupingConceptId="PIH:Payment construct">
+                <fieldset id="payment-amount-question" class="required">
                     <legend>
-                        <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
                     </legend>
                     <h3>
-                        <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
                     </h3>
 
-                    <p class="left">
-                        <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" showUnits="false"
-                             unitsCssClass="append-to-value" size="9">
-                        </obs>
+                    <p class="left" style="color:grey">
+                        <obs conceptId="PIH:Payment amount" id="paymentAmount"
+                             showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
                     </p>
                 </fieldset>
 
-                <obsgroup groupingConceptId="PIH:Payment construct">
-                    <fieldset id="payment-amount-question" class="required">
-                        <legend>
-                            <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
-                        </legend>
-                        <h3>
-                            <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
-                        </h3>
-
-                        <p class="left" style="color:grey">
-                            <obs conceptId="PIH:Payment amount" id="paymentAmount"
-                                 showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
-                        </p>
-                    </fieldset>
-
-                    <fieldset id="receipt-number-question">
-                        <legend>
-                            <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
-                        </legend>
-                        <h3>
-                            <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
-                        </h3>
-
-                        <p class="left">
-                            <obs conceptId="PIH:Receipt number" id="receiptNumber" showUnits="false"
-                                 unitsCssClass="append-to-value" style="dropdown" />
-                        </p>
-                    </fieldset>
-                </obsgroup>
-
-                <fieldset class="provider-question">
+                <fieldset id="receipt-number-question">
                     <legend>
-                        <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
                     </legend>
                     <h3>
-                        <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
                     </h3>
 
                     <p class="left">
-                        <encounterProviderAndRole default="currentUser" encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
-                                                  required="true"/>
+                        <obs conceptId="PIH:Receipt number" id="receiptNumber" showUnits="false"
+                             unitsCssClass="append-to-value" style="dropdown" />
                     </p>
                 </fieldset>
+            </obsgroup>
+
+            <fieldset class="provider-question">
+                <legend>
+                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                </legend>
+                <h3>
+                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                </h3>
+
+                <p class="left">
+                    <encounterProviderAndRole default="currentUser" encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
+                                              required="true"/>
+                </p>
+            </fieldset>
 
         </section>
     </ifMode>
