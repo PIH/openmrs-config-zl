@@ -12,8 +12,8 @@
   ~ Copyright (C) OpenMRS, LLC.  All Rights Reserved.
   -->
 
-<htmlform id="check-in-form" formUuid="8757a568-23d1-4e18-907b-728b56ca7756" formName="Checkin"
-          formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="2.0">
+<htmlform id="check-in-form" formUuid="e0df9aaf-58ae-447b-b8a9-27a7407eb9c2" formName="Checkin"
+          formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.0">
 
     <ifMode mode="VIEW" include="true">
         <!-- a template to display the "view" version of an html form provided by the htmlfromentryui getAsHtml method
@@ -22,53 +22,66 @@
         <style>
 
             #check-in-form legend {
-            display: none;
+                display: none;
             }
 
             #check-in-form fieldset {
-            margin: 0px;
-            border: 0px;
-            padding: 0px;
+                margin: 0px;
+                border: 0px;
+                padding: 0px;
             }
 
             #check-in-form fieldset h3 {
-            width: 200px;
-            display: inline-block;
-            margin: 0px;
-            margin-right: 10px;
-            color: #3E3E3E;
-            vertical-align: top;
-            font-size:0.9em;
+                width: 200px;
+                display: inline-block;
+                margin: 0px;
+                margin-right: 10px;
+                color: #3E3E3E;
+                vertical-align: top;
+                font-size:0.9em;
             }
 
             #check-in-form fieldset p {
-            vertical-align: top;
-            display: inline-block;
-            float: none;
+                vertical-align: top;
+                display: inline-block;
+                float: none;
             }
 
             #check-in-form fieldset .left {
-            vertical-align: top;
-            display: inline-block;
-            float: none;
+                vertical-align: top;
+                display: inline-block;
+                float: none;
             }
 
             #check-in-form .title {
-            display: none;
+                display: none;
             }
 
             #check-in-form .encounter-date {
-            display: none;
+                display: none;
             }
 
             #check-in-form .encounter-provider {
-            display: none;
+                display: none;
             }
 
             #check-in-form .encounter-location {
-            display: none;
+                display: none;
             }
 
+            .section-container input[type="checkbox"] {
+                margin: 0px 5px; /* changed values to vertical, horizontal */
+                top: 5px; /* added to offset the checkbox position to line up */
+            }
+
+            #check-in-form input[type="checkbox"], #check-in-form .form input[type="checkbox"] {
+                float: none;
+                display: inline-block;
+            }
+
+            #check-in-form label, #check-in-form .form label {
+                display: inline-block;
+            }
         </style>
 
     </ifMode>
@@ -78,13 +91,23 @@
             font-size: 1em;
             font-weight: normal;
         }
+
+        .three-columns, .two-columns {
+            display: table;
+            height: 100%;
+            width: 100%;
+        }
+
+        .two-columns > div {
+            display: table-cell;
+            width: 50%;
+        }
     </style>
 
     <macros>
         <macro key="paymentAmts" expression="fn.globalProperty('mirebalais.checkIn.paymentAmounts')"/>
         <macro key="paymentAmtLabels" expression="fn.globalProperty('mirebalais.checkIn.paymentAmountLabels')"/>
         <macro key="paymentAmtDefault" expression="fn.globalProperty('mirebalais.checkIn.paymentAmountDefault')"/>
-        <macro key="reasonsForVisit" expression="fn.globalProperty('haiti.checkIn.reasonsForVisit')"/>
     </macros>
 
     <!-- START ENTER/EDIT VERSION OF THE FORM -->
@@ -143,12 +166,13 @@
                 </h3>
 
                 <p class="left">
-                    <encounterLocation required="true" tags="Check-In Location"/>
+                    <encounterLocation required="true" tags="Check-In Location"
+                                       default="SessionAttribute:emrContext.sessionLocationId"/>
                 </p>
             </fieldset>
 
 
-            <fieldset class="type-of-visit-question">
+            <fieldset id="type-of-visit-question" class="multi-line-confirmation" >
                 <legend>
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </legend>
@@ -156,12 +180,136 @@
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </h3>
 
-                <p class="left">
-                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit"
-                         answerConceptIds="$reasonsForVisit"
-                         showUnits="false" unitsCssClass="append-to-value" style="dropdown" size="999">
-                    </obs>
-                </p>
+                <div class="two-columns">
+                    <div>
+                        <includeIf velocityTest="$patient.gender == 'F' || $patient.age &lt; 10 ">
+                            <div>
+                                <field>
+                                    <label for="gyneco-visit">
+                                        <uimessage code="pihcore.gynIntervent"/>
+                                    </label>
+                                </field>
+                                <repeat>
+                                    <template>
+                                        <field>
+                                            <div class="section-container">
+                                                <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                                     answerConceptId="{acId}" answerCodeXX=""/>
+                                            </div>
+                                        </field>
+                                    </template>
+                                    <render acId="CIEL:1637" aLabel="curetage"/>
+                                    <render acId="PIH:21174" aLabel="bartholin"/>
+                                    <!-- kystectomie? -->
+                                    <render acId="PIH:20149" aLabel="myomectomy"/>
+                                    <render acId="CIEL:159837" aLabel="hysterectomy"/>
+                                    <render acId="CIEL:1171" aLabel="c-section"/>
+                                </repeat>
+                            </div>
+                            <br/>
+                        </includeIf>
+
+                        <div>
+                            <field>
+                                <label for="cert-visit">
+                                    <uimessage code="pihcore.certs"/>
+                                </label>
+                            </field>
+                            <repeat>
+                                <template>
+                                    <field>
+                                        <div class="section-container">
+                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                                 answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
+                                        </div>
+                                    </field>
+                                </template>
+                                <render acId="PIH:7702" aLabel="healthCert"/>
+                                <render acId="PIH:7694" aLabel="prenupCert"/>
+                                <render acId="PIH:21166" aLabel="injuryCert"/>
+                                <render acId="PIH:21167" aLabel="birthCert"/>
+                            </repeat>
+                        </div>
+
+                        <div>
+                            <field>
+                                <label for="other-proc-visit">
+                                    <uimessage code="pihcore.visitNote.plan.other"/>
+                                </label>
+                            </field>
+                            <repeat>
+                                <template>
+                                    <field>
+                                        <div class="section-container">
+                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                                 answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
+                                        </div>
+                                    </field>
+                                </template>
+                                <render acId="PIH:7705" aLabel="generalConsult"/>
+                                <render acId="CIEL:165013" aLabel="obGynConsult.title"/>
+                                <render acId="CIEL:165019" aLabel="intMedConsult"/>
+                                <render acId="CIEL:165048" aLabel="pedConsult"/>
+                                <render acId="PIH:7706" aLabel="location.dental"/>
+                                <render acId="PIH:9355" aLabel="radiology"/> <!-- ?? -->
+                                <!-- ToDo:
+                                xray
+                                        <render acId="PIH:x" aLabel="y" />  -->
+                            </repeat>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <field>
+                                <label for="minor-proc-visit">
+                                    <uimessage code="pihcore.minorSurgery"/>
+                                </label>
+                            </field>
+                            <repeat>
+                                <template>
+                                    <field>
+                                        <div class="section-container">
+                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                                 answerConceptId="{acId}" answerCodeXX="pihcore.{aLabel}"/>
+                                        </div>
+                                    </field>
+                                </template>
+                                <render acId="PIH:21175" aLabel="ankyloglossy"/>
+                                <render acId="PIH:21176" aLabel="polydactyly"/>
+                                <render acId="CIEL:161803" aLabel="circumcision"/>
+                                <render acId="PIH:21177" aLabel="adenofibrome"/>
+                                <render acId="CIEL:165166" aLabel="lipomeCare"/>
+                                <render acId="PIH:21170" aLabel="projectile"/>
+                                <render acId="PIH:21178" aLabel="ingrownNail"/>
+                                <render acId="PIH:21171" aLabel="keloid"/>
+                                <render acId="PIH:21179" aLabel="exciseCyst"/>
+                            </repeat>
+                        </div>
+                        <br/>
+
+                        <div>
+                            <field>
+                                <label for="major-proc-visit">
+                                    <uimessage code="pihcore.majorSurgery"/>
+                                </label>
+                            </field>
+                            <repeat>
+                                <template>
+                                    <field>
+                                        <div class="section-container">
+                                            <obs conceptId="PIH:Type of HUM visit" style="checkbox"
+                                                 answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
+                                        </div>
+                                    </field>
+                                </template>
+                                <render acId="PIH:21172" aLabel="hernia"/>
+                                <render acId="CIEL:161795" aLabel="umbilHernia"/>
+                                <render acId="CIEL:161808" aLabel="hydrocele"/>
+                            </repeat>
+                        </div>
+                    </div>
+                </div>
             </fieldset>
 
             <obsgroup groupingConceptId="PIH:Payment construct">
@@ -218,65 +366,62 @@
 
             <span id="most-recent-encounter-title" style="display:none"><!--The Most Recent Encounter app in Core Apps replaces this with the "most recent" label--></span>
 
-            <fieldset class="type-of-visit-question">
+            <fieldset id="type-of-visit-question">
+                <legend>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </legend>
+                <h3>
+                    <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                </h3>
+
+                <p class="multilines-display">
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                </p>
+            </fieldset>
+
+            <obsgroup groupingConceptId="PIH:Payment construct">
+                <fieldset id="payment-amount-question" class="required">
                     <legend>
-                        <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
                     </legend>
                     <h3>
-                        <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
                     </h3>
 
-                    <p class="left">
-                        <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" showUnits="false"
-                             answerConceptIds="$reasonsForVisit"
-                             unitsCssClass="append-to-value" style="dropdown" size="9">
-                        </obs>
+                    <p class="left" style="color:grey">
+                        <obs conceptId="PIH:Payment amount" id="paymentAmount"
+                             showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
                     </p>
                 </fieldset>
 
-                <obsgroup groupingConceptId="PIH:Payment construct">
-                    <fieldset id="payment-amount-question" class="required">
-                        <legend>
-                            <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
-                        </legend>
-                        <h3>
-                            <uimessage code="mirebalais.retrospectiveCheckin.paymentAmount.label"/>
-                        </h3>
-
-                        <p class="left" style="color:grey">
-                            <obs conceptId="PIH:Payment amount" id="paymentAmount"
-                                 showUnits="pihcore.currencySpaced" unitsCssClass="append-to-value" />
-                        </p>
-                    </fieldset>
-
-                    <fieldset id="receipt-number-question">
-                        <legend>
-                            <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
-                        </legend>
-                        <h3>
-                            <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
-                        </h3>
-
-                        <p class="left">
-                            <obs conceptId="PIH:Receipt number" id="receiptNumber" showUnits="false"
-                                 unitsCssClass="append-to-value" style="dropdown" />
-                        </p>
-                    </fieldset>
-                </obsgroup>
-
-                <fieldset class="type-of-visit-question">
+                <fieldset id="receipt-number-question">
                     <legend>
-                        <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
                     </legend>
                     <h3>
-                        <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                        <uimessage code="mirebalais.retrospectiveCheckin.receiptNumber.label"/>
                     </h3>
 
                     <p class="left">
-                        <encounterProviderAndRole default="currentUser" encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
-                                                  required="true"/>
+                        <obs conceptId="PIH:Receipt number" id="receiptNumber" showUnits="false"
+                             unitsCssClass="append-to-value" style="dropdown" />
                     </p>
                 </fieldset>
+            </obsgroup>
+
+            <fieldset class="provider-question">
+                <legend>
+                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                </legend>
+                <h3>
+                    <uimessage code="mirebalais.retrospectiveCheckin.provider.label"/>
+                </h3>
+
+                <p class="left">
+                    <encounterProviderAndRole default="currentUser" encounterRole="cbfe0b9d-9923-404c-941b-f048adc8cdc0"
+                                              required="true"/>
+                </p>
+            </fieldset>
 
         </section>
     </ifMode>
