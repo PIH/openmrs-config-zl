@@ -2,6 +2,7 @@ Location,Admission Location,Admission Note Location,Appointment Location,Archive
 Hinche,,,,,,,,,,,,,,,,,,,,,TRUE,,,,,,,TRUE,,,,,,,,TRUE,
 Sante Mantal | Hinche,,,,,,TRUE,,TRUE,,,,,,,,,,TRUE,,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,TRUE
 Sante Fanm | Hinche,,,,,TRUE,TRUE,,TRUE,,,,,TRUE,,,TRUE,TRUE,TRUE,TRUE,TRUE,,,,,TRUE,TRUE,,,TRUE,TRUE,,,,,TRUE,,TRUE
+Klinik Ekstèn | Hinche,,,TRUE,,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,TRUE,TRUE,TRUE,TRUE,,,,TRUE,TRUE,,TRUE,TRUE,TRUE,,TRUE,,TRUE,,,TRUE,,,TRUE
 Klinik MNT | Hinche,,,,,TRUE,TRUE,,TRUE,,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,TRUE,,,,TRUE,,TRUE,TRUE,,,,,,,TRUE
 Onkoloji | Hinche,TRUE,,TRUE,,,TRUE,TRUE,TRUE,,,,,,,,TRUE,TRUE,TRUE,,,,,,TRUE,TRUE,TRUE,,,,,,,,,,,TRUE
 Sal Reyabilitasyon | Hinche,TRUE,TRUE,,,TRUE,,,TRUE,,,,,,,TRUE,,,TRUE,,,,,,,TRUE,TRUE,,,,,,,,TRUE,,,TRUE
