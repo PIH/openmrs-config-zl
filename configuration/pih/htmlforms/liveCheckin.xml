@@ -211,7 +211,7 @@
                 </fieldset>
             </ifMode>
 
-            <fieldset id="type-of-visit-question" class="multi-line-confirmation" >
+            <fieldset id="type-of-visit-question">
                 <legend>
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </legend>
