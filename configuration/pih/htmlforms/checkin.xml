@@ -374,7 +374,19 @@
                     <uimessage code="mirebalais.retrospectiveCheckin.visitType.label"/>
                 </h3>
 
+                <!-- support displaying up to 12 type of visit obs -->
                 <p class="multilines-display">
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
+                    <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
                     <obs conceptId="PIH:Type of HUM visit" id="typeOfVisit" />
                 </p>
             </fieldset>
