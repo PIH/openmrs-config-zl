@@ -27,3 +27,35 @@ jobs:
       env:
         SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
         SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+
+    - name: Deploy to ami
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYAMI'
+        method: 'POST'
+        bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
+        customHeaders: '{"Accept": "application/json"}'
+
+    - name: Deploy to hum-ci
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYHUMCI'
+        method: 'POST'
+        bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
+        customHeaders: '{"Accept": "application/json"}'
+
+    - name: Deploy to ci
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYCI'
+        method: 'POST'
+        bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
+        customHeaders: '{"Accept": "application/json"}'
+
+    - name: Deploy to haitihivtest
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://bamboo-ci.pih-emr.org/rest/api/latest/queue/OMRS-DEPLOYHAITIHIVTEST'
+        method: 'POST'
+        bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
+        customHeaders: '{"Accept": "application/json"}'
