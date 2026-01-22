@@ -142,6 +142,18 @@
         }
 
         setupCheckboxRadioGroups();
+    beforeValidation.push(function() {
+    var yesSelected = jq('#drug_allergy_question input[value="1"]').is(':checked');
+    var specifyValue = jq('#drug_allergy_specify_value input').val();
+
+    if (yesSelected &amp;&amp; (!specifyValue || specifyValue.trim() === "")) {
+    jq('#specifyMedsError').text("<uimessage code='zl.drugAllergy.specifyRequired'/>").show();
+    return false;
+    }
+    jq('#specifyMedsError').text("").hide();
+    return true;
+    });
+
     });
 
 </script>
@@ -244,6 +256,38 @@
             </div>
         </div>
     </section>
+
+<!--    Allergies section-->
+    <section id="allergies-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="zl.allergy.title">
+        <div class="section-container">
+             <div class="two-column">
+                 <div>
+                     <label><uimessage code="zl.allergy.drugQuestion"/></label>
+                     <p class="side-by-side">
+                         <obs id="drug_allergy_question"
+                              conceptId="CIEL:165273"
+                              style="radio"
+                              answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
+                             <controls>
+                                 <when value="PIH:YES" thenDisplay="#drug_allergy_specify"/>
+                             </controls>
+                         </obs>
+                     </p>
+
+
+                 </div>
+                 <div>
+                     <p id="drug_allergy_specify">
+                         <label><uimessage code="zl.allergy.specify"/></label>
+                         <obs id="drug_allergy_specify_value"  conceptId="CIEL:164377"/>
+                         <span id="specifyMedsError" class="error field-error" style="display: none"></span>
+                     </p>
+                 </div>
+             </div>
+        </div>
+    </section>
+
 
     <section id="transferIn" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.transferReferralIn">
