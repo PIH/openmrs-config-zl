@@ -85,6 +85,6 @@
 - id: "medEffect"
   labelCode: "zl.status.hivTb.medEffect"
   statusDataQuery: "medEffect.sql"
-  valueExpression: "#if($medication_effect_value && $medication_effect_value.trim() != '') $medication_effect_value #else $fn.translate('pihcore.none.label') #end"
+  valueExpression: "#if($medication_effect_value && $medication_effect_value.trim()!='')$medication_effect_value#elseif($medication_effect_No && $medication_effect_No.trim()!='')$medication_effect_No#elseif($medication_effect_Unknown && $medication_effect_Unknown.trim()!='')$medication_effect_Unknown#else$fn.translate('pihcore.none.label')#end"
   formatExpression: "status-data-alert"
 

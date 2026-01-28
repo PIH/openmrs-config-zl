@@ -7,203 +7,295 @@
         <ifMode mode="VIEW" include="false">
 
             #data-collection {
-                display: inline-block;
-                width: 58%;
-                vertical-align: top;
+            display: inline-block;
+            width: 58%;
+            vertical-align: top;
             }
 
             .two-columns-legacy {
-                column-count: 2;
-                -webkit-column-count: 2;
-                -moz-column-count: 2;
+            column-count: 2;
+            -webkit-column-count: 2;
+            -moz-column-count: 2;
             }
 
             /* A div with class="two-columns" must have exactly two children divs */
             .two-columns {
-                display: table;
-                height: 100%;
-                width: 100%;
+            display: table;
+            height: 100%;
+            width: 100%;
             }
 
             .two-columns > div {
-                display: table-cell;
-                width: 50%;
+            display: table-cell;
+            width: 50%;
             }
 
             p.radio > * {
-                display: inline;
-                float: none !important;
-                min-width: initial;
+            display: inline;
+            float: none !important;
+            min-width: initial;
             }
 
             form fieldset {
-                min-width: 90%;
-                display: block;
+            min-width: 90%;
+            display: block;
             }
 
             .section-container {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
-                line-height: 1.5em; /*add this for vertical spacing between elements*/
+            background: #F2F2F2;
+            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+            padding: 10px 5px 10px 15px;
+            line-height: 1.5em; /*add this for vertical spacing between elements*/
             }
 
             .section-container input[type="checkbox"] {
-                margin: 0px 5px; /*changed values to vertical, horizontal*/
-                top:5px; /*added to offset the checkbox position to line up*/
+            margin: 0px 5px; /*changed values to vertical, horizontal*/
+            top:5px; /*added to offset the checkbox position to line up*/
             }
 
             .section-container label,
             .section-container-color label {
-                margin: 0px;
+            margin: 0px;
             }
 
             .section {
-                width: 95%;
+            width: 95%;
             }
 
             form input[type="radio"], .form input[type="radio"] {
-                float: none;
-                display: inline-block;
+            float: none;
+            display: inline-block;
             }
 
             form label, .form label {
-                display: inline-block;
+            display: inline-block;
             }
 
             .side-by-side label {
-                display: inline-block;
+            display: inline-block;
             }
 
             .boxed {
-                background: #F2F2F2;
-                box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
-                padding: 10px 5px 10px 15px;
+            background: #F2F2F2;
+            box-shadow: 3px 3px 3px 1px rgba(0, 0, 0, 0.2);
+            padding: 10px 5px 10px 15px;
             }
             .dateDatepickerInTheFuture label{
-                 display: block;
+            display: block;
             }
             .date-one-line {
-                display: flex;
+            display: flex;
             }
-            
+
             .date-one-line label {
-                align-self: center;
-                margin-right: 1em;
+            align-self: center;
+            margin-right: 1em;
             }
-            
+
             .date-one-line span {
-                display: flex;
+            display: flex;
             }
-            
+
             .hasDatepicker {
-                min-width: 120px;
-                margin-top: 0px;
+            min-width: 120px;
+            margin-top: 0px;
+            }
+
+            .hfe-hours, .hfe-minutes, .hfe-seconds {
+            width: 70px;
+            min-width: 70px;
+            margin: 0px 10px 0px 10px;
+            }
+            #initial_allergies .label{
+              display:none;
              }
-             
-             .hfe-hours, .hfe-minutes, .hfe-seconds {
-                width: 70px;
-                min-width: 70px;
-                margin: 0px 10px 0px 10px;
-             }
+
+
         </ifMode>
     </style>
 
-<excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
-<script type="text/javascript">
+    <excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
+        <script type="text/javascript">
 
-    jq(document).ready(function() {
+            jq(document).ready(function() {
+            var medicationSideEffectUuid='164377AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+            var medicationSideEffectCodedUuid='165273AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+            const contextPath = window.location.href.split('/')[3];
+            const apiBaseUrl = "/" + contextPath + "/ws/rest/v1";
+            const chwNameConceptUuid = "164141AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+            const patientUuid = '<lookup expression="patient.uuid"/>';
 
-        const contextPath = window.location.href.split('/')[3];
-        const apiBaseUrl =  "/" + contextPath + "/ws/rest/v1";
-        const chwNameConceptUuid = "164141AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-        const patientUuid = '<lookup expression="patient.uuid"/>';
-
-        let currentEncounterDate = new Date();
-        let encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-        if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length > 0)) {
+            let currentEncounterDate = new Date();
+            let encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
+            if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length
+            > 0)) {
             currentEncounterDate = new Date(+encounterDate);
-        }
+            }
 
-        let lastRecordedChw = {
+            let lastRecordedChw = {
             name: "",
             date: null,
             encounterDisplay: ""
-        };
+            };
 
-        jq.getJSON(apiBaseUrl + "/obs", {
+            jq.getJSON(apiBaseUrl + "/obs", {
             concept: chwNameConceptUuid,
             patient: patientUuid,
-            v: 'custom:(uuid,display,obsDatetime,value,encounter:(display,encounterDatetime,location:(display),encounterType:(display)))'
-          },
-          function( data ){
+            v:
+            'custom:(uuid,display,obsDatetime,value,encounter:(display,encounterDatetime,location:(display),encounterType:(display)))'
+            },
+            function( data ){
             if (data.results.length > 0) {
-                for (let index = 0; index &lt; data.results.length; ++index) {
-                    let chwObs = data.results[index];
-                    let chwObsDate = new Date(chwObs.obsDatetime);
-                    let tmpChwObs = {
-                      name: "",
-                      date: null,
-                      encounterDisplay: ""
-                    };
-                    if( (currentEncounterDate.getTime() >=  chwObsDate.getTime()) ||
-                        (currentEncounterDate.toDateString() === chwObsDate.toDateString())) {
-                            if (typeof chwObs.value !== "undefined" &amp;&amp; chwObs.value !== null &amp;&amp; (chwObs.value.length &gt; 0)) {
-                                tmpChwObs.name = chwObs.value;
-                                tmpChwObs.date = chwObsDate;
-                                tmpChwObs.encounterDisplay = chwObs.encounter.display;
-                              }
-                    }
-                    if ( (tmpChwObs.date != null) &amp;&amp;
-                        ((lastRecordedChw.date == null) || (lastRecordedChw.date.getTime() &lt; tmpChwObs.date.getTime()) ) ) {
+            for (let index = 0; index &lt; data.results.length; ++index) {
+            let chwObs = data.results[index];
+            let chwObsDate = new Date(chwObs.obsDatetime);
+            let tmpChwObs = {
+            name: "",
+            date: null,
+            encounterDisplay: ""
+            };
+            if( (currentEncounterDate.getTime() >= chwObsDate.getTime()) ||
+            (currentEncounterDate.toDateString() === chwObsDate.toDateString())) {
+            if (typeof chwObs.value !== "undefined" &amp;&amp; chwObs.value !== null &amp;&amp; (chwObs.value.length
+            &gt; 0)) {
+            tmpChwObs.name = chwObs.value;
+            tmpChwObs.date = chwObsDate;
+            tmpChwObs.encounterDisplay = chwObs.encounter.display;
+            }
+            }
+            if ( (tmpChwObs.date != null) &amp;&amp;
+            ((lastRecordedChw.date == null) || (lastRecordedChw.date.getTime() &lt; tmpChwObs.date.getTime()) ) ) {
 
-                        lastRecordedChw.name = tmpChwObs.name;
-                        lastRecordedChw.date = tmpChwObs.date;
-                        lastRecordedChw.encounterDisplay = tmpChwObs.encounterDisplay;
-                    }
-                }
+            lastRecordedChw.name = tmpChwObs.name;
+            lastRecordedChw.date = tmpChwObs.date;
+            lastRecordedChw.encounterDisplay = tmpChwObs.encounterDisplay;
+            }
+            }
             }
             if (lastRecordedChw.date != null) {
-                  jq("#lastRecordedCHW").text(lastRecordedChw.name);
-                  jq("#lastRecordedCHWEncounter").text(lastRecordedChw.encounterDisplay);
-                  jq("#lastRecorded-CHW-div").show();
+            jq("#lastRecordedCHW").text(lastRecordedChw.name);
+            jq("#lastRecordedCHWEncounter").text(lastRecordedChw.encounterDisplay);
+            jq("#lastRecorded-CHW-div").show();
             } else {
-                //show the div with the normal obs behaviour
-                jq("#normal-CHW-div").show();
+            //show the div with the normal obs behaviour
+            jq("#normal-CHW-div").show();
             }
-          });
+            });
 
-          jq("#changeChw").on('change', function(){
+            jq("#changeChw").on('change', function(){
 
             if (this.checked === true) {
-                jq("#editChwNameDiv").show();
+            jq("#editChwNameDiv").show();
             } else {
-                jq("#editChwNameDiv").hide();
+            jq("#editChwNameDiv").hide();
             }
-          });
+            });
 
-    });
-</script>
-</excludeIf>
+            beforeValidation.push(function() {
+            var yesSelected = jq('#drug_allergy_question input[value="1"]').is(':checked');
+            var specifyValue = jq('#drug_allergy_specify_value input').val();
+
+                if (yesSelected &amp;&amp; (!specifyValue || specifyValue.trim() === "")) {
+                   jq('#specifyMedsError').text("<uimessage code='zl.drugAllergy.specifyRequired'/>").show();
+                   return false;
+                  }
+                 jq('#specifyMedsError').text("").hide();
+                  return true;
+            });
+
+            getLatestDrugAllergies(apiBaseUrl,medicationSideEffectUuid,patientUuid );
+            getLatestSideEffectMedicationCoded(apiBaseUrl,medicationSideEffectCodedUuid,patientUuid )
+            jq('#drug_allergy_question input[type="radio"]').on('change', function () {
+                   const selectedValue = $(this).val();
+                   if(selectedValue ==1 || selectedValue ==2){
+                    getLatestDrugAllergies(apiBaseUrl,medicationSideEffectUuid,patientUuid );
+                   }
+
+                });
+            });
 
 
-    <ifMode mode="VIEW" include="false" >
+            function getLatestDrugAllergies(apiBaseUrl,medicationSideEffectUuid,patientUuid ){
+                     jq.getJSON(apiBaseUrl + "/obs", {
+                         concept: medicationSideEffectUuid,
+                         patient: patientUuid,
+                         v:'custom:(auditInfo:(dateCreated),encounter:(encounterDatetime),value)',
+                     },
+                      function( data ){
+                        if (data.results.length > 0) {
+                         const latestObs = [...data.results].sort((a, b) =>new Date(b.encounter.encounterDatetime) - new Date(a.encounter.encounterDatetime) );
+                         const oldestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) )[0];
+
+                         if(latestObs.length > 1){
+                            jq("#drug_allergy_specify_value input[type='text']").val(latestObs[0].value)
+                          }
+                         if(oldestObs.value){
+                           jq("#initial_allergies .label").show()
+                           jq("#initial_allergies .value").text(oldestObs.value);
+                           }
+
+                     } else {
+                      console.log("Null Value");
+                      }
+                   });
+            }
+
+            
+
+            function getLatestSideEffectMedicationCoded(apiBaseUrl,medicationSideEffectCodedUuid,patientUuid ){
+                jq.getJSON(apiBaseUrl + "/obs", {
+                        concept: medicationSideEffectCodedUuid,
+                        patient: patientUuid,
+                        v:'custom:(auditInfo:(dateCreated),value:(name)',
+                },
+                function( data ){
+                  if (data.results.length > 0) {
+                    const latestObs = data.results .sort((a, b) => new Date(b.auditInfo.dateCreated) - new Date(a.auditInfo.dateCreated))[0];
+                     setAlreadySelectedDrugAllergyOption(latestObs.value.name.display)
+                 } else {
+                  console.log("UNDEFINED");
+                  }
+                 });
+            }
+
+
+            function setAlreadySelectedDrugAllergyOption(option){
+               const mapValue =
+                 {
+                  yes:"1",
+                  no:"2",
+                  unknown: "5423"
+                 }
+              const radioValue = mapValue[option.toLowerCase().trim()];
+              if (radioValue) {
+                   $('#drug_allergy_question input[type="radio"][value="' + radioValue + '"]')
+                      .prop('checked', true)
+                      .trigger('change');
+                  }
+            }
+        </script>
+    </excludeIf>
+
+
+    <ifMode mode="VIEW" include="false">
         <h3>
             <uimessage code="pihcore.hiv.clinicalState.short"/>
         </h3>
         <script type="text/javascript">
-            jq(function() {             
-                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()" />';
-                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks" />');
-                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate" />');
+            jq(function() {
+            var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
+            setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');
+            validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage
+                code="pihcore.errors.eddField.invalidDate"/>');
 
-                setUpDatepickerStartAndEndDateValidation();
-                setUpObsWithObsDateTime('syph-checkbox');
+            setUpDatepickerStartAndEndDateValidation();
+            setUpObsWithObsDateTime('syph-checkbox');
 
-                // handlers for next and submit buttons, see nextAndSubmitButtons.js
-                setUpNextAndSubmitButtons();
+            // handlers for next and submit buttons, see nextAndSubmitButtons.js
+            setUpNextAndSubmitButtons();
 
-                manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>')
+            manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'
+            <uimessage code="pihcore.required"/>')
             });
         </script>
     </ifMode>
@@ -232,7 +324,8 @@
                             </label>
                             <span id="lastRecordedCHW" class="value"></span>
                             <br/>
-                            <label><uimessage code="general.fromDate"/>:</label>
+                            <label><uimessage code="general.fromDate"/>:
+                            </label>
                             <span id="lastRecordedCHWEncounter" class="value"></span>
                             <br/>
                             <ifMode mode="EDIT" include="true">
@@ -241,7 +334,9 @@
                                         <uimessage code="pihcore.change.nameCHW"/>?
                                     </label>
                                     <input type="checkbox" id="changeChw" name="changeChw"/>
-                                    <label for="changeChw"><uimessage code="coreapps.yes"/></label>
+                                    <label for="changeChw">
+                                        <uimessage code="coreapps.yes"/>
+                                    </label>
                                 </div>
                                 <div id="editChwNameDiv" style="display: none">
                                     <label>
@@ -265,6 +360,45 @@
         </div>
     </section>
 
+    <!--    Allergies section-->
+    <section id="allergies-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="zl.allergy.title">
+        <div class="section-container">
+            <div class="two-columns">
+                <div>
+                    <label>
+                        <uimessage code="zl.allergy.drugQuestion"/>
+                    </label>
+                    <p class="side-by-side">
+                        <obs id="drug_allergy_question"
+                             conceptId="CIEL:165273"
+                             style="radio"
+                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
+                            <controls>
+                                <when value="PIH:YES" thenDisplay="#drug_allergy_specify"/>
+                            </controls>
+                        </obs>
+                    </p>
+
+
+                </div>
+                <div>
+                    <p id="drug_allergy_specify">
+                        <label>
+                            <uimessage code="zl.allergy.specify"/>
+                        </label>
+                        <obs id="drug_allergy_specify_value" conceptId="CIEL:164377"/>
+                        <span id="specifyMedsError" class="error field-error" style="display: none"></span>
+                    </p>
+
+                    <p id="initial_allergies">
+                        <span class="label"><uimessage code='zl.drugAllergy.specifyInitial'/></span>
+                        <span class="value"></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
     <!-- UHM-4784 Use Lab results or workflow to enter lab data.  Using includeif to comment out the section -->
     <includeIf velocityTest="$patient.gender == 'NoLabEntryHere' ">
         <section id="hiv-surveillance" sectionTag="fieldset" headerTag="legend" headerStyle="title"
@@ -384,7 +518,7 @@
         </section>
 
         <section id="feeding" sectionTag="fieldset" headerTag="legend" headerStyle="title"
-                 headerCode="pihcore.feedingAndVaccination" >
+                 headerCode="pihcore.feedingAndVaccination">
             <div class="section-container">
                 <p>
                     <label>
@@ -394,7 +528,7 @@
                     <obs conceptId="CIEL:1151"
                          answerConceptIds="CIEL:5526,CIEL:5254,CIEL:6046" style="radio"
                          answerCodes="zl.breastfeedExclusively,pihcore.formulaExclusively,zl.mixedFeeding"
-                         answerSeparator="" />
+                         answerSeparator=""/>
                 </p>
 
                 <p class="radio">
@@ -436,9 +570,9 @@
                 <p class="side-by-side">
                     <obs id="vaccinate" conceptId="CIEL:164134" style="radio"
                          answerConceptIds="CIEL:1065,CIEL:1066,CIEL:1067"
-                         answerSeparator="" >
+                         answerSeparator="">
                         <controls>
-                            <when value="CIEL:1065" thenDisplay="#vaccinationCard" />
+                            <when value="CIEL:1065" thenDisplay="#vaccinationCard"/>
                         </controls>
                     </obs>
                 </p>
@@ -452,7 +586,7 @@
 
                 <p>
                     <label>
-                        <uimessage code="pihcore.childWeaned" />
+                        <uimessage code="pihcore.childWeaned"/>
                     </label>
                     <obs conceptId="CIEL:1152" style="radio"
                          answerConceptIds="CIEL:1065,CIEL:1066"/>
@@ -494,12 +628,12 @@
                         <p class="radio">
                             <!-- ARV medications  -->
 
-                                <div>
-                                    <label>
-                                        <uimessage code="pihcore.regimen"/>:
-                                    </label>
-                                    <obs id="currentARV1" conceptId="CIEL:1282"
-                                        answerConceptIds="
+                            <div>
+                                <label>
+                                    <uimessage code="pihcore.regimen"/>:
+                                </label>
+                                <obs id="currentARV1" conceptId="CIEL:1282"
+                                     answerConceptIds="
                                         CIEL:160124,
                                         CIEL:1652,
                                         CIEL:164511,
@@ -510,7 +644,7 @@
                                         CIEL:164512,
                                         CIEL:162201,
                                         CIEL:5622"
-                                        answerCodes="
+                                     answerCodes="
                                         AZT + 3TC + EFV,
                                         AZT + 3TC + NVP,
                                         AZT + 3TC + ATV/r,
@@ -519,24 +653,24 @@
                                         TDF + 3TC + EFV,
                                         TDF + 3TC + NVP,
                                         TDF + 3TC + ATV/r,
-                                        TDF + 3TC + LPV/r,pihcore.other" />
-                                </div>
-                                <div>
-                                    <!-- Other ARV -->
-                                    <label>
-                                        <uimessage code="pihcore.other"/>
-                                        ARV:
-                                    </label>
-                                    <obs conceptId="CIEL:5424"/>
-                                    <br/>
+                                        TDF + 3TC + LPV/r,pihcore.other"/>
+                            </div>
+                            <div>
+                                <!-- Other ARV -->
+                                <label>
+                                    <uimessage code="pihcore.other"/>
+                                    ARV:
+                                </label>
+                                <obs conceptId="CIEL:5424"/>
+                                <br/>
 
-                                    <!-- Treatment line -->
-                                    <label>
-                                        <uimessage code="pihcore.treatmentLine"/>
-                                    </label>
-                                    <obs conceptId="PIH:13115" style="radio"
-                                        answerConceptIds="PIH:7428,PIH:7429,PIH:7430"/>
-                                </div>
+                                <!-- Treatment line -->
+                                <label>
+                                    <uimessage code="pihcore.treatmentLine"/>
+                                </label>
+                                <obs conceptId="PIH:13115" style="radio"
+                                     answerConceptIds="PIH:7428,PIH:7429,PIH:7430"/>
+                            </div>
                         </p>
                     </div>
                 </obsgroup>
@@ -547,13 +681,13 @@
                 <uimessage code="pihcore.antiTbTreatment"/>
             </h4>
 
-            <div  class="two-columns">
+            <div class="two-columns">
                 <div>
                     <p class="side-by-side">
                         <obs id="takingAntiTB"
-                            conceptId="CIEL:159798" style="radio"
-                            answerConceptIds="CIEL:1065,CIEL:1066"
-                            answerCodes="emr.yes,pihcore.none.label" >
+                             conceptId="CIEL:159798" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCodes="emr.yes,pihcore.none.label">
                             <controls>
                                 <when value="CIEL:1065" thenDisplay=".current-tb-meds"/>
                             </controls>
@@ -562,21 +696,21 @@
 
                     <div class="current-tb-meds">
                         <label>
-                            <uimessage code="pihcore.startDate" />
+                            <uimessage code="pihcore.startDate"/>
                         </label>
-                        <obs conceptId="CIEL:1113" />
+                        <obs conceptId="CIEL:1113"/>
                     </div>
                 </div>
                 <div class="current-tb-meds">
                     <p class="radio">
                         <obs conceptId="CIEL:1111" style="radio"
-                            answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
-                            answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
-                            answerSeparator="&lt;br /&gt;"/>
-                        <obs conceptId="CIEL:160136" size="14" />
+                             answerConceptIds="PIH:2406,PIH:2408,CIEL:159909"
+                             answerCodes="pihcore.tb.initialTreatment,pihcore.tb.retreatment,pihcore.tb.mdrtbTreatment"
+                             answerSeparator="&lt;br /&gt;"/>
+                        <obs conceptId="CIEL:160136" size="14"/>
                     </p>
                     <p>
-                        <obs conceptId="PIH:Anti TB free text" labelCode="zl.ifOtherSpecify" />
+                        <obs conceptId="PIH:Anti TB free text" labelCode="zl.ifOtherSpecify"/>
                     </p>
                 </div>
             </div>
@@ -589,17 +723,17 @@
                 <tr>
                     <td>
                         <label>
-                            <uimessage code="pihcore.treatment" />
+                            <uimessage code="pihcore.treatment"/>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <uimessage code="pihcore.startDate" />
+                            <uimessage code="pihcore.startDate"/>
                         </label>
                     </td>
                     <td>
                         <label>
-                            <uimessage code="pihcore.endDate" />
+                            <uimessage code="pihcore.endDate"/>
                         </label>
                     </td>
                 </tr>
@@ -622,7 +756,7 @@
                             </tr>
                         </obsgroup>
                     </template>
-                    <render conceptMap="CIEL:105281" drugname="Cotrimoxazole" />
+                    <render conceptMap="CIEL:105281" drugname="Cotrimoxazole"/>
                 </repeat>
 
                 <repeat>
@@ -635,21 +769,23 @@
                                          toggle="{id: '{drugname}-current-treat', style: 'dim'}" id="{drugname}"/>
                                     <p class="radio {drugname}-current-treat side-by-side" id="treatmentId">
                                         <obs conceptId="PIH:13786" style="radio"
-                                             answerConceptIds="CIEL:159943, CIEL:159944"  id="treatmentLine"/>
+                                             answerConceptIds="CIEL:159943, CIEL:159944" id="treatmentLine"/>
                                     </p>
                                 </td>
                                 <td>
-                                    <obs conceptId="CIEL:163526" class="startDate" allowFutureDates="true" allowPastDates="true" id="inhStartDate"/>
+                                    <obs conceptId="CIEL:163526" class="startDate" allowFutureDates="true"
+                                         allowPastDates="true" id="inhStartDate"/>
                                 </td>
-                               
+
                                 <td>
-                                    <obs conceptId="CIEL:164384" class="endDate" allowFutureDates="true" allowPastDates="true" id="inhEndDate"/>
-                                    
+                                    <obs conceptId="CIEL:164384" class="endDate" allowFutureDates="true"
+                                         allowPastDates="true" id="inhEndDate"/>
+
                                 </td>
                             </tr>
                         </obsgroup>
                     </template>
-                    <render conceptMap="CIEL:78280"  drugname="Isoniazide" class="Isoniazide"/>
+                    <render conceptMap="CIEL:78280" drugname="Isoniazide" class="Isoniazide"/>
                 </repeat>
 
                 <repeat>
@@ -661,7 +797,7 @@
                                          toggle="{id: '{drugname}-current-treat', style: 'dim'}"/>
                                 </td>
                                 <td class="{drugname}-current-treat">
-                                    <obs conceptId="CIEL:163526" class="startDate" />
+                                    <obs conceptId="CIEL:163526" class="startDate"/>
                                 </td>
                                 <td class="{drugname}-current-treat">
                                     <obs conceptId="CIEL:164384" allowFutureDates="true" class="endDate"/>
@@ -670,8 +806,8 @@
                         </obsgroup>
                     </template>
                     <render conceptMap="CIEL:167692" drugname="Rifapentine"/>
-                    <render conceptMap="CIEL:76488"  drugname="Fluconazole" />
-                    <render conceptMap="CIEL:74250"  drugname="Dapsone" />
+                    <render conceptMap="CIEL:76488" drugname="Fluconazole"/>
+                    <render conceptMap="CIEL:74250" drugname="Dapsone"/>
                 </repeat>
 
                 <obsgroup groupingConceptId="PIH:2739">
@@ -680,10 +816,10 @@
                             <obs conceptId="PIH:2289"
                                  answerConceptId="PIH:3120" answerCode="pihcore.other"
                                  toggle="{id: '{other-current-pro-treat}', style: 'dim'}"
-                                 commentFieldLabel="specify:" />
+                                 commentFieldLabel="specify:"/>
                         </td>
                         <td class="other-current-pro-treat">
-                            <obs conceptId="CIEL:163526" class="startDate" />
+                            <obs conceptId="CIEL:163526" class="startDate"/>
                         </td>
                         <td class="other-current-pro-treat">
                             <obs conceptId="CIEL:164384" allowFutureDates="true" class="endDate"/>
@@ -703,7 +839,8 @@
         </div>
     </section>
 
-    <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.chiefComplaint.title">
+    <section id="complaint" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+             headerCode="pihcore.chiefComplaint.title">
         <div class="section-container">
             <p>
                 <obs conceptId="CIEL:160531" style="textarea" id="chief-complaint"/>
@@ -713,44 +850,46 @@
 
     <style>
         .tb-screening-question * {
-            display: inline;
-            float: none !important;
-            min-width: initial;
-            vertical-align: middle;
+        display: inline;
+        float: none !important;
+        min-width: initial;
+        vertical-align: middle;
         }
 
         .tb-screening-question-label {
-            display:block;
+        display:block;
         }
 
         .tb-screening-question {
-            margin-bottom: 10px;
+        margin-bottom: 10px;
         }
 
         .tb-screening-result-section.tb-screening-result-label {
-            display: inline-block;
+        display: inline-block;
         }
         .tb-screening-result-section select {
-            display: inline-block;
+        display: inline-block;
         }
         .tb-screening-result-section input.hasDatepicker {
-            display: inline-block;
-            width: 200px;
-            min-width: 100px;
+        display: inline-block;
+        width: 200px;
+        min-width: 100px;
         }
     </style>
 
     <script type="text/javascript">
         jq(document).ready(function() {
-            // Only show the TB screening result question if it has been answered.  Only collected historically
-            var showTbScreening = (typeof getValue !== 'undefined' &amp;&amp; getValue('tbScreeningResultQuestion.value')); // Edit mode
-            showTbScreening = showTbScreening || (typeof getValue === 'undefined' &amp;&amp; jq('.tb-screening-result-section').find('.value').length > 0); // View mode
-            if (showTbScreening) {
-                jq('.tb-screening-result-section').show();
-            }
-            else {
-                jq('.tb-screening-result-section').hide();
-            }
+        // Only show the TB screening result question if it has been answered. Only collected historically
+        var showTbScreening = (typeof getValue !== 'undefined' &amp;&amp; getValue('tbScreeningResultQuestion.value'));
+        // Edit mode
+        showTbScreening = showTbScreening || (typeof getValue === 'undefined' &amp;&amp;
+        jq('.tb-screening-result-section').find('.value').length > 0); // View mode
+        if (showTbScreening) {
+        jq('.tb-screening-result-section').show();
+        }
+        else {
+        jq('.tb-screening-result-section').hide();
+        }
         });
     </script>
 
@@ -765,7 +904,7 @@
                              labelCode="pihcore.tbscreen.{0}"
                              labelCssClass="tb-screening-question-label"
                              conceptLabels="coreapps.yes,coreapps.no"
-                             style="radio" />
+                             style="radio"/>
                     </div>
                 </repeat>
             </div>
@@ -775,12 +914,12 @@
                      labelCode="pihcore.tbscreen.screeningTestResult"
                      labelCssClass="tb-screening-result-label"
                      conceptLabels="coreapps.positive,coreapps.negative"
-                     showDate="true" />
+                     showDate="true"/>
             </div>
             <br/>
             <p>
                 <label>
-                    <uimessage code="pihcore.tbSuspectedMessage" />
+                    <uimessage code="pihcore.tbSuspectedMessage"/>
                 </label>
             </p>
         </div>
@@ -801,8 +940,8 @@
                              style="checkbox"/>
                         <div id="{2}" class="two-columns">
                             <obs conceptId="PIH:Radiology report comments"
-                                 labelCode="pihcore.findings.label" />
-                            <obs conceptId="PIH:12847" labelCode="Date" />
+                                 labelCode="pihcore.findings.label"/>
+                            <obs conceptId="PIH:12847" labelCode="Date"/>
                         </div>
                     </obsgroup>
                 </p>
@@ -820,7 +959,7 @@
                             <uimessage code="zl.sexuallyActive"/>?
                         </label>
                         <obs conceptId="CIEL:160109"
-                            answerConceptIds="CIEL:1065,CIEL:1066" style="radio"/>
+                             answerConceptIds="CIEL:1065,CIEL:1066" style="radio"/>
                     </p>
                 </div>
 
@@ -830,7 +969,7 @@
                             <uimessage code="pihcore.familyPlanning.title"/>?
                         </label>
                         <obs conceptId="CIEL:1382" style="checkbox"
-                            answerConceptId="CIEL:1065" toggle="fp-table" />
+                             answerConceptId="CIEL:1065" toggle="fp-table"/>
                     </p>
                 </div>
             </div>
@@ -900,7 +1039,8 @@
                     <td></td>
                 </tr>
             </table>
-            <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F'">
+            <includeIf
+                    velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F'">
                 <!-- Pregnant -->
                 <p>
                     <label>
@@ -909,10 +1049,10 @@
                     <obs conceptId="CIEL:5272" id="hivpregnant"
                          answerConceptIds="CIEL:1065,CIEL:1066"
                          style="radio">
-                         <controls>
+                        <controls>
                             <when value="CIEL:1065" thenDisplay="#pregnant"/>
                         </controls>
-                        </obs>
+                    </obs>
 
                     <div id="pregnant">
                         <div class="two-columns">
@@ -935,26 +1075,30 @@
                                         <uimessage code="pihcore.pregnancy.dueDate"/>
                                     </label>
                                     <span class="small">
-                                        <obs id="edd" conceptId="CIEL:5596" allowFutureDates="true" allowPastDates="false"/>
+                                        <obs id="edd" conceptId="CIEL:5596" allowFutureDates="true"
+                                             allowPastDates="false"/>
                                     </span>
                                 </p>
                             </div>
                         </div>
 
-                        <div id="calculated-edd-and-gestational" class="two-columns hidden calculated-edd-and-gestational" style="display: none;">
+                        <div id="calculated-edd-and-gestational"
+                             class="two-columns hidden calculated-edd-and-gestational" style="display: none;">
                             <div>
                                 <span id="calculated-gestational-age-wrapper">
                                     <span id="calculated-gestational-age-label">
                                         <uimessage code="pihcore.calculatedGestationalAge"/>:&#160;
                                     </span>
-                                    <span id='calculated-gestational-age-value' class="calculated-gestational-age-value value"></span>
+                                    <span id='calculated-gestational-age-value'
+                                          class="calculated-gestational-age-value value"></span>
                                 </span>
                             </div>
                             <div>
                                 <span id="calculated-edd-wrapper">
                                     <span id="calculated-edd-label">
                                         <uimessage code="pihcore.calculatedEstimatedDeliveryDate"/>:&#160;
-                                    </span><br/>
+                                    </span>
+                                    <br/>
                                     <span id='calculated-edd' class="calculated-edd value"></span>
                                 </span>
                             </div>
@@ -970,36 +1114,38 @@
              headerCode="pihcore.anc.delivery.title">
         <div class="section-container">
             <div class="one-columns">
-            <includeIf velocityTest="(($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F')">
-                <br/>
-                <!-- Delivery -->
-                <p>
-                    <label>
-                        <uimessage code="pihcore.delivery"/>
-                    </label>
-                    <obs id="hiv-delivery" conceptId="PIH:14990"
-                         answerConceptIds="CIEL:1065,CIEL:1066"
-                         answerCode="pihcore.delivered"
-                         style="radio">
-                         <controls>
-                            <when value="CIEL:1065" thenDisplay="#delivery"/>
-                        </controls>
+                <includeIf
+                        velocityTest="(($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F')">
+                    <br/>
+                    <!-- Delivery -->
+                    <p>
+                        <label>
+                            <uimessage code="pihcore.delivery"/>
+                        </label>
+                        <obs id="hiv-delivery" conceptId="PIH:14990"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCode="pihcore.delivered"
+                             style="radio">
+                            <controls>
+                                <when value="CIEL:1065" thenDisplay="#delivery"/>
+                            </controls>
                         </obs>
 
-                    <div id="delivery">
-                        <p class="date-one-line">
-                            <label>
-                                <uimessage code="pihcore.mch.deliveryDateTime"/>
-                            </label>
-            
-                            <obs id="deliveryDate" conceptId="CIEL:5599" defaultDatetime="today" allowFutureDates="false" allowFutureTimes="true"/>
-                        </p>
-                    </div>
-                </p>
-            </includeIf>
+                        <div id="delivery">
+                            <p class="date-one-line">
+                                <label>
+                                    <uimessage code="pihcore.mch.deliveryDateTime"/>
+                                </label>
+
+                                <obs id="deliveryDate" conceptId="CIEL:5599" defaultDatetime="today"
+                                     allowFutureDates="false" allowFutureTimes="true"/>
+                            </p>
+                        </div>
+                    </p>
+                </includeIf>
 
             </div>
-         </div> 
+        </div>
     </section>
 
     <!-- This section for Females and HIV followup form -->
@@ -1038,13 +1184,13 @@
                 <p>
                     <obs id="syph-checkbox" conceptId="CIEL:164801" style="checkbox"
                          answerConceptId="CIEL:1065" answerCode="pihcore.screeningSyph"
-                         dateLabel="&lt;br&gt;Date" toggle="syph-screen" />
+                         dateLabel="&lt;br&gt;Date" toggle="syph-screen"/>
                 </p>
                 <p id="syph-screen" class="side-by-side">
                     <label>
                         <uimessage code="pihcore.lab.syphilis"/>
                     </label>
-                <br/>
+                    <br/>
                     <obs conceptId="CIEL:165303" style="radio"
                          answerConceptIds="CIEL:703,CIEL:664,CIEL:1138,PIH:3083"/>
                 </p>
@@ -1058,8 +1204,10 @@
                                      answerCode="pihcore.syphilisTreatmentPregnantMother" toggle="mom-syph-treat"/>
                             </p>
                             <p id="mom-syph-treat" class="startDateEndDate">
-                                <obs id="mom-syph-treat-start" conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
-                                <obs id="mom-syph-treat-end" conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
+                                <obs id="mom-syph-treat-start" conceptId="CIEL:163526"
+                                     labelCode="pihcore.treatmentStartDate" class="startDate"/>
+                                <obs id="mom-syph-treat-end" conceptId="CIEL:164384"
+                                     labelCode="pihcore.treatmentEndDate" class="endDate"/>
                             </p>
                         </obsgroup>
                     </div>
@@ -1071,8 +1219,10 @@
                                      answerCode="pihcore.syphilisTreatmentPartner" toggle="partner-syph-treat"/>
                             </p>
                             <p id="partner-syph-treat" class="startDateEndDate">
-                                <obs id="partner-syph-treat-start" conceptId="CIEL:163526" labelCode="pihcore.treatmentStartDate" class="startDate"/>
-                                <obs id="partner-syph-treat-end" conceptId="CIEL:164384" labelCode="pihcore.treatmentEndDate" class="endDate"/>
+                                <obs id="partner-syph-treat-start" conceptId="CIEL:163526"
+                                     labelCode="pihcore.treatmentStartDate" class="startDate"/>
+                                <obs id="partner-syph-treat-end" conceptId="CIEL:164384"
+                                     labelCode="pihcore.treatmentEndDate" class="endDate"/>
                             </p>
                         </obsgroup>
                     </div>
@@ -1086,18 +1236,19 @@
     <section id="psych" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.psycState">
         <div class="section-container">
-            <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 12 || $patient.getAge($encounter.getEncounterDatetime()) == 12 || (! $patient.age)">
+            <includeIf
+                    velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 12 || $patient.getAge($encounter.getEncounterDatetime()) == 12 || (! $patient.age)">
                 <p class="radio">
                     <label>
-                        <uimessage code="pihcore.receivedPostTestCounsel" />
+                        <uimessage code="pihcore.receivedPostTestCounsel"/>
                     </label>
                     <obs conceptId="CIEL:159382" answerConceptIds="CIEL:1066,CIEL:1065"
-                         style="radio" />
+                         style="radio"/>
                 </p>
 
                 <p>
                     <label>
-                        <uimessage code="pihcore.patientReceivedAdvice" />
+                        <uimessage code="pihcore.patientReceivedAdvice"/>
                     </label>
                     <br/>
 
@@ -1106,24 +1257,24 @@
                             <obs conceptId="CIEL:163560"
                                  answerConceptId="{response}"
                                  answerCode="{text}"
-                                 style="checkbox" />
+                                 style="checkbox"/>
                             <br/>
                         </template>
                         <render response="CIEL:151185" text="pihcore.cervicalCancerScreeningTreatment"/>
-                        <render response="CIEL:165489" text="pihcore.lowRiskBehavior" />
-                        <render response="CIEL:1382"   text="pihcore.fpCounseling" />
-                        <render response="CIEL:163559" text="pihcore.stiScreening" />
-                        <render response="CIEL:159381" text="pihcore.partnerScreening" />
+                        <render response="CIEL:165489" text="pihcore.lowRiskBehavior"/>
+                        <render response="CIEL:1382" text="pihcore.fpCounseling"/>
+                        <render response="CIEL:163559" text="pihcore.stiScreening"/>
+                        <render response="CIEL:159381" text="pihcore.partnerScreening"/>
                     </repeat>
                 </p>
             </includeIf>
 
             <p class="radio">
                 <label>
-                    <uimessage code="pihcore.referredMH" />
+                    <uimessage code="pihcore.referredMH"/>
                 </label>
                 <obs conceptId="PIH:13002" answerConceptIds="CIEL:1066,CIEL:1065"
-                     answerSeparator="" style="radio" />
+                     answerSeparator="" style="radio"/>
 
             </p>
         </div>
@@ -1133,20 +1284,20 @@
              headerCode="pihcore.arvAdherence">
         <div class="section-container">
             <label>
-                <uimessage code="pihcore.med.rxDosesMonth" />
+                <uimessage code="pihcore.med.rxDosesMonth"/>
             </label>
-            <obs conceptId="PIH:13067" />
+            <obs conceptId="PIH:13067"/>
             <br/>
 
             <label>
-                <uimessage code="pihcore.med.missedDosesMonth" />
+                <uimessage code="pihcore.med.missedDosesMonth"/>
             </label>
-            <obs conceptId="CIEL:160110" />
+            <obs conceptId="CIEL:160110"/>
             <br/>
 
             <p class="side-by-side">
                 <label>
-                    <uimessage code="pihcore.dailyCHWvisit" />
+                    <uimessage code="pihcore.dailyCHWvisit"/>
                 </label>
                 <obs id="chwVisit"
                      conceptId="CIEL:160111" style="radio"
@@ -1159,9 +1310,9 @@
 
             <div id="reason-without-chw">
                 <label>
-                    <uimessage code="pihcore.ifNotSpecifyReason" />
+                    <uimessage code="pihcore.ifNotSpecifyReason"/>
                 </label>
-                <obs conceptId="PIH:13065"  />
+                <obs conceptId="PIH:13065"/>
             </div>
         </div>
     </section>
@@ -1192,22 +1343,22 @@
                                         <obs conceptId="PIH:ADVERSE EFFECT"
                                              answerConceptId="{concept}"
                                              style="checkbox"
-                                             toggle="{id: '{name}-ae-date', style: 'dim'}" />
+                                             toggle="{id: '{name}-ae-date', style: 'dim'}"/>
                                     </td>
                                     <td id="{name}-ae-date">
-                                        <obs conceptId="PIH:1300" />
+                                        <obs conceptId="PIH:1300"/>
                                     </td>
                                 </tr>
                             </obsgroup>
                         </template>
-                        <render concept="CIEL:1107"   name="None"/>
+                        <render concept="CIEL:1107" name="None"/>
                         <render concept="CIEL:118983" name="Neuropathy"/>
-                        <render concept="CIEL:136162" name="LacticAcidosis" />
-                        <render concept="CIEL:133473" name="NauseaVomiting" />
-                        <render concept="CIEL:116986" name="Hepatitis" />
+                        <render concept="CIEL:136162" name="LacticAcidosis"/>
+                        <render concept="CIEL:133473" name="NauseaVomiting"/>
+                        <render concept="CIEL:116986" name="Hepatitis"/>
                         <render concept="CIEL:121629" name="Anemia"/>
                         <render concept="CIEL:136443" name="Jaundice"/>
-                        <render concept="CIEL:512"    name="Rash" />
+                        <render concept="CIEL:512" name="Rash"/>
                     </repeat>
                     <repeat>
                         <template>
@@ -1218,15 +1369,15 @@
                                              answerConceptId="{concept}"
                                              style="checkbox"
                                              commentFieldLabel="(préciser)"
-                                             toggle="{id: '{name}-ae-date', style: 'dim'}" />
+                                             toggle="{id: '{name}-ae-date', style: 'dim'}"/>
                                     </td>
                                     <td id="{name}-ae-date">
-                                        <obs conceptId="PIH:1300" />
+                                        <obs conceptId="PIH:1300"/>
                                     </td>
                                 </tr>
                             </obsgroup>
                         </template>
-                        <render concept="CIEL:5622" name="Other" />
+                        <render concept="CIEL:5622" name="Other"/>
                     </repeat>
                 </table>
             </div>
@@ -1242,12 +1393,13 @@
                 </label>
                 <obs conceptId="CIEL:160116"
                      answerConceptIds="PIH:GOOD,PIH:SATISFACTORY,CIEL:162679,PIH:DETERIORATION"
-                     style="radio" />
+                     style="radio"/>
             </p>
         </div>
     </section>
 
-    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 12 || $patient.getAge($encounter.getEncounterDatetime()) == 12 || (! $patient.age)">
+    <includeIf
+            velocityTest="$patient.getAge($encounter.getEncounterDatetime()) &gt; 12 || $patient.getAge($encounter.getEncounterDatetime()) == 12 || (! $patient.age)">
         <section id="hiv-state-stage" sectionTag="fieldset" headerTag="legend" headerStyle="title"
                  headerCode="pihcore.hiv.clinicalStage">
             <div class="boxed">
@@ -1257,7 +1409,7 @@
                     </label>
                     <obs conceptId="PIH:CURRENT WHO HIV STAGE"
                          answerConceptIds="CIEL:1204,CIEL:1205,CIEL:1206,CIEL:1207"
-                         answerLabels="1,2,3,4" style="radio" />
+                         answerLabels="1,2,3,4" style="radio"/>
                 </p>
 
                 <!-- UHM-4784 Use Lab results or workflow to enter lab data.  Using includeif to comment out the section -->
@@ -1266,7 +1418,7 @@
                     <obsgroup groupingConceptId="PIH:3434">
                         <obs conceptId="CIEL:5497" labelCode="pihcore.lab.cd4Count"/>
                         <br/>
-                        <obs conceptId="PIH:10783" labelCode="CD4 Date:" />
+                        <obs conceptId="PIH:10783" labelCode="CD4 Date:"/>
                     </obsgroup>
                 </includeIf>
             </div>
@@ -1296,12 +1448,13 @@
         </div>
     </section>
     <includeIf velocityTest="$encounter.encounterType.uuid == '95e03e7d-9aeb-4a99-bd7a-94e8591ec2c5'">
-        <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend" headerStyle="title" headerCode="pihcore.evaluation">
+        <section id="id-ev-treatment-cont" sectionTag="fieldset" headerTag="legend" headerStyle="title"
+                 headerCode="pihcore.evaluation">
             <div class="section-container">
                 <div>
                     <p class="side-by-side">
                         <label>
-                            <uimessage code="pihcore.dailyDoseARV" />
+                            <uimessage code="pihcore.dailyDoseARV"/>
                         </label>
                         <obs id="daily-dose-arv" conceptId="PIH:13649" style="radio"
                              answerConceptIds="CIEL:1065,CIEL:1066">
@@ -1346,7 +1499,7 @@
             <div class="section-container">
                 <p id="feeding-status" class="side-by-side">
                     <label>
-                        <uimessage code="zl.breastfeedingSinceLastVisit" />
+                        <uimessage code="zl.breastfeedingSinceLastVisit"/>
                     </label>
                     <obs id="breast-since-visit"
                          conceptId="PIH:6981" style="radio"
@@ -1367,9 +1520,9 @@
                 </p>
                 <div id="wean-date">
                     <label>
-                        <uimessage code="zl.weanDate" />
+                        <uimessage code="zl.weanDate"/>
                     </label>
-                    <obs conceptId="CIEL:166566" />
+                    <obs conceptId="CIEL:166566"/>
                 </div>
             </div>
         </section>
