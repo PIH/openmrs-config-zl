@@ -609,7 +609,7 @@
 
                             <option value="f19f1e19-32ad-4531-95b8-6e202ea65acc" label="ABC/3TC/DTG 60/30/5mg" />
                             <option value="3934c65b-f6ed-41fb-9635-46e78b53c5aa" label="TAF/3TC/DTG 25/300/50mg" />
-                            <option value="8d378deb-703e-420c-8481-87e4748bb06d" label="TAF/FTC/DTG 25/200/50mg" />
+                            <option value="8d378deb-703e-420c-8481-87e4748bb06d" label="TAF/TFC/DTG 25/200/50mg" />
                         </orderProperty>
                     </div>
                     <!-- <div style="padding:0px;">
