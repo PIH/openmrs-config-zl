@@ -350,17 +350,6 @@
             return true;
         });
 
-    beforeValidation.push(function() {
-    var yesSelected = jq('#drug_allergy_question input[value="1"]').is(':checked');
-    var specifyValue = jq('#drug_allergy_specify_value input').val();
-
-    if (yesSelected &amp;&amp; (!specifyValue || specifyValue.trim() === "")) {
-         jq('#specifyMedsError').text("<uimessage code='zl.drugAllergy.specifyRequired'/>").show();
-          return false;
-          }
-        jq('#specifyMedsError').text("").hide();
-        return true;
-      });
     }
 });
 </script>
@@ -567,8 +556,8 @@
                     </td>
 
                 </tr>
-             
-               
+
+
             </table>
         </div>
         <div class="section-container">
