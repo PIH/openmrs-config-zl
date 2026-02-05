@@ -39,6 +39,8 @@ jobs:
         method: 'POST'
         bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
         customHeaders: '{"Accept": "application/json"}'
+        retry: 10
+        retryWait: 60000
 
     - name: Deploy to hum-ci
       uses: fjogeleit/http-request-action@v1
@@ -47,6 +49,8 @@ jobs:
         method: 'POST'
         bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
         customHeaders: '{"Accept": "application/json"}'
+        retry: 10
+        retryWait: 60000
 
     - name: Deploy to ci
       uses: fjogeleit/http-request-action@v1
@@ -55,6 +59,8 @@ jobs:
         method: 'POST'
         bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
         customHeaders: '{"Accept": "application/json"}'
+        retry: 10
+        retryWait: 60000
 
     - name: Deploy to haitihivtest
       uses: fjogeleit/http-request-action@v1
@@ -63,6 +69,8 @@ jobs:
         method: 'POST'
         bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
         customHeaders: '{"Accept": "application/json"}'
+        retry: 10
+        retryWait: 60000
 
     - name: Deploy to zl-ci
       uses: fjogeleit/http-request-action@v1
@@ -71,3 +79,5 @@ jobs:
         method: 'POST'
         bearerToken: ${{ secrets.PIH_BAMBOO_API_KEY }}
         customHeaders: '{"Accept": "application/json"}'
+        retry: 10
+        retryWait: 60000
