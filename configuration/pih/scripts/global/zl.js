@@ -435,3 +435,81 @@ function updateLastCheckboxRequired(containerSelector, transRequiredMsgId, requi
   beforeSubmit.push(updateLastCheckbox);
 }
 
+
+function showConfirmBox(message, onYes, onNo) {
+    jq('#confirmText').text(message);
+    jq('#confirmOverlay').fadeIn(150);
+
+    // clean old handlers
+    jq('#confirmYes').off('click');
+    jq('#confirmNo').off('click');
+
+    jq('#confirmYes').on('click', function (e) {
+      e.preventDefault();
+      jq('#confirmOverlay').fadeOut(150);
+      if (typeof onYes === 'function') onYes();
+    });
+
+    jq('#confirmNo').on('click', function (e) {
+      e.preventDefault();
+      jq('#confirmOverlay').fadeOut(150);
+      if (typeof onNo === 'function') onNo();
+    });
+}
+
+function  getStringValue(intVal){
+
+  const map = {
+      "3100": "1ère",
+      "3050":"2ème",
+      "3005":"3ème",
+      "3100":"1st",
+      "3050":"2nd",
+      "3005":"3rd"
+  };
+  return map[intVal];
+}
+
+
+function setTreatmentLine(serverValue) {
+  const map = {
+    "1ère": "3100",
+    "2ème": "3050",
+    "3ème": "3005",
+    "1st": "3100",
+    "2nd": "3050",
+    "3rd": "3005"
+  };
+  const radioValue = map[serverValue];
+  if (!radioValue) return;
+  jq('#treatmentLine input[type="radio"][value="' + radioValue + '"]')
+      .prop('checked', true)
+      .trigger('click');
+}
+
+function formatMessage(template, params) {
+  return template.replace(/{(\d+)}/g, function (_, index) {
+    return params[index] ?? '';
+  });
+}
+
+function setCurrentARV(serverValue) {
+
+  const map = {
+    "AZT + 3TC + EFV": "972",
+    "AZT + 3TC + NVP": "1158",
+    "AZT + 3TC + ATV/r": "3879",
+    "AZT + 3TC + LPR/r": "3792",
+    "TDF + 3TC + DTG": "208",
+    "TDF + 3TC + EFV": "7422",
+    "TDF + 3TC + NVP": "7436",
+    "TDF + 3TC + ATV/r": "397",
+    "TDF + 3TC + LPV/r": "7227",
+    "Other": "4837"
+  };
+
+  const optionValue = map[serverValue];
+  if (!optionValue) return;
+  localStorage.setItem('previousARVValue', optionValue);
+  jq('#currentARV1 select').val(optionValue);
+}

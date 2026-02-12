@@ -109,16 +109,78 @@
             #initial_allergies .label{
               display:none;
              }
+            .confirm-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.45);
+            display: none;
+            z-index: 9999;
+            }
+
+            .confirm-box {
+            width: 340px;
+            max-width: 90%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 200px auto;
+            position: relative;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+            animation: popIn 0.15s ease-out;
+
+            }
+
+            .confirm-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            }
+
+            .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            }
+
+            .btn.cancel {
+            background: #dc3545 !important;
+            }
+
+            .btn.ok {
+            background: #fd7e14 !important;
+              color: #fff;
+            }
+
+            @keyframes popIn {
+            from { transform: scale(0.95); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+            }
+
 
 
         </ifMode>
     </style>
+    <script>
+        const i18n = {
+        confirmChange: "<uimessage code='treatmentLine.change.confirm'/>",
+        confirmDate: "<uimessage code='date.change.confirm'/>"
+        };
+    </script>
 
     <excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
         <script type="text/javascript">
 
             jq(document).ready(function() {
+            let previousArvDate = null;
+            let PreviousTreatmentLineValue=null
+            var regimenUuid='3cd9491e-26fe-102b-80cb-0017a47871b2'
             var medicationSideEffectUuid='164377AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
+            var artTreatmentLineUuid='0c709500-0cf8-4959-b244-3e9d24dcacc0';
+            var artStartDateUuid='159599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
             var medicationSideEffectCodedUuid='165273AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
             const contextPath = window.location.href.split('/')[3];
             const apiBaseUrl = "/" + contextPath + "/ws/rest/v1";
@@ -212,9 +274,123 @@
                    }
 
                 });
+
+
+            jq('#takingARVs input[type="radio"]').on('change', function () {
+                const selectedValue = $(this).val();
+                    if(selectedValue ==1 || selectedValue ==2){
+                        getArtTreatmentLine(apiBaseUrl,artTreatmentLineUuid,patientUuid);
+                        getArtStartDate(apiBaseUrl,artStartDateUuid,patientUuid)
+                     }
+            });
+
+            getArtTreatmentLine(apiBaseUrl,artTreatmentLineUuid,patientUuid);
+            getArtStartDate(apiBaseUrl,artStartDateUuid,patientUuid)
+            getRegiment(apiBaseUrl,regimenUuid,patientUuid)
+
+                jq('#arv_start_date input[type="text"]').on('mousedown', function () {
+                   previousArvDate = jq(this).datepicker('getDate');
+                });
+
+                jq('#arv_start_date input[type="text"]').on('change',function() {
+
+                    const displayValue = jq(this).val();
+                    showConfirmBox( i18n.confirmDate,
+                              ()=> { },
+                              ()=> {
+                                jq(this).datepicker('setDate', previousArvDate);
+                                if (previousArvDate) {
+                                const yyyy = previousArvDate.getFullYear();
+                                const mm = String(previousArvDate.getMonth() + 1).padStart(2, '0');
+                                const dd = String(previousArvDate.getDate()).padStart(2, '0');
+                                getField("arv_start_date.value").datepicker("setDate", previousArvDate)
+                            }
+                         }
+                        );
+
+              });
+
+                 jq(' #treatmentLine input[type="radio"]').on('change',function() {
+
+                    const previousValue = localStorage.getItem('previousTreatmentLineValue');
+
+                     if (!previousValue) return;
+                        const selectedValue =getStringValue( jq(this).val());
+                        const message = formatMessage( i18n.confirmChange, [previousValue, selectedValue] );
+
+
+                        showConfirmBox( message,
+                        ()=> setTreatmentLine(selectedValue) ,
+                        ()=> setTreatmentLine(previousValue)
+                        );
+
+                  });
+
+            jq('#currentARV1 select').on('change',function() {
+                    showConfirmBox( i18n.confirmDate,
+                      ()=> {}  ,
+                      ()=> getRegiment(apiBaseUrl,regimenUuid,patientUuid)
+                     );
+               });
             });
 
 
+            function getArtTreatmentLine(apiBaseUrl,artTreatmentLineUuid,patientUuid){
+                jq.getJSON(apiBaseUrl + "/obs", {
+                    concept: artTreatmentLineUuid,
+                    patient: patientUuid,
+                    v: "custom:(auditInfo:(dateCreated),value:(name:(display)),encounter:(encounterDatetime))"
+                    }, function (data) {
+                if (data.results.length > 0) {
+                const res = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
+
+                 var response =(res.length > 1)? res[res.length -1].value.name.display : res[0].value.name.display
+                  localStorage.setItem('previousTreatmentLineValue', response);
+                 setTreatmentLine(response)
+                }
+            });
+
+            }
+
+            function getArtStartDate(apiBaseUrl,artStartDateUuid,patientUuid){
+                jq.getJSON(apiBaseUrl + "/obs", {
+                        concept: artStartDateUuid,
+                        patient: patientUuid,
+                        v: "custom:(auditInfo:(dateCreated),value:(name:(display)),encounter:(encounterDatetime))"
+                    }, function (data) {
+                    if (data.results.length > 0) {
+
+                       const res = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
+                        previousArvDate=(res.length > 1)? formatEncounterDate(res[res.length -1]) :formatEncounterDate(res[0])
+                        getField("arv_start_date.value").datepicker("setDate", previousArvDate)
+                    }
+                });
+
+            }
+
+            function getRegiment(apiBaseUrl,regimenUuid,patientUuid){
+                jq.getJSON(apiBaseUrl + "/obs", {
+                    concept: regimenUuid,
+                    patient: patientUuid,
+                    v: "custom:(auditInfo:(dateCreated),value:(name:(display)),encounter:(encounterDatetime))"
+
+                }, function (data) {
+                if (data.results.length > 0) {
+                    console.log("data: ",data.results)
+                    const res = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
+                     var response =(res.length > 1)? res[res.length -1].value.name.display : res[0].value.name.display
+
+                     setCurrentARV(response)
+                    console.log("Regime: ",response)
+                }
+            });
+
+          }
+
+            function formatEncounterDate(dateFromServer){
+               const parts = dateFromServer.value.split("-");
+                return new Date( parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10) );
+            }
             function getLatestDrugAllergies(apiBaseUrl,medicationSideEffectUuid,patientUuid ){
                      jq.getJSON(apiBaseUrl + "/obs", {
                          concept: medicationSideEffectUuid,
@@ -238,6 +414,8 @@
                       console.log("Null Value");
                       }
                    });
+
+
             }
 
             
@@ -273,6 +451,8 @@
                       .trigger('change');
                   }
             }
+
+
         </script>
     </excludeIf>
 
@@ -303,6 +483,19 @@
     <!-- Program enrollment (if the patient hasn't already been enrolled);
          use first ancestor location tagged as Program Location -->
     <enrollInProgram programId="HIV" locationTag="Program Location"/>
+
+    <div id="confirmOverlay" class="confirm-overlay">
+        <div class="confirm-box">
+            <h3 id="confirmTitle">Confirmation</h3>
+            <p id="confirmText"></p>
+
+            <div class="confirm-actions">
+                <button  type="button" id="confirmNo" class="btn cancel">No</button>
+                <button  type="button" id="confirmYes" class="btn ok">Yes</button>
+            </div>
+        </div>
+    </div>
+
 
     <section id="chwName-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.chw">
@@ -622,7 +815,7 @@
                         <uimessage code="pihcore.hiv.startDateARV"/>
                     </label>
                     <p class="small">
-                        <obs conceptId="CIEL:159599"/>
+                        <obs id="arv_start_date" conceptId="CIEL:159599"/>
                     </p>
                     <div class="two-columns">
                         <p class="radio">
@@ -668,7 +861,7 @@
                                 <label>
                                     <uimessage code="pihcore.treatmentLine"/>
                                 </label>
-                                <obs conceptId="PIH:13115" style="radio"
+                                <obs id="treatmentLine" conceptId="PIH:13115" style="radio"
                                      answerConceptIds="PIH:7428,PIH:7429,PIH:7430"/>
                             </div>
                         </p>
