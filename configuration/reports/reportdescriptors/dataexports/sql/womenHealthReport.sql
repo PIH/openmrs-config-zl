@@ -166,7 +166,7 @@ SELECT
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate;
 
----B1 Prenatal consultation
+-- B1 Prenatal consultation
 SELECT
        SUM(CASE
             WHEN  o.value_coded = concept_from_mapping("PIH","10900")
@@ -327,7 +327,7 @@ FROM (
     GROUP BY fs.patient_id, fs.encounter_id, o_trimester.value_coded
 ) x;
 
----Number of pregnant women with an estimated due date (EDD) for the month of the report
+-- Number of pregnant women with an estimated due date (EDD) for the month of the report
 SELECT 
 COUNT(x.person_id ) INTO @ANC_DPA_MONTH
 FROM (
@@ -360,7 +360,7 @@ WHERE
  GROUP BY o.person_id 
  )x;
 
-----# of high-risk pregnancies
+-- # of high-risk pregnancies
 SELECT COUNT(x.person_id ) INTO @ANC_PREG_HR_CONDITIONS
  FROM (
     SELECT o.person_id FROM encounter e 
@@ -392,7 +392,7 @@ SELECT COUNT(x.person_id ) INTO @ANC_PREG_HR_CONDITIONS
     GROUP BY o.person_id 
  )x;
 
-----# of pregnant women who had their first visit since October during the month of the report.
+-- # of pregnant women who had their first visit since October during the month of the report.
  SELECT COUNT(x.person_id ) INTO  @ANC_1ST_VISIT_SINCE_OCT_MONTH
   FROM (
     SELECT o.person_id FROM encounter e 
@@ -424,7 +424,7 @@ SELECT COUNT(x.person_id ) INTO @ANC_PREG_HR_CONDITIONS
     GROUP BY o.person_id 
  )x;
 
---- number of pregnant women who received iron during prenatal visits (ferrous sulfate, iron, iron dextran)
+-- number of pregnant women who received iron during prenatal visits (ferrous sulfate, iron, iron dextran)
 SELECT COUNT(x.person_id ) INTO  @ANC_PREG_IRON_SUPP_COUNT
     FROM (
     SELECT o.person_id FROM encounter e 
