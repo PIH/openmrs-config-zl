@@ -15,6 +15,7 @@
     "growthChart",
     "importPatients",
     "markPatientDead",
+    "medicationDispensing",
     "mentalHealth",
     "monitoringReports",
     "myAccount",
