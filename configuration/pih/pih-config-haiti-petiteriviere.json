@@ -10,6 +10,7 @@
     "exportPatients",
     "importPatients",
     "markPatientDead",
+    "medicationDispensing",
     "mentalHealth",
     "myAccount",
     "patientRegistration",
