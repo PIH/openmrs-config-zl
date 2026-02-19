@@ -167,12 +167,28 @@
     <script>
         const i18n = {
         confirmChange: "<uimessage code='treatmentLine.change.confirm'/>",
-        confirmDate: "<uimessage code='date.change.confirm'/>"
+        confirmDate: "<uimessage code='date.change.confirm'/>",
+        confirmRegimen: "<uimessage code='regimen.change.confirm'/>",
         };
     </script>
 
     <excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
         <script type="text/javascript">
+            const treatmentLineFirst = '<lookup expression="fn.getConcept('CIEL: 166074 ').id" />';
+            const treatmentLineSecond = '<lookup expression="fn.getConcept('CIEL: 166075 ').id" />';
+            const treatmentLineThird = '<lookup expression="fn.getConcept('CIEL: 166076 ').id" />';
+
+
+            const REGIMEN_AZT_3TC_EFV_ID = '<lookup expression="fn.getConcept('CIEL: 160124 ').id" />';
+            const REGIMEN_AZT_3TC_NVP_ID = '<lookup expression="fn.getConcept('CIEL: 1652 ').id" />';
+            const REGIMEN_AZT_3TC_ATV_R_ID = '<lookup expression="fn.getConcept('CIEL: 164511 ').id" />';
+            const REGIMEN_AZT_3TC_LPV_R_ID = '<lookup expression="fn.getConcept('CIEL: 162561 ').id" />';
+            const REGIMEN_TDF_3TC_DTG_ID = '<lookup expression="fn.getConcept('CIEL: 165086 ').id" />';
+            const REGIMEN_TDF_3TC_EFV_ID = '<lookup expression="fn.getConcept('CIEL: 164505 ').id" />';
+            const REGIMEN_TDF_3TC_NVP_ID = '<lookup expression="fn.getConcept('CIEL: 162565 ').id" />';
+            const REGIMEN_TDF_3TC_ATV_R_ID = '<lookup expression="fn.getConcept('CIEL: 164512 ').id" />';
+            const REGIMEN_TDF_3TC_LPV_R_ID = '<lookup expression="fn.getConcept('CIEL: 162201 ').id" />';
+            const REGIMEN_OTHER_ID = '<lookup expression="fn.getConcept('CIEL: 5622 ').id" />';
 
             jq(document).ready(function() {
             let previousArvDate = null;
@@ -316,6 +332,7 @@
 
                      if (!previousValue) return;
                         const selectedValue =getStringValue( jq(this).val());
+                        console.log("SELECTED VALUE IS ",jq(this).val())
                         const message = formatMessage( i18n.confirmChange, [previousValue, selectedValue] );
 
 
@@ -327,7 +344,7 @@
                   });
 
             jq('#currentARV1 select').on('change',function() {
-                    showConfirmBox( i18n.confirmDate,
+                    showConfirmBox( i18n.confirmRegimen,
                       ()=> {}  ,
                       ()=> getRegiment(apiBaseUrl,regimenUuid,patientUuid)
                      );
@@ -345,8 +362,9 @@
                 const res = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
 
                  var response =(res.length > 1)? res[res.length -1].value.name.display : res[0].value.name.display
+
                   localStorage.setItem('previousTreatmentLineValue', response);
-                 setTreatmentLine(response)
+                   setTreatmentLine(response)
                 }
             });
 
@@ -452,7 +470,56 @@
                   }
             }
 
+            function getStringValue(conceptId) {
+            const map = {
+                [treatmentLineFirst]:  "1st",
+                [treatmentLineSecond]: "2nd",
+                [treatmentLineThird]:  "3rd",
+                [treatmentLineFirst]:  "1ère",
+                [treatmentLineSecond]: "2ème",
+                [treatmentLineThird]:  "3ème",
 
+            };
+              return map[conceptId] || conceptId;
+            }
+
+            function setTreatmentLine(serverValue) {
+            const map = {
+                "1ère":  [treatmentLineFirst],
+                "2ème":  [treatmentLineSecond],
+                "3ème":  [treatmentLineThird],
+                "1st":   [treatmentLineFirst],
+                "2nd":   [treatmentLineSecond],
+                "3rd":   [treatmentLineThird]
+            };
+            const radioValue = map[serverValue];
+                if (!radioValue) return;
+                jq('#treatmentLine input[type="radio"][value="' + radioValue + '"]')
+                .prop('checked', true)
+                .trigger('click');
+            }
+
+
+
+            function setCurrentARV(serverValue) {
+                const map = {
+                    "AZT + 3TC + EFV": [REGIMEN_AZT_3TC_EFV_ID],
+                    "AZT + 3TC + NVP": [REGIMEN_AZT_3TC_NVP_ID],
+                    "AZT + 3TC + ATV/r": [REGIMEN_AZT_3TC_ATV_R_ID],
+                    "AZT + 3TC + LPR/r": [REGIMEN_AZT_3TC_LPV_R_ID],
+                    "TDF + 3TC + DTG": [REGIMEN_TDF_3TC_DTG_ID],
+                    "TDF + 3TC + EFV": [REGIMEN_TDF_3TC_EFV_ID],
+                    "TDF + 3TC + NVP": [REGIMEN_TDF_3TC_NVP_ID],
+                    "TDF + 3TC + ATV/r": [REGIMEN_TDF_3TC_ATV_R_ID],
+                    "TDF + 3TC + LPV/r": [REGIMEN_TDF_3TC_LPV_R_ID],
+                    "Other": [REGIMEN_OTHER_ID]
+                };
+
+                const optionValue = map[serverValue];
+                if (!optionValue) return;
+                localStorage.setItem('previousARVValue', optionValue);
+                jq('#currentARV1 select').val(optionValue);
+            }
         </script>
     </excludeIf>
 
