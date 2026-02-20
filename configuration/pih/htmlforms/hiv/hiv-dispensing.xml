@@ -350,8 +350,35 @@
             return true;
         });
 
-    }
+    jq.getJSON(apiBaseUrl + "/obs", {
+        concept: artTreatmentLineUuid,
+        patient: patientUuid,
+        v: "custom:(auditInfo:(dateCreated),value:(name:(display)),encounter:(encounterDatetime))"
+    }, function (data) {
+        if (data.results.length > 0) {
+        const oldestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) )[0];
+        setTreatmentLine(oldestObs.value.name.display)
+        }
+    });
+  }
+
 });
+    function setTreatmentLine(serverValue) {
+    const map = {
+            "1ère": "3100",
+            "2ème": "3050",
+            "3ème": "3005",
+            "1st": "3100",
+            "2nd": "3050",
+            "3rd": "3005"
+    };
+    const radioValue = map[serverValue];
+    if (!radioValue) return;
+        jq('#treatmentLine input[type="radio"][value="' + radioValue + '"]')
+        .prop('checked', true)
+        .trigger('click');
+    }
+
 </script>
 
 
@@ -522,7 +549,7 @@
                             <label>
                                 <uimessage code="pihcore.treatmentLine" />
                             </label>
-                            <obs conceptId="PIH:13115" style="radio"
+                            <obs id="treatmentLine" conceptId="PIH:13115" style="radio"
                                  answerConceptIds="PIH:7428,PIH:7429,PIH:7430" />
                         </p>
                     </td>

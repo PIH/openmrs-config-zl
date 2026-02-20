@@ -435,3 +435,36 @@ function updateLastCheckboxRequired(containerSelector, transRequiredMsgId, requi
   beforeSubmit.push(updateLastCheckbox);
 }
 
+
+function showConfirmBox(message, onYes, onNo) {
+    jq('#confirmText').text(message);
+    jq('#confirmOverlay').fadeIn(150);
+
+    // clean old handlers
+    jq('#confirmYes').off('click');
+    jq('#confirmNo').off('click');
+
+    jq('#confirmYes').on('click', function (e) {
+      e.preventDefault();
+      jq('#confirmOverlay').fadeOut(150);
+      if (typeof onYes === 'function') onYes();
+    });
+
+    jq('#confirmNo').on('click', function (e) {
+      e.preventDefault();
+      jq('#confirmOverlay').fadeOut(150);
+      if (typeof onNo === 'function') onNo();
+    });
+}
+
+
+
+
+
+function formatMessage(template, params) {
+  return template.replace(/{(\d+)}/g, function (_, index) {
+    return params[index] ?? '';
+  });
+}
+
+
