@@ -1,5 +1,5 @@
 Uuid,Void/Retire,Mappings|SAME-AS|OpenBoxes,Name,Concept Drug,Concept Dosage Form,Ingredient 1,Ingredient 1 Strength,Ingredient 1 Units,Ingredient 2,Ingredient 2 Strength,Ingredient 2 Units,Ingredient 3,Ingredient 3 Strength,Ingredient 3 Units,Ingredient 4,Ingredient 4 Strength,Ingredient 4 Units
-2033cc3e-179e-41ab-b8e4-3de9fcc5b6c9,,11627,"Acetazolamide, 250mg tablet",PIH:4031,Tablet,PIH:4031,250,Milligram,,,,,,,,,
+2033cc3e-179e-41ab-b8e4-3de9fcc5b6c9,,11627,"Acetazolamide, 250mg tablet",CIEL:70125,Tablet,CIEL:70125,250,Milligram,,,,,,,,,
 ec08318d-5255-467e-847c-738eff37b3d5,,10629,"Acetylcysteine, Solution for injection, 200mg/mL, 10mL ampoule",CIEL:70148,Ampoule(s),CIEL:70148,,,,,,,,,,,
 8d5941e8-5f86-4289-a6ba-122320814bd5,TRUE,10194,"Acetylsalicylic acid, 100mg tablet",CIEL:71617,Tablet,CIEL:71617,100,Milligram,,,,,,,,,
 0962492b-295e-4f61-8d7b-717a61f43997,,11059,"Aciclovir, 200mg tablet",CIEL:70245,Tablet,CIEL:70245,200,Milligram,,,,,,,,,
@@ -69,7 +69,7 @@ fd576d2f-1472-47d8-b925-3cebeb5b1c44,,10083,"Cefixime, 400mg film coated tablet"
 b697554f-491b-4ad4-a259-bb2f4f1d16a3,,10983,"Ceftriaxone, Powder for solution for injection, 1 gram vial",CIEL:73041,Vial,CIEL:73041,,,,,,,,,,,
 38562c47-96f5-4092-a552-d47cb84ebaaf,,11278,"Ceftriaxone, Powder for solution for injection, 250mg vial",CIEL:73041,Vial,CIEL:73041,,,,,,,,,,,
 199bd4a3-b4ab-4bcc-bb1d-52d4e270bf71,,11541,"Cetirizine hydrochloride, 10mg tablet",CIEL:73136,Tablet,CIEL:73136,10,Milligram,,,,,,,,,
-cab79287-0da2-4168-947a-4946be6bb2fb,,10092,"Charcoal, Activated, Granules for oral suspension, 50 gram bottle",PIH:2938,Bottle,PIH:2938,,,,,,,,,,,
+cab79287-0da2-4168-947a-4946be6bb2fb,,10092,"Charcoal, Activated, Granules for oral suspension, 50 gram bottle",CIEL:70229,Bottle,CIEL:70229,,,,,,,,,,,
 57e41df2-d64c-4316-a4e4-35613bd36a35,,11696,"Chloramphenicol sodium succinate, Powder for solution for injection, 1 gram vial",CIEL:73241,Vial,CIEL:73241,,,,,,,,,,,
 d8283445-07f9-4af6-ac73-ffe4818a66b5,TRUE,10613,"Chloramphenicol, Eye ointment, 1%, 5 gram tube",CIEL:73239,Tube,CIEL:73239,,,,,,,,,,,
 203e9c50-ff86-44f7-8725-b8c5c475bd23,,10910,"Chloramphenicol, Oral suspension, 25mg/mL, 100mL bottle",CIEL:73239,Bottle,CIEL:73239,,,,,,,,,,,
