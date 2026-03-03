@@ -317,14 +317,20 @@ FROM (
         ON fs_prev.patient_id = fs.patient_id
         AND fs_prev.encounter_datetime > last_nv.last_new_visit_date
         AND fs_prev.encounter_datetime < fs.encounter_datetime
+        AND fs_prev.encounter_datetime >=   @startDate
+        AND fs_prev.encounter_datetime <    @endDate
         AND fs_prev.voided = 0
     LEFT JOIN obs o_suivi_prev
         ON o_suivi_prev.encounter_id = fs_prev.encounter_id
         AND o_suivi_prev.value_coded = concept_from_mapping('PIH','7383')
+        AND fs_prev.encounter_datetime >=   @startDate
+        AND fs_prev.encounter_datetime <    @endDate
         AND o_suivi_prev.voided = 0
     LEFT JOIN obs o_pn_prev
         ON o_pn_prev.encounter_id = fs_prev.encounter_id
         AND o_pn_prev.value_coded = concept_from_mapping('PIH','6259')
+        AND fs_prev.encounter_datetime >=   @startDate
+        AND fs_prev.encounter_datetime <    @endDate
         AND o_pn_prev.voided = 0
     WHERE fs.encounter_datetime > last_nv.last_new_visit_date
       AND fs.encounter_datetime >=  @startDate
