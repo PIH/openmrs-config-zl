@@ -267,7 +267,13 @@ FROM (
     SELECT
         fs.patient_id,
         fs.encounter_id,
-        COUNT(fs_prev.encounter_id) + 1 AS followup_number,
+         COUNT(
+			  CASE 
+			    WHEN o_suivi_prev.encounter_id IS NOT NULL 
+			     AND o_pn_prev.encounter_id IS NOT NULL 
+			    THEN 1 
+			  END
+			) + 1 AS followup_number,
         CASE
             WHEN o_trimester.value_coded = concept_from_mapping('PIH','10900') THEN 'Trim1'
             WHEN o_trimester.value_coded = concept_from_mapping('PIH','10901') THEN 'Trim2'
