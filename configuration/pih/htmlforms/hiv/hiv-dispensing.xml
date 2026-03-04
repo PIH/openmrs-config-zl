@@ -349,35 +349,11 @@
 
             return true;
         });
-
-    jq.getJSON(apiBaseUrl + "/obs", {
-        concept: artTreatmentLineUuid,
-        patient: patientUuid,
-        v: "custom:(auditInfo:(dateCreated),value:(name:(display)),encounter:(encounterDatetime))"
-    }, function (data) {
-        if (data.results.length > 0) {
-        const oldestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) )[0];
-        setTreatmentLine(oldestObs.value.name.display)
-        }
-    });
+ 
   }
 
 });
-    function setTreatmentLine(serverValue) {
-    const map = {
-            "1ère": "3100",
-            "2ème": "3050",
-            "3ème": "3005",
-            "1st": "3100",
-            "2nd": "3050",
-            "3rd": "3005"
-    };
-    const radioValue = map[serverValue];
-    if (!radioValue) return;
-        jq('#treatmentLine input[type="radio"][value="' + radioValue + '"]')
-        .prop('checked', true)
-        .trigger('click');
-    }
+ 
 
 </script>
 
@@ -556,37 +532,7 @@
                 </tr>
             </table>
         </div>
-          <!-- Side effects or allergies: -->
-          <div class="section-container">
-            <table>
-                <tr>
-                    <td>
-                        <label><uimessage code="zl.allergy.drugQuestion"/></label>
-                        <br/>
-
-                        <obs id="drug_allergy_question"
-                             conceptId="CIEL:165273"
-                             style="radio"
-                             answerConceptIds="PIH:YES,PIH:NO,PIH:UNKNOWN">
-                            <controls>
-                                <when value="PIH:YES" thenDisplay="#drug_allergy_specify"/>
-                            </controls>
-                        </obs>
-                    </td>
-
-                    <td>
-                        <p id="drug_allergy_specify">
-                            <label><uimessage code="zl.allergy.specify"/></label>
-                            <obs id="drug_allergy_specify_value"  conceptId="CIEL:164377"/>
-                            <span id="specifyMedsError" class="error field-error" style="display: none"></span>
-                        </p>
-                    </td>
-
-                </tr>
-
-
-            </table>
-        </div>
+        
         <div class="section-container">
             <table>
                 <tr>
