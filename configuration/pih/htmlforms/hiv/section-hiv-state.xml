@@ -305,7 +305,7 @@
 
               });
 
-                 jq(' #treatmentLine input[type="radio"]').on('change',function() {
+                 jq('#treatmentLine input[type="radio"]').on('change',function() {
 
                     const previousValue = localStorage.getItem('previousTreatmentLineValue');
 
