@@ -92,9 +92,6 @@
     </ifMode>
 
     <macros>
-        <macro key="paymentAmts" expression="fn.globalProperty('mirebalais.checkIn.paymentAmounts')"/>
-        <macro key="paymentAmtLabels" expression="fn.globalProperty('mirebalais.checkIn.paymentAmountLabels')"/>
-        <macro key="paymentAmtDefault" expression="fn.globalProperty('mirebalais.checkIn.paymentAmountDefault')"/>
         <macro key="reasonsForVisit" expression="fn.globalProperty('haiti.checkIn.reasonsForVisit')"/>
     </macros>
 
