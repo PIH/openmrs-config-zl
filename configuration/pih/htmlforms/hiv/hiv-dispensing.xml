@@ -259,26 +259,37 @@
         jq("#missingMedsError").text("").hide();
     });
 
+
+
+    checkFields();
+
     jq("#dispensedTo").click(function () {
 
     dispensedToValue= getValue('dispensedTo.value');
     if (dispensedToValue == dispensedToPatientConceptId) {
+
         // medication dispensed to patient
         // do not allow entering the name of CHW
         setValue('chwName.value','');
-        getField('chwName.value').fadeTo(250,0.33);
         getField('chwName.value').prop( 'disabled', true );
+        jq('#medPickupComId').hide();
+        jq('#medPickupChwId').hide();
+
     } else if (dispensedToValue == dispensedToChwConceptId) {
-        // medication dispensed to CHW
-        // enable CHW name input
-        getField('chwName.value').prop('disabled', false );
-        getField('chwName.value').fadeTo(250,1);
+
+         getField('chwName.value').prop('disabled', false );
+         jq('#medPickupComId').hide();
+         jq('#medPickupChwId').show();
+
     } else if (dispensedToValue == dispensedInCommunityId) {
         // medication dispensed in Community
         // disable CHW name input
-        setValue('chwName.value','');
-        getField('chwName.value').fadeTo(250,0.33);
-        getField('chwName.value').prop( 'disabled', true );
+
+        setValue('comName.value','');
+        getField('comName.value').prop( 'disabled', false );
+        jq('#medPickupComId').show();
+        jq('#medPickupChwId').hide();
+
     }
 
     });
@@ -489,6 +500,13 @@
 
 </script>
 
+    <ifMode mode="VIEW" include="true">
+        <script>
+            checkFieldsEditMode();
+        </script>
+    </ifMode>
+
+
 
     <div class="print-form-datestamps" style="display:none">
         <p><uimessage code="pihcore.form.created_on"/>:
@@ -503,6 +521,7 @@
     </div>
 
     <ifMode mode="VIEW" include="false">
+
         <h2>
             <label>
                 <uimessage code="pihcore.hivDispensing"/>

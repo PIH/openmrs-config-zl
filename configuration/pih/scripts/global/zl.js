@@ -467,4 +467,42 @@ function formatMessage(template, params) {
   });
 }
 
+function checkFields() {
+
+  let chwValue = jq('#chwName input').val()?.trim();
+  let comValue = $('#comName input').val()?.trim();
+
+  if (chwValue) {
+    jq('#medPickupComId').hide();
+    jq('#medPickupChwId').show();
+  } else if (comValue) {
+    jq('#medPickupChwId').hide();
+    jq('#medPickupComId').show();
+  } else {
+
+    jq('#medPickupChwId, #medPickupComId').show();
+  }
+}
+
+function checkFieldsEditMode() {
+  let chwValue = jq('#chwName .value').text().trim();
+  let comValue = jq('#comName .value').text().trim();
+
+  let chwEmpty = jq('#chwName .emptyValue').length > 0;
+  let comEmpty = jq('#comName .emptyValue').length > 0;
+
+  if (!chwEmpty && chwValue !== '') {
+
+    jq('#medPickupComId').hide();
+    jq('#medPickupChwId').show();
+  } else if (!comEmpty && comValue !== '') {
+    // COM has value → hide CHW
+    jq('#medPickupChwId').hide();
+    jq('#medPickupComId').show();
+  } else {
+
+    jq('#medPickupChwId, #medPickupComId').show();
+  }
+}
+
 
