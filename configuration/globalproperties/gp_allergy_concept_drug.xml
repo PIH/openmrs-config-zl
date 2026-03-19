@@ -1,0 +1,9 @@
+<config>
+    <globalProperties>
+        <globalProperty>
+            <property>allergy.concept.allergen.drug</property>
+            <!-- Concept: ZL custom drug allergies with core and HIV drugs -->
+            <value>d0937fdc-9fb7-441a-a83f-b3fcc6f99868</value>
+        </globalProperty>
+    </globalProperties>
+</config>
