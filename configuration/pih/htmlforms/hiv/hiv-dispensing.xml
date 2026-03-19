@@ -20,6 +20,7 @@
 
     <macros>
         <macro key="medPickupChw" value="c29f0c91-0128-445d-a64b-1f85498c5752"/>
+        <macro key="medPickupCom" value="169d39c2-8e03-4f77-b5ff-8f65f4f58ec2"/>
     </macros>
 
     <style type="text/css">
@@ -258,26 +259,37 @@
         jq("#missingMedsError").text("").hide();
     });
 
+
+
+    checkFields();
+
     jq("#dispensedTo").click(function () {
 
     dispensedToValue= getValue('dispensedTo.value');
     if (dispensedToValue == dispensedToPatientConceptId) {
+
         // medication dispensed to patient
         // do not allow entering the name of CHW
         setValue('chwName.value','');
-        getField('chwName.value').fadeTo(250,0.33);
         getField('chwName.value').prop( 'disabled', true );
+        jq('#medPickupComId').hide();
+        jq('#medPickupChwId').hide();
+
     } else if (dispensedToValue == dispensedToChwConceptId) {
-        // medication dispensed to CHW
-        // enable CHW name input
-        getField('chwName.value').prop('disabled', false );
-        getField('chwName.value').fadeTo(250,1);
+
+         getField('chwName.value').prop('disabled', false );
+         jq('#medPickupComId').hide();
+         jq('#medPickupChwId').show();
+
     } else if (dispensedToValue == dispensedInCommunityId) {
         // medication dispensed in Community
         // disable CHW name input
-        setValue('chwName.value','');
-        getField('chwName.value').fadeTo(250,0.33);
-        getField('chwName.value').prop( 'disabled', true );
+
+        setValue('comName.value','');
+        getField('comName.value').prop( 'disabled', false );
+        jq('#medPickupComId').show();
+        jq('#medPickupChwId').hide();
+
     }
 
     });
@@ -287,6 +299,12 @@
         if (chwName.length > 0) {
             getField('chwName.error').text("").hide();
         }
+    });
+    jq("#comName input").change(function() {
+    var comName= getValue('comName.value');
+    if (comName.length > 0) {
+    getField('comName.error').text("").hide();
+    }
     });
 
     jq("#nextDispenseDate input[type='hidden']").change(function() {
@@ -353,6 +371,18 @@
           }
           return true;
         });
+    beforeValidation.push(function() {
+    var dispensedToChw= getValue('dispensedTo.value');
+    if (dispensedToChw == dispensedInCommunityId ) {
+    var comName = getValue('comName.value');
+    if (comName == false) {
+    // the Community name was not entered
+    getField('comName.error').text("<uimessage code='pihcore.required'/>").show();
+    return false;
+    }
+    }
+    return true;
+    });
 
         // (Encounter Date) less than (Next Dispensing Date) less than (Encounter Date + 365 days)
         beforeValidation.push(function() {
@@ -470,6 +500,13 @@
 
 </script>
 
+    <ifMode mode="VIEW" include="true">
+        <script>
+            checkFieldsEditMode();
+        </script>
+    </ifMode>
+
+
 
     <div class="print-form-datestamps" style="display:none">
         <p><uimessage code="pihcore.form.created_on"/>:
@@ -484,6 +521,7 @@
     </div>
 
     <ifMode mode="VIEW" include="false">
+
         <h2>
             <label>
                 <uimessage code="pihcore.hivDispensing"/>
@@ -622,14 +660,26 @@
                         <obs id="dispensedTo" conceptId="PIH:12071" style="radio"
                              answerConceptIds="CIEL:162571,CIEL:1555,PIH:9361"
                              answerCodes="pihcore.toPatient,pihcore.toCHW,pihcore.inCommunity">
+                            <controls>
+                                <when value="CIEL:1555" thenDisplay="#medPickupChwId"/>
+                                <when value="PIH:9361" thenDisplay="#medPickupComId"/>
+                            </controls>
+
                         </obs>
                     </td>
-                    <td>
+                    <td id="medPickupChwId">
                         <label>
                             <uimessage code="pihcore.nameCHW" />
                         </label>
                         <obs id="chwName" conceptId="$medPickupChw" />
                     </td>
+                    <td id="medPickupComId">
+                        <label>
+                            <uimessage code="pihcore.nameCom" />
+                        </label>
+                        <obs id="comName" conceptId="$medPickupCom" />
+                    </td>
+
 
                 </tr>
                 <!-- ToDo:  Remove this
