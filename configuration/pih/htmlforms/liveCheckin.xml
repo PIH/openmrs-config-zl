@@ -15,6 +15,7 @@
 <htmlform id="check-in-form" formUuid="2b20903c-ceef-4b4c-9bfc-b1f9bea9d6b9" formName="LiveCheckin"
           formEncounterType="55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b" formVersion="3.0">
 
+    <!-- TODO: remove if/when we stop using the archives functionality -->
     <includeIf velocityTest="$config.isComponentEnabled('archives')">
         <!-- in Mirebalais we prompt for pulling dossier -->
         <redirectOnSave url="/paperrecord/requestPaperRecord.page?patientId={{patient.id}}&amp;returnProvider=pihcore&amp;returnPage=router/appEndRouter"/>
@@ -24,6 +25,7 @@
         <!-- otherwise redirect back directly to the router -->
         <redirectOnSave url="/pihcore/router/appEndRouter.page?patientId={{patient.id}}"/>
     </includeIf>
+    <!-- TODO: end code to remove -->
 
 
     <style>
