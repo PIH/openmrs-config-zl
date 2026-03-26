@@ -174,7 +174,6 @@
     "uuid": "transferOutOfHospital",
     "name": "disposition.emrapi.transferOutOfHospital",
     "conceptCode": "PIH:Transfer out of hospital",
-    "excludedEncounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
     "actions": [
       "dischargeIfAdmittedDispositionAction"
     ],
