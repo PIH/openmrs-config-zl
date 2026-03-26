@@ -23,20 +23,6 @@
 
     <style type="text/css">
 
-        #who-when-where {
-            margin-bottom: 6px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        #who-when-where p {
-            display: inline-block;
-            padding-right: 20px;
-        }
-
-        #where > input[type=text] {
-            display: inline-block;
-        }
-
         .field-error {
             color: #ff6666;
             font-size: 1.1em;
@@ -111,6 +97,25 @@
             width: 200px;
         }
 
+        .list-inline label, .list-inline input[type="radio"], .list-inline span,
+        .list-inline-wide label, .list-inline-wide input[type="radio"], .list-inline-wide span,
+        .list-inline-extra-wide label, .list-inline-extra-wide input[type="radio"], .list-inline-extra-wide span {
+            display: inline-block;
+            float: none;
+        }
+
+        .list-inline label:first-child {
+            width: 220px;
+        }
+
+        .list-inline-wide label:first-child {
+            width: 320px;
+        }
+
+        .list-inline-extra-wide label:first-child {
+            width: 420px;
+        }
+
         <ifMode mode="EDIT" include="true">
             #disposition small {
                 font-size: 100%;
@@ -149,112 +154,16 @@
             </label>
         </h2>
 
-        <!-- users with retroConsultNote privilege can edit provider, location, and date for both retro and active visits -->
-        <includeIf velocityTest="$user.hasPrivilege('Task: emr.retroConsultNote')">
-            <div id="who-when-where">
-                <p id="who">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.providerRequired"/>
-                    </label>
-                    <span>
-                        <encounterProviderAndRole default="currentUser"
-                                                  encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05" required="true"/>
-                    </span>
-                </p>
-                <p id="where">
-                    <label>
-                        <uimessage code="emr.locationRequired"/>
-                    </label>
-                    <span>
-                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
-                                           tags="Consult Note Location"/>
-                    </span>
-                </p>
-                <p id="when">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.date"/>
-                    </label>
-                    <span>
-                        <encounterDate id="encounterDate" default="now"/>
-                    </span>
-                </p>
-            </div>
-        </includeIf>
-        <!-- users with retroConsultNoteThisProviderOnly can edit location and date (but not provider) for retro visits -->
-        <includeIf
-                velocityTest="$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !($user.hasPrivilege('Task: emr.retroConsultNote')) and (!$visit.open)">
-            <div style="display:none">
-                <encounterProviderAndRole default="currentUser" encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
+        <subform path="configuration/pih/subforms/encounter-provider-location-date.xml">
+            <span subform-parameter="encounter-location-widget">
+                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Consult Note Location"/>
+            </span>
+            <span subform-parameter="encounter-provider-widget">
+                <encounterProviderAndRole default="currentUser"
+                                          encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
                                           required="true"/>
-            </div>
-
-            <div id="who-when-where">
-                <p id="who">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.provider"/>
-                    </label>
-                    <span>
-                        <lookup expression="user.person.personName"/>
-                    </span>
-                </p>
-                <p id="where">
-                    <label>
-                        <uimessage code="emr.locationRequired"/>
-                    </label>
-                    <span>
-                        <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"
-                                           tags="Consult Note Location"/>
-                    </span>
-                </p>
-                <p id="when">
-                    <label>
-                        <uimessage code="emr.patientDashBoard.date"/>
-                    </label>
-                    <span>
-                        <encounterDate id="encounterDate" default="now"/>
-                    </span>
-                </p>
-            </div>
-
-        </includeIf>
-        <!-- all users that don't have either retro privilege, or those with retro-this-provider-only but with an active visit, can only edit location -->
-        <includeIf velocityTest="(!$user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote')) or ($user.hasPrivilege('Task: emr.retroConsultNoteThisProviderOnly') and !$user.hasPrivilege('Task: emr.retroConsultNote') and $visit.open)">
-            <div style="display:none">
-                <encounterProviderAndRole default="currentUser" encounterRole="4f10ad1a-ec49-48df-98c7-1391c6ac7f05"
-                                          required="true"/>
-                <encounterDate id="encounterDate" default="now"/>
-            </div>
-            <div id="who-when-where">
-                <table id="who-where-when-view">
-                    <tr>
-                        <td>
-                            <label>
-                                <uimessage code="emr.patientDashBoard.provider"/>
-                            </label>
-                            <span>
-                                <lookup complexExpression="#if($encounter) $ui.format($encounter.provider) #else $ui.format($user.person) #end"/>
-                            </span>
-                        </td>
-                        <td>
-                            <label>
-                                <uimessage code="emr.locationRequired"/>
-                            </label>
-                            <span>
-                                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
-                            </span>
-                        </td>
-                        <td>
-                            <label>
-                                <uimessage code="emr.patientDashBoard.date"/>
-                            </label>
-                            <span>
-                                <lookup complexExpression="#if($encounter) $ui.format($fn.startOfDay($encounter.encounterDatetime)) #else $ui.format($fn.startOfDay($formGeneratedDatetime)) #end"/>
-                            </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </includeIf>
+            </span>
+        </subform>
     </ifMode>
 
     <style type="text/css">
@@ -296,17 +205,43 @@
     <section id="monitor" sectionTag="fieldset" headerTag="legend"
              headerStyle="title" headerCode="pihcore.prepMonitoring">
         <div class="section-container">
-            <div class="two-columns">
-                <div>
-                    <label>
-                        <uimessage code="pihcore.returnPrepDate" />
-                    </label>
-                    <obs id="apptDate" conceptId="PIH:RETURN VISIT DATE"
-                         allowFutureDates="true" allowPastDates="false" cols="12" />
+
+            <includeIf velocityTest="$patient.gender == 'F' ">
+                <div class="two-columns">
+                    <div>
+                        <p class="list-inline">
+                            <label>
+                                <uimessage code="pihcore.pregnant"/>
+                            </label>
+                            <obs conceptId="CIEL:5272" id="hivpregnant"
+                                 answerConceptIds="CIEL:1065,CIEL:1066"
+                                 answerCodes="pihcore.yes,pihcore.no"
+                                 style="radio"/>
+                        </p>
+                    </div>
+                    <div>
+                        <p class="list-inline">
+                            <label>
+                                <uimessage code="zl.maternalBreastfeeding" />
+                            </label>
+                            <obs id="breastfeeding-mom" conceptId="CIEL:985" style="radio"
+                                 answerConceptIds="PIH:CURRENTLY,CIEL:1152"
+                                 answerCodes="pihcore.currently,zl.breastfeedStopped">
+                                <controls>
+                                    <when value="CIEL:1152" thenDisplay="#wean-date"/>
+                                </controls>
+                            </obs>
+                        </p>
+                        <div id="wean-date">
+                            <label>
+                                <uimessage code="zl.weanDate" />
+                            </label>
+                            <obs conceptId="CIEL:166566" />
+                            <br/>
+                        </div>
+                    </div>
                 </div>
-                <div></div>
-            </div>
-            <br/>
+            </includeIf>
 
             <div class="two-columns">
                 <div>
@@ -370,7 +305,6 @@
                 </div>
             </div>
 
-            <br/>
             <table>
                 <tr>
                     <th colspan="2">
@@ -496,53 +430,89 @@
                     </div>
                 </orderTemplate>
             </drugOrder>
+        </div>
+    </section>
 
-            <h2>
-                <label>
-                    <uimessage code="more" />
-                </label>
-            </h2>
-            <p class="side-by-side">
+    <section id="prevention" sectionTag="fieldset" headerTag="legend"
+             headerStyle="title" headerCode="pihcore.preventionAndEd.label">
+        <div class="section-container">
+            <p class="list-inline-wide">
                 <label>
                     <uimessage code="pihcore.hivRiskCounsel" />
                 </label>
                 <obs conceptId="PIH:20898" style="radio"
-                     answerConceptIds="CIEL:1065,CIEL:1066" />
+                     answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerCodes="pihcore.yes,pihcore.no"/>
             </p>
 
-            <p class="side-by-side">
+            <p class="list-inline-wide">
                 <label>
-                    <uimessage code="pihcore.condomLubProvided" />
+                    <uimessage code="pihcore.fp.condomsProvided" />
                 </label>
                 <obs conceptId="CIEL:159777" style="radio"
-                     answerConceptIds="CIEL:1065,CIEL:1066" />
+                     answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerCodes="pihcore.yes,pihcore.no"/>
             </p>
 
-            <h2>
-                <uimessage code="pihcore.status" />
-            </h2>
-            <div id="disposition">
-                <encounterDisposition/>
-            </div>
+            <p class="list-inline-wide">
+                <label>
+                    <uimessage code="pihcore.lubeProvided" />
+                </label>
+                <obs conceptId="PIH:21424" style="radio"
+                     answerConceptIds="CIEL:1065,CIEL:1066"
+                     answerCodes="pihcore.yes,pihcore.no"/>
+            </p>
+
+            <includeIf velocityTest="$patient.gender == 'M' ">
+                <p class="list-inline-wide">
+                    <label>
+                        <uimessage code="pihcore.vmmc" />
+                    </label>
+                    <obs conceptId="CIEL:166677" style="radio"
+                         answerConceptIds="CIEL:145096,CIEL:163841"
+                         answerCodes="pihcore.yes,pihcore.no"/>
+                </p>
+            </includeIf>
+
+            <p>
+                <label>
+                    <uimessage code="pihcore.otherPrevention" />
+                </label>
+                <obs conceptId="PIH:21428" />
+            </p>
         </div>
     </section>
 
     <section id="comments" sectionTag="fieldset" headerTag="legend"
-             headerStyle="title" headerCode="pihcore.other">
-        <div class="section-container">
-            <p class="side-by-side">
-                <label>
-                    <uimessage code="pihcore.prepAdherence" />
-                </label>
-                <obs conceptId="CIEL:164847" style="radio"
-                     answerConceptIds="PIH:20901,PIH:20900,PIH:20902,PIH:20903,CIEL:1107"
-                     answerCodes="&gt;95%,&gt;50%,50%,&lt;50%,0%"/>
-            </p>
+             headerStyle="title" headerCode="pihcore.status">
+        <div class="section-container two-columns">
+            <div>
+                <p class="side-by-side">
+                    <label>
+                        <uimessage code="pihcore.prepAdherence" />
+                    </label>
+                    <obs conceptId="CIEL:164847" style="radio"
+                         answerConceptIds="PIH:20901,PIH:20900,PIH:20902,PIH:20903,CIEL:1107"
+                         answerCodes="&gt;95%,&gt;50%,50%,&lt;50%,0%"/>
+                </p>
 
-            <label>
-                <uimessage code="pihcore.remarks" />
-            </label>
-            <obs conceptId="PIH:1620" style="textarea" cols="70"/>
+                <div id="disposition">
+                    <encounterDisposition/>
+                </div>
+            </div>
+            <div>
+                <p class="narrow">
+                    <label>
+                        <lookup expression="fn.getConcept('PIH:RETURN VISIT DATE').name"/>
+                    </label>
+                    <obs conceptId="PIH:RETURN VISIT DATE" allowFutureDates="true" allowPastDates="false" id="apptDate"/>
+                </p>
+
+                <label>
+                    <uimessage code="pihcore.remarks" />
+                </label>
+                <obs conceptId="PIH:1620" style="textarea" cols="70"/>
+            </div>
         </div>
     </section>
 
