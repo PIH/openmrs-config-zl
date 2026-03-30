@@ -527,6 +527,27 @@
         <div class="section-container">
             <div class="two-columns">
                 <div>
+                    <p class="list-inline-wide">
+                        <label>
+                            <uimessage code="pihcore.followedElsewherePrEP" />
+                        </label>
+                        <obs id="previous-prep"
+                             conceptId="CIEL:170089" style="radio"
+                             answerConceptIds="CIEL:1065,CIEL:1066"
+                             answerCodes="pihcore.yes,pihcore.no">
+                            <controls>
+                                <when value="CIEL:1065" thenDisplay="#est-prog-start"/>
+                            </controls>
+                        </obs>
+                    </p>
+
+                    <p id="est-prog-start">
+                        <label>
+                            <uimessage code="pihcore.estimatedProgramStartDate" />
+                        </label>
+                        <obs conceptId="PIH:21422" />
+                    </p>
+
                     <label>
                         <uimessage code="pihcore.referenceClinic" />
                     </label>
