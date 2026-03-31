@@ -166,7 +166,8 @@
     </style>
     <script>
         const i18n = {
-        confirmChange: "<uimessage code='treatmentLine.change.confirm'/>",
+        confirmChange: "<uimessage code='
+        .change.confirm'/>",
         confirmDate: "<uimessage code='date.change.confirm'/>",
         confirmRegimen: "<uimessage code='regimen.change.confirm'/>",
         };
@@ -177,6 +178,10 @@
             const treatmentLineFirst = '<lookup expression="fn.getConcept('CIEL: 166074 ').id" />';
             const treatmentLineSecond = '<lookup expression="fn.getConcept('CIEL: 166075 ').id" />';
             const treatmentLineThird = '<lookup expression="fn.getConcept('CIEL: 166076 ').id" />';
+
+            const treatmentLinePrimary = '<lookup expression="fn.getConcept('CIEL: 159943 ').id" />';
+            const treatmentLineSecondary = '<lookup expression="fn.getConcept('CIEL: 159944 ').id" />';
+            const IsoniazidDrug = '<lookup expression="fn.getConcept('CIEL: 78280 ').id" />';
 
 
             const REGIMEN_AZT_3TC_EFV_ID = '<lookup expression="fn.getConcept('CIEL: 160124 ').id" />';
@@ -194,6 +199,7 @@
             let previousArvDate = null;
             let PreviousTreatmentLineValue=null
             var regimenUuid='3cd9491e-26fe-102b-80cb-0017a47871b2'
+            prophylaxisTreatmentConstructUuid='3cdb91f6-26fe-102b-80cb-0017a47871b2'
             var medicationSideEffectUuid='164377AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
             var artTreatmentLineUuid='0c709500-0cf8-4959-b244-3e9d24dcacc0';
             var artStartDateUuid='159599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
@@ -282,6 +288,7 @@
             getArtTreatmentLine(apiBaseUrl,artTreatmentLineUuid,patientUuid);
             getArtStartDate(apiBaseUrl,artStartDateUuid,patientUuid)
             getRegiment(apiBaseUrl,regimenUuid,patientUuid)
+            getCurrentProphylaxisTreatment(apiBaseUrl,prophylaxisTreatmentConstructUuid,patientUuid)
 
                 jq('#arv_start_date input[type="text"]').on('mousedown', function () {
                    previousArvDate = jq(this).datepicker('getDate');
@@ -373,7 +380,7 @@
 
                 }, function (data) {
                 if (data.results.length > 0) {
-                    console.log("data: ",data.results)
+
                     const res = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
                      var response =(res.length > 1)? res[res.length -1].value.name.display : res[0].value.name.display
 
@@ -428,9 +435,30 @@
                     const latestObs = data.results .sort((a, b) => new Date(b.auditInfo.dateCreated) - new Date(a.auditInfo.dateCreated))[0];
                      setAlreadySelectedDrugAllergyOption(latestObs.value.name.display)
                  } else {
-                  console.log("UNDEFINED");
+
                   }
                  });
+            }
+
+            function getCurrentProphylaxisTreatment(apiBaseUrl, prophylaxisTreatmentConstructUuid, patientUuid) {
+
+                    jq.getJSON(apiBaseUrl + "/obs", {
+                    concept: prophylaxisTreatmentConstructUuid,
+                    patient: patientUuid,
+                    v: 'full',
+                }, function (data) {
+
+                if (!data.results || data.results.length === 0) {
+                console.log("No prophylaxis treatment found");
+                return;
+                }
+            const latestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
+            console.log("Prophylaxis treatment construct obs: ", latestObs);
+            var response =(latestObs.length > 1)? latestObs[latestObs.length -1].display: latestObs[0].display
+                  const displayName = response;
+                  const result = displayName?.includes("construct:") ? displayName.split("construct:")[1].trim() : "";
+                  setProphylaxisTreatment(result);
+                });
             }
 
 
@@ -478,6 +506,54 @@
                 .trigger('click');
             }
 
+            function setProphylaxisTreatment(prophylaxisTreatment) {
+
+                    if (!prophylaxisTreatment) return;
+
+                    const parts = prophylaxisTreatment.split(",").map(v => v.trim());
+
+                    const drug = parts[0];
+                    const startDate = parts[1];
+                    const endDate = parts[2];
+                    const type = parts[3];
+
+
+                    const map = {
+                        "Isoniazide": IsoniazidDrug,
+                        "Isoniazid": IsoniazidDrug
+                    };
+
+                    const checkboxValue = map[drug];
+                    if (!checkboxValue) return;
+
+
+                    const checkbox = jq('#Isoniazide input[type="checkbox"][value="' + checkboxValue + '"]');
+                     console.log("checkbox selector: ",checkbox);
+                    if (!checkbox.prop('checked')) {
+                      checkbox.prop('checked', true);
+                      checkbox.trigger('change');
+                    }
+
+
+                    const radioContainer = jq('.Isoniazide-current-treat');
+                    radioContainer.css('opacity', 1);
+                    radioContainer.find('input[type="radio"]').prop('disabled', false);
+
+
+                    if (type) {
+                        const radio = radioContainer.find('input[type="radio"]').filter(function () {
+                        return jq(this).next('label').text().trim() === type;
+                        });
+                        radio.prop('checked', true).trigger('click');
+                   }
+
+                   if( startDate){
+                    jq('#Isoniazide') .closest('tr') .find('td:eq(1) input') .val(startDate) .trigger('change');
+                    }
+                    if( endDate){
+                    jq('#Isoniazide') .closest('tr') .find('td:eq(2) input') .val(endDate) .trigger('change');
+                   }
+            }
 
 
             function setCurrentARV(serverValue) {
@@ -969,7 +1045,7 @@
                                          toggle="{id: '{drugname}-current-treat', style: 'dim'}" id="{drugname}"/>
                                     <p class="radio {drugname}-current-treat side-by-side" id="treatmentId">
                                         <obs conceptId="PIH:13786" style="radio"
-                                             answerConceptIds="CIEL:159943, CIEL:159944" id="treatmentLine"/>
+                                             answerConceptIds="CIEL:159943, CIEL:159944" id="prophylaxis_treatmentLine"/>
                                     </p>
                                 </td>
                                 <td>
