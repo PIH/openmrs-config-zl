@@ -705,6 +705,11 @@
                 </tr>
             </table>
         </div>
+
+        <div class="section-container">
+            <h4><uimessage code="allergyui.allergies"/></h4>
+            <subform path="configuration/pih/subforms/allergies-table.xml"/>
+        </div>
         
         <div class="section-container">
             <table>
