@@ -12,7 +12,6 @@ jq(document).ready(function() {
         jq.get(openmrsContextPath + "/ws/rest/v1/patient/" + patientUuid + "/allergy?v=" + rep, function(data, textStatus, jqXHR) {
             const status = jqXHR.status;
             const allergies = data?.results ?? [];
-            console.log(allergies);
             if (allergies.length === 0) {
                 const message = status === 204 ? '<uimessage code="allergyui.unknown"/>' : '<uimessage code="allergyui.noKnownAllergies"/>';
                 console.log(message);
