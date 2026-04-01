@@ -1,5 +1,5 @@
 /**
- * This subform is entirely javascript-based on works via convention over configuration
+ * This is intended to be used to populate the table in the allergies-table.xml subform, or a similar custom table
  * It looks for elements with specific classes in the form, and will populate them with the patient's allergy information
  */
 jq(document).ready(function() {
