@@ -7,14 +7,15 @@ jq(document).ready(function() {
     const allergiesTableBody = allergiesTable.find("tbody");
     if (allergiesTableBody.length > 0) {
         allergiesTableBody.empty();
+        allergiesTableBody.append(jq("<tr/>").append(jq("<td/>").attr("colspan", "5").append(jq("<i/>").addClass("icon-spinner icon-spin"))));
         const patientUuid = '<lookup expression="patient.uuid"/>';
         const rep = "custom:(display,reactions:(reaction:(display),reactionNonCoded),severity:(display),comment,auditInfo:(dateChanged,dateCreated))";
         jq.get(openmrsContextPath + "/ws/rest/v1/patient/" + patientUuid + "/allergy?v=" + rep, function(data, textStatus, jqXHR) {
+            allergiesTableBody.empty();
             const status = jqXHR.status;
             const allergies = data?.results ?? [];
             if (allergies.length === 0) {
                 const message = status === 204 ? '<uimessage code="allergyui.unknown"/>' : '<uimessage code="allergyui.noKnownAllergies"/>';
-                console.log(message);
                 const noAllergiesRow = jq("<tr/>");
                 noAllergiesRow.append(jq("<td/>").attr("colspan", "5").html(message));
                 allergiesTableBody.append(noAllergiesRow);
