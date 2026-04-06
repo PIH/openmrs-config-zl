@@ -471,6 +471,227 @@ SELECT COUNT(x.person_id ) INTO  @ANC_PREG_IRON_SUPP_COUNT
     GROUP BY o.person_id 
   )x;
 
+
+
+
+-- #Total number of women seen at their first postnatal visit during the reporting month
+  SELECT
+       COUNT(*)
+   INTO @PNC_1ST_VISIT_TOTAL
+FROM encounter e
+INNER JOIN (
+    SELECT
+        e.encounter_id
+    FROM encounter e
+    INNER JOIN obs o_pn
+        ON o_pn.encounter_id = e.encounter_id
+        AND o_pn.value_coded =  concept_from_mapping('PIH','6261')
+        AND o_pn.voided = 0
+    INNER JOIN obs o_nv
+        ON o_nv.encounter_id = e.encounter_id
+        AND o_nv.value_coded =  concept_from_mapping('PIH','13235')
+        AND o_nv.voided = 0
+    INNER JOIN (
+        SELECT
+            o.person_id,
+            MAX(e.encounter_datetime) AS last_enc_datetime
+        FROM encounter e
+        INNER JOIN obs o
+            ON o.encounter_id = e.encounter_id
+        INNER JOIN obs o2
+            ON o2.encounter_id = e.encounter_id
+        WHERE
+            o.value_coded = concept_from_mapping('PIH','6261')
+            AND o2.value_coded = concept_from_mapping('PIH','13235')
+            AND o.voided = 0
+            AND o2.voided = 0
+            AND e.voided = 0
+            AND e.encounter_datetime IS NOT NULL
+        GROUP BY o.person_id
+    ) last_enc
+        ON last_enc.person_id = o_pn.person_id
+       AND last_enc.last_enc_datetime = e.encounter_datetime
+        and e.voided = 0
+        and o_pn.voided =0
+        AND e.encounter_datetime >= @startDate
+	    AND e.encounter_datetime <  @endDate
+       GROUP BY o_pn.person_id
+) last_encounters
+    ON last_encounters.encounter_id = e.encounter_id
+    WHERE  e.encounter_datetime >= @startDate
+	AND e.encounter_datetime <  @endDate;
+
+-- # of women who gave birth at another facility
+SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
+ FROM (
+    SELECT o.person_id FROM encounter e 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN (
+            SELECT
+                e.patient_id,e.encounter_id ,
+                MAX(e.encounter_datetime) AS last_new_visit_date
+            FROM encounter e
+            INNER JOIN obs o_pn2
+                ON o_pn2.encounter_id = e.encounter_id
+                AND o_pn2.value_coded = concept_from_mapping('PIH','6261')
+                AND o_pn2.voided = 0
+            INNER JOIN obs o_nv
+                ON o_nv.encounter_id = e.encounter_id
+                AND o_nv.value_coded = concept_from_mapping('PIH','13235')
+                AND o_nv.voided = 0
+            WHERE e.voided = 0
+            GROUP BY e.patient_id
+        ) last_nv
+            ON last_nv.patient_id = e.patient_id
+    WHERE
+    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    AND o.voided =0
+    AND e.voided =0
+    AND o.concept_id =concept_from_mapping('PIH','11348')
+    AND o.value_coded  =concept_from_mapping('PIH','8856')
+    AND e.encounter_datetime >= @startDate
+    AND e.encounter_datetime <  @endDate
+    GROUP BY o.person_id
+ )x;
+
+
+-- # of women who have adopted a family planning method
+ SELECT COUNT(x.person_id ) INTO @FP_METHOD_ACCEPTED_SUBSET
+ FROM (
+    SELECT o.person_id FROM encounter e 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN (
+            SELECT
+                e.patient_id,e.encounter_id ,
+                MAX(e.encounter_datetime) AS last_new_visit_date
+            FROM encounter e
+            INNER JOIN obs o_pn2
+                ON o_pn2.encounter_id = e.encounter_id
+                AND o_pn2.value_coded = concept_from_mapping('PIH','6261')
+                AND o_pn2.voided = 0
+            INNER JOIN obs o_nv
+                ON o_nv.encounter_id = e.encounter_id
+                AND o_nv.value_coded = concept_from_mapping('PIH','13235')
+                AND o_nv.voided = 0
+            WHERE e.voided = 0
+            GROUP BY e.patient_id
+        ) last_nv
+            ON last_nv.patient_id = e.patient_id
+    WHERE
+    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    AND o.voided =0
+    AND e.voided =0
+    AND o.concept_id =concept_from_mapping('PIH','374')
+    AND e.encounter_datetime >= @startDate
+    AND e.encounter_datetime <  @endDate
+    GROUP BY o.person_id 
+ )x;
+
+
+-- # of women who received vitamin A postpartum
+ SELECT COUNT(x.person_id ) INTO @PNC_VIT_A_GIVEN
+ FROM (
+    SELECT o.person_id FROM encounter e 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN (
+            SELECT
+                e.patient_id,e.encounter_id ,
+                MAX(e.encounter_datetime) AS last_new_visit_date
+            FROM encounter e
+            INNER JOIN obs o_pn2
+                ON o_pn2.encounter_id = e.encounter_id
+                AND o_pn2.value_coded = concept_from_mapping('PIH','6261')
+                AND o_pn2.voided = 0
+            INNER JOIN obs o_nv
+                ON o_nv.encounter_id = e.encounter_id
+                AND o_nv.value_coded = concept_from_mapping('PIH','13235')
+                AND o_nv.voided = 0
+            WHERE e.voided = 0
+            GROUP BY e.patient_id
+        ) last_nv
+            ON last_nv.patient_id = e.patient_id
+    WHERE
+    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    AND o.voided =0
+    AND e.voided =0
+    AND o.concept_id =concept_from_mapping('PIH','13255')
+    AND o.value_coded  =concept_from_mapping('PIH','4063')
+    AND e.encounter_datetime >= @startDate
+    AND e.encounter_datetime <  @endDate
+    GROUP BY o.person_id 
+ )x;
+
+
+-- # of women who gave birth at home and received prenatal care at the facility in question
+ SELECT COUNT(x.person_id ) INTO @PREG_HOME_DELIV_ANC_FACILITY
+ FROM (
+    SELECT o.person_id FROM encounter e 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN (
+            SELECT
+                e.patient_id,e.encounter_id ,
+                MAX(e.encounter_datetime) AS last_new_visit_date
+            FROM encounter e
+            INNER JOIN obs o_pn2
+                ON o_pn2.encounter_id = e.encounter_id
+                AND o_pn2.value_coded = concept_from_mapping('PIH','6261')
+                AND o_pn2.voided = 0
+            INNER JOIN obs o_nv
+                ON o_nv.encounter_id = e.encounter_id
+                AND o_nv.value_coded = concept_from_mapping('PIH','13235')
+                AND o_nv.voided = 0
+            WHERE e.voided = 0
+            GROUP BY e.patient_id
+        ) last_nv
+            ON last_nv.patient_id = e.patient_id
+    WHERE
+    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    AND o.voided =0
+    AND e.voided =0
+    AND o.concept_id =concept_from_mapping('PIH','11348')
+    AND o.value_coded  =concept_from_mapping('PIH','7889')
+    AND e.encounter_datetime >= @startDate
+    AND e.encounter_datetime <  @endDate
+    GROUP BY o.person_id 
+ )x;
+
+-- # of women seen at their first postnatal visit during the reporting month within 72 hours of delivery
+SELECT 
+  SUM(CASE 
+        WHEN x.last_new_visit_date >= x.value_datetime
+         AND x.last_new_visit_date <= DATE_ADD(x.value_datetime, INTERVAL 72 HOUR)
+        THEN 1 ELSE 0 
+    END) INTO  @PNC_FIRST_VISIT_LT72H_MONTH
+ FROM (
+    SELECT o.person_id,o.value_datetime,last_nv.last_new_visit_date  FROM encounter e 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN (
+            SELECT
+                e.patient_id,e.encounter_id ,
+                MAX(e.encounter_datetime) AS last_new_visit_date
+            FROM encounter e
+            INNER JOIN obs o_pn2
+                ON o_pn2.encounter_id = e.encounter_id
+                AND o_pn2.value_coded = concept_from_mapping('PIH','6261')
+                AND o_pn2.voided = 0
+            INNER JOIN obs o_nv
+                ON o_nv.encounter_id = e.encounter_id
+                AND o_nv.value_coded = concept_from_mapping('PIH','13235')
+                AND o_nv.voided = 0
+            WHERE e.voided = 0
+            GROUP BY e.patient_id
+        ) last_nv
+            ON last_nv.patient_id = e.patient_id
+    WHERE
+    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    AND o.voided =0
+    AND e.voided =0
+    AND o.concept_id =concept_from_mapping('PIH','5599')
+    AND e.encounter_datetime >=  @startDate
+    AND e.encounter_datetime <  @endDate
+    GROUP BY o.person_id 
+ )x;
+
 SELECT 
         @MET_COC_LESS_THAN_25_ACCEPTED 'MET_COC_LESS_THAN_25_ACCEPTED',
         @MET_COP_LESS_THAN_25_ACCEPTED 'MET_COP_LESS_THAN_25_ACCEPTED',
@@ -500,4 +721,7 @@ SELECT
     	@ANC_SV_4_6M 'ANC_SV_4_6M',@ANC_TV_4_6M 'ANC_TV_4_6M',@ANC_FV_4_6M 'ANC_FV_4_6M',@ANC_5PLUS_4_6M 'ANC_5PLUS_4_6M',
     	@ANC_SV_7_9M 'ANC_SV_7_9M',@ANC_TV_7_9M 'ANC_TV_7_9M',@ANC_FV_7_9M 'ANC_FV_7_9M',@ANC_5PLUS_7_9M 'ANC_5PLUS_7_9M',
         @ANC_DPA_MONTH 'ANC_DPA_MONTH', @ANC_PREG_HR_CONDITIONS 'ANC_PREG_HR_CONDITIONS', @ANC_1ST_VISIT_SINCE_OCT_MONTH 'ANC_1ST_VISIT_SINCE_OCT_MONTH', 
-        @ANC_PREG_IRON_SUPP_COUNT 'ANC_PREG_IRON_SUPP_COUNT', 0 'ANC_VACC_COMPLETED_MONTH',0 'ANC_PREG_ABORTED_MONTH', 0 'ANC_PAC_MANAGED_MONTH';
+        @ANC_PREG_IRON_SUPP_COUNT 'ANC_PREG_IRON_SUPP_COUNT', 0 'ANC_VACC_COMPLETED_MONTH',0 'ANC_PREG_ABORTED_MONTH', 0 'ANC_PAC_MANAGED_MONTH',
+        @PNC_1ST_VISIT_TOTAL 'PNC_1ST_VISIT_TOTAL',@DELIVERY_EXT_FACILITY_COUNT 'DELIVERY_EXT_FACILITY_COUNT',
+        @FP_METHOD_ACCEPTED_SUBSET 'FP_METHOD_ACCEPTED_SUBSET', @PREG_HOME_DELIV_ANC_FACILITY 'PREG_HOME_DELIV_ANC_FACILITY',
+        @PNC_FIRST_VISIT_LT72H_MONTH 'PNC_FIRST_VISIT_LT72H_MONTH',@PNC_VIT_A_GIVEN 'PNC_VIT_A_GIVEN';
