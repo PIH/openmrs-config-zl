@@ -182,6 +182,9 @@
             const treatmentLinePrimary = '<lookup expression="fn.getConcept('CIEL: 159943 ').id" />';
             const treatmentLineSecondary = '<lookup expression="fn.getConcept('CIEL: 159944 ').id" />';
             const IsoniazidDrug = '<lookup expression="fn.getConcept('CIEL: 78280 ').id" />';
+            const IsoniazidPrimary = '<lookup expression="fn.getConcept('CIEL: 159943 ').id" />';
+            const IsoniazidSecondary= '<lookup expression="fn.getConcept('CIEL: 159944 ').id" />';
+
 
 
             const REGIMEN_AZT_3TC_EFV_ID = '<lookup expression="fn.getConcept('CIEL: 160124 ').id" />';
@@ -508,51 +511,61 @@
 
             function setProphylaxisTreatment(prophylaxisTreatment) {
 
-                    if (!prophylaxisTreatment) return;
+            if (!prophylaxisTreatment) return;
 
-                    const parts = prophylaxisTreatment.split(",").map(v => v.trim());
+            const parts = prophylaxisTreatment.split(",").map(v => v.trim());
 
-                    const drug = parts[0];
-                    const startDate = parts[1];
-                    const endDate = parts[2];
-                    const type = parts[3];
+            const drug = parts[0];
+            const startDate = parts[1];
+            const endDate = parts[2];
+            const type = parts[3];
 
+            const map = {
+            "Isoniazide": IsoniazidDrug,
+            "Isoniazid": IsoniazidDrug
+            };
 
-                    const map = {
-                        "Isoniazide": IsoniazidDrug,
-                        "Isoniazid": IsoniazidDrug
-                    };
+            const typeMap = {
+            "Primary": IsoniazidPrimary,
+            "Primaire": IsoniazidPrimary,
+            "Secondary": IsoniazidSecondary,
+            "Secondaire": IsoniazidSecondary
+            };
 
-                    const checkboxValue = map[drug];
-                    if (!checkboxValue) return;
-
-
-                    const checkbox = jq('#Isoniazide input[type="checkbox"][value="' + checkboxValue + '"]');
-                     console.log("checkbox selector: ",checkbox);
-                    if (!checkbox.prop('checked')) {
-                      checkbox.prop('checked', true);
-                      checkbox.trigger('change');
-                    }
+            const checkboxValue = map[drug];
+            if (!checkboxValue) return;
 
 
-                    const radioContainer = jq('.Isoniazide-current-treat');
-                    radioContainer.css('opacity', 1);
-                    radioContainer.find('input[type="radio"]').prop('disabled', false);
+            const checkbox = jq('#Isoniazide input[type="checkbox"][value="' + checkboxValue + '"]');
+
+            if (!checkbox.prop('checked')) {
+            checkbox.prop('checked', true);
+            checkbox.trigger('change');
+            }
 
 
-                    if (type) {
-                        const radio = radioContainer.find('input[type="radio"]').filter(function () {
-                        return jq(this).next('label').text().trim() === type;
-                        });
-                        radio.prop('checked', true).trigger('click');
-                   }
+            const radioContainer = jq('.Isoniazide-current-treat');
+            radioContainer.css('opacity', 1);
+            radioContainer.find('input[type="radio"]').prop('disabled', false);
 
-                   if( startDate){
-                    jq('#Isoniazide') .closest('tr') .find('td:eq(1) input') .val(startDate) .trigger('change');
-                    }
-                    if( endDate){
-                    jq('#Isoniazide') .closest('tr') .find('td:eq(2) input') .val(endDate) .trigger('change');
-                   }
+
+
+            if (type) {
+            const radioValue = typeMap[type];
+
+            if (radioValue) {
+            const radio = radioContainer.find('input[type="radio"][value="' + radioValue + '"]');
+
+            radio.prop('checked', true).trigger('click');
+            }
+            }
+
+            if( startDate){
+            jq('#Isoniazide') .closest('tr') .find('td:eq(1) input') .val(startDate) .trigger('change');
+            }
+            if( endDate){
+            jq('#Isoniazide') .closest('tr') .find('td:eq(2) input') .val(endDate) .trigger('change');
+            }
             }
 
 
