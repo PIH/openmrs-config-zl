@@ -58,7 +58,7 @@
     "ea204038-be61-432d-a3fe-df31f784365e"
   ],
 
-  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-outpatient.json",
+  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-hiv.json",
 
   "registrationConfig": {
     "afterCreatedActions": [

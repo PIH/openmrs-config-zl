@@ -34,6 +34,4 @@
   "rebuildSearchIndexConfig": -1,
   "localZlIdentifierGeneratorEnabled": "true",
   "localZlIdentifierGeneratorPrefix": "Y",
-
-  "dispositionConfig": "file:configuration/pih/pih-dispositions-haiti-outpatient.json"
 }
