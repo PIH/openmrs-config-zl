@@ -31,7 +31,7 @@
     "vitals"
   ],
 
-  "rebuildSearchIndexConfig": -1,
+  "rebuildSearchIndexConfig": 2,
   "localZlIdentifierGeneratorEnabled": "true",
   "localZlIdentifierGeneratorPrefix": "Y"
 }
