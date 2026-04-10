@@ -11,17 +11,6 @@
         "registrationapp.paperRecordIdentifierDefinition": "paperrecord.patientDataDefinition.paperRecordIdentifier"
     },
 
-    "authenticationConfig": {
-      "scheme": "2fa",
-      "schemes": {
-        "2fa": {
-          "config": {
-            "secondaryOptions": "secret,totp"
-          }
-        }
-      }
-    },
-
     "scheduleBackupReports": "false",
     "dashboardUrl": "/pihcore/router/programDashboard.page?patientId={{patientId}}",
     "afterMergeUrl": "/registrationapp/registrationSummary.page?patientId={{patientId}}&app=registrationapp.registerPatient",

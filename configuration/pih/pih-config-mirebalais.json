@@ -11,17 +11,6 @@
     "registrationapp.paperRecordIdentifierDefinition": "paperrecord.patientDataDefinition.paperRecordIdentifier"
   },
 
-  "authenticationConfig": {
-    "scheme": "2fa",
-    "schemes": {
-      "2fa": {
-        "config": {
-          "secondaryOptions": "secret,totp"
-        }
-      }
-    }
-  },
-
   "scheduleBackupReports": "false",
   "providerIdentifierPrefix": "M",
 
