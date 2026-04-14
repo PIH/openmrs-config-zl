@@ -179,11 +179,11 @@
             const treatmentLineSecond = '<lookup expression="fn.getConcept('CIEL: 166075 ').id" />';
             const treatmentLineThird = '<lookup expression="fn.getConcept('CIEL: 166076 ').id" />';
 
-            const treatmentLinePrimary = '<lookup expression="fn.getConcept('CIEL: 159943 ').id" />';
-            const treatmentLineSecondary = '<lookup expression="fn.getConcept('CIEL: 159944 ').id" />';
-            const IsoniazidDrug = '<lookup expression="fn.getConcept('CIEL: 78280 ').id" />';
-            const IsoniazidPrimary = '<lookup expression="fn.getConcept('CIEL: 159943 ').id" />';
-            const IsoniazidSecondary= '<lookup expression="fn.getConcept('CIEL: 159944 ').id" />';
+            const prophylaxisIsoniazidTreatmentLinePrimary = '<lookup expression="fn.getConcept('CIEL: 159943 ').id" />';
+            const prophylaxisIsoniazidTreatmentLineSecondary = '<lookup expression="fn.getConcept('CIEL: 159944 ').id" />';
+            const prophylaxisIsoniazidMedication = '<lookup expression="fn.getConcept('CIEL: 78280 ').id" />';
+            const prophylaxisIsoniazidPrimary = '<lookup expression="fn.getConcept('CIEL: 159943 ').id" />';
+            const prophylaxisIsoniazidSecondary= '<lookup expression="fn.getConcept('CIEL: 159944 ').id" />';
 
 
             const REGIMEN_AZT_3TC_EFV_ID = '<lookup expression="fn.getConcept('CIEL: 160124 ').id" />';
@@ -201,7 +201,16 @@
             let previousArvDate = null;
             let PreviousTreatmentLineValue=null
             var regimenUuid='3cd9491e-26fe-102b-80cb-0017a47871b2'
-            prophylaxisTreatmentConstructUuid='3cdb91f6-26fe-102b-80cb-0017a47871b2'
+
+            prophylaxisMedicationNameUuid='3ce29244-26fe-102b-80cb-0017a47871b2'
+            prophylaxisTreatmentLineUuid='4dfefa8d-9940-4ad5-800d-f16579b37d54'
+
+            prophylaxisStartDateUuid='163526AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+            prophylaxisStopDateUuid='164384AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+
+            InitialprophylaxisStartDateUuid='3cd7cecc-26fe-102b-80cb-0017a47871b2'
+            InitialprophylaxisStopDateUuid='3cd7d05c-26fe-102b-80cb-0017a47871b2'
+
             var medicationSideEffectUuid='164377AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
             var artTreatmentLineUuid='0c709500-0cf8-4959-b244-3e9d24dcacc0';
             var artStartDateUuid='159599AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA';
@@ -290,7 +299,12 @@
             getArtTreatmentLine(apiBaseUrl,artTreatmentLineUuid,patientUuid);
             getArtStartDate(apiBaseUrl,artStartDateUuid,patientUuid)
             getRegiment(apiBaseUrl,regimenUuid,patientUuid)
-            getCurrentProphylaxisTreatment(apiBaseUrl,prophylaxisTreatmentConstructUuid,patientUuid)
+            getInitialProphylaxisIsoniazideStartDateUuid(apiBaseUrl, InitialprophylaxisStartDateUuid,patientUuid)
+            getInitialProphylaxisIsoniazideStopDateUuid(apiBaseUrl, InitialprophylaxisStopDateUuid,patientUuid)
+            getProphylaxisIsoniazideMedicationNameUuid(apiBaseUrl,prophylaxisMedicationNameUuid,patientUuid)
+            getProphylaxisIsoniazideTreatmentLineUuid(apiBaseUrl, prophylaxisTreatmentLineUuid,patientUuid);
+            getProphylaxisIsoniazideStartDateUuid(apiBaseUrl, prophylaxisStartDateUuid,patientUuid)
+            getProphylaxisIsoniazideStopDateUuid(apiBaseUrl, prophylaxisStopDateUuid,patientUuid)
 
                 jq('#arv_start_date input[type="text"]').on('mousedown', function () {
                    previousArvDate = jq(this).datepicker('getDate');
@@ -442,28 +456,201 @@
                  });
             }
 
-            function getCurrentProphylaxisTreatment(apiBaseUrl, prophylaxisTreatmentConstructUuid, patientUuid) {
+            function getInitialProphylaxisIsoniazideStartDateUuid(apiBaseUrl, InitialprophylaxisStartDateUuid,patientUuid) {
+                jq.getJSON(apiBaseUrl + "/obs", {
+                concept:  InitialprophylaxisStartDateUuid,
+                patient: patientUuid,
+                v: 'full',
+            }, function (data) {
 
+                if (!data.results || data.results.length === 0) {
+                console.log("No prophylaxis treatment line found");
+                return;
+                }
+
+                const latestObs = data.results[0];
+
+                if (!latestObs.value) {
+                    console.log("No date value found");
+                    return;
+                }
+                const [year, month, day] = latestObs.value.split("-").map(Number);
+                const startDate = new Date(year, month - 1, day);
+                localStorage.setItem("InitialprophylaxisStartDate",startDate)
+
+            });
+            }
+
+            function getInitialProphylaxisIsoniazideStopDateUuid(apiBaseUrl, InitialprophylaxisStopDateUuid,patientUuid) {
+            jq.getJSON(apiBaseUrl + "/obs", {
+            concept:  InitialprophylaxisStopDateUuid,
+            patient: patientUuid,
+            v: 'full',
+            }, function (data) {
+
+            if (!data.results || data.results.length === 0) {
+            console.log("No prophylaxis treatment line found");
+            return;
+            }
+            const latestObs = data.results[0];
+
+             if (!latestObs.value) {
+               console.log("No date value found");
+               return;
+            }
+              const [year, month, day] = latestObs.value.split("-").map(Number);
+              const stopDate = new Date(year, month - 1, day);
+               localStorage.setItem("InitialprophylaxisStopDate",stopDate)
+            });
+
+            }
+
+            function getProphylaxisIsoniazideMedicationNameUuid(apiBaseUrl, prophylaxisMedicationNameUuid,patientUuid) {
                     jq.getJSON(apiBaseUrl + "/obs", {
-                    concept: prophylaxisTreatmentConstructUuid,
+                    concept: prophylaxisMedicationNameUuid,
                     patient: patientUuid,
                     v: 'full',
-                }, function (data) {
+                  }, function (data) {
 
                 if (!data.results || data.results.length === 0) {
                 console.log("No prophylaxis treatment found");
                 return;
                 }
             const latestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
-            console.log("Prophylaxis treatment construct obs: ", latestObs);
-            var response =(latestObs.length > 1)? latestObs[latestObs.length -1].display: latestObs[0].display
-                  const displayName = response;
-                  const result = displayName?.includes("construct:") ? displayName.split("construct:")[1].trim() : "";
-                  setProphylaxisTreatment(result);
-                });
+            var response =(latestObs.length > 1)? latestObs[latestObs.length -1]: latestObs[0]
+
+                const map = {
+                    "Isoniazide": prophylaxisIsoniazidMedication,
+                    "Isoniazid": prophylaxisIsoniazidMedication
+                };
+               const drug = response.value.display;
+                const checkboxValue = map[drug];
+                if (!checkboxValue) return;
+                const checkbox = jq('#Isoniazide input[type="checkbox"][value="' + checkboxValue + '"]');
+                if (!checkbox.prop('checked')) {
+                    checkbox.prop('checked', true);
+                    checkbox.trigger('change');
+                }
+              });
+            }
+
+            function getProphylaxisIsoniazideTreatmentLineUuid(apiBaseUrl, prophylaxisTreatmentLineUuid,patientUuid) {
+                    jq.getJSON(apiBaseUrl + "/obs", {
+                    concept: prophylaxisTreatmentLineUuid,
+                    patient: patientUuid,
+                    v: 'full',
+                  }, function (data) {
+
+                if (!data.results || data.results.length === 0) {
+                console.log("No prophylaxis treatment line found");
+                return;
+                }
+            const latestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
+            var response =(latestObs.length > 1)? latestObs[latestObs.length -1]: latestObs[0]
+
+            const type = response.value.display;
+            const typeMap = {
+                "Primary": prophylaxisIsoniazidPrimary,
+                "Primaire": prophylaxisIsoniazidPrimary,
+                "Secondary": prophylaxisIsoniazidSecondary,
+                "Secondaire": prophylaxisIsoniazidSecondary
+               };
+
+                if(type){
+                    const radioValue = typeMap[type];
+                    if (radioValue) {
+
+                        jq('#Isoniazide input[type="checkbox"]')
+                            .prop('checked', true)
+                            .trigger('change');
+
+                        jq('#prophylaxis_treatmentLine input[type="radio"][value="' + radioValue + '"]')
+                            .prop('checked', true)
+                            .trigger('click');
+                   }else{
+                    console.log("Treatment line value does not match expected options: ", type);
+                   }
+                }
+
+              });
+            }
+
+            function getProphylaxisIsoniazideStartDateUuid(apiBaseUrl, prophylaxisStartDateUuid, patientUuid) {
+                jq.getJSON(apiBaseUrl + "/obs", {
+                concept: prophylaxisStartDateUuid,
+                patient: patientUuid,
+                v: 'full',
+            }, function (data) {
+
+            const initialStopDate = localStorage.getItem("InitialprophylaxisStartDate");
+
+            let stopDate = null;
+
+
+            if (data.results &amp;&amp; data.results.length > 0) {
+
+                const latestObs = data.results.reduce((latest, current) => {
+                return new Date(current.encounter?.encounterDatetime) >
+                new Date(latest.encounter?.encounterDatetime)
+                ? current
+                : latest;
+            });
+
+
+            if (latestObs?.value) {
+                const [year, month, day] = latestObs.value.split("-").map(Number);
+                stopDate = new Date(year, month - 1, day);
+            }
+                } else {
+                console.log("No prophylaxis treatment line found");
             }
 
 
+            if (!stopDate &amp;&amp; initialStopDate) {
+             stopDate = new Date(initialStopDate);
+            }
+
+            getField("inhStartDate.value").datepicker("setDate", stopDate || null);
+            });
+
+            }
+
+            function getProphylaxisIsoniazideStopDateUuid(apiBaseUrl, prophylaxisStopDateUuid, patientUuid) {
+                jq.getJSON(apiBaseUrl + "/obs", {
+                concept: prophylaxisStopDateUuid,
+                patient: patientUuid,
+                v: 'full',
+            }, function (data) {
+
+            const initialStopDate = localStorage.getItem("InitialprophylaxisStopDate");
+            let stopDate = null;
+
+            if (data.results  &amp;&amp; data.results.length > 0) {
+
+                const latestObs = data.results.reduce((latest, current) => {
+                return new Date(current.encounter?.encounterDatetime) >
+                new Date(latest.encounter?.encounterDatetime)
+                ? current
+                : latest;
+            });
+
+
+            if (latestObs?.value) {
+                const [year, month, day] = latestObs.value.split("-").map(Number);
+                stopDate = new Date(year, month - 1, day);
+            } else {
+                 console.log("No date value found in latestObs");
+            }  else {
+                 console.log("No prophylaxis treatment line found");
+            }
+
+
+            if (!stopDate &amp;&amp; initialStopDate) {
+            stopDate = new Date(initialStopDate);
+            }
+            getField("inhEndDate.value").datepicker("setDate", stopDate || null);
+            });
+            }
             function setAlreadySelectedDrugAllergyOption(option){
                const mapValue =
                  {
@@ -507,65 +694,6 @@
                 .prop('checked', true)
                 .trigger('click');
             }
-
-            function setProphylaxisTreatment(prophylaxisTreatment) {
-
-               if (!prophylaxisTreatment) return;
-
-                const parts = prophylaxisTreatment.split(",").map(v => v.trim());
-
-                const drug = parts[0];
-                const startDate = parts[1];
-                const endDate = parts[2];
-                const type = parts[3];
-
-                const map = {
-                    "Isoniazide": IsoniazidDrug,
-                    "Isoniazid": IsoniazidDrug
-                };
-
-                const typeMap = {
-                    "Primary": IsoniazidPrimary,
-                    "Primaire": IsoniazidPrimary,
-                    "Secondary": IsoniazidSecondary,
-                    "Secondaire": IsoniazidSecondary
-                };
-
-                const checkboxValue = map[drug];
-                        if (!checkboxValue) return;
-
-                const checkbox = jq('#Isoniazide input[type="checkbox"][value="' + checkboxValue + '"]');
-                if (!checkbox.prop('checked')) {
-                    checkbox.prop('checked', true);
-                    checkbox.trigger('change');
-                }
-
-
-                const radioContainer = jq('.Isoniazide-current-treat');
-                radioContainer.css('opacity', 1);
-                radioContainer.find('input[type="radio"]').prop('disabled', false);
-
-
-
-                if (type) {
-                const radioValue = typeMap[type];
-                    if (radioValue) {
-                    const radio = radioContainer.find('input[type="radio"][value="' + radioValue + '"]');
-                    radio.prop('checked', true).trigger('change');
-                   }
-                }
-
-                if( startDate){
-                    const dateObj = new Date(startDate);
-                    getField("inhStartDate.value").datepicker("setDate", dateObj).trigger("change")
-                }
-
-                if( endDate){
-                    const dateObj = new Date(endDate);
-                    getField("inhEndDate.value").datepicker("setDate", dateObj).trigger("change")
-                  }
-            }
-
 
             function setCurrentARV(serverValue) {
                 const map = {
