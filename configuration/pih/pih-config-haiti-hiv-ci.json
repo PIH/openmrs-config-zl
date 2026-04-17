@@ -16,6 +16,7 @@
     "labs",
     "markPatientDead",
     "medicationDispensing",
+    "medicationOrder",
     "myAccount",
     "patientRegistration",
     "pmtct",

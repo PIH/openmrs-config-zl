@@ -16,6 +16,7 @@
     "importPatients",
     "markPatientDead",
     "medicationDispensing",
+    "medicationOrder",
     "mentalHealth",
     "monitoringReports",
     "myAccount",

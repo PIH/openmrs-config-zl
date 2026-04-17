@@ -28,6 +28,7 @@
     "markPatientDead",
     "mch",
     "medicationDispensing",
+    "medicationOrder",
     "mentalHealth",
     "monitoringReports",
     "myAccount",
