@@ -21,6 +21,46 @@
     "additionalObs": []
   },
   {
+    "uuid": "onProphylaxis",
+    "name": "pihcore.onPrep",
+    "conceptCode": "PIH:On prophylaxis",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "voluntaryStop",
+    "name": "pihcore.voluntaryStopPrEP",
+    "conceptCode": "PIH:21092",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "interrupt",
+    "name": "pihcore.interruptPrEP",
+    "conceptCode": "PIH:21093",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "discontinue",
+    "name": "pihcore.discontinuePrEPmed",
+    "conceptCode": "PIH:21094",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
+    "uuid": "seroconversion",
+    "name": "pihcore.seroconversion",
+    "conceptCode": "PIH:20909",
+    "encounterTypes": ["4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"],
+    "actions": [],
+    "additionalObs": []
+  },
+  {
     "uuid": "leftWithoutSeeingAClinician",
     "name": "disposition.emrapi.leftWithoutSeeingAClinician",
     "conceptCode": "PIH:Left without seeing a clinician",
@@ -39,12 +79,23 @@
     "additionalObs": []
   },
   {
+    "uuid": "leftAgainstMedicalAdvice",
+    "name": "pihcore.disposition.leftAgainstMedicalAdvice",
+    "conceptCode": "CIEL:1694",
+    "encounterTypes": [
+      "8d50b938-dcf9-4b8e-9938-e625bd2f0a81",
+      "ca65f5d3-6312-4143-ae4e-0237427f339e",
+      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
+    ],
+    "actions": [
+      "dischargeIfAdmittedDispositionAction"
+    ],
+    "additionalObs": []
+  },
+  {
     "uuid": "transferOutOfHospital",
     "name": "disposition.emrapi.transferOutOfHospital",
     "conceptCode": "PIH:Transfer out of hospital",
-    "excludedEncounterTypes": [
-      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
-    ],
     "additionalObs": [
       {
         "label": "disposition.emrapi.transferOutOfHospital.sites",
@@ -60,15 +111,6 @@
     "name": "disposition.emrapi.transferInHospital",
     "conceptCode": "PIH:Transfer within hospital",
     "excludedEncounterTypes": [
-      "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
-    ],
-    "additionalObs": []
-  },
-  {
-    "uuid": "treatmentStopped",
-    "name": "disposition.emrapi.treatmentStopped",
-    "conceptCode": "CIEL:164349",
-    "encounterTypes": [
       "4fe5fc03-b42b-4bb2-8ed8-e3c7de8942fb"
     ],
     "additionalObs": []
