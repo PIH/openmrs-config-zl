@@ -166,15 +166,17 @@
     </style>
     <script>
         const i18n = {
-        confirmChange: "<uimessage code='
-        .change.confirm'/>",
-        confirmDate: "<uimessage code='date.change.confirm'/>",
-        confirmRegimen: "<uimessage code='regimen.change.confirm'/>",
+            confirmChange: "<uimessage code='.change.confirm'/>",
+            confirmDate: "<uimessage code='date.change.confirm'/>",
+            confirmRegimen: "<uimessage code='regimen.change.confirm'/>",
         };
     </script>
 
     <excludeIf velocityTest="$fn.getObs($encounter, 'CIEL:164141')">
         <script type="text/javascript">
+            const yesConceptId = '<lookup expression="fn.getConcept('CIEL:1065').id" />';
+            const noConceptId = '<lookup expression="fn.getConcept('CIEL:1066').id" />';
+            const unknownConceptId = '<lookup expression="fn.getConcept('CIEL:1067').id" />';
 
             const treatmentLineFirst = '<lookup expression="fn.getConcept('CIEL: 166074 ').id" />';
             const treatmentLineSecond = '<lookup expression="fn.getConcept('CIEL: 166075 ').id" />';
@@ -225,75 +227,70 @@
 
             let currentEncounterDate = new Date();
             let encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-            if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length
-            > 0)) {
-            currentEncounterDate = new Date(+encounterDate);
+            if (typeof encounterDate !== "undefined" &amp;&amp; encounterDate !== null &amp;&amp; (encounterDate.length > 0)) {
+                currentEncounterDate = new Date(+encounterDate);
             }
 
             let lastRecordedChw = {
-            name: "",
-            date: null,
-            encounterDisplay: ""
+                name: "",
+                date: null,
+                encounterDisplay: ""
             };
 
             jq.getJSON(apiBaseUrl + "/obs", {
-            concept: chwNameConceptUuid,
-            patient: patientUuid,
-            v:
-            'custom:(uuid,display,obsDatetime,value,encounter:(display,encounterDatetime,location:(display),encounterType:(display)))'
+                concept: chwNameConceptUuid,
+                patient: patientUuid,
+                v:
+                'custom:(uuid,display,obsDatetime,value,encounter:(display,encounterDatetime,location:(display),encounterType:(display)))'
             },
             function( data ){
-            if (data.results.length > 0) {
-            for (let index = 0; index &lt; data.results.length; ++index) {
-            let chwObs = data.results[index];
-            let chwObsDate = new Date(chwObs.obsDatetime);
-            let tmpChwObs = {
-            name: "",
-            date: null,
-            encounterDisplay: ""
-            };
-            if( (currentEncounterDate.getTime() >= chwObsDate.getTime()) ||
-            (currentEncounterDate.toDateString() === chwObsDate.toDateString())) {
-            if (typeof chwObs.value !== "undefined" &amp;&amp; chwObs.value !== null &amp;&amp; (chwObs.value.length
-            &gt; 0)) {
-            tmpChwObs.name = chwObs.value;
-            tmpChwObs.date = chwObsDate;
-            tmpChwObs.encounterDisplay = chwObs.encounter.display;
-            }
-            }
-            if ( (tmpChwObs.date != null) &amp;&amp;
-            ((lastRecordedChw.date == null) || (lastRecordedChw.date.getTime() &lt; tmpChwObs.date.getTime()) ) ) {
+                if (data.results.length > 0) {
+                    for (let index = 0; index &lt; data.results.length; ++index) {
+                        let chwObs = data.results[index];
+                        let chwObsDate = new Date(chwObs.obsDatetime);
+                        let tmpChwObs = {
+                            name: "",
+                            date: null,
+                            encounterDisplay: ""
+                        };
+                        if( (currentEncounterDate.getTime() >= chwObsDate.getTime()) ||
+                            (currentEncounterDate.toDateString() === chwObsDate.toDateString())) {
+                            if (typeof chwObs.value !== "undefined" &amp;&amp; chwObs.value !== null &amp;&amp; (chwObs.value.length &gt; 0)) {
+                                tmpChwObs.name = chwObs.value;
+                                tmpChwObs.date = chwObsDate;
+                                tmpChwObs.encounterDisplay = chwObs.encounter.display;
+                            }
+                        }
+                        if ( (tmpChwObs.date != null) &amp;&amp;
+                            ((lastRecordedChw.date == null) || (lastRecordedChw.date.getTime() &lt; tmpChwObs.date.getTime()) ) ) {
 
-            lastRecordedChw.name = tmpChwObs.name;
-            lastRecordedChw.date = tmpChwObs.date;
-            lastRecordedChw.encounterDisplay = tmpChwObs.encounterDisplay;
-            }
-            }
-            }
-            if (lastRecordedChw.date != null) {
-            jq("#lastRecordedCHW").text(lastRecordedChw.name);
-            jq("#lastRecordedCHWEncounter").text(lastRecordedChw.encounterDisplay);
-            jq("#lastRecorded-CHW-div").show();
-            } else {
-            //show the div with the normal obs behaviour
-            jq("#normal-CHW-div").show();
-            }
+                            lastRecordedChw.name = tmpChwObs.name;
+                            lastRecordedChw.date = tmpChwObs.date;
+                            lastRecordedChw.encounterDisplay = tmpChwObs.encounterDisplay;
+                        }
+                    }
+                }
+                if (lastRecordedChw.date != null) {
+                    jq("#lastRecordedCHW").text(lastRecordedChw.name);
+                    jq("#lastRecordedCHWEncounter").text(lastRecordedChw.encounterDisplay);
+                    jq("#lastRecorded-CHW-div").show();
+                } else {
+                    //show the div with the normal obs behaviour
+                    jq("#normal-CHW-div").show();
+                }
             });
 
             jq("#changeChw").on('change', function(){
-
-            if (this.checked === true) {
-            jq("#editChwNameDiv").show();
-            } else {
-            jq("#editChwNameDiv").hide();
-            }
+                if (this.checked === true) {
+                    jq("#editChwNameDiv").show();
+                } else {
+                    jq("#editChwNameDiv").hide();
+                }
             });
-
-
 
             jq('#takingARVs input[type="radio"]').on('change', function () {
                 const selectedValue = $(this).val();
-                    if(selectedValue ==1 || selectedValue ==2){
+                    if(selectedValue == 1 || selectedValue == 2){
                         getArtTreatmentLine(apiBaseUrl,artTreatmentLineUuid,patientUuid);
                         getArtStartDate(apiBaseUrl,artStartDateUuid,patientUuid)
                      }
@@ -438,10 +435,7 @@
                       }
                    });
 
-
             }
-
-
 
             function getLatestSideEffectMedicationCoded(apiBaseUrl,medicationSideEffectCodedUuid,patientUuid ){
                 jq.getJSON(apiBaseUrl + "/obs", {
@@ -499,8 +493,8 @@
                   }, function (data) {
 
                 if (!data.results || data.results.length === 0) {
-                console.log("No prophylaxis treatment found");
-                return;
+                    console.log("No prophylaxis treatment found");
+                    return;
                 }
             const latestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
             var response =(latestObs.length > 1)? latestObs[latestObs.length -1]: latestObs[0]
@@ -528,8 +522,8 @@
                   }, function (data) {
 
                 if (!data.results || data.results.length === 0) {
-                console.log("No prophylaxis treatment line found");
-                return;
+                    console.log("No prophylaxis treatment line found");
+                    return;
                 }
             const latestObs = [...data.results].sort((a, b) =>new Date(a.encounter.encounterDatetime) - new Date(b.encounter.encounterDatetime) );
             var response =(latestObs.length > 1)? latestObs[latestObs.length -1]: latestObs[0]
@@ -553,7 +547,7 @@
                         jq('#prophylaxis_treatmentLine input[type="radio"][value="' + radioValue + '"]')
                             .prop('checked', true)
                             .trigger('click');
-                   }else{
+                   } else {
                     console.log("Treatment line value does not match expected options: ", type);
                    }
                 }
@@ -582,9 +576,9 @@
             function setAlreadySelectedDrugAllergyOption(option){
                const mapValue =
                  {
-                  yes:"1",
-                  no:"2",
-                  unknown: "5423"
+                  yes: yesConceptId,
+                  no: noConceptId,
+                  unknown: unknownConceptId
                  }
               const radioValue = mapValue[option.toLowerCase().trim()];
               if (radioValue) {
@@ -652,19 +646,17 @@
         </h3>
         <script type="text/javascript">
             jq(function() {
-            var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-            setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');
-            validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage
-                code="pihcore.errors.eddField.invalidDate"/>');
+                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
+                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');
+                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate"/>');
 
-            setUpDatepickerStartAndEndDateValidation();
-            setUpObsWithObsDateTime('syph-checkbox');
+                setUpDatepickerStartAndEndDateValidation();
+                setUpObsWithObsDateTime('syph-checkbox');
 
-            // handlers for next and submit buttons, see nextAndSubmitButtons.js
-            setUpNextAndSubmitButtons();
+                // handlers for next and submit buttons, see nextAndSubmitButtons.js
+                setUpNextAndSubmitButtons();
 
-            manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'
-            <uimessage code="pihcore.required"/>')
+                manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>')
             });
         </script>
     </ifMode>
