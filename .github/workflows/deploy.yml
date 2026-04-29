@@ -41,6 +41,7 @@ jobs:
         customHeaders: '{"Accept": "application/json"}'
         retry: 60
         retryWait: 60000
+        ignoreStatusCodes: 400
 
     - name: Deploy to ci
       uses: fjogeleit/http-request-action@v1
@@ -51,6 +52,7 @@ jobs:
         customHeaders: '{"Accept": "application/json"}'
         retry: 60
         retryWait: 60000
+        ignoreStatusCodes: 400
 
     - name: Deploy to haitihivtest
       uses: fjogeleit/http-request-action@v1
@@ -61,6 +63,7 @@ jobs:
         customHeaders: '{"Accept": "application/json"}'
         retry: 60
         retryWait: 60000
+        ignoreStatusCodes: 400
 
     - name: Deploy to zl-ci
       uses: fjogeleit/http-request-action@v1
@@ -71,3 +74,4 @@ jobs:
         customHeaders: '{"Accept": "application/json"}'
         retry: 60
         retryWait: 60000
+        ignoreStatusCodes: 400
