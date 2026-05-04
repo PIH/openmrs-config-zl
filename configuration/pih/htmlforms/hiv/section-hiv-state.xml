@@ -646,9 +646,9 @@
         </h3>
         <script type="text/javascript">
             jq(function() {
-                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
-                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');
-                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate"/>');
+<!--                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';-->
+<!--                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');-->
+<!--                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate"/>');-->
 
                 setUpDatepickerStartAndEndDateValidation();
                 setUpObsWithObsDateTime('syph-checkbox');
@@ -677,7 +677,15 @@
         </div>
     </div>
 
-
+    <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F'">
+        <script type="text/javascript">
+            jq(function() {
+            var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
+            setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');
+            validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate"/>');
+              });
+        </script>
+    </includeIf>
     <section id="chwName-section" sectionTag="fieldset" headerTag="legend" headerStyle="title"
              headerCode="pihcore.chw">
         <div class="section-container">
