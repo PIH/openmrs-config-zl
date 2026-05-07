@@ -653,10 +653,10 @@
                 setUpDatepickerStartAndEndDateValidation();
                 setUpObsWithObsDateTime('syph-checkbox');
 
-                // handlers for next and submit buttons, see nextAndSubmitButtons.js
-                setUpNextAndSubmitButtons();
+                manageInputActivationForRadioButton("#Isoniazide","#prophylaxis_treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
 
-                manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>')
+            // handlers for next and submit buttons, see nextAndSubmitButtons.js
+            setUpNextAndSubmitButtons();
             });
         </script>
     </ifMode>
@@ -1081,6 +1081,7 @@
                     </td>
                 </tr>
 
+                <!-- Cotrimozazole -->
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:2739">
@@ -1102,6 +1103,7 @@
                     <render conceptMap="CIEL:105281" drugname="Cotrimoxazole"/>
                 </repeat>
 
+                <!-- Isoniazid -->
                 <repeat>
                     <template>
                         <obsgroup groupingConceptId="PIH:2739">
@@ -1110,17 +1112,17 @@
                                     <obs conceptId="PIH:2289" answerConceptId="{conceptMap}"
                                          answerLabel="{drugname}"
                                          toggle="{id: '{drugname}-current-treat', style: 'dim'}" id="{drugname}"/>
-                                    <p class="radio {drugname}-current-treat side-by-side" id="treatmentId">
+                                    <p id="inhTreatmentId" class="radio {drugname}-current-treat side-by-side" >
                                         <obs conceptId="PIH:13786" style="radio"
                                              answerConceptIds="CIEL:159943, CIEL:159944" id="prophylaxis_treatmentLine"/>
                                     </p>
                                 </td>
-                                <td>
+                                <td class="{drugname}-current-treat">
                                     <obs conceptId="CIEL:163526" class="startDate" allowFutureDates="true"
                                          allowPastDates="true" id="inhStartDate"/>
                                 </td>
 
-                                <td>
+                                <td class="{drugname}-current-treat">
                                     <obs conceptId="CIEL:164384" class="endDate" allowFutureDates="true"
                                          allowPastDates="true" id="inhEndDate"/>
 
@@ -1128,7 +1130,7 @@
                             </tr>
                         </obsgroup>
                     </template>
-                    <render conceptMap="CIEL:78280" drugname="Isoniazide" class="Isoniazide"/>
+                    <render conceptMap="CIEL:78280" drugname="Isoniazide" />
                 </repeat>
 
                 <repeat>
