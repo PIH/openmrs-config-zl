@@ -646,10 +646,6 @@
         </h3>
         <script type="text/javascript">
             jq(function() {
-<!--                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';-->
-<!--                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');-->
-<!--                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate"/>');-->
-
                 setUpDatepickerStartAndEndDateValidation();
                 setUpObsWithObsDateTime('syph-checkbox');
 
