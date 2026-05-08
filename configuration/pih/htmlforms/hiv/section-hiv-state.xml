@@ -166,7 +166,7 @@
     </style>
     <script>
         const i18n = {
-            confirmChange: "<uimessage code='.change.confirm'/>",
+            confirmChange: "<uimessage code='treatmentLine.change.confirm'/>",
             confirmDate: "<uimessage code='date.change.confirm'/>",
             confirmRegimen: "<uimessage code='regimen.change.confirm'/>",
         };
@@ -306,27 +306,6 @@
             getProphylaxisIsoniazideStartDateUuid(apiBaseUrl, prophylaxisStartDateUuid,InitialprophylaxisStartDateUuid, patientUuid)
             getProphylaxisIsoniazideStopDateUuid(apiBaseUrl, prophylaxisStopDateUuid,InitialprophylaxisStopDateUuid, patientUuid)
 
-                jq('#arv_start_date input[type="text"]').on('mousedown', function () {
-                   previousArvDate = jq(this).datepicker('getDate');
-                });
-
-                jq('#arv_start_date input[type="text"]').on('change',function() {
-
-                    const displayValue = jq(this).val();
-                    showConfirmBox( i18n.confirmDate,
-                              ()=> { },
-                              ()=> {
-                                jq(this).datepicker('setDate', previousArvDate);
-                                if (previousArvDate) {
-                                const yyyy = previousArvDate.getFullYear();
-                                const mm = String(previousArvDate.getMonth() + 1).padStart(2, '0');
-                                const dd = String(previousArvDate.getDate()).padStart(2, '0');
-                                getField("arv_start_date.value").datepicker("setDate", previousArvDate)
-                            }
-                         }
-                        );
-
-              });
 
                  jq('#treatmentLine input[type="radio"]').on('change',function() {
 
@@ -334,10 +313,8 @@
 
                      if (!previousValue) return;
                         const selectedValue =getStringValue( jq(this).val());
-                        console.log("SELECTED VALUE IS ",jq(this).val())
+                       setTreatmentLine(selectedValue)
                         const message = formatMessage( i18n.confirmChange, [previousValue, selectedValue] );
-
-
                         showConfirmBox( message,
                         ()=> setTreatmentLine(selectedValue) ,
                         ()=> setTreatmentLine(previousValue)
@@ -346,6 +323,7 @@
                   });
 
             jq('#currentARV1 select').on('change',function() {
+            getRegiment(apiBaseUrl,regimenUuid,patientUuid)
                     showConfirmBox( i18n.confirmRegimen,
                       ()=> {}  ,
                       ()=> getRegiment(apiBaseUrl,regimenUuid,patientUuid)
@@ -543,14 +521,22 @@
                         jq('#Isoniazide input[type="checkbox"]')
                             .prop('checked', true)
                             .trigger('change');
+                             const inhStartDate = jq('#inhStartDate');
 
                         jq('#prophylaxis_treatmentLine input[type="radio"][value="' + radioValue + '"]')
                             .prop('checked', true)
+                            .trigger('change')
                             .trigger('click');
-                   } else {
+
+                             inhStartDate.find('.field-error').hide();
+                             inhStartDate.find('input').removeAttr('required');
+
+                    }
+
+            } else {
                     console.log("Treatment line value does not match expected options: ", type);
-                   }
-                }
+            }
+
 
               });
             }
@@ -649,7 +635,7 @@
                 setUpDatepickerStartAndEndDateValidation();
                 setUpObsWithObsDateTime('syph-checkbox');
 
-                manageInputActivationForRadioButton("#Isoniazide","#prophylaxis_treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
+                manageInputActivationForRadioButton("#Isoniazide","#prophylaxis_treatmentLine",["#inhStartDate","#inhEndDate"],'<uimessage code="pihcore.required"/>');
 
             // handlers for next and submit buttons, see nextAndSubmitButtons.js
             setUpNextAndSubmitButtons();
