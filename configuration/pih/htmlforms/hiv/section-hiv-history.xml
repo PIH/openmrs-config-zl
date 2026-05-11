@@ -155,9 +155,6 @@
 
         <script type="text/javascript">
             jq(function() {
-                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()" />';
-                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks" />');
-                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate" />');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
                 setUpDatepickerStartAndEndDateValidation();
 
@@ -167,6 +164,18 @@
                 manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
             });
         </script>
+    </ifMode>
+
+    <ifMode mode="VIEW" include="false">
+        <includeIf velocityTest="(($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F')">
+            <script type="text/javascript">
+                jq(function() {
+                    var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()" />';
+                    setUpEdd(encounterDate,'<uimessage code="pihcore.weeks" />');
+                    validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate" />');
+                });
+            </script>
+        </includeIf>
     </ifMode>
 
     <!-- Program enrollment (if the patient hasn't already been enrolled); use first ancestor location tagged as Program Location -->
@@ -1186,7 +1195,7 @@
                     <render mode="withprosex" cId="CIEL:160580" toggle="withSexWorker" />
                 </repeat>
 
-                <obsgroup groupingConceptId="CIEL:163288">
+                <obsgroup groupingConceptId="CIEL:163288" showIfEmpty="false">
                     <tr>
                         <td colspan="2">
                             <obs conceptId="CIEL:160581"
