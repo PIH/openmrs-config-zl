@@ -637,8 +637,8 @@
 
                 manageInputActivationForRadioButton("#Isoniazide","#prophylaxis_treatmentLine",["#inhStartDate","#inhEndDate"],'<uimessage code="pihcore.required"/>');
 
-            // handlers for next and submit buttons, see nextAndSubmitButtons.js
-            setUpNextAndSubmitButtons();
+                // handlers for next and submit buttons, see nextAndSubmitButtons.js
+                setUpNextAndSubmitButtons();
             });
         </script>
     </ifMode>
