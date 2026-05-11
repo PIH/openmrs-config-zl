@@ -155,16 +155,13 @@
 
         <script type="text/javascript">
             jq(function() {
-                var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()" />';
-                setUpEdd(encounterDate,'<uimessage code="pihcore.weeks" />');
-                validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate" />');
-                setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
-                setUpDatepickerStartAndEndDateValidation();
+            setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
+            setUpDatepickerStartAndEndDateValidation();
 
                 // handlers for next and submit buttons, see nextAndSubmitButtons.js
-                setUpNextAndSubmitButtons();
+            manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
+            setUpNextAndSubmitButtons();
 
-                manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
             });
         </script>
     </ifMode>
@@ -196,6 +193,15 @@
 
             </div>
         </section>
+    </includeIf>
+    <includeIf velocityTest="($patient.getAge($encounter.getEncounterDatetime()) &gt; 8) &amp;&amp; $patient.gender == 'F'">
+        <script type="text/javascript">
+            jq(function() {
+            var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()"/>';
+            setUpEdd(encounterDate,'<uimessage code="pihcore.weeks"/>');
+            validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate"/>');
+            });
+        </script>
     </includeIf>
 
     <!-- ToDo:  Add when enrollment date is fixed
