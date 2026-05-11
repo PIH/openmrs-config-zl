@@ -459,7 +459,7 @@
                             <obs conceptId="CIEL:160581"
                                  answerConceptId="PIH:11406"
                                  style="checkbox" commentFieldCode=""
-                                 toggle="{id: 'other-risk--date', style: 'dim'}"/>
+                                 toggle="{id: 'other-risk-date', style: 'dim'}"/>
                         </td>
                         <td id="other-risk-date">
                             <obs conceptId="CIEL:162601" allowTime="false" />
@@ -947,7 +947,7 @@
                              labelCode="pihcore.tbscreen.{0}"
                              labelCssClass="tb-screening-question-label"
                              conceptLabels="coreapps.yes,coreapps.no"
-                             style="radio" />
+                             style="radio" required="true"/>
                     </div>
                 </repeat>
             </div>
