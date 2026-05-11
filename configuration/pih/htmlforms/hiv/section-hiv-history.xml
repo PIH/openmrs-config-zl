@@ -155,17 +155,12 @@
 
         <script type="text/javascript">
             jq(function() {
-<<<<<<< UHM-6448
-            setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
-            setUpDatepickerStartAndEndDateValidation();
-=======
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
                 setUpDatepickerStartAndEndDateValidation();
->>>>>>> master
 
                 // handlers for next and submit buttons, see nextAndSubmitButtons.js
-            manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
-            setUpNextAndSubmitButtons();
+                manageInputActivationForRadioButton("#Isoniazide","#treatmentLine",["#inhStartDate","#inhEndDate"],["#inhStartDate"],'<uimessage code="pihcore.required"/>');
+                setUpNextAndSubmitButtons();
 
             });
         </script>
