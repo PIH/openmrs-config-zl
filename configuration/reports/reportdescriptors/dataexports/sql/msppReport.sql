@@ -14,250 +14,312 @@ SET @discharged = concept_from_mapping('PIH','DISCHARGED');
 SET @TransferOutOfHospital = concept_from_mapping('PIH','Transfer out of hospital');
 SET @LeftWithoutSeeingClinician = concept_from_mapping('PIH','Left without seeing a clinician');
 
-DROP TEMPORARY TABLE IF EXISTS visits_distribution_temp;
-
-CREATE TEMPORARY TABLE visits_distribution_temp (
-    child_under_1_n INT,
-    child_between_1_4_n INT,
-    child_between_5_9_n INT,
-    child_between_10_14_n INT,
-    young_adult_between_15_19_n INT,
-    young_adult_between_20_24_n INT,
-    other_adult_n INT,
-    child_under_1_s INT,
-    child_between_1_4_s INT,
-    child_between_5_9_s INT,
-    child_between_10_14_s INT,
-    young_adult_between_15_19_s INT,
-    young_adult_between_20_24_s INT,
-    other_adult_s INT,
-    pregnant_visits_n INT,
-    pregnant_visits_s INT
-);
 
 -- New visits (First visit of the year)
-INSERT INTO visits_distribution_temp 
-(child_under_1_n, child_between_1_4_n, child_between_5_9_n, child_between_10_14_n, 
- young_adult_between_15_19_n, young_adult_between_20_24_n, other_adult_n)
-SELECT 
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 < 1 
-           AND YEAR(e.encounter_datetime) = YEAR(CURDATE())
-           AND e.encounter_datetime = first_visit.first_visit_this_year 
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=1 AND DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<5
-           AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
-           AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=5 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<10 
-           AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
-           AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=10 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<15 
-           AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
-           AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=15 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<20
-           AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
-           AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=20 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<25
-           AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
-           AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)),
-           
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 >= 25 
-           AND YEAR(e.encounter_datetime) = YEAR(CURDATE()) 
-           AND e.encounter_datetime = first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0))
-FROM patient p
--- Person
-INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
--- Check in encounter
-INNER JOIN encounter e ON p.patient_id = e.patient_id AND e.voided = 0 AND e.encounter_type = @chkEnc
+ SELECT 
+    SUM(IF(age < 1, 1, 0)) AS less_than_1,
+    SUM(IF(age >= 1 AND age < 5, 1, 0)) AS age_1_4,
+    SUM(IF(age >= 5 AND age < 10, 1, 0)) AS age_5_9,
+    SUM(IF(age >= 10 AND age < 15, 1, 0)) AS age_10_14,
+    SUM(IF(age >= 15 AND age < 20, 1, 0)) AS age_15_19,
+    SUM(IF(age >= 20 AND age < 25, 1, 0)) AS age_20_24,
+    SUM(IF(age >= 25, 1, 0)) AS age_25_plus
+	INTO
+	@child_under_1_n,
+	@child_between_1_4_n,
+	@child_between_5_9_n,
+	@child_between_10_14_n,
+	@young_adult_between_15_19_n,
+	@young_adult_between_20_24_n,
+	@other_adult_n
+FROM (
+    SELECT 
+       DISTINCT e.patient_id,
+        TIMESTAMPDIFF(YEAR, pr.birthdate, e.encounter_datetime) AS age
+    FROM encounter e
+    INNER JOIN patient p ON e.patient_id = p.patient_id AND p.voided = 0
+    INNER JOIN person pr ON pr.person_id = p.patient_id AND pr.voided = 0
 
--- Determining the first visit of the year
-LEFT JOIN (
-    SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
-    FROM encounter
-    WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
-     AND DATE(encounter_datetime) >= @firstDate
-   AND DATE(encounter_datetime) < @endDate
-    GROUP BY patient_id
-) AS first_visit ON e.patient_id = first_visit.patient_id
-WHERE p.voided = 0
--- Exclude test patients
-AND p.patient_id NOT IN (
-    SELECT person_id 
-    FROM person_attribute 
-    WHERE value = 'true' 
-    AND person_attribute_type_id = @testPt 
-    AND voided = 0
-)
-AND DATE(e.encounter_datetime) >= @firstDate
-AND DATE(e.encounter_datetime) < @endDate;
+    INNER JOIN (
+        SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
+        FROM encounter
+        WHERE encounter_type = encounter_type('55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b')
+        AND voided = 0
+        AND YEAR(encounter_datetime) = YEAR(CURDATE())
+        GROUP BY patient_id
+    ) first_visit 
+        ON e.patient_id = first_visit.patient_id
+        AND e.encounter_datetime = first_visit.first_visit_this_year
 
-
--- Subsequent visits 
-INSERT INTO visits_distribution_temp 
-(child_under_1_s, child_between_1_4_s, child_between_5_9_s, child_between_10_14_s, 
- young_adult_between_15_19_s, young_adult_between_20_24_s, other_adult_s)
-SELECT 
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 < 1 
-           AND YEAR(e.encounter_datetime) <= YEAR(CURDATE())
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=1 AND DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<5
-           AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=5 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<10 
-           AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=10 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<15 
-           AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=15 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<20
-           AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25>=20 and DATEDIFF(e.encounter_datetime, pr.birthdate)/365.25<25
-           AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)),
-    SUM(IF(DATEDIFF(e.encounter_datetime, pr.birthdate) / 365.25 >= 25 
-           AND YEAR(e.encounter_datetime) <= YEAR(CURDATE()) 
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0))
-FROM patient p
--- Person
-INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
--- Check in encounter
-INNER JOIN encounter e ON p.patient_id = e.patient_id AND e.voided = 0 AND e.encounter_type = @chkEnc
--- Determining the first visit of the year
-LEFT JOIN (
-    SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
-    FROM encounter
-    WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
-     AND DATE(encounter_datetime) >= @firstDate
-   AND DATE(encounter_datetime) < @endDate
-    GROUP BY patient_id
-) AS first_visit ON e.patient_id = first_visit.patient_id
-WHERE p.voided = 0
--- Exclude test patients
-AND p.patient_id NOT IN (
-    SELECT person_id 
-    FROM person_attribute 
-    WHERE value = 'true' 
-    AND person_attribute_type_id = @testPt 
-    AND voided = 0
-)
-AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate;
-
-
--- New visits Of pregnancy women
-INSERT INTO visits_distribution_temp 
-(pregnant_visits_n)
-    SELECT
-    IF(DATE(e.encounter_datetime) = DATE(first_visit.first_visit_this_year), 1, 0)
-    FROM obs o
-    INNER JOIN encounter e on e.patient_id =o.person_id 
-    LEFT JOIN (
-    SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
-    FROM encounter
-    WHERE YEAR(encounter_datetime) = YEAR(CURDATE())
-    GROUP BY patient_id
-    ) AS first_visit ON e.patient_id = first_visit.patient_id
-    WHERE o.concept_id = concept_from_mapping('PIH', '5596')
-    AND o.voided = 0
-    AND e.voided = 0
-    AND DATE(o.value_datetime) > CURDATE()
+    WHERE e.voided = 0 
+    AND e.encounter_type = encounter_type('55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b')
     AND DATE(e.encounter_datetime) >= @firstDate
     AND DATE(e.encounter_datetime) < @endDate
-    GROUP BY e.visit_id 
-    ORDER BY e.visit_id DESC;
+) t;
+
+-- Subsequent visits 
+SELECT 
+    SUM(IF(age < 1, 1, 0)) AS less_than_1,
+    SUM(IF(age >= 1 AND age < 5, 1, 0)) AS age_1_4,
+    SUM(IF(age >= 5 AND age < 10, 1, 0)) AS age_5_9,
+    SUM(IF(age >= 10 AND age < 15, 1, 0)) AS age_10_14,
+    SUM(IF(age >= 15 AND age < 20, 1, 0)) AS age_15_19,
+    SUM(IF(age >= 20 AND age < 25, 1, 0)) AS age_20_24,
+    SUM(IF(age >= 25, 1, 0)) AS age_25_plus
+	INTO @child_under_1_s,
+	@child_between_1_4_s,
+	@child_between_5_9_s,
+	@child_between_10_14_s,
+	@young_adult_between_15_19_s,
+	@young_adult_between_20_24_s,
+	@other_adult_s
+FROM (
+    SELECT 
+        e.patient_id,
+        DATE(e.encounter_datetime) AS visit_date,
+        TIMESTAMPDIFF(YEAR, pr.birthdate, MIN(e.encounter_datetime)) AS age
+    FROM patient p
+    INNER JOIN person pr 
+        ON p.patient_id = pr.person_id AND pr.voided = 0
+
+    INNER JOIN encounter e 
+        ON p.patient_id = e.patient_id 
+        AND e.voided = 0 
+        AND e.encounter_type = encounter_type('55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b')
+    INNER JOIN (
+        SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
+        FROM encounter
+        WHERE encounter_type = encounter_type('55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b')
+        AND voided = 0
+        AND YEAR(encounter_datetime) = YEAR(CURDATE())
+        GROUP BY patient_id
+    ) first_visit 
+        ON e.patient_id = first_visit.patient_id
+
+    WHERE p.voided = 0
+
+    AND e.encounter_datetime > first_visit.first_visit_this_year
+
+    AND DATE(e.encounter_datetime) >= @startDate
+    AND DATE(e.encounter_datetime) < @endDate
+
+    AND p.patient_id NOT IN (
+        SELECT person_id 
+        FROM person_attribute 
+        WHERE value = 'true' 
+        AND person_attribute_type_id = @testPt 
+        AND voided = 0
+    )
+    GROUP BY e.patient_id, DATE(e.encounter_datetime)
+) t;
+
+-- New visits Of pregnancy women
+SELECT
+    COUNT(*)
+   INTO @pregnant_visits_n
+FROM encounter e
+INNER JOIN (
+    SELECT
+        e.encounter_id
+    FROM encounter e
+    INNER JOIN obs o_pn
+        ON o_pn.encounter_id = e.encounter_id
+        AND o_pn.value_coded =  concept_from_mapping('PIH','6259')
+        AND o_pn.voided = 0
+    INNER JOIN obs o_nv
+        ON o_nv.encounter_id = e.encounter_id
+        AND o_nv.value_coded =  concept_from_mapping('PIH','13235')
+        AND o_nv.voided = 0
+    INNER JOIN (
+        SELECT
+            o.person_id,
+            MAX(e.encounter_datetime) AS last_enc_datetime
+        FROM encounter e
+        INNER JOIN obs o
+            ON o.encounter_id = e.encounter_id
+        INNER JOIN obs o2
+            ON o2.encounter_id = e.encounter_id
+        WHERE
+            o.value_coded = concept_from_mapping('PIH','6259')
+            AND o2.value_coded = concept_from_mapping('PIH','13235')
+            AND o.voided = 0
+            AND o2.voided = 0
+            AND e.voided = 0
+            AND e.encounter_datetime IS NOT NULL
+        GROUP BY o.person_id
+    ) last_enc
+        ON last_enc.person_id = o_pn.person_id
+       AND last_enc.last_enc_datetime = e.encounter_datetime
+        and e.voided = 0
+        and o_pn.voided =0
+        AND e.encounter_datetime >= @startDate
+	    AND e.encounter_datetime <  @endDate
+       GROUP BY o_pn.person_id
+) last_encounters
+    ON last_encounters.encounter_id = e.encounter_id
+    WHERE  e.encounter_datetime >= @startDate
+	AND e.encounter_datetime <  @endDate;
 
 
 -- Subsequent visits for pregnancy women
-INSERT INTO visits_distribution_temp 
-(pregnant_visits_s)
-       SELECT
-    IF(DATE(e.encounter_datetime) > DATE(first_visit.first_visit_this_year), 1, 0)
-    FROM obs o
-    INNER JOIN encounter e on e.patient_id =o.person_id 
-    LEFT JOIN (
-    SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
-    FROM encounter
-    WHERE YEAR(encounter_datetime) = YEAR(CURDATE())
-    GROUP BY patient_id
-    ) AS first_visit ON e.patient_id = first_visit.patient_id
-    WHERE o.concept_id = concept_from_mapping('PIH', '5596')
-    AND o.voided = 0
-    AND e.voided = 0
-    AND DATE(o.value_datetime) > CURDATE()
-    AND DATE(e.encounter_datetime) >= @startDate
-    AND DATE(e.encounter_datetime) < @endDate
-    GROUP BY e.visit_id 
-    ORDER BY e.visit_id DESC;
+SELECT COUNT(*) 
+INTO @pregnant_visits_s
+FROM (
+    
+    SELECT 
+        fs.patient_id,
+        DATE(fs.encounter_datetime) AS visit_date
+
+    FROM encounter fs
+
+    INNER JOIN obs o_suivi
+        ON o_suivi.encounter_id = fs.encounter_id
+        AND o_suivi.value_coded = concept_from_mapping('PIH','7383')
+        AND o_suivi.voided = 0
+
+    INNER JOIN obs o_pn
+        ON o_pn.encounter_id = fs.encounter_id
+        AND o_pn.value_coded = concept_from_mapping('PIH','6259')
+        AND o_pn.voided = 0
+
+    INNER JOIN (
+        SELECT
+            e.patient_id,
+            MIN(e.encounter_datetime) AS first_prenatal_visit
+        FROM encounter e
+
+        INNER JOIN obs o_pn2
+            ON o_pn2.encounter_id = e.encounter_id
+            AND o_pn2.value_coded = concept_from_mapping('PIH','6259')
+            AND o_pn2.voided = 0
+
+        INNER JOIN obs o_nv
+            ON o_nv.encounter_id = e.encounter_id
+            AND o_nv.value_coded = concept_from_mapping('PIH','13235')
+            AND o_nv.voided = 0
+
+        WHERE e.voided = 0
+        GROUP BY e.patient_id
+    ) first_visit
+        ON first_visit.patient_id = fs.patient_id
+    WHERE fs.voided = 0
+    AND fs.encounter_datetime > first_visit.first_prenatal_visit
+    AND fs.encounter_datetime >= @startDate
+    AND fs.encounter_datetime < @endDate
+    GROUP BY fs.patient_id, DATE(fs.encounter_datetime)
+) x;
 
 -- NEW CLIENT PF
-SELECT 
- SUM(IF(YEAR(e.encounter_datetime) = YEAR(CURDATE())
-           AND e.encounter_datetime = first_visit.first_visit_this_year 
-           AND DATE(e.encounter_datetime) BETWEEN @firstDate AND @endDate, 1, 0)) INTO @clientPfN
-from obs o 
-INNER JOIN encounter e 
-ON o.encounter_id =e.encounter_id 
-LEFT JOIN (
-    SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
+SELECT
+       COUNT(*)
+   INTO @clientPfN
+FROM encounter e
+INNER JOIN (
+    SELECT
+        e.encounter_id
     FROM encounter e
-    JOIN obs o2 ON e.encounter_id=o2.encounter_id
-    WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
-    AND o2.value_coded =concept_from_mapping('PIH','5483')
-    AND date(e.encounter_datetime) >= @firstDate
-	AND date(e.encounter_datetime) < @endDate
-    GROUP BY e.patient_id
-) AS first_visit ON e.patient_id = first_visit.patient_id
-WHERE o.value_coded =concept_from_mapping('PIH','5483')
-AND o.voided =0
-AND date(e.encounter_datetime) >= @firstDate
-AND date(e.encounter_datetime) < @endDate;
+    INNER JOIN obs o_pf
+        ON o_pf.encounter_id = e.encounter_id
+        AND o_pf.value_coded =  concept_from_mapping('PIH','5483')
+        AND o_pf.voided = 0
+    INNER JOIN obs o_nv
+        ON o_nv.encounter_id = e.encounter_id
+        AND o_nv.value_coded =  concept_from_mapping('PIH','13235')
+        AND o_nv.voided = 0
+    INNER JOIN (
+        SELECT
+            o.person_id,
+            MAX(e.encounter_datetime) AS last_enc_datetime
+        FROM encounter e
+        INNER JOIN obs o
+            ON o.encounter_id = e.encounter_id
+        INNER JOIN obs o2
+            ON o2.encounter_id = e.encounter_id
+        WHERE
+            o.value_coded = concept_from_mapping('PIH','5483')
+            AND o2.value_coded = concept_from_mapping('PIH','13235')
+            AND o.voided = 0
+            AND o2.voided = 0
+            AND e.voided = 0
+            AND e.encounter_datetime IS NOT NULL
+        GROUP BY o.person_id
+    ) last_enc
+        ON last_enc.person_id = o_pf.person_id
+       AND last_enc.last_enc_datetime = e.encounter_datetime
+        and e.voided = 0
+        and o_pf.voided =0
+        AND e.encounter_datetime >= @startDate
+	    AND e.encounter_datetime <  @endDate
+       GROUP BY o_pf.person_id
+) last_encounters
+    ON last_encounters.encounter_id = e.encounter_id
+    WHERE  e.encounter_datetime >= @startDate
+	AND e.encounter_datetime <  @endDate;
 
 
 -- SUBSEQUENT CLIENT PF
-SELECT  
-SUM(IF(YEAR(e.encounter_datetime) <= YEAR(CURDATE())
-           AND e.encounter_datetime != first_visit.first_visit_this_year
-           AND DATE(e.encounter_datetime) BETWEEN @startDate AND @endDate, 1, 0)) INTO @clientPfS
-from obs o 
-INNER JOIN encounter e 
-ON o.encounter_id =e.encounter_id 
-LEFT JOIN (
-    SELECT e.patient_id, MIN(e.encounter_datetime) AS first_visit_this_year
-    FROM encounter e
-    JOIN obs o2 ON e.encounter_id=o2.encounter_id
-    WHERE YEAR(encounter_datetime) = YEAR(CURDATE()) 
-    AND o2.value_coded =concept_from_mapping('PIH','5483')
-    AND date(e.encounter_datetime) >= @firstDate
-	AND date(e.encounter_datetime) < @endDate
-    GROUP BY e.patient_id
-) AS first_visit ON e.patient_id = first_visit.patient_id
-WHERE o.value_coded =concept_from_mapping('PIH','5483')
-AND o.voided =0
-AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+SELECT COUNT(*) 
+INTO @clientPfS
+FROM (
+    
+    SELECT 
+        fs.patient_id,
+        DATE(fs.encounter_datetime) AS visit_date
+
+    FROM encounter fs
+
+    INNER JOIN obs o_suivi
+        ON o_suivi.encounter_id = fs.encounter_id
+        AND o_suivi.value_coded = concept_from_mapping('PIH','7383')
+        AND o_suivi.voided = 0
+
+    INNER JOIN obs o_pf
+        ON o_pf.encounter_id = fs.encounter_id
+        AND o_pf.value_coded = concept_from_mapping('PIH','5483')
+        AND o_pf.voided = 0
+
+    INNER JOIN (
+        SELECT
+            e.patient_id,
+            MIN(e.encounter_datetime) AS first_prenatal_visit
+        FROM encounter e
+
+        INNER JOIN obs o_pf2
+            ON o_pf2.encounter_id = e.encounter_id
+            AND o_pf2.value_coded = concept_from_mapping('PIH','5483')
+            AND o_pf2.voided = 0
+
+        INNER JOIN obs o_nv
+            ON o_nv.encounter_id = e.encounter_id
+            AND o_nv.value_coded = concept_from_mapping('PIH','13235')
+            AND o_nv.voided = 0
+
+        WHERE e.voided = 0
+        GROUP BY e.patient_id
+    ) first_visit
+        ON first_visit.patient_id = fs.patient_id
+
+    WHERE fs.voided = 0
+    AND fs.encounter_datetime > first_visit.first_prenatal_visit
+    AND fs.encounter_datetime >= @startDate
+    AND fs.encounter_datetime < @endDate
+    GROUP BY fs.patient_id, DATE(fs.encounter_datetime)
+
+) x;
 
 
 -- PEOPLE MENTAL DISODER
-SELECT COUNT(*) INTO @totalMentalDisorder from
+SELECT COUNT(*) 
+INTO @totalMentalDisorder
+from
 obs o 
 INNER JOIN encounter e 
 ON o.encounter_id =e.encounter_id  
 WHERE o.value_coded =concept_from_mapping('PIH','7202')
 AND o.voided =0
 AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+AND date(e.encounter_datetime) < @endDate
+GROUP BY e.patient_id, DATE(e.encounter_datetime);
 
 -- EXAMEN LABORATOIRE
 
@@ -3237,15 +3299,23 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
             AND DATE(e.encounter_datetime) < @endDate;
 		  	
 	 
-SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_1_S",
-        SUM(child_between_1_4_n) "CHILD_BETWEEN_1_4_N", SUM(child_between_1_4_s) "CHILD_BETWEEN_1_4_S",
-        SUM(child_between_5_9_n) "CHILD_BETWEEN_5_9_N",SUM(child_between_5_9_s) "CHILD_BETWEEN_5_9_S",
-         SUM(child_between_10_14_n) "CHILD_BETWEEN_10_14_N", SUM(child_between_10_14_s) "CHILD_BETWEEN_10_14_S",
-          SUM(young_adult_between_15_19_n) "YOUNG_ADULT_BETWEEN_15_19_N", SUM(young_adult_between_15_19_s) "YOUNG_ADULT_BETWEEN_15_19_S",
-           SUM(young_adult_between_20_24_n) "YOUNG_ADULT_BETWEEN_20_24_N",  SUM(young_adult_between_20_24_s) "YOUNG_ADULT_BETWEEN_20_24_S", 
-           SUM(other_adult_n) "OTHER_ADULT_N", SUM(other_adult_s) "OTHER_ADULT_S",
-           @clientPfN "CLIENT_PF_N", @clientPfS "CLIENT_PF_S",
-            SUM(pregnant_visits_n) 'PREGNANCY_WOMEN_N',SUM(pregnant_visits_s) 'PREGNANCY_WOMEN_S',
+SELECT  @child_under_1_n  "CHILD_UNDER_1_N",
+		@child_between_1_4_n "CHILD_BETWEEN_1_4_N",
+	    @child_between_5_9_n "CHILD_BETWEEN_5_9_N",
+	    @child_between_10_14_n "CHILD_BETWEEN_10_14_N",
+	    @young_adult_between_15_19_n "YOUNG_ADULT_BETWEEN_15_19_N",
+		@young_adult_between_20_24_n "YOUNG_ADULT_BETWEEN_20_24_N",
+	    @other_adult_n "OTHER_ADULT_N",
+		@child_under_1_s "CHILD_UNDER_1_S",
+       	@child_between_1_4_s "CHILD_BETWEEN_1_4_S",
+        @child_between_5_9_s "CHILD_BETWEEN_5_9_S",
+        @child_between_10_14_s "CHILD_BETWEEN_10_14_S",
+        @young_adult_between_15_19_s "YOUNG_ADULT_BETWEEN_15_19_S",
+        @young_adult_between_20_24_s "YOUNG_ADULT_BETWEEN_20_24_S", 
+        @other_adult_s "OTHER_ADULT_S",
+        @clientPfN "CLIENT_PF_N", @clientPfS "CLIENT_PF_S",
+        @pregnant_visits_n 'PREGNANCY_WOMEN_N',
+		@pregnant_visits_s 'PREGNANCY_WOMEN_S',
             @totalMentalDisorder 'PEOPLE_MENTAL_DISODER',
             0 'CLIENT_S_BU_DENTAIRE_N', 0 'CLIENT_S_BU_DENTAIRE_S',
             0 'PEOPLE_REDUCED_MOB_MOTOR_N',0 'PEOPLE_REDUCED_MOB_MOTOR_S',
@@ -3625,6 +3695,5 @@ SELECT SUM(child_under_1_n) "CHILD_UNDER_1_N",SUM(child_under_1_s) "CHILD_UNDER_
 			@NEW_RENAL_FAILURE_BET_20_AND_24_F 'NEW_RENAL_FAILURE_BET_20_AND_24_F', @OLD_RENAL_FAILURE_BET_20_AND_24_F 'OLD_RENAL_FAILURE_BET_20_AND_24_F', @NEW_RENAL_FAILURE_BET_20_AND_24_M 'NEW_RENAL_FAILURE_BET_20_AND_24_M', @OLD_RENAL_FAILURE_BET_20_AND_24_M 'OLD_RENAL_FAILURE_BET_20_AND_24_M',
 			@NEW_RENAL_FAILURE_BET_25_AND_49_F 'NEW_RENAL_FAILURE_BET_25_AND_49_F', @OLD_RENAL_FAILURE_BET_25_AND_49_F 'OLD_RENAL_FAILURE_BET_25_AND_49_F', @NEW_RENAL_FAILURE_BET_25_AND_49_M 'NEW_RENAL_FAILURE_BET_25_AND_49_M', @OLD_RENAL_FAILURE_BET_25_AND_49_M 'OLD_RENAL_FAILURE_BET_25_AND_49_M',
 			@NEW_RENAL_FAILURE_BET_50_AND_MORE_F 'NEW_RENAL_FAILURE_BET_50_AND_MORE_F', @OLD_RENAL_FAILURE_BET_50_AND_MORE_F 'OLD_RENAL_FAILURE_BET_50_AND_MORE_F', @NEW_RENAL_FAILURE_BET_50_AND_MORE_M 'NEW_RENAL_FAILURE_BET_50_AND_MORE_M', @OLD_RENAL_FAILURE_BET_50_AND_MORE_M 'OLD_RENAL_FAILURE_BET_50_AND_MORE_M',
-			@RENAL_FAILURE_DEAD 'RENAL_FAILURE_DEAD', @NEW_RENAL_FAILURE_DISCHARGED 'NEW_RENAL_FAILURE_DISCHARGED', @OLD_RENAL_FAILURE_DISCHARGED 'OLD_RENAL_FAILURE_DISCHARGED'
-           
-FROM visits_distribution_temp;
+			@RENAL_FAILURE_DEAD 'RENAL_FAILURE_DEAD', @NEW_RENAL_FAILURE_DISCHARGED 'NEW_RENAL_FAILURE_DISCHARGED', 
+			@OLD_RENAL_FAILURE_DISCHARGED 'OLD_RENAL_FAILURE_DISCHARGED';
