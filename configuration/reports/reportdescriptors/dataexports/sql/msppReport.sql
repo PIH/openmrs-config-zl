@@ -165,8 +165,8 @@ INNER JOIN (
 SELECT COUNT(*) 
 INTO @pregnant_visits_s
 FROM (
-    
-    SELECT 
+
+    SELECT
         fs.patient_id,
         DATE(fs.encounter_datetime) AS visit_date
 
@@ -174,39 +174,40 @@ FROM (
 
     INNER JOIN obs o_suivi
         ON o_suivi.encounter_id = fs.encounter_id
-        AND o_suivi.value_coded = concept_from_mapping('PIH','7383')
+        AND o_suivi.concept_id  = concept_from_mapping('PIH', '13236')
+        AND o_suivi.value_coded = concept_from_mapping('PIH', '7383')
         AND o_suivi.voided = 0
 
     INNER JOIN obs o_pn
         ON o_pn.encounter_id = fs.encounter_id
-        AND o_pn.value_coded = concept_from_mapping('PIH','6259')
+        AND o_pn.concept_id  = concept_from_mapping('PIH', '8879')
+        AND o_pn.value_coded = concept_from_mapping('PIH', '6259')
         AND o_pn.voided = 0
-
-    INNER JOIN (
-        SELECT
-            e.patient_id,
-            MIN(e.encounter_datetime) AS first_prenatal_visit
-        FROM encounter e
-
-        INNER JOIN obs o_pn2
-            ON o_pn2.encounter_id = e.encounter_id
-            AND o_pn2.value_coded = concept_from_mapping('PIH','6259')
-            AND o_pn2.voided = 0
-
-        INNER JOIN obs o_nv
-            ON o_nv.encounter_id = e.encounter_id
-            AND o_nv.value_coded = concept_from_mapping('PIH','13235')
-            AND o_nv.voided = 0
-
-        WHERE e.voided = 0
-        GROUP BY e.patient_id
-    ) first_visit
-        ON first_visit.patient_id = fs.patient_id
+        
     WHERE fs.voided = 0
-    AND fs.encounter_datetime > first_visit.first_prenatal_visit
+    AND NOT EXISTS (
+        SELECT 1
+        FROM encounter e_new
+        INNER JOIN obs o_new_type
+            ON o_new_type.encounter_id = e_new.encounter_id
+            AND o_new_type.concept_id  = concept_from_mapping('PIH', '13236')
+            AND o_new_type.value_coded = concept_from_mapping('PIH', '13235')
+            AND o_new_type.voided = 0
+        INNER JOIN obs o_new_pn
+            ON o_new_pn.encounter_id = e_new.encounter_id
+            AND o_new_pn.concept_id  = concept_from_mapping('PIH', '8879')
+            AND o_new_pn.value_coded = concept_from_mapping('PIH', '6259')
+            AND o_new_pn.voided = 0
+        WHERE e_new.patient_id = fs.patient_id
+          AND DATE(e_new.encounter_datetime) = DATE(fs.encounter_datetime)
+          AND e_new.voided = 0
+    )
+    
     AND fs.encounter_datetime >= @startDate
     AND fs.encounter_datetime < @endDate
+
     GROUP BY fs.patient_id, DATE(fs.encounter_datetime)
+
 ) x;
 
 -- NEW CLIENT PF
@@ -261,8 +262,8 @@ INNER JOIN (
 SELECT COUNT(*) 
 INTO @clientPfS
 FROM (
-    
-    SELECT 
+
+    SELECT
         fs.patient_id,
         DATE(fs.encounter_datetime) AS visit_date
 
@@ -270,39 +271,39 @@ FROM (
 
     INNER JOIN obs o_suivi
         ON o_suivi.encounter_id = fs.encounter_id
-        AND o_suivi.value_coded = concept_from_mapping('PIH','7383')
+        AND o_suivi.concept_id  = concept_from_mapping('PIH', '13236')
+        AND o_suivi.value_coded = concept_from_mapping('PIH', '7383')
         AND o_suivi.voided = 0
 
     INNER JOIN obs o_pf
         ON o_pf.encounter_id = fs.encounter_id
-        AND o_pf.value_coded = concept_from_mapping('PIH','5483')
+        AND o_pf.concept_id  = concept_from_mapping('PIH', '8879')
+        AND o_pf.value_coded = concept_from_mapping('PIH', '5483')
         AND o_pf.voided = 0
 
-    INNER JOIN (
-        SELECT
-            e.patient_id,
-            MIN(e.encounter_datetime) AS first_prenatal_visit
-        FROM encounter e
-
-        INNER JOIN obs o_pf2
-            ON o_pf2.encounter_id = e.encounter_id
-            AND o_pf2.value_coded = concept_from_mapping('PIH','5483')
-            AND o_pf2.voided = 0
-
-        INNER JOIN obs o_nv
-            ON o_nv.encounter_id = e.encounter_id
-            AND o_nv.value_coded = concept_from_mapping('PIH','13235')
-            AND o_nv.voided = 0
-
-        WHERE e.voided = 0
-        GROUP BY e.patient_id
-    ) first_visit
-        ON first_visit.patient_id = fs.patient_id
 
     WHERE fs.voided = 0
-    AND fs.encounter_datetime > first_visit.first_prenatal_visit
+
+    AND NOT EXISTS (
+        SELECT 1
+        FROM encounter e_new
+        INNER JOIN obs o_new_type
+            ON o_new_type.encounter_id = e_new.encounter_id
+            AND o_new_type.concept_id  = concept_from_mapping('PIH', '13236')
+            AND o_new_type.value_coded = concept_from_mapping('PIH', '13235')
+            AND o_new_type.voided = 0
+        INNER JOIN obs o_new_pf
+            ON o_new_pf.encounter_id = e_new.encounter_id
+            AND o_new_pf.concept_id  = concept_from_mapping('PIH', '8879')
+            AND o_new_pf.value_coded = concept_from_mapping('PIH', '5483')
+            AND o_new_pf.voided = 0
+        WHERE e_new.patient_id = fs.patient_id
+          AND DATE(e_new.encounter_datetime) = DATE(fs.encounter_datetime)
+          AND e_new.voided = 0
+    )
     AND fs.encounter_datetime >= @startDate
     AND fs.encounter_datetime < @endDate
+
     GROUP BY fs.patient_id, DATE(fs.encounter_datetime)
 
 ) x;
