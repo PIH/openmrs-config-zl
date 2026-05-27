@@ -1,0 +1,31 @@
+<htmlform formUuid="1E43C2A8-8634-4C16-B8D8-256B4782FB37" formName="Patient Registration Health Center" formEncounterType="873f968a-73a8-4f9c-ac78-9f4778b751b6" formVersion="1.0">
+
+    <ifMode mode="VIEW" include="false">
+        <h2><uimessage code="zl.registration.patient.healthCenter.header"/></h2>
+    </ifMode>
+
+    <input id="displayEncounterDate" value="false" type="hidden" />
+
+    <section id="healthCenter" sectionTag="section">
+
+        <fieldset>
+
+            <div>
+                <h3><uimessage code="zl.registration.patient.healthCenter.label"/></h3>
+                <p>
+                    <personAttribute attributeType="8d87236c-c2cc-11de-8d13-0010c6dffd0f" tags="Visit Location"/>
+                </p>
+            </div>
+
+        </fieldset>
+
+    </section>
+
+    <ifMode mode="VIEW" include="false">
+        <div id="buttons">
+            <button class="submitButton confirm right" onclick="submitHtmlForm()"><uimessage code="mirebalais.save"/><i class="icon-spinner icon-spin icon-2x" style="display: none; margin-left: 10px;"></i></button>
+            <button type="button" class="cancel"><uimessage code="emr.cancel"/></button>
+        </div>
+    </ifMode>
+
+</htmlform>
