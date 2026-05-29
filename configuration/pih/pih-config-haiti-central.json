@@ -65,5 +65,45 @@
     "vitalsHomepageApp",
     "wristbands",
     "zika"
+  ],
+  "registrationConfig": {
+    "afterCreatedActions": [
+      "bean:assignDossierNumber",
+      "bean:assignHealthCenter"
+    ]
+  },
+  "findPatientColumnConfig": [
+    {
+      "type": "identifier",
+      "value": "a541af1e-105c-40bf-b345-ba1fd6a59b85",
+      "label": "ui.i18n.PatientIdentifierType.name.a541af1e-105c-40bf-b345-ba1fd6a59b85",
+      "width": "80px"
+    },
+    {
+      "type": "name",
+      "label": "coreapps.search.name",
+      "width": "200px"
+    },
+    {
+      "type": "gender",
+      "label": "coreapps.gender",
+      "width": "65px"
+    },
+    {
+      "type": "age",
+      "label": "coreapps.age",
+      "width": "50px"
+    },
+    {
+      "type": "birthdate",
+      "label": "coreapps.birthdate",
+      "width": "100px"
+    },
+    {
+      "type": "attribute",
+      "value": "Health Center",
+      "label": "coreapps.healthCenter",
+      "width": "150px"
+    }
   ]
 }
