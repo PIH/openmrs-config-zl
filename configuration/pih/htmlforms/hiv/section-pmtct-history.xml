@@ -145,6 +145,7 @@
                 var encounterDate = '<lookup expression="encounter.getEncounterDatetime().getTime()" />';
                 setUpEdd(encounterDate, '<uimessage code="pihcore.weeks"/>');
                 validateEstimatedDeliveryDate("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.invalidDate" />');
+                eddCannotBeOlderThanTwoWeeks("edd", new Date(+encounterDate), '<uimessage code="pihcore.errors.eddField.twoWeeksOlder" />');
                 setUpExpandableContacts('<uimessage code="pihcore.invalid.phoneNumber"/>');
                 setUpDatepickerStartAndEndDateValidation();
                 setUpObsWithObsDateTime('syph-checkbox');
@@ -559,7 +560,7 @@
                         <uimessage code="pihcore.pregnancy.dueDate"/>
                     </label>
                     <span class="small">
-                        <obs id="edd" conceptId="CIEL:5596" allowFutureDates="true" allowPastDates="false"/>
+                        <obs id="edd" conceptId="CIEL:5596" allowFutureDates="true" allowPastDates="true"/>
                     </span>
                 </div>
              </div>
