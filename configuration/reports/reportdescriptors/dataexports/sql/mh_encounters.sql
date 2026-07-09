@@ -118,18 +118,20 @@ index_desc                        int
 
 
 INSERT INTO temp_mh_encounters (patient_id, encounter_id, visit_id, encounter_datetime, entered_datetime, creator, location_id)
-SELECT  patient_id,
-		encounter_id,
-		visit_id,
-		encounter_datetime,
-		date_created,
-		creator,
-		location_id
+SELECT  e.patient_id,
+		e.encounter_id,
+		e.visit_id,
+		e.encounter_datetime,
+		e.date_created,
+		e.creator,
+		e.location_id
 FROM encounter e
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 where e.voided = 0
 and e.encounter_type = @mhEncounterTypeId
-and (DATE(encounter_datetime) >=  date(@startDate) or @startDate is null)
-and (DATE(encounter_datetime) <=  date(@endDate) or @endDate is null);
+and (DATE(e.encounter_datetime) >=  date(@startDate) or @startDate is null)
+and (DATE(e.encounter_datetime) <=  date(@endDate) or @endDate is null)
+AND v.location_id = @location;
 
 update temp_mh_encounters set user_entered= person_name_of_user(creator);
 update temp_mh_encounters set encounter_location = location_name(location_id);

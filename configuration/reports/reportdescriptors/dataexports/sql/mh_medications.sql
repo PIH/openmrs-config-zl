@@ -20,13 +20,15 @@ dosage_unit varchar(50)
 );
 
 DROP TABLE IF EXISTS temp_encounter;
-CREATE TEMPORARY TABLE temp_encounter AS 
-SELECT patient_id, encounter_id, encounter_datetime, encounter_type 
-FROM encounter e 
+CREATE TEMPORARY TABLE temp_encounter AS
+SELECT e.patient_id, e.encounter_id, e.encounter_datetime, e.encounter_type
+FROM encounter e
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 WHERE e.encounter_type =@mh_enctype
 AND e.voided =0
 and (DATE(encounter_datetime) >=  date(@startDate) or @startDate is null)
-and (DATE(encounter_datetime) <=  date(@endDate) or @endDate is null);;
+and (DATE(encounter_datetime) <=  date(@endDate) or @endDate is null)
+AND v.location_id = @location;;
 
 create index temp_encounter_e on temp_encounter(encounter_id);
 
