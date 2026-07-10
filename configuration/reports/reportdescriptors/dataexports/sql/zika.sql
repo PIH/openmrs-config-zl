@@ -18,6 +18,7 @@ from patient p
 -- only return patients in program
 INNER JOIN patient_program pp on pp.patient_id = p.patient_id and pp.program_id in
       (select program_id from program where program_id = @zikaProgram)
+      AND pp.location_id = @location AND pp.voided = 0
 LEFT OUTER JOIN patient_identifier pid ON pid.patient_identifier_id = (select pid2.patient_identifier_id from patient_identifier pid2 where pid2.patient_id = p.patient_id and pid2.identifier_type = @zlId
                                                  order by pid2.preferred desc, pid2.date_created desc limit 1)
 INNER JOIN current_name_address d on d.person_id = p.patient_id
