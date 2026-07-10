@@ -2,6 +2,12 @@ key: "programs"
 uuid: "345556d3-0975-49c5-9123-e712f8ccbe99"
 name: "mirebalaisreports.programs.name"
 description: "mirebalaisreports.programs.description"
+parameters:
+  - key: "location"
+    type: "org.openmrs.Location"
+    label: "reporting.parameter.location"
+    widgetConfiguration:
+      withTag: "Visit Location"
 datasets:
   - key: "programs"
     type: "sql"
