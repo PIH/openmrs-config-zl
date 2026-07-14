@@ -692,6 +692,76 @@ SELECT
     GROUP BY o.person_id 
  )x;
 
+-- SECTION C
+
+ SELECT
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','11785') AND x.age < 15 THEN 1 ELSE 0 END) AS vaginal_lt15,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','11785') AND x.age BETWEEN 15 AND 19 THEN 1 ELSE 0 END) AS vaginal_15_19,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','11785') AND x.age BETWEEN 20 AND 24 THEN 1 ELSE 0 END) AS vaginal_20_24,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','11785') AND x.age BETWEEN 25 AND 29 THEN 1 ELSE 0 END) AS vaginal_25_29,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','11785') AND x.age >= 30 THEN 1 ELSE 0 END) AS vaginal_30_plus,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','11785') AND x.age IS NULL THEN 1 ELSE 0 END) AS vaginal_unknown,
+
+    
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','9336') AND x.age < 15 THEN 1 ELSE 0 END) AS cesarienne_lt15,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','9336') AND x.age BETWEEN 15 AND 19 THEN 1 ELSE 0 END) AS cesarienne_15_19,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','9336') AND x.age BETWEEN 20 AND 24 THEN 1 ELSE 0 END) AS cesarienne_20_24,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','9336') AND x.age BETWEEN 25 AND 29 THEN 1 ELSE 0 END) AS cesarienne_25_29,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','9336') AND x.age >= 30 THEN 1 ELSE 0 END) AS cesarienne_30_plus,
+
+    SUM(CASE WHEN x.value_coded = concept_from_mapping('PIH','9336') AND x.age IS NULL THEN 1 ELSE 0 END) AS cesarienne_unknown
+    
+    INTO 
+    @VAGINAL_BIRTH_MOTHER_LT15,@VAGINAL_BIRTH_MOTHER_15_19,@DELIVERY_VAGINAL_MOTHER_AGE_20_24,@VAGINAL_BIRTH_MOTHER_25_29,@DELIVERY_VAGINAL_MOTHER_AGE_GT30,@DELIVERY_VAGINAL_MOTHER_AGE_UNKNOWN,
+    @CESAREAN_BIRTH_MOTHER_LT15,@DELIVERY_CESAREAN_MOTHER_AGE_15_19,@DELIVERY_CESAREAN_MOTHER_AGE_20_24,@DELIVERY_CESAREAN_MOTHER_AGE_25_29,@DELIVERY_CESAREAN_MOTHER_AGE_GT30,@DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN
+
+FROM
+(
+    SELECT
+        d.person_id,
+        d.encounter_id,
+        d.value_datetime AS delivery_date,
+        t.value_coded,
+
+        CASE
+            WHEN p.birthdate IS NULL THEN NULL
+            ELSE TIMESTAMPDIFF(YEAR, p.birthdate, d.value_datetime)
+        END AS age
+
+    FROM obs d
+
+    INNER JOIN encounter e
+        ON e.encounter_id = d.encounter_id
+       AND e.voided = 0
+
+    INNER JOIN obs t
+        ON t.encounter_id = d.encounter_id
+       AND t.person_id = d.person_id
+       AND t.concept_id = concept_from_mapping('PIH','11663')
+       AND t.voided = 0
+
+    LEFT JOIN person p
+        ON p.person_id = d.person_id
+       AND p.voided = 0
+
+    WHERE d.concept_id = concept_from_mapping('PIH','5599')
+      AND d.value_datetime IS NOT NULL
+      AND d.voided = 0
+      AND e.encounter_datetime >= @startDate
+      AND e.encounter_datetime < @endDate
+
+) x;
+
 SELECT 
         @MET_COC_LESS_THAN_25_ACCEPTED 'MET_COC_LESS_THAN_25_ACCEPTED',
         @MET_COP_LESS_THAN_25_ACCEPTED 'MET_COP_LESS_THAN_25_ACCEPTED',
@@ -724,4 +794,6 @@ SELECT
         @ANC_PREG_IRON_SUPP_COUNT 'ANC_PREG_IRON_SUPP_COUNT', 0 'ANC_VACC_COMPLETED_MONTH',0 'ANC_PREG_ABORTED_MONTH', 0 'ANC_PAC_MANAGED_MONTH',
         @PNC_1ST_VISIT_TOTAL 'PNC_1ST_VISIT_TOTAL',@DELIVERY_EXT_FACILITY_COUNT 'DELIVERY_EXT_FACILITY_COUNT',
         @FP_METHOD_ACCEPTED_SUBSET 'FP_METHOD_ACCEPTED_SUBSET', @PREG_HOME_DELIV_ANC_FACILITY 'PREG_HOME_DELIV_ANC_FACILITY',
-        @PNC_FIRST_VISIT_LT72H_MONTH 'PNC_FIRST_VISIT_LT72H_MONTH',@PNC_VIT_A_GIVEN 'PNC_VIT_A_GIVEN';
+        @PNC_FIRST_VISIT_LT72H_MONTH 'PNC_FIRST_VISIT_LT72H_MONTH',@PNC_VIT_A_GIVEN 'PNC_VIT_A_GIVEN',
+        @VAGINAL_BIRTH_MOTHER_LT15 'VAGINAL_BIRTH_MOTHER_LT15',@VAGINAL_BIRTH_MOTHER_15_19 'VAGINAL_BIRTH_MOTHER_15_19',@DELIVERY_VAGINAL_MOTHER_AGE_20_24 'DELIVERY_VAGINAL_MOTHER_AGE_20_24',@VAGINAL_BIRTH_MOTHER_25_29 'VAGINAL_BIRTH_MOTHER_25_29',@DELIVERY_VAGINAL_MOTHER_AGE_GT30 'DELIVERY_VAGINAL_MOTHER_AGE_GT30',@DELIVERY_VAGINAL_MOTHER_AGE_UNKNOWN 'DELIVERY_VAGINAL_MOTHER_AGE_UNKNOWN',
+        @CESAREAN_BIRTH_MOTHER_LT15 'CESAREAN_BIRTH_MOTHER_LT15',@DELIVERY_CESAREAN_MOTHER_AGE_15_19 'DELIVERY_CESAREAN_MOTHER_AGE_15_19',@DELIVERY_CESAREAN_MOTHER_AGE_20_24 'DELIVERY_CESAREAN_MOTHER_AGE_20_24',@DELIVERY_CESAREAN_MOTHER_AGE_25_29 'DELIVERY_CESAREAN_MOTHER_AGE_25_29',@DELIVERY_CESAREAN_MOTHER_AGE_GT30 'DELIVERY_CESAREAN_MOTHER_AGE_GT30',@DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN 'DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN';
