@@ -9,6 +9,11 @@ parameters:
   - key: "endDate"
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
+  - key: "location"
+    type: "org.openmrs.Location"
+    label: "reporting.parameter.location"
+    widgetConfiguration:
+      withTag: "Visit Location"
 datasets:
   - {key: "patients", type: "mirebalaisPatientDataSetManager"}
   - {key: "registration", type: "registrationDataSetManager"}
@@ -24,7 +29,6 @@ datasets:
   - {key: "radiologyStudyEncounters", type: "sql", config: "sql/radiologyStudyEncounters.sql"}
   - {key: "radiologyReportEncounters", type: "sql", config: "sql/radiologyReportEncounters.sql"}
   - {key: "dispensing", type: "sql", config: "sql/dispensingData.sql"}
-  - {key: "encounters", type: "haitiEncounterDataSetManager"}
 designs:
   - type: "csv"
     properties:
@@ -46,4 +50,5 @@ config:
   order: "1"
   sites:
     - "MIREBALAIS"
+    - "CENTRAL"
   privilege: "Task: clinical.reports"

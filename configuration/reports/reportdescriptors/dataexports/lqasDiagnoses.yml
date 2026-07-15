@@ -25,6 +25,7 @@ config:
   order: 1004
   sites:
     - "MIREBALAIS"
+    - "CENTRAL"
   components:
     - "dataExports"
     - "allDataExports"

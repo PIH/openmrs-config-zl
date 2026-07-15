@@ -29,5 +29,6 @@ config:
   order: 4
   sites:
     - "MIREBALAIS"
+    - "CENTRAL"
   privilege: "Task: clinical.reports"
 
