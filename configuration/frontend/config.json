@@ -1,4 +1,10 @@
 {
+  "@openmrs/esm-login-app": {
+  "logo": {
+    "src": "zl-logo.png",
+    "alt": "Partners In Health"
+  }
+},
   "@openmrs/esm-primary-navigation-app": {
     "logo": {
       "src": "zl-logo.png",
