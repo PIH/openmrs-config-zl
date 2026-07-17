@@ -16,10 +16,9 @@ parameters:
       withTag: "Visit Location"
 datasets:
   - {key: "patients", type: "mirebalaisPatientDataSetManager"}
-  - {key: "registration", type: "registrationDataSetManager"}
   - {key: "visits", type: "sql", config: "sql/visits.sql"}
   - {key: "checkins", type: "sql", config: "sql/checkins.sql"}
-  - {key: "consultations", type: "consultationsDataSetManager"}
+  - {key: "consultations", type: "sql", config: "sql/consultations.sql"}
   - {key: "diagnoses", type: "sql", config: "sql/diagnoses.sql"}
   - {key: "hospitalizations", type: "sql", config: "sql/hospitalizations.sql"}
   - {key: "postOpNote1", type: "sql", config: "sql/postOpNote1.sql"}
