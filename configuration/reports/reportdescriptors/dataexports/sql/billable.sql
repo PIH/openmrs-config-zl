@@ -32,6 +32,7 @@ INNER JOIN (SELECT person_id, given_name, family_name FROM person_name WHERE voi
 INNER JOIN encounter e ON p.patient_id = e.patient_id and e.voided = 0
 INNER JOIN encounter_type et ON et.encounter_type_id = e.encounter_type
 INNER JOIN location el ON e.location_id = el.location_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 -- Insurance information
 LEFT OUTER JOIN (select insco.person_id, cn_ins.name from obs insco, concept_name cn_ins where insco.voided = 0 AND insco.concept_id =
   (select crm.concept_id from concept_reference_map crm, concept_reference_term crt, concept_reference_source crs
@@ -157,6 +158,7 @@ AND p.patient_id NOT IN (SELECT person_id FROM person_attribute WHERE value = 't
      or Lab_Tests_Ordered is not null)
 AND date(e.encounter_datetime) >= date(@startDate)
 AND date(e.encounter_datetime) <= date(@endDate)
+AND v.location_id = @location
 GROUP BY e.encounter_id, med.obs_group_id
 ORDER BY date(e.encounter_datetime), zlemr,encounter_datetime
 ;

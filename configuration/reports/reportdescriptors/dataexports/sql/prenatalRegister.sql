@@ -69,12 +69,14 @@ enrolled_in_mother_support_group             varchar(3)
 set @type_visit = concept_from_mapping('PIH','8879');
 set @prenatal = concept_from_mapping('PIH','6259');
 INSERT INTO temp_obgyn_visit(patient_id, encounter_id,encounter_datetime, visit_id)
-SELECT DISTINCT e.patient_id, e.encounter_id, e.encounter_datetime, visit_id 
+SELECT DISTINCT e.patient_id, e.encounter_id, e.encounter_datetime, v.visit_id
 FROM encounter e
+INNER JOIN visit v ON v.visit_id = e.visit_id AND v.voided = 0
 INNER JOIN obs o ON o.encounter_id = e.encounter_id AND o.voided = 0 and concept_id = @type_visit and value_coded = @prenatal
 WHERE e.voided = 0 AND encounter_type = @obgyn_encounter
 AND ((date(e.encounter_datetime) >=@startDate) or @startDate is null)
 AND ((date(e.encounter_datetime) <=@endDate)  or @endDate is null)
+AND v.location_id = @location
 ;
 
 

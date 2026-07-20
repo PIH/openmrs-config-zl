@@ -22,7 +22,8 @@ INNER JOIN encounter pc
 
 INNER JOIN location loc
    ON pc.location_id = loc.location_id
-   AND loc.location_id = @location
+
+INNER JOIN visit v ON pc.visit_id = v.visit_id AND v.voided = 0
 
 INNER JOIN patient_identifier d
    ON p.patient_id = d.patient_id
@@ -99,6 +100,7 @@ INNER JOIN person_name un
    ON u.person_id = un.person_id
 
 WHERE p.voided = 0
+AND v.location_id = @location
 
 GROUP BY pc.encounter_id
 

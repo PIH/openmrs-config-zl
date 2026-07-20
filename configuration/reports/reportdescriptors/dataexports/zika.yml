@@ -2,6 +2,12 @@ key: "zika"
 uuid: "c6bafa69-1745-4838-9171-cffaacf8fb1d"
 name: "mirebalaisreports.zika.name"
 description: "mirebalaisreports.zika.description"
+parameters:
+  - key: "location"
+    type: "org.openmrs.Location"
+    label: "reporting.parameter.location"
+    widgetConfiguration:
+     withTag: "Visit Location"
 datasets:
   - key: "zika"
     type: "sql"

@@ -13,6 +13,7 @@ config:
   category: "DAILY"
   sites:
     - "MIREBALAIS"
+    - "CENTRAL"
   order: "4"
   pageProvider: "pihcore"
   pagePath: "reports/inpatientStatsDailyReport"

@@ -21,6 +21,7 @@ INNER JOIN person pr ON p.patient_id = pr.person_id AND pr.voided = 0
 INNER JOIN current_name_address n on n.person_id = p.patient_id
 -- program info
 INNER JOIN patient_program pp on pp.patient_id = p.patient_id
+            AND pp.location_id = @location AND pp.voided = 0
 INNER JOIN program prog ON prog.program_id = pp.program_id
 INNER JOIN concept_name cn_prog on cn_prog.concept_id = prog.concept_id and cn_prog.locale = 'en' and cn_prog.locale_preferred = '1'  and cn_prog.voided = 0
 LEFT OUTER JOIN concept_name cn_out on cn_out.concept_id = pp.outcome_concept_id and cn_out.locale = 'en' and cn_out.locale_preferred = '1'  and cn_out.voided = 0

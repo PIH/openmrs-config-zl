@@ -89,5 +89,6 @@ AND voided = 0)
 
 AND v.date_started >= @startDate
 AND v.date_started < ADDDATE(@endDate, INTERVAL 1 DAY)
+AND v.location_id = @location
 GROUP BY v.visit_id
 ;

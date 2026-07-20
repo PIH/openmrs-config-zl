@@ -9,11 +9,16 @@ parameters:
   - key: "endDate"
     type: "java.util.Date"
     label: "reporting.parameter.endDate"
+  - key: "location"
+    type: "org.openmrs.Location"
+    label: "reporting.parameter.location"
+    widgetConfiguration:
+      withTag: "Visit Location"
 datasets:
   - {key: "patients", type: "mirebalaisPatientDataSetManager"}
   - {key: "checkins", type: "sql", config: "sql/checkins.sql"}
   - {key: "vitals", type: "sql", config: "sql/vitals.sql"}
-  - {key: "consultations", type: "consultationsDataSetManager"}
+  - {key: "consultations", type: "sql", config: "sql/consultations.sql"}
   - {key: "diagnoses", type: "sql", config: "sql/diagnoses.sql"}
   - {key: "visits", type: "sql", config: "sql/visits.sql"}
   - {key: "hospitalizations", type: "sql", config: "sql/hospitalizations.sql"}
@@ -31,4 +36,5 @@ config:
   order: "2"
   sites:
     - "MIREBALAIS"
+    - "CENTRAL"
   privilege: "Task: clinical.reports"
