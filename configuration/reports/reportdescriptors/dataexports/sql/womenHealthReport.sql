@@ -96,9 +96,10 @@ SELECT
     INTO
           @MET_COC_LESS_THAN_25_ACCEPTED,@MET_COP_LESS_THAN_25_ACCEPTED,@MET_DEPO_PROVERA_LESS_THAN_25_ACCEPTED,@MET_IMPL_LESS_THAN_25_ACCEPTED,@MET_DIU_LESS_THAN_25_ACCEPTED,@MET_CONDOM_LESS_THAN_25_ACCEPTED,@MET_MAMA_LESS_THAN_25_ACCEPTED,@MET_COLLIER_LESS_THAN_25_ACCEPTED,@MET_CCV_LESS_THAN_25_ACCEPTED,
           @MET_COC_MORE_25_ACCEPTED,@MET_COP_MORE_25_ACCEPTED,@MET_DEPO_PROVERA_MORE_25_ACCEPTED,@MET_IMPL_MORE_25_ACCEPTED,@MET_DIU_USED_MORE_25_ACCEPTED,@MET_CONDOM_MORE_25_ACCEPTED,@MET_MAMA_MORE_25_ACCEPTED,@MET_COLLIER_MORE_25_ACCEPTED,@MET_CCV_MORE_25_ACCEPTED
-    FROM 
-    obs o 
-   INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+    FROM
+    obs o
+   INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+   INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
    INNER JOIN person p ON p.person_id = o.person_id
    LEFT JOIN (
 	    SELECT encounter_id, value_coded
@@ -114,7 +115,8 @@ SELECT
     AND e.voided = 0
     AND o.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
-    AND DATE(e.encounter_datetime) < @endDate;
+    AND DATE(e.encounter_datetime) < @endDate
+    AND v.location_id = @location;
 
   SELECT 
   SUM(IF( planing_method.value_coded=concept_from_mapping("PIH","1719") 
@@ -128,9 +130,10 @@ SELECT
     INTO
       @MET_CCV,@MET_IMPL,@MET_DIU
 
-    FROM 
-    obs o 
-   INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+    FROM
+    obs o
+   INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+   INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
    INNER JOIN person p ON p.person_id = o.person_id
    LEFT JOIN (
 	    SELECT encounter_id, value_coded
@@ -142,7 +145,8 @@ SELECT
     AND e.voided = 0
     AND o.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
-    AND DATE(e.encounter_datetime) < @endDate;
+    AND DATE(e.encounter_datetime) < @endDate
+    AND v.location_id = @location;
 
 
 -- NUMBER 0F CONDOMS DONATED
@@ -150,9 +154,10 @@ SELECT
      SUM(nb_of_condoms.value_numeric)
     INTO
       @NB_OF_CONDOMS
-    FROM 
-    obs o 
-   INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+    FROM
+    obs o
+   INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+   INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
    INNER JOIN person p ON p.person_id = o.person_id
    LEFT JOIN (
 	    SELECT encounter_id, value_numeric  
@@ -164,7 +169,8 @@ SELECT
     AND e.voided = 0
     AND o.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
-    AND DATE(e.encounter_datetime) < @endDate;
+    AND DATE(e.encounter_datetime) < @endDate
+    AND v.location_id = @location;
 
 -- B1 Prenatal consultation
 SELECT
@@ -193,8 +199,9 @@ SELECT
             WHEN o.concept_id = concept_from_mapping("PIH","3267")
             AND  o.value_datetime IS NOT NULL
             THEN 1 ELSE 0 END)
-INTO  @ANC_1ST_VISIT_T1,@ANC_1ST_VISIT_T2,@ANC_1ST_VISIT_T3,@ANC_1ST_VISIT_GA_UNK,@ANC_1ST_VISIT_HIV_TESTED,@ANC_1ST_VISIT_HIV_POS,@ANC_1ST_VISIT_SYPH_TESTED 
+INTO  @ANC_1ST_VISIT_T1,@ANC_1ST_VISIT_T2,@ANC_1ST_VISIT_T3,@ANC_1ST_VISIT_GA_UNK,@ANC_1ST_VISIT_HIV_TESTED,@ANC_1ST_VISIT_HIV_POS,@ANC_1ST_VISIT_SYPH_TESTED
 FROM encounter e
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN (
     SELECT
         e.encounter_id
@@ -241,7 +248,8 @@ INNER JOIN person p
     AND o.voided = 0
     AND e.voided = 0
     WHERE  e.encounter_datetime >=  @startDate
-	AND e.encounter_datetime <   @endDate;
+	AND e.encounter_datetime <   @endDate
+	AND v.location_id = @location;
 
 
 SELECT
@@ -280,6 +288,7 @@ FROM (
             WHEN o_trimester.value_coded = concept_from_mapping('PIH','10902') THEN 'Trim3'
         END AS trimestre
     FROM encounter fs
+    INNER JOIN visit v_fs ON fs.visit_id = v_fs.visit_id AND v_fs.voided = 0
     INNER JOIN obs o_suivi
         ON o_suivi.encounter_id = fs.encounter_id
         AND o_suivi.value_coded = concept_from_mapping('PIH','7383')
@@ -336,6 +345,7 @@ FROM (
       AND fs.encounter_datetime >=  @startDate
       AND fs.encounter_datetime <   @endDate
       AND fs.voided = 0
+      AND v_fs.location_id = @location
     GROUP BY fs.patient_id, fs.encounter_id, o_trimester.value_coded
 ) x;
 
@@ -343,8 +353,9 @@ FROM (
 SELECT 
 COUNT(x.person_id ) INTO @ANC_DPA_MONTH
 FROM (
-SELECT o.person_id FROM encounter e 
-INNER JOIN obs o on o.encounter_id =e.encounter_id 
+SELECT o.person_id FROM encounter e
+INNER JOIN obs o on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN (
         SELECT
             e.patient_id,e.encounter_id ,
@@ -363,20 +374,22 @@ INNER JOIN (
     ) last_nv
         ON last_nv.patient_id = e.patient_id
 WHERE
- e.encounter_datetime = last_nv.last_new_visit_date 
+ e.encounter_datetime = last_nv.last_new_visit_date
  AND e.encounter_datetime >= @startDate
  AND e.encounter_datetime <  @endDate
  AND o.voided =0
  AND e.voided =0
  AND o.concept_id =concept_from_mapping('PIH','5596')
- GROUP BY o.person_id 
+ AND v.location_id = @location
+ GROUP BY o.person_id
  )x;
 
 -- # of high-risk pregnancies
 SELECT COUNT(x.person_id ) INTO @ANC_PREG_HR_CONDITIONS
  FROM (
     SELECT o.person_id FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -395,20 +408,22 @@ SELECT COUNT(x.person_id ) INTO @ANC_PREG_HR_CONDITIONS
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    e.encounter_datetime   >= last_nv.last_new_visit_date
     AND e.encounter_datetime >=  @startDate
     AND e.encounter_datetime <  @endDate
     AND o.voided =0
     AND e.voided =0
     AND o.concept_id =concept_from_mapping('PIH','11673')
-    GROUP BY o.person_id 
+    AND v.location_id = @location
+    GROUP BY o.person_id
  )x;
 
 -- # of pregnant women who had their first visit since October during the month of the report.
  SELECT COUNT(x.person_id ) INTO  @ANC_1ST_VISIT_SINCE_OCT_MONTH
   FROM (
     SELECT o.person_id FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -427,21 +442,23 @@ SELECT COUNT(x.person_id ) INTO @ANC_PREG_HR_CONDITIONS
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime = last_nv.last_new_visit_date 
+    e.encounter_datetime = last_nv.last_new_visit_date
     AND e.encounter_datetime >=  @startDate
     AND e.encounter_datetime <  @endDate
     AND o.voided =0
     AND e.voided =0
     AND o.value_coded = concept_from_mapping('PIH','6259')
-    GROUP BY o.person_id 
+    AND v.location_id = @location
+    GROUP BY o.person_id
  )x;
 
 -- number of pregnant women who received iron during prenatal visits (ferrous sulfate, iron, iron dextran)
 SELECT COUNT(x.person_id ) INTO  @ANC_PREG_IRON_SUPP_COUNT
     FROM (
-    SELECT o.person_id FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    SELECT o.person_id FROM encounter e
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
     INNER JOIN orders o2 on o2.encounter_id = e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -460,7 +477,7 @@ SELECT COUNT(x.person_id ) INTO  @ANC_PREG_IRON_SUPP_COUNT
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime >= last_nv.last_new_visit_date 
+    e.encounter_datetime >= last_nv.last_new_visit_date
     AND e.encounter_datetime >=  @startDate
     AND e.encounter_datetime <  @endDate
     AND o.voided =0
@@ -468,7 +485,8 @@ SELECT COUNT(x.person_id ) INTO  @ANC_PREG_IRON_SUPP_COUNT
     AND o.value_coded = concept_from_mapping('PIH','6259')
     and o2.concept_id in (concept_from_mapping('PIH','256'),concept_from_mapping('PIH','9267'))
     AND o2.voided =0
-    GROUP BY o.person_id 
+    AND v.location_id = @location
+    GROUP BY o.person_id
   )x;
 
 
@@ -479,6 +497,7 @@ SELECT COUNT(x.person_id ) INTO  @ANC_PREG_IRON_SUPP_COUNT
        COUNT(*)
    INTO @PNC_1ST_VISIT_TOTAL
 FROM encounter e
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN (
     SELECT
         e.encounter_id
@@ -519,13 +538,15 @@ INNER JOIN (
 ) last_encounters
     ON last_encounters.encounter_id = e.encounter_id
     WHERE  e.encounter_datetime >= @startDate
-	AND e.encounter_datetime <  @endDate;
+	AND e.encounter_datetime <  @endDate
+	AND v.location_id = @location;
 
 -- # of women who gave birth at another facility
 SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
  FROM (
     SELECT o.person_id FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -544,13 +565,14 @@ SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    e.encounter_datetime   >= last_nv.last_new_visit_date
     AND o.voided =0
     AND e.voided =0
     AND o.concept_id =concept_from_mapping('PIH','11348')
     AND o.value_coded  =concept_from_mapping('PIH','8856')
     AND e.encounter_datetime >= @startDate
     AND e.encounter_datetime <  @endDate
+    AND v.location_id = @location
     GROUP BY o.person_id
  )x;
 
@@ -559,7 +581,8 @@ SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
  SELECT COUNT(x.person_id ) INTO @FP_METHOD_ACCEPTED_SUBSET
  FROM (
     SELECT o.person_id FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -578,13 +601,14 @@ SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    e.encounter_datetime   >= last_nv.last_new_visit_date
     AND o.voided =0
     AND e.voided =0
     AND o.concept_id =concept_from_mapping('PIH','374')
     AND e.encounter_datetime >= @startDate
     AND e.encounter_datetime <  @endDate
-    GROUP BY o.person_id 
+    AND v.location_id = @location
+    GROUP BY o.person_id
  )x;
 
 
@@ -592,7 +616,8 @@ SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
  SELECT COUNT(x.person_id ) INTO @PNC_VIT_A_GIVEN
  FROM (
     SELECT o.person_id FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -611,14 +636,15 @@ SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    e.encounter_datetime   >= last_nv.last_new_visit_date
     AND o.voided =0
     AND e.voided =0
     AND o.concept_id =concept_from_mapping('PIH','13255')
     AND o.value_coded  =concept_from_mapping('PIH','4063')
     AND e.encounter_datetime >= @startDate
     AND e.encounter_datetime <  @endDate
-    GROUP BY o.person_id 
+    AND v.location_id = @location
+    GROUP BY o.person_id
  )x;
 
 
@@ -626,7 +652,8 @@ SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
  SELECT COUNT(x.person_id ) INTO @PREG_HOME_DELIV_ANC_FACILITY
  FROM (
     SELECT o.person_id FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -645,14 +672,15 @@ SELECT COUNT(x.person_id ) INTO @DELIVERY_EXT_FACILITY_COUNT
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    e.encounter_datetime   >= last_nv.last_new_visit_date
     AND o.voided =0
     AND e.voided =0
     AND o.concept_id =concept_from_mapping('PIH','11348')
     AND o.value_coded  =concept_from_mapping('PIH','7889')
     AND e.encounter_datetime >= @startDate
     AND e.encounter_datetime <  @endDate
-    GROUP BY o.person_id 
+    AND v.location_id = @location
+    GROUP BY o.person_id
  )x;
 
 -- # of women seen at their first postnatal visit during the reporting month within 72 hours of delivery
@@ -664,7 +692,8 @@ SELECT
     END) INTO  @PNC_FIRST_VISIT_LT72H_MONTH
  FROM (
     SELECT o.person_id,o.value_datetime,last_nv.last_new_visit_date  FROM encounter e 
-    INNER JOIN obs o on o.encounter_id =e.encounter_id 
+    INNER JOIN obs o on o.encounter_id =e.encounter_id
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
             SELECT
                 e.patient_id,e.encounter_id ,
@@ -683,13 +712,14 @@ SELECT
         ) last_nv
             ON last_nv.patient_id = e.patient_id
     WHERE
-    e.encounter_datetime   >= last_nv.last_new_visit_date 
+    e.encounter_datetime   >= last_nv.last_new_visit_date
     AND o.voided =0
     AND e.voided =0
     AND o.concept_id =concept_from_mapping('PIH','5599')
     AND e.encounter_datetime >=  @startDate
     AND e.encounter_datetime <  @endDate
-    GROUP BY o.person_id 
+    AND v.location_id = @location
+    GROUP BY o.person_id
  )x;
 
 -- SECTION C
@@ -744,6 +774,10 @@ FROM
         ON e.encounter_id = d.encounter_id
        AND e.voided = 0
 
+    INNER JOIN visit v
+        ON v.visit_id = e.visit_id
+       AND v.voided = 0
+
     INNER JOIN obs t
         ON t.encounter_id = d.encounter_id
        AND t.person_id = d.person_id
@@ -759,6 +793,7 @@ FROM
       AND d.voided = 0
       AND e.encounter_datetime >= @startDate
       AND e.encounter_datetime < @endDate
+      AND v.location_id = @location
 
 ) x;
 

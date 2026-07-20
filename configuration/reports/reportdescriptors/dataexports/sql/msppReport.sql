@@ -37,6 +37,7 @@ FROM (
        DISTINCT e.patient_id,
         TIMESTAMPDIFF(YEAR, pr.birthdate, e.encounter_datetime) AS age
     FROM encounter e
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN patient p ON e.patient_id = p.patient_id AND p.voided = 0
     INNER JOIN person pr ON pr.person_id = p.patient_id AND pr.voided = 0
 
@@ -51,10 +52,11 @@ FROM (
         ON e.patient_id = first_visit.patient_id
         AND e.encounter_datetime = first_visit.first_visit_this_year
 
-    WHERE e.voided = 0 
+    WHERE e.voided = 0
     AND e.encounter_type = encounter_type('55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b')
     AND DATE(e.encounter_datetime) >= @firstDate
     AND DATE(e.encounter_datetime) < @endDate
+    AND v.location_id = @location
 ) t;
 
 -- Subsequent visits 
@@ -82,10 +84,11 @@ FROM (
     INNER JOIN person pr 
         ON p.patient_id = pr.person_id AND pr.voided = 0
 
-    INNER JOIN encounter e 
-        ON p.patient_id = e.patient_id 
-        AND e.voided = 0 
+    INNER JOIN encounter e
+        ON p.patient_id = e.patient_id
+        AND e.voided = 0
         AND e.encounter_type = encounter_type('55a0d3ea-a4d7-4e88-8f01-5aceb2d3c61b')
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     INNER JOIN (
         SELECT patient_id, MIN(encounter_datetime) AS first_visit_this_year
         FROM encounter
@@ -93,7 +96,7 @@ FROM (
         AND voided = 0
         AND YEAR(encounter_datetime) = YEAR(CURDATE())
         GROUP BY patient_id
-    ) first_visit 
+    ) first_visit
         ON e.patient_id = first_visit.patient_id
 
     WHERE p.voided = 0
@@ -102,6 +105,7 @@ FROM (
 
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate
+    AND v.location_id = @location
 
     AND p.patient_id NOT IN (
         SELECT person_id 
@@ -118,6 +122,7 @@ SELECT
     COUNT(*)
    INTO @pregnant_visits_n
 FROM encounter e
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN (
     SELECT
         e.encounter_id
@@ -158,7 +163,8 @@ INNER JOIN (
 ) last_encounters
     ON last_encounters.encounter_id = e.encounter_id
     WHERE  e.encounter_datetime >= @startDate
-	AND e.encounter_datetime <  @endDate;
+	AND e.encounter_datetime <  @endDate
+	AND v.location_id = @location;
 
 
 -- Subsequent visits for pregnancy women
@@ -171,6 +177,7 @@ FROM (
         DATE(fs.encounter_datetime) AS visit_date
 
     FROM encounter fs
+    INNER JOIN visit v_fs ON fs.visit_id = v_fs.visit_id AND v_fs.voided = 0
 
     INNER JOIN obs o_suivi
         ON o_suivi.encounter_id = fs.encounter_id
@@ -183,7 +190,7 @@ FROM (
         AND o_pn.concept_id  = concept_from_mapping('PIH', '8879')
         AND o_pn.value_coded = concept_from_mapping('PIH', '6259')
         AND o_pn.voided = 0
-        
+
     WHERE fs.voided = 0
     AND NOT EXISTS (
         SELECT 1
@@ -202,9 +209,10 @@ FROM (
           AND DATE(e_new.encounter_datetime) = DATE(fs.encounter_datetime)
           AND e_new.voided = 0
     )
-    
+
     AND fs.encounter_datetime >= @startDate
     AND fs.encounter_datetime < @endDate
+    AND v_fs.location_id = @location
 
     GROUP BY fs.patient_id, DATE(fs.encounter_datetime)
 
@@ -215,6 +223,7 @@ SELECT
        COUNT(*)
    INTO @clientPfN
 FROM encounter e
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN (
     SELECT
         e.encounter_id
@@ -255,7 +264,8 @@ INNER JOIN (
 ) last_encounters
     ON last_encounters.encounter_id = e.encounter_id
     WHERE  e.encounter_datetime >= @startDate
-	AND e.encounter_datetime <  @endDate;
+	AND e.encounter_datetime <  @endDate
+	AND v.location_id = @location;
 
 
 -- SUBSEQUENT CLIENT PF
@@ -268,6 +278,7 @@ FROM (
         DATE(fs.encounter_datetime) AS visit_date
 
     FROM encounter fs
+    INNER JOIN visit v_fs ON fs.visit_id = v_fs.visit_id AND v_fs.voided = 0
 
     INNER JOIN obs o_suivi
         ON o_suivi.encounter_id = fs.encounter_id
@@ -303,6 +314,7 @@ FROM (
     )
     AND fs.encounter_datetime >= @startDate
     AND fs.encounter_datetime < @endDate
+    AND v_fs.location_id = @location
 
     GROUP BY fs.patient_id, DATE(fs.encounter_datetime)
 
@@ -316,10 +328,12 @@ from
 obs o 
 INNER JOIN encounter e 
 ON o.encounter_id =e.encounter_id  
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 WHERE o.value_coded =concept_from_mapping('PIH','7202')
 AND o.voided =0
 AND date(e.encounter_datetime) >= @startDate
 AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location
 GROUP BY e.patient_id, DATE(e.encounter_datetime);
 
 -- EXAMEN LABORATOIRE
@@ -330,9 +344,12 @@ CREATE TEMPORARY TABLE pregnancy_patient_temp(person_id int,pregnant int);
    SELECT
     o.person_id, IF(DATE(o.value_datetime) > CURDATE(), 1, 0)
     FROM obs o
+    INNER JOIN encounter e ON o.encounter_id = e.encounter_id AND e.voided = 0
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
     WHERE o.concept_id = concept_from_mapping('PIH', '5596')
     AND o.voided = 0
     AND DATE(o.value_datetime) > CURDATE()
+    AND v.location_id = @location
     GROUP BY o.person_id;
 
 
@@ -341,6 +358,7 @@ SELECT COUNT(*) INTO @total_urine_test_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -350,7 +368,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', '12375')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
 
 
 -- TOTAL TEST D'HEMOGRAME
@@ -358,6 +377,7 @@ SELECT COUNT(*) INTO @total_hemogram_test_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -367,7 +387,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', '11711')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
 
  -- TOTAL TEST MALARIA TEST RAPID
@@ -375,6 +396,7 @@ SELECT COUNT(*) INTO @totat_malaria_rapd_test_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -384,13 +406,15 @@ WHERE o.concept_id = concept_from_mapping('PIH', '11464')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
   -- TOTAL TEST RPR
 SELECT COUNT(*) INTO @total_rpr_test_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -400,7 +424,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', 'RPR')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
  
   -- TOTAL TEST  HIV
@@ -408,6 +433,7 @@ SELECT COUNT(*) INTO @total_hiv_test_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -417,13 +443,15 @@ WHERE o.concept_id = concept_from_mapping('PIH', '1040')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
   -- TOTAL SICKLING TEST
 SELECT COUNT(*) INTO @total_sickling_test_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -433,7 +461,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', '12716')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
  
   -- TOTAL TEST GROUPE SANGUIN
@@ -441,6 +470,7 @@ SELECT COUNT(*) INTO @total_blood_type_test_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -450,7 +480,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', 'BLOOD TYPING')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
    
  
 
@@ -461,13 +492,15 @@ SELECT COUNT(*) INTO @total_blood_type_test
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 WHERE o.concept_id = concept_from_mapping('PIH', 'BLOOD TYPING')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
   -- TOTAL SICKLING TEST NOT PREGNANT
 SELECT COUNT(*) 
@@ -475,12 +508,14 @@ INTO @total_sickling_test
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 WHERE o.concept_id = concept_from_mapping('PIH', '12716')
   AND o.voided = 0 
   AND e.voided = 0
-  AND date(e.encounter_datetime) >= @startDate;
+  AND date(e.encounter_datetime) >= @startDate
+  AND v.location_id = @location;
 
   
   
@@ -491,13 +526,15 @@ INTO @total_malaria_rapd_test
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 WHERE o.concept_id = concept_from_mapping('PIH', '11464')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
 
 
 
@@ -507,6 +544,7 @@ SELECT COUNT(*) INTO @totat_malaria_rapd_test_positif
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 WHERE o.concept_id = concept_from_mapping('PIH', '11464')
@@ -514,7 +552,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', '11464')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
  
  -- TOTAL TEST MALARIA TEST RAPID POSITIVE
@@ -522,6 +561,7 @@ SELECT COUNT(*) INTO @totat_malaria_rapd_test_positif_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -532,13 +572,15 @@ WHERE o.concept_id = concept_from_mapping('PIH', '11464')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
   -- TOTAL TEST RPR POSITIVE
  SELECT COUNT(*) INTO @total_rpr_test_positif_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -549,7 +591,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', 'RPR')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
  
  
@@ -558,6 +601,7 @@ SELECT COUNT(*) INTO @total_hiv_test_positif_women
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 INNER JOIN pregnancy_patient_temp pr
@@ -568,7 +612,8 @@ WHERE o.concept_id = concept_from_mapping('PIH', '1040')
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
 
 --  FOR Malaria Test microscopique
  
@@ -576,6 +621,7 @@ WHERE o.concept_id = concept_from_mapping('PIH', '1040')
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 WHERE o.value_coded = concept_from_mapping("PIH","11463")
@@ -583,7 +629,8 @@ WHERE o.value_coded = concept_from_mapping("PIH","11463")
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
  
  
@@ -591,6 +638,7 @@ SELECT COUNT(1) INTO @malaria_test_microscopique_oval
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 WHERE o.value_coded = concept_from_mapping("PIH","20083")
@@ -598,13 +646,15 @@ WHERE o.value_coded = concept_from_mapping("PIH","20083")
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
 
 SELECT COUNT(1) INTO @malaria_test_microscopique_malariae 
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
 WHERE o.value_coded = concept_from_mapping("PIH","20082")
@@ -612,12 +662,14 @@ WHERE o.value_coded = concept_from_mapping("PIH","20082")
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
 SELECT COUNT(1) INTO @malaria_test_microscopique_falciparum 
 FROM obs o 
 INNER JOIN encounter e 
     ON o.encounter_id = e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p
     ON p.person_id = o.person_id
  WHERE o.value_coded = concept_from_mapping("PIH","11461")
@@ -625,7 +677,8 @@ INNER JOIN person p
   AND o.voided = 0 
   AND e.voided = 0
   AND date(e.encounter_datetime) >= @startDate
-  AND date(e.encounter_datetime) < @endDate;
+  AND date(e.encounter_datetime) < @endDate
+  AND v.location_id = @location;
  
 SELECT  (@malaria_test_microscopique_vivax +
          @malaria_test_microscopique_oval +
@@ -655,6 +708,7 @@ INTO
 @PHYSICAL_VIOL_WOMEN_LEFT,@PHYSICAL_VIOL_MEN_LEFT,@PHYSICAL_VIOL_KID_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p ON p.person_id = o.person_id
 LEFT JOIN (
 SELECT encounter_id,value_coded  from obs where concept_id =concept_from_mapping("PIH","8620")
@@ -665,7 +719,8 @@ and o.value_coded =concept_from_mapping("PIH","11533")
 and e.voided =0
 and o.voided =0
 AND date(e.encounter_datetime) >= @startDate
- AND date(e.encounter_datetime) < @endDate;
+ AND date(e.encounter_datetime) < @endDate
+ AND v.location_id = @location;
  
 
 -- SEXUAL VIOLENCE 
@@ -693,6 +748,7 @@ INTO
 @SEX_VIOL_WOMEN_LEFT,@SEX_VIOL_MEN_LEFT,@SEX_VIOL_KIDF_LEFT,@SEX_VIOL_KIDM_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p ON p.person_id = o.person_id
 LEFT JOIN (
 SELECT encounter_id,value_coded  from obs where concept_id =concept_from_mapping("PIH","8620")
@@ -703,7 +759,8 @@ and o.value_coded = concept_from_mapping("PIH","11049")
 and e.voided =0
 and o.voided =0
  AND date(e.encounter_datetime) >= @startDate
-    AND date(e.encounter_datetime) < @endDate;
+    AND date(e.encounter_datetime) < @endDate
+    AND v.location_id = @location;
 
 -- OTHER VIOLENCE
 SELECT 
@@ -723,6 +780,7 @@ INTO @OTHER_SEX_VIOL_WOMEN_DEAD,@OTHER_SEX_VIOL_MEN_DEAD,@OTHER_SEX_VIOL_KID_DEA
 @OTHER_SEX_VIOL_WOMEN_TRANSFER,@OTHER_SEX_VIOL_MEN_TRANSFER,@OTHER_SEX_VIOL_KID_TRANSFER,@OTHER_SEX_VIOL_WOMEN_LEFT,@OTHER_SEX_VIOL_MEN_LEFT,@OTHER_SEX_VIOL_KID_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person p ON p.person_id = o.person_id
 LEFT JOIN (
 SELECT encounter_id,value_coded  from obs where concept_id =concept_from_mapping("PIH","8620")
@@ -737,7 +795,8 @@ where o.concept_id =concept_from_mapping("PIH","3064")
 and e.voided =0
 and o.voided =0
 AND date(e.encounter_datetime) >= @startDate
- AND date(e.encounter_datetime) < @endDate;
+ AND date(e.encounter_datetime) < @endDate
+ AND v.location_id = @location;
  
 -- DOMESTIC ACCIDENT
 SELECT 
@@ -748,6 +807,7 @@ SUM(IF(disp.value_coded=@death,1,0))
 INTO @ACC_DOMES_LEFT,@ACC_DOMES_TREATED,@ACC_DOMES_TRANSFER,@ACC_DOMES_DEAD
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 LEFT JOIN (
 SELECT encounter_id,value_coded  FROM obs WHERE concept_id =concept_from_mapping("PIH","8620")
 GROUP BY encounter_id 
@@ -757,7 +817,8 @@ AND o.value_coded = concept_from_mapping('PIH','Home accident')
 AND e.voided =0
 AND o.voided =0
 AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location;
       
 -- WORK ACCIDENT
 SELECT 
@@ -768,6 +829,7 @@ SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician,1,0))
 INTO @ACC_TR_DEAD,@ACC_TR_TREATED,@ACC_TR_TRANSFER,@ACC_TR_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 LEFT JOIN (
 SELECT encounter_id,value_coded  from obs where concept_id =concept_from_mapping("PIH","8620")
 GROUP BY encounter_id 
@@ -777,7 +839,8 @@ and o.value_coded = concept_from_mapping("PIH","8851")
 and e.voided =0
 and o.voided =0
 AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location;
    
 
  
@@ -790,6 +853,7 @@ SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician,1,0))
 INTO @ACC_TR_MOTOR_DEAD,@ACC_TR_MOTOR_TREATED,@ACC_TR_MOTOR_TRANSFER,@ACC_TR_MOTOR_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 LEFT JOIN (
 SELECT encounter_id,value_coded  from obs where concept_id =concept_from_mapping("PIH","8620")
 GROUP BY encounter_id 
@@ -799,7 +863,8 @@ and o.value_coded = concept_from_mapping("PIH","9579")
 and e.voided =0
 and o.voided =0
 AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location;
 
 
 -- TRANSPORT-VEHICLE ACCIDENT
@@ -811,6 +876,7 @@ SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician,1,0))
 INTO @ACC_TR_VEHICLE_DEAD,@ACC_TR_VEHICLE_TREATED,@ACC_TR_VEHICLE_TRANSFER,@ACC_TR_VEHICLE_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 LEFT JOIN (
 SELECT encounter_id,value_coded  from obs where concept_id =concept_from_mapping("PIH","8620")
 GROUP BY encounter_id 
@@ -820,7 +886,8 @@ and o.value_coded= concept_from_mapping("PIH","9556")
 and e.voided =0
 and o.voided =0
 AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location;
 
 -- OTHER ACCIDENTS 
 SELECT 
@@ -831,6 +898,7 @@ SUM(IF(disp.value_coded=@LeftWithoutSeeingClinician,1,0))
 INTO @OTHER_ACC_TR_DEAD,@OTHER_ACC_TR_TREATED,@OTHER_ACC_TR_TRANSFER,@OTHER_ACC_TR_LEFT
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 LEFT JOIN (
 SELECT encounter_id,value_coded  from obs where concept_id =concept_from_mapping("PIH","8620")
 GROUP BY encounter_id 
@@ -840,7 +908,8 @@ and o.value_coded = concept_from_mapping("PIH","8437")
 and e.voided =0
 and o.voided =0
 AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location;
 
 -- Urgences Medico-Chirurgicales
 SELECT 
@@ -857,11 +926,13 @@ SUM(IF(o.value_coded=concept_from_mapping('PIH','83'),1,0))
 INTO @UMC_TRAUMA,@UMC_DIGESTIVE,@UMC_RESPIRATORY,@UMC_OBSTETRICS,@UMC_OSTEO_ARTICULAR,@UMC_OTHER
 FROM obs o 
 INNER JOIN encounter e on o.encounter_id =e.encounter_id
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 WHERE o.concept_id =concept_from_mapping("PIH","Triage diagnosis")
 AND o.voided =0
 AND e.voided =0
 AND date(e.encounter_datetime) >= @startDate
-AND date(e.encounter_datetime) < @endDate;
+AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location;
 
 -- ACCOUCHEMENT
 
@@ -910,6 +981,7 @@ SELECT
     @UNKNOWN_AGE_INST
 FROM obs o 
 JOIN encounter e  ON o.encounter_id = e.encounter_id   
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 JOIN person p  ON p.person_id = o.person_id
   LEFT JOIN (
     SELECT encounter_id, value_coded
@@ -921,7 +993,8 @@ JOIN person p  ON p.person_id = o.person_id
    AND o.voided = 0
    AND e.voided = 0
    AND DATE(e.encounter_datetime) >= @startDate
-   AND DATE(e.encounter_datetime) < @endDate;
+   AND DATE(e.encounter_datetime) < @endDate
+   AND v.location_id = @location;
 --    NAISSANCE
 SELECT
 
@@ -959,6 +1032,7 @@ SELECT
 	@INST_NO_WEIGHT
 FROM obs o 
 JOIN encounter e  ON o.encounter_id = e.encounter_id   
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 JOIN person p  ON p.person_id = o.person_id
   LEFT JOIN (
     SELECT encounter_id, value_coded
@@ -976,7 +1050,8 @@ JOIN person p  ON p.person_id = o.person_id
    AND o.voided = 0
    AND e.voided = 0
    AND DATE(e.encounter_datetime) >= @startDate
-   AND DATE(e.encounter_datetime) < @endDate;
+   AND DATE(e.encounter_datetime) < @endDate
+   AND v.location_id = @location;
 --    Client PF
     
   SELECT 
@@ -1161,6 +1236,7 @@ JOIN person p  ON p.person_id = o.person_id
    
     obs o 
    INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+   INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
    INNER JOIN person p ON p.person_id = o.person_id
   LEFT JOIN (
     SELECT encounter_id, value_coded
@@ -1181,7 +1257,8 @@ WHERE
    AND e.voided = 0
    AND o.voided = 0
    AND DATE(e.encounter_datetime) >= @startDate
-   AND DATE(e.encounter_datetime) < @endDate;
+   AND DATE(e.encounter_datetime) < @endDate
+   AND v.location_id = @location;
 
 
 
@@ -1287,10 +1364,11 @@ FROM (
             AND DATE(e2.encounter_datetime) >= @startDate
             AND DATE(e2.encounter_datetime) < @endDate
         ) AS visit_rank
-    FROM obs o 
+    FROM obs o
     JOIN encounter e ON e.encounter_id = o.encounter_id
+    JOIN visit v2 ON e.visit_id = v2.visit_id AND v2.voided = 0
     LEFT JOIN (
-        SELECT 
+        SELECT
             MAX(o.value_datetime) AS edd,
             o.person_id  
         FROM obs o 
@@ -1318,6 +1396,7 @@ FROM (
     AND e.voided = 0
     AND DATE(e.encounter_datetime) >= @startDate
     AND DATE(e.encounter_datetime) < @endDate
+    AND v2.location_id = @location
 ) AS v
 ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 
@@ -1393,6 +1472,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
              @FE_DEATH, @FE_TRANSFER
 		 FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -1402,7 +1482,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'FEVER')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		   
 		  
 		  SELECT 
@@ -1498,6 +1579,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  
 		   FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		 LEFT JOIN (
 		    SELECT encounter_id, value_coded,obs_group_id
@@ -1511,7 +1593,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'MALARIA')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 		  SELECT 
@@ -1592,6 +1675,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id  
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -1601,7 +1685,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'Severe malaria')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 	    
@@ -1698,6 +1783,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -1707,7 +1793,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'Severe malaria')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 		  
@@ -1770,6 +1857,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
             @ANX_DEATH,@ANX_TRANSFER
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -1779,7 +1867,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'ANXIETY DISORDER')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 		
@@ -1841,6 +1930,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		    
 		      FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		   LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -1850,7 +1940,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		   WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', 'DEMENTIA')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 
@@ -1916,6 +2007,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  
 		        FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -1925,7 +2017,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', 'DEPRESSION')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 		  
@@ -1986,6 +2079,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		    @SCHIZOPHRENIA_DEATH, @SCHIZOPHRENIA_TRANSFER
 		         FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -1995,7 +2089,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', 'SCHIZOPHRENIA')
 		  AND DATE(e.encounter_datetime) >= @startDate
-		  AND DATE(e.encounter_datetime) < @endDate;
+		  AND DATE(e.encounter_datetime) < @endDate
+		  AND v.location_id = @location;
 		  
 		  
 		  
@@ -2056,6 +2151,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -2065,7 +2161,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '7950')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 	 SELECT
@@ -2123,6 +2220,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			@BIPOLAR_DISO_DEATH,@BIPOLAR_DISO_TRANSFER
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -2132,7 +2230,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', 'Bipolar disorder')
 		  AND DATE(e.encounter_datetime) >= @startDate
-		  AND DATE(e.encounter_datetime) < @endDate;
+		  AND DATE(e.encounter_datetime) < @endDate
+		  AND v.location_id = @location;
 		  
 		  
 		 SELECT
@@ -2194,6 +2293,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  
 		    FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -2203,7 +2303,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		  AND o.value_coded = concept_from_mapping('PIH', '7201')
 		  AND DATE(e.encounter_datetime) >= @startDate
-		  AND DATE(e.encounter_datetime) < @endDate;
+		  AND DATE(e.encounter_datetime) < @endDate
+		  AND v.location_id = @location;
 		  
 		  
 		  
@@ -2267,6 +2368,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  
 		     FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -2276,7 +2378,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '7951')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 		  
@@ -2339,6 +2442,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			@ALCOHOL_USED_DISO_DEATH,   @ALCOHOL_USED_DISO_TRANSFER
 		       FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -2348,7 +2452,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '9522')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 		  
@@ -2409,6 +2514,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		    
 		  FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -2418,7 +2524,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '7197')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		  
 		  
 		 SELECT
@@ -2478,6 +2585,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  
 		    FROM  obs o 
 		  INNER JOIN encounter e ON o.encounter_id = e.encounter_id 
+		  INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 		  INNER JOIN person p ON p.person_id = o.person_id 
 		  LEFT JOIN (
 		    SELECT encounter_id, value_coded
@@ -2487,7 +2595,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 		  WHERE  e.voided = 0 AND o.voided = 0
 		   AND o.value_coded = concept_from_mapping('PIH', '10633')
 		   AND DATE(e.encounter_datetime) >= @startDate
-		   AND DATE(e.encounter_datetime) < @endDate;
+		   AND DATE(e.encounter_datetime) < @endDate
+		   AND v.location_id = @location;
 		
 		 
 		  -- Maladie Chroniques
@@ -2549,6 +2658,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 
 			FROM obs o 
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -2569,7 +2679,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 
  
 
@@ -2630,6 +2741,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 							
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -2650,7 +2762,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 			
 
 			
@@ -2711,6 +2824,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 								
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -2731,7 +2845,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 
 			
 			
@@ -2793,6 +2908,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 				
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -2813,7 +2929,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 
 		 
 			SELECT 
@@ -2873,6 +2990,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 								
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -2893,7 +3011,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 
  
         SELECT 
@@ -2954,6 +3073,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 				
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -2974,7 +3094,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 
 
 			
@@ -3038,6 +3159,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 				
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -3058,7 +3180,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
  
 
        	SELECT 
@@ -3118,6 +3241,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 				
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -3138,7 +3262,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
  
 
 			SELECT 
@@ -3197,6 +3322,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 								
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -3217,7 +3343,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 
 			
 			SELECT 
@@ -3277,6 +3404,7 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 								
 			FROM obs o  
 			INNER JOIN encounter e ON o.encounter_id = e.encounter_id
+			INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 			INNER JOIN person p ON p.person_id = o.person_id
 			LEFT JOIN (
 				SELECT encounter_id, value_coded  
@@ -3297,7 +3425,8 @@ ORDER BY v.person_id, v.encounter_datetime, v.encounter_id;
 			AND e.voided = 0
 			AND o.voided = 0
 			AND DATE(e.encounter_datetime) >= @startDate
-            AND DATE(e.encounter_datetime) < @endDate;
+            AND DATE(e.encounter_datetime) < @endDate
+            AND v.location_id = @location;
 		  	
 	 
 SELECT  @child_under_1_n  "CHILD_UNDER_1_N",
@@ -3697,4 +3826,4 @@ SELECT  @child_under_1_n  "CHILD_UNDER_1_N",
 			@NEW_RENAL_FAILURE_BET_25_AND_49_F 'NEW_RENAL_FAILURE_BET_25_AND_49_F', @OLD_RENAL_FAILURE_BET_25_AND_49_F 'OLD_RENAL_FAILURE_BET_25_AND_49_F', @NEW_RENAL_FAILURE_BET_25_AND_49_M 'NEW_RENAL_FAILURE_BET_25_AND_49_M', @OLD_RENAL_FAILURE_BET_25_AND_49_M 'OLD_RENAL_FAILURE_BET_25_AND_49_M',
 			@NEW_RENAL_FAILURE_BET_50_AND_MORE_F 'NEW_RENAL_FAILURE_BET_50_AND_MORE_F', @OLD_RENAL_FAILURE_BET_50_AND_MORE_F 'OLD_RENAL_FAILURE_BET_50_AND_MORE_F', @NEW_RENAL_FAILURE_BET_50_AND_MORE_M 'NEW_RENAL_FAILURE_BET_50_AND_MORE_M', @OLD_RENAL_FAILURE_BET_50_AND_MORE_M 'OLD_RENAL_FAILURE_BET_50_AND_MORE_M',
 			@RENAL_FAILURE_DEAD 'RENAL_FAILURE_DEAD', @NEW_RENAL_FAILURE_DISCHARGED 'NEW_RENAL_FAILURE_DISCHARGED', 
-			@OLD_RENAL_FAILURE_DISCHARGED 'OLD_RENAL_FAILURE_DISCHARGED';
+			@OLD_RENAL_FAILURE_DISCHARGED 'OLD_RENAL_FAILURE_DISCHARGED';

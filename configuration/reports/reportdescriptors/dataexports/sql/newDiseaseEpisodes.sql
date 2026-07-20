@@ -204,6 +204,8 @@ end) 'Diagnosis',
 (CASE when round(DATEDIFF(o.obs_datetime, pr.birthdate)/365.25, 1) > 50 and pr.gender = 'M' then 1 else 0 end) "MG50",
 (CASE when round(DATEDIFF(o.obs_datetime, pr.birthdate)/365.25, 1) > 50 and pr.gender = 'F' then 1 else 0 end) "FG50"
 from obs o
+INNER JOIN encounter e ON o.encounter_id = e.encounter_id AND e.voided = 0
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 INNER JOIN person pr on pr.person_id = o.person_id
 INNER JOIN report_mapping rm on o.value_coded = rm.concept_id
 LEFT OUTER JOIN obs oc on oc.encounter_id = o.encounter_id and oc.voided = 0 and oc.obs_group_id = o.obs_group_id and oc.concept_id =
@@ -211,15 +213,16 @@ LEFT OUTER JOIN obs oc on oc.encounter_id = o.encounter_id and oc.voided = 0 and
 LEFT OUTER JOIN concept_name c_name on c_name.concept_id = oc.value_coded and  c_name.locale = 'en' and c_name.locale_preferred = '1' and c_name.voided = 0
 where o.concept_id = (select concept_id from report_mapping where source = 'PIH' and code = 'DIAGNOSIS')
 and not exists -- qualify result for NEW diagnoses
-   (select 1 from obs o_prev 
-    where o_prev.obs_id <> o.obs_id   
+   (select 1 from obs o_prev
+    where o_prev.obs_id <> o.obs_id
     and o_prev.person_id = o.person_id
     and o_prev.concept_id = o.concept_id
     and o_prev.value_coded = o.value_coded
     )
-and o.voided = 0 
+and o.voided = 0
 AND date(o.obs_datetime) >= @startDate
 AND date(o.obs_datetime) < @endDate
+AND v.location_id = @location
 group by o.obs_id, rm.source, rm.code
 ) oo
 where diagnosis is not null
