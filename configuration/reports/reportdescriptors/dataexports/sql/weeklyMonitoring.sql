@@ -96,17 +96,20 @@ obs_id,
 obs_group_id,
 diagnosis_concept_id
 )
-select 
+select
 o.person_id,
 o.encounter_id,
 o.obs_id,
 o.obs_group_id ,
-o.value_coded 
-from obs o 
+o.value_coded
+from obs o
+INNER JOIN encounter e ON o.encounter_id = e.encounter_id AND e.voided = 0
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 where concept_id = @diagnosis
 AND o.voided = 0
 AND ((date(o.obs_datetime) >=@startDate) or @startDate is null)
 AND ((date(o.obs_datetime) <=@endDate)  or @endDate is null)
+AND v.location_id = @location
 and o.value_coded in (
 @cholera,
 @diphtheria_probable,
