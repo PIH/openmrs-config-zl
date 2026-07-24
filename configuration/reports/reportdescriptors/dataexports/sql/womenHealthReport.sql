@@ -1,6 +1,9 @@
 CALL initialize_global_metadata();
 SET  @locale = GLOBAL_PROPERTY_VALUE('default_locale', 'en');
 SET @endDate = ADDDATE(@endDate, INTERVAL 1 DAY);
+SET @type_of_delivery_concept_id = concept_from_mapping('PIH','11663');
+SET @diagnosis_concept_id = concept_from_mapping('PIH','3064');
+SET @delivery_date_concept_id = concept_from_mapping('PIH','5599');
 
 -- Acceptation methode moderne contraception
 SELECT
@@ -715,7 +718,7 @@ SELECT
     e.encounter_datetime   >= last_nv.last_new_visit_date
     AND o.voided =0
     AND e.voided =0
-    AND o.concept_id =concept_from_mapping('PIH','5599')
+    AND o.concept_id =@delivery_date_concept_id
     AND e.encounter_datetime >=  @startDate
     AND e.encounter_datetime <  @endDate
     AND v.location_id = @location
@@ -781,14 +784,114 @@ FROM
     INNER JOIN obs t
         ON t.encounter_id = d.encounter_id
        AND t.person_id = d.person_id
-       AND t.concept_id = concept_from_mapping('PIH','11663')
+       AND t.concept_id = @type_of_delivery_concept_id
        AND t.voided = 0
 
     LEFT JOIN person p
         ON p.person_id = d.person_id
        AND p.voided = 0
 
-    WHERE d.concept_id = concept_from_mapping('PIH','5599')
+    WHERE d.concept_id = @delivery_date_concept_id
+      AND d.value_datetime IS NOT NULL
+      AND d.voided = 0
+      AND e.encounter_datetime >= @startDate
+      AND e.encounter_datetime < @endDate
+
+) x;
+
+SELECT
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.prematurity = concept_from_mapping('PIH','11789')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.prematurity = concept_from_mapping('PIH','11790')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.prematurity = concept_from_mapping('PIH','9414')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND (
+                    x.prematurity IS NULL
+                 OR x.prematurity NOT IN (
+                        concept_from_mapping('PIH','11789'),
+                        concept_from_mapping('PIH','11790'),
+                        concept_from_mapping('PIH','9414')
+                    )
+                 )
+            THEN 1 ELSE 0
+        END),
+
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.prematurity = concept_from_mapping('PIH','11789')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.prematurity = concept_from_mapping('PIH','11790')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.prematurity = concept_from_mapping('PIH','9414')
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type =  concept_from_mapping('PIH','9336')
+             AND (
+                    x.prematurity IS NULL
+                 OR x.prematurity NOT IN (
+                         concept_from_mapping('PIH','11789'),
+                        concept_from_mapping('PIH','11790'),
+                        concept_from_mapping('PIH','9414')
+                    )
+                 )
+            THEN 1 ELSE 0
+        END)
+INTO @VAGINAL_BIRTH_SEVERE_PREMATURITY,@VAGINAL_BIRTH_MODERATE_PREMATURITY,@VAGINAL_BIRTH_EXTREME_PREMATURITY,@VAGINAL_BIRTH_PREMATURITY_UNKNOWN,
+	@CESAREAN_BIRTH_SEVERE_PREMATURITY, @CESAREAN_BIRTH_MODERATE_PREMATURITY,@CESAREAN_BIRTH_EXTREME_PREMATURITY,@CESAREAN_BIRTH_PREMATURITY_UNKNOWN
+FROM
+(
+    SELECT
+        d.person_id,
+        d.encounter_id,
+        t.value_coded AS delivery_type,
+        p.value_coded AS prematurity
+
+    FROM obs d
+
+    INNER JOIN encounter e
+        ON e.encounter_id = d.encounter_id
+       AND e.voided = 0
+
+    INNER JOIN obs t
+        ON t.encounter_id = d.encounter_id
+       AND t.person_id = d.person_id
+       AND t.concept_id = @type_of_delivery_concept_id
+       AND t.voided = 0
+
+    LEFT JOIN obs p
+        ON p.encounter_id = d.encounter_id
+       AND p.person_id = d.person_id
+       AND p.concept_id = @diagnosis_concept_id
+       AND p.voided = 0
+
+    WHERE d.concept_id =  @delivery_date_concept_id
       AND d.value_datetime IS NOT NULL
       AND d.voided = 0
       AND e.encounter_datetime >= @startDate
@@ -831,4 +934,6 @@ SELECT
         @FP_METHOD_ACCEPTED_SUBSET 'FP_METHOD_ACCEPTED_SUBSET', @PREG_HOME_DELIV_ANC_FACILITY 'PREG_HOME_DELIV_ANC_FACILITY',
         @PNC_FIRST_VISIT_LT72H_MONTH 'PNC_FIRST_VISIT_LT72H_MONTH',@PNC_VIT_A_GIVEN 'PNC_VIT_A_GIVEN',
         @VAGINAL_BIRTH_MOTHER_LT15 'VAGINAL_BIRTH_MOTHER_LT15',@VAGINAL_BIRTH_MOTHER_15_19 'VAGINAL_BIRTH_MOTHER_15_19',@DELIVERY_VAGINAL_MOTHER_AGE_20_24 'DELIVERY_VAGINAL_MOTHER_AGE_20_24',@VAGINAL_BIRTH_MOTHER_25_29 'VAGINAL_BIRTH_MOTHER_25_29',@DELIVERY_VAGINAL_MOTHER_AGE_GT30 'DELIVERY_VAGINAL_MOTHER_AGE_GT30',@DELIVERY_VAGINAL_MOTHER_AGE_UNKNOWN 'DELIVERY_VAGINAL_MOTHER_AGE_UNKNOWN',
-        @CESAREAN_BIRTH_MOTHER_LT15 'CESAREAN_BIRTH_MOTHER_LT15',@DELIVERY_CESAREAN_MOTHER_AGE_15_19 'DELIVERY_CESAREAN_MOTHER_AGE_15_19',@DELIVERY_CESAREAN_MOTHER_AGE_20_24 'DELIVERY_CESAREAN_MOTHER_AGE_20_24',@DELIVERY_CESAREAN_MOTHER_AGE_25_29 'DELIVERY_CESAREAN_MOTHER_AGE_25_29',@DELIVERY_CESAREAN_MOTHER_AGE_GT30 'DELIVERY_CESAREAN_MOTHER_AGE_GT30',@DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN 'DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN';
+        @CESAREAN_BIRTH_MOTHER_LT15 'CESAREAN_BIRTH_MOTHER_LT15',@DELIVERY_CESAREAN_MOTHER_AGE_15_19 'DELIVERY_CESAREAN_MOTHER_AGE_15_19',@DELIVERY_CESAREAN_MOTHER_AGE_20_24 'DELIVERY_CESAREAN_MOTHER_AGE_20_24',@DELIVERY_CESAREAN_MOTHER_AGE_25_29 'DELIVERY_CESAREAN_MOTHER_AGE_25_29',@DELIVERY_CESAREAN_MOTHER_AGE_GT30 'DELIVERY_CESAREAN_MOTHER_AGE_GT30',@DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN 'DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN',
+        @VAGINAL_BIRTH_SEVERE_PREMATURITY 'VAGINAL_BIRTH_SEVERE_PREMATURITY',@VAGINAL_BIRTH_MODERATE_PREMATURITY 'VAGINAL_BIRTH_MODERATE_PREMATURITY',@VAGINAL_BIRTH_EXTREME_PREMATURITY 'VAGINAL_BIRTH_EXTREME_PREMATURITY',@VAGINAL_BIRTH_PREMATURITY_UNKNOWN 'VAGINAL_BIRTH_PREMATURITY_UNKNOWN',
+	    @CESAREAN_BIRTH_SEVERE_PREMATURITY 'CESAREAN_BIRTH_SEVERE_PREMATURITY', @CESAREAN_BIRTH_MODERATE_PREMATURITY 'CESAREAN_BIRTH_MODERATE_PREMATURITY',@CESAREAN_BIRTH_EXTREME_PREMATURITY 'CESAREAN_BIRTH_EXTREME_PREMATURITY',@CESAREAN_BIRTH_PREMATURITY_UNKNOWN 'CESAREAN_BIRTH_PREMATURITY_UNKNOWN';
