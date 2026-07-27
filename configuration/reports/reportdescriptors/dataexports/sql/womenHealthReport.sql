@@ -896,7 +896,6 @@ FROM
       AND d.voided = 0
       AND e.encounter_datetime >= @startDate
       AND e.encounter_datetime < @endDate
-      AND v.location_id = @location
 
 ) x;
 
