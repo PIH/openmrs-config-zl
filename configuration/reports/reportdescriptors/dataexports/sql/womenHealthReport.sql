@@ -900,6 +900,166 @@ FROM
 
 ) x;
 
+
+SELECT
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.birth_weight < 2.5
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.birth_weight >= 2.5
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.birth_weight IS NULL
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.apgar_score IS NOT NULL
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','11785')
+             AND x.neonatal_resuscitation = concept_from_mapping('PIH','1065')
+            THEN 1 ELSE 0
+        END),
+        
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.birth_weight < 2.5
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.birth_weight >= 2.5
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.birth_weight IS NULL
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.apgar_score IS NOT NULL
+            THEN 1 ELSE 0
+        END),
+
+    SUM(CASE
+            WHEN x.delivery_type = concept_from_mapping('PIH','9336')
+             AND x.neonatal_resuscitation = concept_from_mapping('PIH','1065')
+            THEN 1 ELSE 0
+        END)
+
+INTO
+    @VAGINAL_DELIVERY_BIRTH_WEIGHT_LT2500G,
+    @VAGINAL_DELIVERY_BIRTH_WEIGHT_GTE2500G,
+    @VAGINAL_DELIVERY_BIRTH_WEIGHT_UNKNOWN,
+    @VAGINAL_DELIVERY_APGAR_RECORDED,
+    @VAGINAL_DELIVERY_NEWBORN_RESUSCITATED,
+
+    @CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G,
+    @CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G,
+    @CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN,
+    @CESAREAN_DELIVERY_APGAR_RECORDED,
+    @CESAREAN_DELIVERY_NEWBORN_RESUSCITATED
+
+FROM
+(
+    SELECT
+        d.person_id,
+        d.encounter_id,
+        t.value_coded AS delivery_type,
+        bw.birth_weight,
+        ap.apgar_score,
+        nr.neonatal_resuscitation
+
+    FROM obs d
+
+    INNER JOIN encounter e
+        ON e.encounter_id = d.encounter_id
+       AND e.voided = 0
+
+    INNER JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded) value_coded
+        FROM obs
+        WHERE concept_id = @type_of_delivery_concept_id
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) t
+        ON t.encounter_id = d.encounter_id
+       AND t.person_id = d.person_id
+
+    LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_numeric) AS birth_weight
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','11067')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) bw
+        ON bw.encounter_id = d.encounter_id
+       AND bw.person_id = d.person_id
+
+    LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_numeric) AS apgar_score
+        FROM obs
+        WHERE concept_id IN
+        (
+            concept_from_mapping('PIH','14785'),
+            concept_from_mapping('PIH','13558'),
+            concept_from_mapping('PIH','14419')
+        )
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) ap
+        ON ap.encounter_id = d.encounter_id
+       AND ap.person_id = d.person_id
+
+    LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded) AS neonatal_resuscitation
+        FROM obs
+        WHERE concept_id = concept_from_mapping('PIH','13096')
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) nr
+        ON nr.encounter_id = d.encounter_id
+       AND nr.person_id = d.person_id
+
+    WHERE d.concept_id = @delivery_date_concept_id
+      AND d.value_datetime IS NOT NULL
+      AND d.voided = 0
+      AND e.encounter_datetime >= @startDate
+      AND e.encounter_datetime < @endDate
+
+) x;
+
 SELECT 
         @MET_COC_LESS_THAN_25_ACCEPTED 'MET_COC_LESS_THAN_25_ACCEPTED',
         @MET_COP_LESS_THAN_25_ACCEPTED 'MET_COP_LESS_THAN_25_ACCEPTED',
@@ -936,4 +1096,6 @@ SELECT
         @VAGINAL_BIRTH_MOTHER_LT15 'VAGINAL_BIRTH_MOTHER_LT15',@VAGINAL_BIRTH_MOTHER_15_19 'VAGINAL_BIRTH_MOTHER_15_19',@DELIVERY_VAGINAL_MOTHER_AGE_20_24 'DELIVERY_VAGINAL_MOTHER_AGE_20_24',@VAGINAL_BIRTH_MOTHER_25_29 'VAGINAL_BIRTH_MOTHER_25_29',@DELIVERY_VAGINAL_MOTHER_AGE_GT30 'DELIVERY_VAGINAL_MOTHER_AGE_GT30',@DELIVERY_VAGINAL_MOTHER_AGE_UNKNOWN 'DELIVERY_VAGINAL_MOTHER_AGE_UNKNOWN',
         @CESAREAN_BIRTH_MOTHER_LT15 'CESAREAN_BIRTH_MOTHER_LT15',@DELIVERY_CESAREAN_MOTHER_AGE_15_19 'DELIVERY_CESAREAN_MOTHER_AGE_15_19',@DELIVERY_CESAREAN_MOTHER_AGE_20_24 'DELIVERY_CESAREAN_MOTHER_AGE_20_24',@DELIVERY_CESAREAN_MOTHER_AGE_25_29 'DELIVERY_CESAREAN_MOTHER_AGE_25_29',@DELIVERY_CESAREAN_MOTHER_AGE_GT30 'DELIVERY_CESAREAN_MOTHER_AGE_GT30',@DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN 'DELIVERY_CESAREAN_MOTHER_AGE_UNKNOWN',
         @VAGINAL_BIRTH_SEVERE_PREMATURITY 'VAGINAL_BIRTH_SEVERE_PREMATURITY',@VAGINAL_BIRTH_MODERATE_PREMATURITY 'VAGINAL_BIRTH_MODERATE_PREMATURITY',@VAGINAL_BIRTH_EXTREME_PREMATURITY 'VAGINAL_BIRTH_EXTREME_PREMATURITY',@VAGINAL_BIRTH_PREMATURITY_UNKNOWN 'VAGINAL_BIRTH_PREMATURITY_UNKNOWN',
-	    @CESAREAN_BIRTH_SEVERE_PREMATURITY 'CESAREAN_BIRTH_SEVERE_PREMATURITY', @CESAREAN_BIRTH_MODERATE_PREMATURITY 'CESAREAN_BIRTH_MODERATE_PREMATURITY',@CESAREAN_BIRTH_EXTREME_PREMATURITY 'CESAREAN_BIRTH_EXTREME_PREMATURITY',@CESAREAN_BIRTH_PREMATURITY_UNKNOWN 'CESAREAN_BIRTH_PREMATURITY_UNKNOWN';
+	    @CESAREAN_BIRTH_SEVERE_PREMATURITY 'CESAREAN_BIRTH_SEVERE_PREMATURITY', @CESAREAN_BIRTH_MODERATE_PREMATURITY 'CESAREAN_BIRTH_MODERATE_PREMATURITY',@CESAREAN_BIRTH_EXTREME_PREMATURITY 'CESAREAN_BIRTH_EXTREME_PREMATURITY',@CESAREAN_BIRTH_PREMATURITY_UNKNOWN 'CESAREAN_BIRTH_PREMATURITY_UNKNOWN',
+        @VAGINAL_DELIVERY_BIRTH_WEIGHT_LT2500G 'VAGINAL_DELIVERY_BIRTH_WEIGHT_LT2500G',@VAGINAL_DELIVERY_BIRTH_WEIGHT_GTE2500G 'VAGINAL_DELIVERY_BIRTH_WEIGHT_GTE2500G',@VAGINAL_DELIVERY_BIRTH_WEIGHT_UNKNOWN 'VAGINAL_DELIVERY_BIRTH_WEIGHT_UNKNOWN',@VAGINAL_DELIVERY_APGAR_RECORDED 'VAGINAL_DELIVERY_APGAR_RECORDED',@VAGINAL_DELIVERY_NEWBORN_RESUSCITATED 'VAGINAL_DELIVERY_NEWBORN_RESUSCITATED',
+	    @CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_LT2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G 'CESAREAN_DELIVERY_BIRTH_WEIGHT_GTE2500G',@CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN 'CESAREAN_DELIVERY_BIRTH_WEIGHT_UNKNOWN',@CESAREAN_DELIVERY_APGAR_RECORDED 'CESAREAN_DELIVERY_APGAR_RECORDED',@CESAREAN_DELIVERY_NEWBORN_RESUSCITATED 'CESAREAN_DELIVERY_NEWBORN_RESUSCITATED';
