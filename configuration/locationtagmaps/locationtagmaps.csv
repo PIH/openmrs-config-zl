@@ -1,48 +1,13 @@
 Location,Health Facility Location
-Baptiste, TRUE
 Belladère,TRUE
 Boucan-Carré,TRUE
 Cange,TRUE
-Cerca cavajal,TRUE
 Cerca la Source,TRUE
-Dufailly,TRUE
 Hinche,TRUE
-Jean Denis,TRUE
 La Colline,TRUE
-Maissade,TRUE
-Mirebalais,TRUE
 Petite Riviere,TRUE
-POZ,TRUE
+Mirebalais,TRUE
 Saint-Marc (HSN),TRUE
 Saint-Marc (SSPE),TRUE
-Savanette,TRUE
-Thomassique,TRUE
 Thomonde,TRUE
-Tilory,TRUE
 Verrettes,TRUE
-
-
-
-
- Baptiste          |        3 |
-| Belladère         |    79938 |
-| Boucan-Carré      |   117636 |
-| Cange             |   119135 |
-| Cerca cavajal     |       11 |
-| Cerca la Source   |    69445 |
-| Dufailly          |        5 |
-| Hinche            |   212695 |
-| Jean Denis        |        6 |
-| La Colline        |   187722 |
-| Maissade          |       11 |
-| Mirebalais        |   123100 |
-| Petite Riviere    |   297340 |
-| POZ               |    28960 |
-| Saint-Marc (HSN)  |     3646 |
-| Saint-Marc (SSPE) |   349194 |
-| Savanette         |        7 |
-| Thomassique       |       15 |
-| Thomonde          |   100741 |
-| Tilory            |        4 |
-| Unknown Location  |     3637 |
-| Verrettes         |   23
