@@ -796,6 +796,7 @@ FROM
       AND d.voided = 0
       AND e.encounter_datetime >= @startDate
       AND e.encounter_datetime < @endDate
+      AND v.location_id = @location
 
 ) x;
 
@@ -878,6 +879,7 @@ FROM
     INNER JOIN encounter e
         ON e.encounter_id = d.encounter_id
        AND e.voided = 0
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 
     INNER JOIN obs t
         ON t.encounter_id = d.encounter_id
@@ -896,7 +898,7 @@ FROM
       AND d.voided = 0
       AND e.encounter_datetime >= @startDate
       AND e.encounter_datetime < @endDate
-
+      AND v.location_id = @location
 ) x;
 
 
@@ -989,6 +991,7 @@ FROM
     INNER JOIN encounter e
         ON e.encounter_id = d.encounter_id
        AND e.voided = 0
+    INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 
     INNER JOIN
     (
@@ -1056,7 +1059,7 @@ FROM
       AND d.voided = 0
       AND e.encounter_datetime >= @startDate
       AND e.encounter_datetime < @endDate
-
+      AND v.location_id = @location
 ) x;
 
 SELECT 
