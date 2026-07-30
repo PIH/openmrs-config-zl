@@ -1,35 +1,4 @@
 {
-
-  "components": [
-    "allergies",
-    "biometricsFingerPrints",
-    "clinicianDashboard",
-    "commentForm",
-    "dataExports",
-    "exportPatients",
-    "exposedInfant",
-    "hiv",
-    "hivProgramLocationWarning",
-    "importPatients",
-    "labResults",
-    "labs",
-    "markPatientDead",
-    "medicationOrder",
-    "myAccount",
-    "patientRegistration",
-    "pmtct",
-    "prep",
-    "programs",
-    "relationships",
-    "socioEconomics",
-    "systemAdministration",
-    "todaysVisits",
-    "vct",
-    "visitManagement",
-    "visitNote",
-    "vitals"
-  ],
-
   "rebuildSearchIndexConfig": 2,
   "localZlIdentifierGeneratorEnabled": "true",
   "localZlIdentifierGeneratorPrefix": "Y"
