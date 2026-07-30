@@ -25,6 +25,7 @@ LEFT OUTER JOIN (SELECT * FROM person_address WHERE voided = 0 ORDER BY date_cre
 INNER JOIN (SELECT person_id, given_name, family_name FROM person_name WHERE voided = 0 ORDER BY date_created desc) n ON p.patient_id = n.person_id
 -- Check in encounter
 INNER JOIN encounter e ON p.patient_id = e.patient_id and e.voided = 0 AND e.encounter_type in (@AdultInitEnc, @AdultFollowEnc, @PedInitEnc, @PedFollowEnc)
+INNER JOIN visit v ON v.visit_id = e.visit_id AND v.voided = 0
 -- new/subsequent visit
 LEFT OUTER JOIN encounter prev_checkin on prev_checkin.patient_id = e.patient_id and prev_checkin.encounter_type = e.encounter_type 
 		and prev_checkin.encounter_datetime < e.encounter_datetime  
@@ -57,6 +58,7 @@ AND p.patient_id NOT IN (SELECT person_id FROM person_attribute WHERE value = 't
                          AND voided = 0)
 AND date(e.encounter_datetime) >= @startDate
 AND date(e.encounter_datetime) < @endDate
+AND v.location_id = @location
 GROUP BY e.encounter_id 
 ;
 

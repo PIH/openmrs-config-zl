@@ -35,6 +35,9 @@ INNER JOIN (SELECT person_id, given_name, family_name FROM person_name WHERE voi
 --Check in encounter
 INNER JOIN encounter e ON p.patient_id = e.patient_id and e.voided = 0 AND e.encounter_type = @chkEnc
 
+--Visit location
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
+
 --Provider with Administrative Clerk encounter role
 INNER JOIN encounter_provider ep ON e.encounter_id = ep.encounter_id AND ep.voided = 0 AND ep.encounter_role_id =@clerkEncRole
 INNER JOIN provider epp ON ep.provider_id = epp.provider_id
@@ -61,5 +64,6 @@ WHERE p.voided = 0
 AND p.patient_id NOT IN (SELECT person_id FROM person_attribute WHERE value = 'true' AND person_attribute_type_id = @testPt AND voided = 0)
 
 AND e.encounter_datetime >= @startDate AND e.encounter_datetime < ADDDATE(@endDate, INTERVAL 1 DAY)
+AND v.location_id = @location
 
 GROUP BY e.encounter_id;

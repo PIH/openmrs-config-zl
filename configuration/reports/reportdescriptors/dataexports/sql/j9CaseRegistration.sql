@@ -46,7 +46,8 @@ where pp.patient_program_id =
          	(select pp2.patient_program_id from patient_program pp2
          	where pp2.patient_id = pp.patient_id 
          	and pp2.program_id = @matHealthProgram 
-         	and pp2.voided = 0  
+         	and pp2.voided = 0
+         	and pp2.location_id = @location
          	and pp2.date_completed is null
          	and (@minEnrollmentDate is null or pp2.date_enrolled >= @minEnrollmentDate)
          	order by pp2.date_enrolled desc limit 1);

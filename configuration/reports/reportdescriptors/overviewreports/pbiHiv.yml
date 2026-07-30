@@ -9,6 +9,7 @@ config:
   category: "OVERVIEW"
   sites:
     - "MIREBALAIS"
+    - "CENTRAL"
   order: "5"
   components:
     - "powerbiReports"

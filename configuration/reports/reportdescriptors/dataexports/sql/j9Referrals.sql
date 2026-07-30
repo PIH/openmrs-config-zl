@@ -76,6 +76,7 @@ where e.voided = 0
 and e.encounter_type in (@prenatal, @pediatric,@postnatal,@mat_followup)
 AND date(e.encounter_datetime) >= date(@startDate)
 AND date(e.encounter_datetime) <= date(@endDate)
+AND v.location_id = @location
 order by referral_date desc
 ;
 

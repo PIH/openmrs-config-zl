@@ -76,12 +76,14 @@ CREATE TEMPORARY TABLE temp_soc
  household_no_assets                   varchar(255)  
 );
    
-insert into temp_soc(patient_id, encounter_id, visit_id, encounter_datetime, date_entered)   
+insert into temp_soc(patient_id, encounter_id, visit_id, encounter_datetime, date_entered)
 select e.patient_id,  e.encounter_id, e.visit_id, e.encounter_datetime, e.date_created from encounter e
+INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 where e.encounter_type = @socioeconomics_enc_id
 AND ((date(e.encounter_datetime) >=@startDate) or @startDate is null)
 AND ((date(e.encounter_datetime) <=@endDate)  or @endDate is null)
-and e.voided = 0;
+and e.voided = 0
+AND v.location_id = @location;
 
 create index temp_soc_ei on temp_soc(encounter_id);
 

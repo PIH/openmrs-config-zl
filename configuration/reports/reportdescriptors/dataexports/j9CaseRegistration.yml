@@ -7,6 +7,11 @@ parameters:
     type: "java.lang.Integer"
     label: "zl.report.j9.limitMaxMonthsEnrolled"
     required: false
+  - key: "location"
+    type: "org.openmrs.Location"
+    label: "reporting.parameter.location"
+    widgetConfiguration:
+      withTag: "Visit Location"
 datasets:
   - key: "j9CaseRegistration"
     type: "sql"
