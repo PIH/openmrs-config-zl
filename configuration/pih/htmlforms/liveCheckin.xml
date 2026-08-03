@@ -227,7 +227,7 @@
                                 <repeat>
                                     <template>
                                         <field>
-                                            <div class="section-container">
+                                            <div>
                                                 <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                      answerConceptId="{acId}" answerCodeXX=""/>
                                             </div>
@@ -241,7 +241,6 @@
                                     <render acId="CIEL:1171" aLabel="c-section"/>
                                 </repeat>
                             </div>
-                            <br/>
                         </includeIf>
 
                         <div>
@@ -253,7 +252,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
                                         </div>
@@ -275,7 +274,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
                                         </div>
@@ -304,7 +303,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCodeXX="pihcore.{aLabel}"/>
                                         </div>
@@ -321,7 +320,6 @@
                                 <render acId="PIH:21179" aLabel="exciseCyst"/>
                             </repeat>
                         </div>
-                        <br/>
 
                         <div>
                             <field>
@@ -332,7 +330,7 @@
                             <repeat>
                                 <template>
                                     <field>
-                                        <div class="section-container">
+                                        <div>
                                             <obs conceptId="PIH:Type of HUM visit" style="checkbox"
                                                  answerConceptId="{acId}" answerCode="pihcore.{aLabel}"/>
                                         </div>
