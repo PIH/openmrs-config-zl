@@ -866,13 +866,14 @@ SELECT
         END)
 INTO @VAGINAL_BIRTH_SEVERE_PREMATURITY,@VAGINAL_BIRTH_MODERATE_PREMATURITY,@VAGINAL_BIRTH_EXTREME_PREMATURITY,@VAGINAL_BIRTH_PREMATURITY_UNKNOWN,
 	@CESAREAN_BIRTH_SEVERE_PREMATURITY, @CESAREAN_BIRTH_MODERATE_PREMATURITY,@CESAREAN_BIRTH_EXTREME_PREMATURITY,@CESAREAN_BIRTH_PREMATURITY_UNKNOWN
-FROM
+
+	FROM
 (
     SELECT
         d.person_id,
         d.encounter_id,
         t.value_coded AS delivery_type,
-        p.value_coded AS prematurity
+        p.prematurity
 
     FROM obs d
 
@@ -881,17 +882,34 @@ FROM
        AND e.voided = 0
     INNER JOIN visit v ON e.visit_id = v.visit_id AND v.voided = 0
 
-    INNER JOIN obs t
+    INNER JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded) value_coded
+        FROM obs
+        WHERE concept_id = @type_of_delivery_concept_id
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) t
         ON t.encounter_id = d.encounter_id
        AND t.person_id = d.person_id
-       AND t.concept_id = @type_of_delivery_concept_id
-       AND t.voided = 0
-
-    LEFT JOIN obs p
+       
+    LEFT JOIN
+    (
+        SELECT
+            encounter_id,
+            person_id,
+            MAX(value_coded ) AS prematurity
+        FROM obs
+        WHERE concept_id = @diagnosis_concept_id
+          AND voided = 0
+        GROUP BY encounter_id, person_id
+    ) p
         ON p.encounter_id = d.encounter_id
        AND p.person_id = d.person_id
-       AND p.concept_id = @diagnosis_concept_id
-       AND p.voided = 0
+
 
     WHERE d.concept_id =  @delivery_date_concept_id
       AND d.value_datetime IS NOT NULL
