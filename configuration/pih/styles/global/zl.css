@@ -236,4 +236,16 @@ username input[type="text"],
     font-weight: normal;
 }
 
+#calculated-waist-hip-ratio {
+    font-weight: bold;
+    font-size: 1.4em;
+}
 
+.encounter-summary-container #calculated-ratio {
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.light-font {
+    font-family: "OpenSansLight",sans-serif;
+}
